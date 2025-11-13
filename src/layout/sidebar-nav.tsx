@@ -1,0 +1,132 @@
+"use client";
+
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+
+export interface NavItem {
+  id: string;
+  label: string;
+  icon?: React.ReactNode;
+}
+
+export interface SidebarNavProps {
+  title: string;
+  subtitle?: string;
+  items: NavItem[];
+  activeItem: string;
+  onItemClick: (itemId: string) => void;
+  footer?: React.ReactNode;
+  position?: "left" | "right";
+}
+
+export function SidebarNav({
+  title,
+  subtitle,
+  items,
+  activeItem,
+  onItemClick,
+  footer,
+  position = "right",
+}: SidebarNavProps) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const isLeft = position === "left";
+
+  const handleItemClick = (itemId: string) => {
+    onItemClick(itemId);
+    setMobileMenuOpen(false);
+  };
+
+  return (
+    <>
+      {/* Mobile Header */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 px-4 py-3">
+        <div
+          className={`flex items-center ${
+            isLeft ? "justify-between" : "justify-between flex-row-reverse"
+          }`}
+        >
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <X className="w-6 h-6 text-gray-700" />
+            ) : (
+              <Menu className="w-6 h-6 text-gray-700" />
+            )}
+          </button>
+          <div>
+            <h1 className="text-lg font-bold text-gray-900">{title}</h1>
+            {subtitle && <p className="text-xs text-gray-500">{subtitle}</p>}
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Menu Overlay - Overlays main content without shifting */}
+      {mobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 lg:hidden"
+          style={{ zIndex: 35 }}
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Sidebar Navigation */}
+      <aside
+        className={`
+          fixed top-0 h-screen w-64 bg-white z-40
+          transition-transform duration-300 ease-in-out overflow-y-auto
+          ${isLeft ? "left-0 border-r" : "right-0 border-l"} border-gray-200
+          lg:translate-x-0
+          ${
+            mobileMenuOpen
+              ? "translate-x-0"
+              : `${
+                  isLeft ? "-translate-x-full" : "translate-x-full"
+                } lg:translate-x-0`
+          }
+        `}
+      >
+        {/* Desktop Header */}
+        <div className="hidden lg:block p-6 border-b border-gray-200">
+          <h1 className="text-xl font-bold text-gray-900">{title}</h1>
+          {subtitle && <p className="text-xs text-gray-500 mt-1">{subtitle}</p>}
+        </div>
+
+        {/* Mobile Header Spacer */}
+        <div className="lg:hidden h-[57px]" />
+
+        {/* Navigation Items */}
+        <nav className="p-4">
+          <ul className="space-y-1">
+            {items.map((item) => (
+              <li key={item.id}>
+                <button
+                  onClick={() => handleItemClick(item.id)}
+                  className={`
+                    w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors
+                    ${
+                      activeItem === item.id
+                        ? "bg-blue-50 text-blue-700"
+                        : "text-gray-700 hover:bg-gray-50"
+                    }
+                  `}
+                >
+                  {item.icon && <span className="shrink-0">{item.icon}</span>}
+                  <span>{item.label}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* Footer */}
+        {footer && (
+          <div className="p-4 border-t border-gray-200 mt-auto">{footer}</div>
+        )}
+      </aside>
+    </>
+  );
+}
