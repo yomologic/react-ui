@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "cd site && npm install && npm run build",
-  "devCommand": "cd site && npm run dev",
-  "installCommand": "npm install --prefix site",
+  "buildCommand": "cd site && yarn build",
+  "devCommand": "cd site && yarn dev",
+  "installCommand": "cd site && yarn install --check-files",
   "outputDirectory": "site/.next"
 }
