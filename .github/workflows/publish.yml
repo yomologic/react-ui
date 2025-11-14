@@ -22,8 +22,16 @@ jobs:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
 
+      - name: Remove workspaces from package.json
+        run: |
+          node -e "const pkg = require('./package.json'); delete pkg.workspaces; require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
+
+      - name: Remove workspaces from package.json
+        run: |
+          node -e "const pkg=require('./package.json'); delete pkg.workspaces; require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2))"
+
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --ignore-workspace-root-check
+        run: yarn install --frozen-lockfile
 
       - name: Build package
         run: yarn build
