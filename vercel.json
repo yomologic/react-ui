@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "yarn workspace @yomologic/react-ui-site build",
-  "installCommand": "sed -i 's/\"private\": false/\"private\": true/' package.json && yarn install",
+  "installCommand": "node -e \"const fs=require('fs');const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));pkg.private=true;fs.writeFileSync('package.json',JSON.stringify(pkg,null,2))\" && yarn install --frozen-lockfile --prefer-offline",
   "outputDirectory": "site/.next"
 }
