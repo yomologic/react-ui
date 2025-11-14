@@ -6,6 +6,12 @@ node_modules/
 # Production
 dist/
 build/
+.next/
+out/
+
+# Next.js
+.next/
+next-env.d.ts
 
 # Testing
 coverage/

@@ -83,6 +83,7 @@ export function CodeSnippet({ code, language = "tsx" }: CodeSnippetProps) {
 
       {/* Code Block with Syntax Highlighting */}
       <div className="rounded-lg overflow-hidden border border-gray-800">
+        {/* @ts-expect-error - SyntaxHighlighter has typing issues with React 19 */}
         <SyntaxHighlighter
           language={language}
           style={vscDarkPlus}

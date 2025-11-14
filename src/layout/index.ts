@@ -4,3 +4,5 @@ export type { ContainerProps } from './container';
 
 export { SidebarNav } from './sidebar-nav';
 export type { SidebarNavProps, NavItem } from './sidebar-nav';
+
+export { SectionLayout } from './section-layout';

@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 
 interface RadioOption {
   value: string;
@@ -45,8 +45,8 @@ export function RadioGroup({
       )}
       <div
         className={cn(
-          "space-y-2",
-          orientation === "horizontal" && "flex flex-wrap gap-4 space-y-0"
+          orientation === "vertical" && "space-y-2",
+          orientation === "horizontal" && "flex flex-wrap gap-4"
         )}
       >
         {options.map((option) => {

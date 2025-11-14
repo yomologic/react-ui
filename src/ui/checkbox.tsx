@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 
 interface CheckboxProps {
   label?: string;
@@ -17,6 +17,10 @@ export function Checkbox({
   className,
   id,
 }: CheckboxProps) {
+  // Auto-generate ID if not provided to ensure label clicking works
+  const checkboxId =
+    id || `checkbox-${Math.random().toString(36).substr(2, 9)}`;
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
       onChange(e.target.checked);
@@ -27,7 +31,7 @@ export function Checkbox({
     <div className={cn("flex items-center", className)}>
       <input
         type="checkbox"
-        id={id}
+        id={checkboxId}
         checked={checked}
         onChange={handleChange}
         disabled={disabled}
@@ -38,7 +42,7 @@ export function Checkbox({
       />
       {label && (
         <label
-          htmlFor={id}
+          htmlFor={checkboxId}
           className={cn(
             "ml-2 text-sm font-medium text-gray-600",
             disabled && "cursor-not-allowed opacity-50",

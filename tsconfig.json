@@ -20,8 +20,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    /* Path aliases */
-    "baseUrl": ".",
+    /* Path aliases - using new approach for TS 6.0+ */
     "paths": {
       "@/*": ["./src/*"]
     }

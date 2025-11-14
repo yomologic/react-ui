@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 
 export interface NavItem {
@@ -96,7 +96,7 @@ export function SidebarNav({
         </div>
 
         {/* Mobile Header Spacer */}
-        <div className="lg:hidden h-[57px]" />
+        <div className="lg:hidden h-[57px]" aria-hidden="true" />
 
         {/* Navigation Items */}
         <nav className="p-4">

@@ -1,7 +1,7 @@
 // UI Components
 export { Button } from './ui/button';
 export { Input } from './ui/input';
-export { Card, CardContent } from './ui/card';
+export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './ui/card';
 export { Badge } from './ui/badge';
 export { Checkbox, CheckboxGroup } from './ui/checkbox';
 export { RadioGroup } from './ui/radio';
@@ -15,7 +15,7 @@ export { Alert } from './feedback/alert';
 // Layout Components
 export { Container } from './layout/container';
 export { SectionLayout } from './layout/section-layout';
-export { SidebarNav } from './layout/sidebar-nav';
+export { SidebarNav, type NavItem } from './layout/sidebar-nav';
 
 // Shared Components
 export { EmptyState } from './shared/empty-state';
