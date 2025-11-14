@@ -6,7 +6,7 @@ export { CardsSection } from "./cards";
 export { BadgesSection } from "./badges";
 export { AlertSection } from "./alert";
 export { LoadingSection } from "./loading";
-export { LayoutSection } from "./layout";
+export { LayoutSection } from "./layouts";
 export { ExamplesSection } from "./examples";
 
 export { default as Rating } from "./rating";
