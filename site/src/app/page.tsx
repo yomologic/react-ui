@@ -23,30 +23,53 @@ import {
   LayoutSection,
   ExamplesSection,
 } from "./sections";
-import { DropdownSection } from "./sections/dropdown-section";
-import { RadioSection } from "./sections/radio-section";
-import { CheckboxSection } from "./sections/checkbox-section";
+import { DropdownSection } from "./sections/dropdown";
+import { RadioSection } from "./sections/radio";
+import { CheckboxSection } from "./sections/checkbox";
+
+import { Rating } from "./sections";
+import { Star } from "lucide-react";
 
 type SectionId =
-  | "buttons"
-  | "inputs"
-  | "dropdown"
-  | "radio"
-  | "checkbox"
-  | "cards"
-  | "badges"
   | "alert"
-  | "loading"
+  | "badges"
+  | "buttons"
+  | "cards"
+  | "checkbox"
+  | "dropdown"
+  | "examples"
+  | "inputs"
   | "layout"
-  | "examples";
+  | "loading"
+  | "radio"
+  | "rating";
 
 const navItems: NavItem[] = [
+  {
+    id: "alert",
+    label: "Alerts",
+    icon: <MessageCircle className="w-5 h-5" />,
+  },
+  { id: "badges", label: "Badges", icon: <Tag className="w-5 h-5" /> },
   { id: "buttons", label: "Buttons", icon: <Circle className="w-5 h-5" /> },
-  { id: "inputs", label: "Inputs", icon: <Type className="w-5 h-5" /> },
+  { id: "cards", label: "Cards", icon: <CreditCard className="w-5 h-5" /> },
+  {
+    id: "checkbox",
+    label: "Checkboxes",
+    icon: <CheckSquare className="w-5 h-5" />,
+  },
   {
     id: "dropdown",
     label: "Dropdown",
     icon: <ChevronDown className="w-5 h-5" />,
+  },
+  { id: "examples", label: "Examples", icon: <Sparkles className="w-5 h-5" /> },
+  { id: "inputs", label: "Inputs", icon: <Type className="w-5 h-5" /> },
+  { id: "layout", label: "Layout", icon: <Layout className="w-5 h-5" /> },
+  {
+    id: "loading",
+    label: "Loading",
+    icon: <Circle className="w-5 h-5" />,
   },
   {
     id: "radio",
@@ -54,28 +77,14 @@ const navItems: NavItem[] = [
     icon: <Circle className="w-5 h-5" />,
   },
   {
-    id: "checkbox",
-    label: "Checkboxes",
-    icon: <CheckSquare className="w-5 h-5" />,
+    id: "rating",
+    label: "Rating",
+    icon: <Star className="w-5 h-5 text-yellow-400" />,
   },
-  { id: "cards", label: "Cards", icon: <CreditCard className="w-5 h-5" /> },
-  { id: "badges", label: "Badges", icon: <Tag className="w-5 h-5" /> },
-  {
-    id: "alert",
-    label: "Alerts",
-    icon: <MessageCircle className="w-5 h-5" />,
-  },
-  {
-    id: "loading",
-    label: "Loading",
-    icon: <Circle className="w-5 h-5" />,
-  },
-  { id: "layout", label: "Layout", icon: <Layout className="w-5 h-5" /> },
-  { id: "examples", label: "Examples", icon: <Sparkles className="w-5 h-5" /> },
 ];
 
 export default function ComponentShowcase() {
-  const [activeSection, setActiveSection] = useState<SectionId>("buttons");
+  const [activeSection, setActiveSection] = useState<SectionId>("alert");
 
   return (
     <div className="flex min-h-screen bg-gray-50">
@@ -108,28 +117,30 @@ export default function ComponentShowcase() {
 
 function renderSectionContent(sectionId: SectionId) {
   switch (sectionId) {
-    case "buttons":
-      return <ButtonsSection />;
-    case "inputs":
-      return <InputsSection />;
-    case "dropdown":
-      return <DropdownSection />;
-    case "radio":
-      return <RadioSection />;
-    case "checkbox":
-      return <CheckboxSection />;
-    case "cards":
-      return <CardsSection />;
-    case "badges":
-      return <BadgesSection />;
     case "alert":
       return <AlertSection />;
-    case "loading":
-      return <LoadingSection />;
-    case "layout":
-      return <LayoutSection />;
+    case "badges":
+      return <BadgesSection />;
+    case "buttons":
+      return <ButtonsSection />;
+    case "cards":
+      return <CardsSection />;
+    case "checkbox":
+      return <CheckboxSection />;
+    case "dropdown":
+      return <DropdownSection />;
     case "examples":
       return <ExamplesSection />;
+    case "inputs":
+      return <InputsSection />;
+    case "layout":
+      return <LayoutSection />;
+    case "loading":
+      return <LoadingSection />;
+    case "radio":
+      return <RadioSection />;
+    case "rating":
+      return <Rating />;
     default:
       return null;
   }

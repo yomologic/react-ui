@@ -1,3 +1,4 @@
+export { Rating } from "./rating";
 // UI Components
 export { Button } from "./button";
 export type { ButtonProps } from "./button";

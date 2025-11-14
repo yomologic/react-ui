@@ -1,10 +1,12 @@
-export { ButtonsSection } from "./buttons-section";
-export { InputsSection } from "./inputs-section";
-export { RadioSection } from "./radio-section";
-export { CheckboxSection } from "./checkbox-section";
-export { CardsSection } from "./cards-section";
-export { BadgesSection } from "./badges-section";
-export { AlertSection } from "./alert-section";
-export { LoadingSection } from "./loading-section";
-export { LayoutSection } from "./layout-section";
-export { ExamplesSection } from "./examples-section";
+export { ButtonsSection } from "./buttons";
+export { InputsSection } from "./inputs";
+export { RadioSection } from "./radio";
+export { CheckboxSection } from "./checkbox";
+export { CardsSection } from "./cards";
+export { BadgesSection } from "./badges";
+export { AlertSection } from "./alert";
+export { LoadingSection } from "./loading";
+export { LayoutSection } from "./layout";
+export { ExamplesSection } from "./examples";
+
+export { default as Rating } from "./rating";
