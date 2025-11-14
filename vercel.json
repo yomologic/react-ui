@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "sed -i 's/\"private\": false/\"private\": true/' package.json && yarn install && yarn workspace @yomologic/react-ui-site build",
-  "installCommand": "echo 'Handled in buildCommand'",
+  "buildCommand": "yarn workspace @yomologic/react-ui-site build",
+  "installCommand": "sed -i 's/\"private\": false/\"private\": true/' package.json && yarn install",
   "outputDirectory": "site/.next"
 }
