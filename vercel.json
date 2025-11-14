@@ -2,5 +2,5 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "yarn workspace @yomologic/react-ui-site build",
   "installCommand": "cd .. && node vercel-setup.js && cd site && yarn install --frozen-lockfile --prefer-offline",
-  "outputDirectory": "site/.next"
+  "outputDirectory": ".next"
 }
