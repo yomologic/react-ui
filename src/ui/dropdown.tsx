@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useRef, useEffect, ReactNode } from "react";
 import { ChevronDown } from "lucide-react";
 
@@ -49,6 +51,10 @@ export interface DropdownProps {
    */
   required?: boolean;
   /**
+   * Size of the dropdown
+   */
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  /**
    * Additional CSS classes
    */
   className?: string;
@@ -65,6 +71,7 @@ export function Dropdown({
   error,
   helperText,
   required = false,
+  size = "md",
   className = "",
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -75,6 +82,30 @@ export function Dropdown({
     if (!value) return placeholder;
     const selected = options.find((opt) => opt.value === value);
     return selected ? selected.label : placeholder;
+  };
+
+  const sizeStyles = {
+    xs: `[padding-left:var(--dropdown-padding-xs-x)] [padding-right:var(--dropdown-padding-xs-x)] [padding-top:var(--dropdown-padding-xs-y)] [padding-bottom:var(--dropdown-padding-xs-y)] [font-size:var(--dropdown-font-size-xs)]`,
+    sm: `[padding-left:var(--dropdown-padding-sm-x)] [padding-right:var(--dropdown-padding-sm-x)] [padding-top:var(--dropdown-padding-sm-y)] [padding-bottom:var(--dropdown-padding-sm-y)] [font-size:var(--dropdown-font-size-sm)]`,
+    md: `[padding-left:var(--dropdown-padding-md-x)] [padding-right:var(--dropdown-padding-md-x)] [padding-top:var(--dropdown-padding-md-y)] [padding-bottom:var(--dropdown-padding-md-y)] [font-size:var(--dropdown-font-size-md)]`,
+    lg: `[padding-left:var(--dropdown-padding-lg-x)] [padding-right:var(--dropdown-padding-lg-x)] [padding-top:var(--dropdown-padding-lg-y)] [padding-bottom:var(--dropdown-padding-lg-y)] [font-size:var(--dropdown-font-size-lg)]`,
+    xl: `[padding-left:var(--dropdown-padding-xl-x)] [padding-right:var(--dropdown-padding-xl-x)] [padding-top:var(--dropdown-padding-xl-y)] [padding-bottom:var(--dropdown-padding-xl-y)] [font-size:var(--dropdown-font-size-xl)]`,
+  };
+
+  const iconSizeStyles = {
+    xs: `[width:var(--dropdown-icon-size-xs)] [height:var(--dropdown-icon-size-xs)]`,
+    sm: `[width:var(--dropdown-icon-size-sm)] [height:var(--dropdown-icon-size-sm)]`,
+    md: `[width:var(--dropdown-icon-size-md)] [height:var(--dropdown-icon-size-md)]`,
+    lg: `[width:var(--dropdown-icon-size-lg)] [height:var(--dropdown-icon-size-lg)]`,
+    xl: `[width:var(--dropdown-icon-size-xl)] [height:var(--dropdown-icon-size-xl)]`,
+  };
+
+  const optionSizeStyles = {
+    xs: `[padding-left:var(--dropdown-option-padding-xs-x)] [padding-right:var(--dropdown-option-padding-xs-x)] [padding-top:var(--dropdown-option-padding-xs-y)] [padding-bottom:var(--dropdown-option-padding-xs-y)] [font-size:var(--dropdown-option-font-size-xs)]`,
+    sm: `[padding-left:var(--dropdown-option-padding-sm-x)] [padding-right:var(--dropdown-option-padding-sm-x)] [padding-top:var(--dropdown-option-padding-sm-y)] [padding-bottom:var(--dropdown-option-padding-sm-y)] [font-size:var(--dropdown-option-font-size-sm)]`,
+    md: `[padding-left:var(--dropdown-option-padding-md-x)] [padding-right:var(--dropdown-option-padding-md-x)] [padding-top:var(--dropdown-option-padding-md-y)] [padding-bottom:var(--dropdown-option-padding-md-y)] [font-size:var(--dropdown-option-font-size-md)]`,
+    lg: `[padding-left:var(--dropdown-option-padding-lg-x)] [padding-right:var(--dropdown-option-padding-lg-x)] [padding-top:var(--dropdown-option-padding-lg-y)] [padding-bottom:var(--dropdown-option-padding-lg-y)] [font-size:var(--dropdown-option-font-size-lg)]`,
+    xl: `[padding-left:var(--dropdown-option-padding-xl-x)] [padding-right:var(--dropdown-option-padding-xl-x)] [padding-top:var(--dropdown-option-padding-xl-y)] [padding-bottom:var(--dropdown-option-padding-xl-y)] [font-size:var(--dropdown-option-font-size-xl)]`,
   };
 
   // Close dropdown when clicking outside
@@ -127,7 +158,9 @@ export function Dropdown({
           onKeyDown={handleKeyDown}
           disabled={disabled}
           className={`
-            w-full px-4 py-2 text-left bg-white border rounded-lg
+            w-full ${
+              sizeStyles[size]
+            } text-left bg-white border rounded-(--dropdown-radius)
             flex items-center justify-between
             transition-all duration-200
             ${
@@ -145,7 +178,9 @@ export function Dropdown({
         >
           <span className="truncate">{getSelectedLabel()}</span>
           <ChevronDown
-            className={`w-5 h-5 text-gray-400 transition-transform duration-200 shrink-0 ml-2 ${
+            className={`${
+              iconSizeStyles[size]
+            } text-gray-400 transition-transform duration-200 shrink-0 ml-2 ${
               isOpen ? "transform rotate-180" : ""
             }`}
           />
@@ -172,7 +207,7 @@ export function Dropdown({
                       }
                       disabled={option.disabled}
                       className={`
-                        w-full px-4 py-2 text-left text-sm
+                        w-full ${optionSizeStyles[size]} text-left
                         transition-colors duration-150
                         ${
                           option.value === value

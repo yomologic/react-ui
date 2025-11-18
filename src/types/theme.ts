@@ -77,15 +77,19 @@ export interface ThemeTypography {
 export interface ButtonTheme {
   // Padding for different sizes
   padding: {
+    xs: { x: string; y: string };
     sm: { x: string; y: string };
     md: { x: string; y: string };
     lg: { x: string; y: string };
+    xl: { x: string; y: string };
   };
   // Font sizes for different sizes
   fontSize: {
+    xs: string;
     sm: string;
     md: string;
     lg: string;
+    xl: string;
   };
   // Border radius
   borderRadius: string;
@@ -108,10 +112,142 @@ export interface CardTheme {
   };
 }
 
+export interface InputTheme {
+  padding: {
+    xs: string;
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+  };
+  fontSize: {
+    xs: string;
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+  };
+  borderRadius: string;
+  borderWidth: string;
+}
+
+export interface CheckboxTheme {
+  size: {
+    xs: string;
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+  };
+  labelSpacing: {
+    xs: string;
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+  };
+  labelFontSize: {
+    xs: string;
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+  };
+  borderRadius: string;
+}
+
+export interface RadioTheme {
+  size: {
+    xs: string;
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+  };
+  labelSpacing: {
+    xs: string;
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+  };
+  labelFontSize: {
+    xs: string;
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+  };
+}
+
+export interface DropdownTheme {
+  padding: {
+    xs: { x: string; y: string };
+    sm: { x: string; y: string };
+    md: { x: string; y: string };
+    lg: { x: string; y: string };
+    xl: { x: string; y: string };
+  };
+  fontSize: {
+    xs: string;
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+  };
+  iconSize: {
+    xs: string;
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+  };
+  optionPadding: {
+    xs: { x: string; y: string };
+    sm: { x: string; y: string };
+    md: { x: string; y: string };
+    lg: { x: string; y: string };
+    xl: { x: string; y: string };
+  };
+  optionFontSize: {
+    xs: string;
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+  };
+  borderRadius: string;
+  borderWidth: string;
+}
+
+export interface NavTheme {
+  height: string;
+  itemPadding: {
+    xs: { x: string; y: string };
+    sm: { x: string; y: string };
+    md: { x: string; y: string };
+    lg: { x: string; y: string };
+    xl: { x: string; y: string };
+  };
+  fontSize: {
+    xs: string;
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+  };
+  borderRadius: string;
+  gap: string;
+}
+
 export interface ComponentThemes {
   button: ButtonTheme;
   card: CardTheme;
-  // Add more components as needed
+  input: InputTheme;
+  checkbox: CheckboxTheme;
+  radio: RadioTheme;
+  dropdown: DropdownTheme;
+  nav: NavTheme;
 }
 
 export interface Theme {

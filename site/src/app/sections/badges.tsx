@@ -137,9 +137,11 @@ export function BadgesSection() {
               onChange={setSize}
               orientation="horizontal"
               options={[
+                { value: "xs", label: "Extra Small" },
                 { value: "sm", label: "Small" },
                 { value: "md", label: "Medium" },
                 { value: "lg", label: "Large" },
+                { value: "xl", label: "Extra Large" },
               ]}
             />
 

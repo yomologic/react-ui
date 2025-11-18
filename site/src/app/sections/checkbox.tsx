@@ -15,6 +15,7 @@ export function CheckboxSection() {
   const [showLabel, setShowLabel] = useState(true);
   const [hasDisabledOption, setHasDisabledOption] = useState(false);
   const [groupDisabled, setGroupDisabled] = useState(false);
+  const [size, setSize] = useState<string>("md");
   const [showCodeOverlay, setShowCodeOverlay] = useState(false);
 
   // Generate code snippet
@@ -37,6 +38,7 @@ export function CheckboxSection() {
     props.push("value={selectedValues}");
     props.push("onChange={setSelectedValues}");
     if (orientation !== "vertical") props.push(`orientation="${orientation}"`);
+    if (size !== "md") props.push(`size="${size}"`);
     if (groupDisabled) props.push("disabled");
 
     const propsString = props.join("\n  ");
@@ -83,6 +85,7 @@ export function CheckboxSection() {
                     value={selectedValues}
                     onChange={setSelectedValues}
                     orientation={orientation as "vertical" | "horizontal"}
+                    size={size as "sm" | "md" | "lg"}
                     disabled={groupDisabled}
                   />
                 </div>
@@ -141,6 +144,21 @@ export function CheckboxSection() {
               options={[
                 { value: "vertical", label: "Vertical" },
                 { value: "horizontal", label: "Horizontal" },
+              ]}
+            />
+
+            <RadioGroup
+              label="Size"
+              name="size"
+              value={size}
+              onChange={setSize}
+              orientation="horizontal"
+              options={[
+                { value: "xs", label: "Extra Small" },
+                { value: "sm", label: "Small" },
+                { value: "md", label: "Medium" },
+                { value: "lg", label: "Large" },
+                { value: "xl", label: "Extra Large" },
               ]}
             />
 

@@ -12,55 +12,7 @@ import { Mail, Lock, Search, ArrowRight } from "lucide-react";
 
 export function ExamplesSection() {
   return (
-    <SectionLayout hasStickyPreview>
-      {/* Sticky Preview Section */}
-      <section className="sticky top-0 z-15 py-4 bg-gray-50">
-        <Card variant="elevated" padding="lg">
-          <div className="space-y-4">
-            {/* Heading */}
-            <div className="border-b border-gray-200 pb-3">
-              <h1 className="text-2xl font-bold text-gray-900 mb-1">
-                Examples
-              </h1>
-              <p className="text-sm text-gray-600">
-                Real-world component combinations
-              </p>
-            </div>
-
-            {/* Preview */}
-            <div>
-              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
-                Live Preview
-              </h3>
-              <div className="p-6 bg-linear-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <Card variant="bordered" padding="sm">
-                    <div className="text-center space-y-2">
-                      <div className="w-12 h-12 bg-blue-500 rounded-full mx-auto flex items-center justify-center text-white text-sm font-bold">
-                        JD
-                      </div>
-                      <p className="text-xs font-medium">John Doe</p>
-                      <Badge variant="success" size="sm" dot>
-                        Active
-                      </Badge>
-                    </div>
-                  </Card>
-                  <Card variant="bordered" padding="sm">
-                    <Input placeholder="Search..." />
-                  </Card>
-                  <Card variant="bordered" padding="sm">
-                    <Button variant="primary" size="sm" className="w-full">
-                      Action
-                    </Button>
-                  </Card>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Card>
-      </section>
-
-      {/* Scrollable Content */}
+    <SectionLayout>
       <section>
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Login Form</h2>
         <Card variant="elevated" padding="lg" className="max-w-md">

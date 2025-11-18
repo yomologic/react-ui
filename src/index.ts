@@ -15,10 +15,18 @@ export { Alert } from './feedback/alert';
 // Layout Components
 export { Container } from './layout/container';
 export { SectionLayout } from './layout/section-layout';
-export { SidebarNav, type NavItem } from './layout/sidebar-nav';
+export { Nav } from './layout/nav';
+export type { NavItem, NavProps } from './layout/nav';
+/** @deprecated Use Nav component instead. SidebarNav will be removed in v1.0.0 */
+export { SidebarNav } from './layout/sidebar-nav';
+export type { NavItem as SidebarNavItem, NavSection } from './layout/sidebar-nav';
 
 // Shared Components
 export { EmptyState } from './shared/empty-state';
+
+// Theme System
+export { ThemeProvider, useTheme } from './shared/contexts/ThemeContext';
+export type { Theme } from './types/theme';
 
 // Re-export utility function
 export { cn } from './lib/utils';

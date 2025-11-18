@@ -16,6 +16,7 @@ interface RadioGroupProps {
   orientation?: "vertical" | "horizontal";
   required?: boolean;
   disabled?: boolean;
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
 }
 
 export function RadioGroup({
@@ -28,11 +29,36 @@ export function RadioGroup({
   orientation = "vertical",
   required = false,
   disabled = false,
+  size = "md",
 }: RadioGroupProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
       onChange(e.target.value);
     }
+  };
+
+  const sizeStyles = {
+    xs: `[width:var(--radio-size-xs)] [height:var(--radio-size-xs)]`,
+    sm: `[width:var(--radio-size-sm)] [height:var(--radio-size-sm)]`,
+    md: `[width:var(--radio-size-md)] [height:var(--radio-size-md)]`,
+    lg: `[width:var(--radio-size-lg)] [height:var(--radio-size-lg)]`,
+    xl: `[width:var(--radio-size-xl)] [height:var(--radio-size-xl)]`,
+  };
+
+  const labelSizeStyles = {
+    xs: `[font-size:var(--radio-label-font-size-xs)]`,
+    sm: `[font-size:var(--radio-label-font-size-sm)]`,
+    md: `[font-size:var(--radio-label-font-size-md)]`,
+    lg: `[font-size:var(--radio-label-font-size-lg)]`,
+    xl: `[font-size:var(--radio-label-font-size-xl)]`,
+  };
+
+  const labelSpacingStyles = {
+    xs: `[margin-left:var(--radio-label-spacing-xs)]`,
+    sm: `[margin-left:var(--radio-label-spacing-sm)]`,
+    md: `[margin-left:var(--radio-label-spacing-md)]`,
+    lg: `[margin-left:var(--radio-label-spacing-lg)]`,
+    xl: `[margin-left:var(--radio-label-spacing-xl)]`,
   };
 
   return (
@@ -62,14 +88,17 @@ export function RadioGroup({
                 onChange={handleChange}
                 disabled={isDisabled}
                 className={cn(
-                  "h-4 w-4 border-gray-400 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
+                  sizeStyles[size],
+                  "border-gray-400 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
                   isDisabled && "cursor-not-allowed opacity-50"
                 )}
               />
               <label
                 htmlFor={`${name}-${option.value}`}
                 className={cn(
-                  "ml-2 text-sm font-medium text-gray-600",
+                  labelSpacingStyles[size],
+                  labelSizeStyles[size],
+                  "font-medium text-gray-600",
                   isDisabled && "cursor-not-allowed opacity-50",
                   !isDisabled && "cursor-pointer"
                 )}

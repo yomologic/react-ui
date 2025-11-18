@@ -11,8 +11,9 @@ import {
   Layout,
   Sparkles,
   ChevronDown,
+  Menu,
 } from "lucide-react";
-import { SidebarNav, NavItem } from "@yomologic/react-ui";
+import { SidebarNav, NavSection } from "@yomologic/react-ui";
 import {
   ButtonsSection,
   InputsSection,
@@ -22,6 +23,7 @@ import {
   LoadingSection,
   LayoutSection,
   ExamplesSection,
+  NavSection as NavShowcaseSection,
 } from "./sections";
 import { DropdownSection } from "./sections/dropdown";
 import { RadioSection } from "./sections/radio";
@@ -41,57 +43,88 @@ type SectionId =
   | "inputs"
   | "layout"
   | "loading"
+  | "nav"
   | "radio"
   | "rating";
 
-const navItems: NavItem[] = [
+const navSections: NavSection[] = [
   {
-    id: "alert",
-    label: "Alerts",
-    icon: <MessageCircle className="w-5 h-5" />,
-  },
-  { id: "badges", label: "Badges", icon: <Tag className="w-5 h-5" /> },
-  { id: "buttons", label: "Buttons", icon: <Circle className="w-5 h-5" /> },
-  { id: "cards", label: "Cards", icon: <CreditCard className="w-5 h-5" /> },
-  {
-    id: "checkbox",
-    label: "Checkboxes",
-    icon: <CheckSquare className="w-5 h-5" />,
-  },
-  {
-    id: "dropdown",
-    label: "Dropdown",
-    icon: <ChevronDown className="w-5 h-5" />,
-  },
-  { id: "examples", label: "Examples", icon: <Sparkles className="w-5 h-5" /> },
-  { id: "inputs", label: "Inputs", icon: <Type className="w-5 h-5" /> },
-  { id: "layout", label: "Layout", icon: <Layout className="w-5 h-5" /> },
-  {
-    id: "loading",
-    label: "Loading",
-    icon: <Circle className="w-5 h-5" />,
+    title: "Form Components",
+    items: [
+      { id: "inputs", label: "Inputs", icon: <Type className="w-5 h-5" /> },
+      {
+        id: "checkbox",
+        label: "Checkboxes",
+        icon: <CheckSquare className="w-5 h-5" />,
+      },
+      {
+        id: "radio",
+        label: "Radio Buttons",
+        icon: <Circle className="w-5 h-5" />,
+      },
+      {
+        id: "dropdown",
+        label: "Dropdown",
+        icon: <ChevronDown className="w-5 h-5" />,
+      },
+    ],
   },
   {
-    id: "radio",
-    label: "Radio Buttons",
-    icon: <Circle className="w-5 h-5" />,
+    title: "UI Components",
+    items: [
+      { id: "buttons", label: "Buttons", icon: <Circle className="w-5 h-5" /> },
+      { id: "badges", label: "Badges", icon: <Tag className="w-5 h-5" /> },
+      { id: "cards", label: "Cards", icon: <CreditCard className="w-5 h-5" /> },
+      {
+        id: "alert",
+        label: "Alerts",
+        icon: <MessageCircle className="w-5 h-5" />,
+      },
+      {
+        id: "rating",
+        label: "Rating",
+        icon: <Star className="w-5 h-5" />,
+      },
+    ],
   },
   {
-    id: "rating",
-    label: "Rating",
-    icon: <Star className="w-5 h-5 text-yellow-400" />,
+    title: "Feedback & Loading",
+    items: [
+      {
+        id: "loading",
+        label: "Loading",
+        icon: <Circle className="w-5 h-5" />,
+      },
+    ],
+  },
+  {
+    title: "Layout",
+    items: [
+      { id: "nav", label: "Navigation", icon: <Menu className="w-5 h-5" /> },
+      { id: "layout", label: "Layout", icon: <Layout className="w-5 h-5" /> },
+    ],
+  },
+  {
+    title: "Examples",
+    items: [
+      {
+        id: "examples",
+        label: "Examples",
+        icon: <Sparkles className="w-5 h-5" />,
+      },
+    ],
   },
 ];
 
 export default function ComponentShowcase() {
-  const [activeSection, setActiveSection] = useState<SectionId>("alert");
+  const [activeSection, setActiveSection] = useState<SectionId>("inputs");
 
   return (
     <div className="flex min-h-screen bg-gray-50">
       <SidebarNav
         title="Component Showcase"
         subtitle="Test all UI components"
-        items={navItems}
+        sections={navSections}
         activeItem={activeSection}
         onItemClick={(id) => setActiveSection(id as SectionId)}
         // position="left" // uncomment to move sidebar to left
@@ -137,6 +170,8 @@ function renderSectionContent(sectionId: SectionId) {
       return <LayoutSection />;
     case "loading":
       return <LoadingSection />;
+    case "nav":
+      return <NavShowcaseSection />;
     case "radio":
       return <RadioSection />;
     case "rating":

@@ -6,9 +6,10 @@ import {
   Checkbox,
   Badge,
   Input,
+  CodeSnippet,
 } from "@yomologic/react-ui";
 import { SectionLayout } from "@yomologic/react-ui";
-import { Settings2, BookOpen } from "lucide-react";
+import { Settings2, BookOpen, Code2 } from "lucide-react";
 
 export function DropdownSection() {
   const [selectedValue, setSelectedValue] = useState<string | number>("");
@@ -17,6 +18,8 @@ export function DropdownSection() {
   const [hasHelper, setHasHelper] = useState(false);
   const [contentType, setContentType] = useState<string>("standard");
   const [customPlaceholder, setCustomPlaceholder] = useState<string>("");
+  const [size, setSize] = useState<string>("md");
+  const [showCodeOverlay, setShowCodeOverlay] = useState(false);
 
   // Sample options
   const standardOptions = [
@@ -37,6 +40,64 @@ export function DropdownSection() {
     { value: "au", label: "Australia" },
   ];
 
+  const generateCode = () => {
+    const props: string[] = [];
+
+    if (hasLabel) {
+      props.push(
+        contentType === "standard"
+          ? 'label="Select an option"'
+          : 'label="Select a country"'
+      );
+    }
+
+    const placeholderText =
+      customPlaceholder ||
+      (contentType === "standard" ? "Choose an option" : "Choose a country");
+    props.push(`placeholder="${placeholderText}"`);
+
+    if (contentType === "standard") {
+      props.push("options={options}");
+    }
+
+    props.push("value={selectedValue}");
+    props.push("onChange={setSelectedValue}");
+
+    if (dropdownState === "disabled") {
+      props.push("disabled");
+    }
+
+    if (dropdownState === "error") {
+      props.push('error="This field has an error"');
+    }
+
+    if (hasHelper) {
+      props.push('helperText="This is a helper text"');
+    }
+
+    if (size !== "md") {
+      props.push(`size="${size}"`);
+    }
+
+    const propsString = props.join("\n  ");
+
+    if (contentType === "standard") {
+      return `<Dropdown
+  ${propsString}
+/>`;
+    } else {
+      return `<Dropdown
+  ${propsString}
+>
+  {/* Custom content */}
+  <div className="py-1">
+    {/* Group headers and custom styled options */}
+    {/* See full example in documentation */}
+  </div>
+</Dropdown>`;
+    }
+  };
+
   return (
     <SectionLayout hasStickyPreview>
       {/* Sticky Preview Section */}
@@ -48,6 +109,13 @@ export function DropdownSection() {
               <h2 className="text-lg font-semibold text-gray-900">
                 Dropdowns Live Preview
               </h2>
+              <button
+                onClick={() => setShowCodeOverlay(true)}
+                className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-colors duration-150"
+              >
+                <Code2 className="w-4 h-4" />
+                Code
+              </button>
             </div>
 
             {/* Preview Content */}
@@ -70,6 +138,7 @@ export function DropdownSection() {
                       helperText={
                         hasHelper ? "This is a helper text" : undefined
                       }
+                      size={size as "sm" | "md" | "lg"}
                     />
                   ) : (
                     <Dropdown
@@ -86,6 +155,7 @@ export function DropdownSection() {
                       helperText={
                         hasHelper ? "This is a helper text" : undefined
                       }
+                      size={size as "sm" | "md" | "lg"}
                     >
                       {/* Custom content */}
                       <div className="py-1">
@@ -205,6 +275,21 @@ export function DropdownSection() {
                 { value: "normal", label: "Normal" },
                 { value: "error", label: "Error" },
                 { value: "disabled", label: "Disabled" },
+              ]}
+            />
+
+            <RadioGroup
+              label="Size"
+              name="size"
+              value={size}
+              onChange={setSize}
+              orientation="horizontal"
+              options={[
+                { value: "xs", label: "Extra Small" },
+                { value: "sm", label: "Small" },
+                { value: "md", label: "Medium" },
+                { value: "lg", label: "Large" },
+                { value: "xl", label: "Extra Large" },
               ]}
             />
 
@@ -404,6 +489,142 @@ export function DropdownSection() {
           </div>
         </Card>
       </section>
+
+      {/* Usage Examples */}
+      <section>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <BookOpen className="w-5 h-5" />
+          Usage Examples
+        </h2>
+        <div className="space-y-6">
+          <Card variant="elevated" padding="lg">
+            <h3 className="text-sm font-semibold text-gray-900 mb-3">
+              Basic Dropdown
+            </h3>
+            <CodeSnippet
+              code={`const options = [
+  { value: "1", label: "Option 1" },
+  { value: "2", label: "Option 2" },
+  { value: "3", label: "Option 3" },
+];
+
+<Dropdown
+  label="Select an option"
+  placeholder="Choose an option"
+  options={options}
+  value={selectedValue}
+  onChange={setSelectedValue}
+/>`}
+              language="tsx"
+            />
+          </Card>
+
+          <Card variant="elevated" padding="lg">
+            <h3 className="text-sm font-semibold text-gray-900 mb-3">
+              With Error State
+            </h3>
+            <CodeSnippet
+              code={`<Dropdown
+  label="Country"
+  placeholder="Select your country"
+  options={countryOptions}
+  value={country}
+  onChange={setCountry}
+  error="Please select a country"
+  required
+/>`}
+              language="tsx"
+            />
+          </Card>
+
+          <Card variant="elevated" padding="lg">
+            <h3 className="text-sm font-semibold text-gray-900 mb-3">
+              Custom Content
+            </h3>
+            <CodeSnippet
+              code={`<Dropdown
+  label="Choose a country"
+  placeholder="Select country"
+  value={selectedCountry}
+  onChange={setSelectedCountry}
+>
+  <div className="py-1">
+    <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">
+      North America
+    </div>
+    {northAmericaCountries.map((country) => (
+      <button
+        key={country.value}
+        onClick={() => setSelectedCountry(country.value)}
+        className={cn(
+          "w-full px-4 py-2 text-left text-sm",
+          "hover:bg-gray-100 transition-colors",
+          selectedCountry === country.value && "bg-blue-50 text-blue-700"
+        )}
+      >
+        {country.label}
+      </button>
+    ))}
+  </div>
+</Dropdown>`}
+              language="tsx"
+            />
+          </Card>
+
+          <Card variant="elevated" padding="lg">
+            <h3 className="text-sm font-semibold text-gray-900 mb-3">
+              With Disabled Options
+            </h3>
+            <CodeSnippet
+              code={`const options = [
+  { value: "1", label: "Available Option" },
+  { value: "2", label: "Another Available" },
+  { value: "3", label: "Disabled Option", disabled: true },
+  { value: "4", label: "Also Disabled", disabled: true },
+];
+
+<Dropdown
+  label="Select option"
+  options={options}
+  value={selected}
+  onChange={setSelected}
+  helperText="Some options may be disabled"
+/>`}
+              language="tsx"
+            />
+          </Card>
+        </div>
+      </section>
+
+      {/* Code Overlay */}
+      {showCodeOverlay && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/50 z-40"
+            onClick={() => setShowCodeOverlay(false)}
+          />
+          <div className="fixed inset-4 z-50 flex items-center justify-center pointer-events-none">
+            <Card
+              variant="elevated"
+              padding="lg"
+              className="max-w-3xl w-full max-h-[80vh] overflow-auto pointer-events-auto"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Generated Code
+                </h3>
+                <button
+                  onClick={() => setShowCodeOverlay(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  ✕
+                </button>
+              </div>
+              <CodeSnippet code={generateCode()} language="tsx" />
+            </Card>
+          </div>
+        </>
+      )}
     </SectionLayout>
   );
 }

@@ -9,6 +9,7 @@ export function RadioSection() {
   const [hasLabel, setHasLabel] = useState(true);
   const [hasDisabled, setHasDisabled] = useState(false);
   const [groupDisabled, setGroupDisabled] = useState(false);
+  const [size, setSize] = useState<string>("md");
   const [showCodeOverlay, setShowCodeOverlay] = useState(false);
 
   const getOptions = () => {
@@ -50,6 +51,10 @@ export function RadioSection() {
       props.push('orientation="horizontal"');
     }
 
+    if (size !== "md") {
+      props.push(`size="${size}"`);
+    }
+
     if (groupDisabled) {
       props.push("disabled");
     }
@@ -89,6 +94,7 @@ export function RadioSection() {
                     onChange={setSelectedValue}
                     options={getOptions()}
                     orientation={orientation as "vertical" | "horizontal"}
+                    size={size as "sm" | "md" | "lg"}
                     disabled={groupDisabled}
                   />
                 </div>
@@ -147,6 +153,21 @@ export function RadioSection() {
               options={[
                 { value: "vertical", label: "Vertical" },
                 { value: "horizontal", label: "Horizontal" },
+              ]}
+            />
+
+            <RadioGroup
+              label="Size"
+              name="size"
+              value={size}
+              onChange={setSize}
+              orientation="horizontal"
+              options={[
+                { value: "xs", label: "Extra Small" },
+                { value: "sm", label: "Small" },
+                { value: "md", label: "Medium" },
+                { value: "lg", label: "Large" },
+                { value: "xl", label: "Extra Large" },
               ]}
             />
 

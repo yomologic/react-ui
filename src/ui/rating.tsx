@@ -1,5 +1,5 @@
 // Moved from src/components/ui/Rating.tsx for consistency
-import React from "react";
+import React, { useId } from "react";
 import { Star } from "lucide-react";
 
 interface RatingProps {
@@ -12,9 +12,6 @@ interface RatingProps {
   mobileSize?: number; // px (size for mobile when responsive is true)
 }
 
-// Generate unique ID for SVG gradients to avoid hydration issues
-const generateId = () => `rating-${Math.random().toString(36).substr(2, 9)}`;
-
 export const Rating: React.FC<RatingProps> = ({
   value,
   max = 5,
@@ -24,7 +21,8 @@ export const Rating: React.FC<RatingProps> = ({
   responsive = false,
   mobileSize,
 }) => {
-  const uniqueId = React.useMemo(() => generateId(), []);
+  // Generate unique ID for SVG gradients (stable across server/client)
+  const uniqueId = useId();
 
   // Determine sizes
   const actualMobileSize = mobileSize || Math.max(16, Math.floor(size * 0.7));

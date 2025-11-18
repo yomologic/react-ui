@@ -19,7 +19,7 @@ import { SectionLayout } from "@yomologic/react-ui";
 export function ButtonsSection() {
   // Interactive playground state
   type VariantType = "primary" | "secondary" | "outline" | "ghost" | "danger";
-  type SizeType = "sm" | "md" | "lg";
+  type SizeType = "xs" | "sm" | "md" | "lg" | "xl";
 
   const [variant, setVariant] = useState<VariantType>("primary");
   const [size, setSize] = useState<SizeType>("md");
@@ -153,9 +153,11 @@ export function ButtonsSection() {
               onChange={(value) => setSize(value as SizeType)}
               orientation="horizontal"
               options={[
+                { value: "xs", label: "Extra Small" },
                 { value: "sm", label: "Small" },
                 { value: "md", label: "Medium" },
                 { value: "lg", label: "Large" },
+                { value: "xl", label: "Extra Large" },
               ]}
             />
 

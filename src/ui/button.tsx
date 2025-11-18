@@ -4,7 +4,7 @@ import { cn } from "../lib/utils";
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "outline" | "ghost" | "danger";
-  size?: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
   isLoading?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
@@ -42,9 +42,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     };
 
     const sizes = {
-      sm: "[font-size:var(--button-text-sm)] [padding-left:var(--button-padding-sm-x)] [padding-right:var(--button-padding-sm-x)] [padding-top:var(--button-padding-sm-y)] [padding-bottom:var(--button-padding-sm-y)] gap-1.5",
-      md: "[font-size:var(--button-text-md)] [padding-left:var(--button-padding-md-x)] [padding-right:var(--button-padding-md-x)] [padding-top:var(--button-padding-md-y)] [padding-bottom:var(--button-padding-md-y)] gap-2",
-      lg: "[font-size:var(--button-text-lg)] [padding-left:var(--button-padding-lg-x)] [padding-right:var(--button-padding-lg-x)] [padding-top:var(--button-padding-lg-y)] [padding-bottom:var(--button-padding-lg-y)] gap-2.5",
+      xs: "[font-size:var(--button-font-size-xs)] [padding-left:var(--button-padding-xs-x)] [padding-right:var(--button-padding-xs-x)] [padding-top:var(--button-padding-xs-y)] [padding-bottom:var(--button-padding-xs-y)] gap-1",
+      sm: "[font-size:var(--button-font-size-sm)] [padding-left:var(--button-padding-sm-x)] [padding-right:var(--button-padding-sm-x)] [padding-top:var(--button-padding-sm-y)] [padding-bottom:var(--button-padding-sm-y)] gap-1.5",
+      md: "[font-size:var(--button-font-size-md)] [padding-left:var(--button-padding-md-x)] [padding-right:var(--button-padding-md-x)] [padding-top:var(--button-padding-md-y)] [padding-bottom:var(--button-padding-md-y)] gap-2",
+      lg: "[font-size:var(--button-font-size-lg)] [padding-left:var(--button-padding-lg-x)] [padding-right:var(--button-padding-lg-x)] [padding-top:var(--button-padding-lg-y)] [padding-bottom:var(--button-padding-lg-y)] gap-2.5",
+      xl: "[font-size:var(--button-font-size-xl)] [padding-left:var(--button-padding-xl-x)] [padding-right:var(--button-padding-xl-x)] [padding-top:var(--button-padding-xl-y)] [padding-bottom:var(--button-padding-xl-y)] gap-3",
     };
 
     const radiusStyle = "[border-radius:var(--button-radius)]";

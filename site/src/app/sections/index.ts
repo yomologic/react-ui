@@ -10,3 +10,4 @@ export { LayoutSection } from "./layouts";
 export { ExamplesSection } from "./examples";
 
 export { default as Rating } from "./rating";
+export { default as NavSection } from "./nav";

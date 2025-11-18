@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 import { cn } from "../lib/utils";
 
 export interface InputProps
@@ -27,7 +27,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     },
     ref
   ) => {
-    const inputId = id || label?.toLowerCase().replace(/\s+/g, "-");
+    const autoId = useId();
+    const inputId = id || `input-${autoId}`;
 
     return (
       <div className={cn("flex flex-col", fullWidth && "w-full")}>

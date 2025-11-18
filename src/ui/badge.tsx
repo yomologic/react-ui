@@ -3,7 +3,7 @@ import { cn } from "../lib/utils";
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   variant?: "default" | "primary" | "success" | "warning" | "danger" | "info";
-  size?: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
   dot?: boolean;
 }
 
@@ -31,9 +31,11 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
     };
 
     const sizes = {
+      xs: "text-[0.625rem] px-1.5 py-0.5",
       sm: "text-xs px-2 py-0.5",
       md: "text-sm px-2.5 py-1",
       lg: "text-base px-3 py-1.5",
+      xl: "text-lg px-3.5 py-2",
     };
 
     const dotVariants = {

@@ -9,10 +9,16 @@ export interface NavItem {
   icon?: React.ReactNode;
 }
 
+export interface NavSection {
+  title: string;
+  items: NavItem[];
+}
+
 export interface SidebarNavProps {
   title: string;
   subtitle?: string;
-  items: NavItem[];
+  items?: NavItem[];
+  sections?: NavSection[];
   activeItem: string;
   onItemClick: (itemId: string) => void;
   footer?: React.ReactNode;
@@ -23,6 +29,7 @@ export function SidebarNav({
   title,
   subtitle,
   items,
+  sections,
   activeItem,
   onItemClick,
   footer,
@@ -36,6 +43,9 @@ export function SidebarNav({
     onItemClick(itemId);
     setMobileMenuOpen(false);
   };
+
+  // Use sections if provided, otherwise fall back to items
+  const useSections = sections || (items ? [{ title: "", items }] : []);
 
   return (
     <>
@@ -100,26 +110,37 @@ export function SidebarNav({
 
         {/* Navigation Items */}
         <nav className="p-4">
-          <ul className="space-y-1">
-            {items.map((item) => (
-              <li key={item.id}>
-                <button
-                  onClick={() => handleItemClick(item.id)}
-                  className={`
-                    w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors
-                    ${
-                      activeItem === item.id
-                        ? "bg-blue-50 text-blue-700"
-                        : "text-gray-700 hover:bg-gray-50"
-                    }
-                  `}
-                >
-                  {item.icon && <span className="shrink-0">{item.icon}</span>}
-                  <span>{item.label}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
+          {useSections.map((section, sectionIndex) => (
+            <div key={sectionIndex} className={sectionIndex > 0 ? "mt-6" : ""}>
+              {section.title && (
+                <h3 className="px-4 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  {section.title}
+                </h3>
+              )}
+              <ul className="space-y-1">
+                {section.items.map((item) => (
+                  <li key={item.id}>
+                    <button
+                      onClick={() => handleItemClick(item.id)}
+                      className={`
+                        w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors
+                        ${
+                          activeItem === item.id
+                            ? "bg-blue-50 text-blue-700"
+                            : "text-gray-700 hover:bg-gray-50"
+                        }
+                      `}
+                    >
+                      {item.icon && (
+                        <span className="shrink-0">{item.icon}</span>
+                      )}
+                      <span>{item.label}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </nav>
 
         {/* Footer */}
