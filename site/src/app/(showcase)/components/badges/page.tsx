@@ -1,7 +1,9 @@
+"use client";
+
 import { useState } from "react";
 import {
+  Badge,
   Card,
-  CardContent,
   RadioGroup,
   Checkbox,
   CodeSnippet,
@@ -9,10 +11,10 @@ import {
 import { SectionLayout } from "@yomologic/react-ui";
 import { Settings2, Code2, BookOpen } from "lucide-react";
 
-export function CardsSection() {
-  const [variant, setVariant] = useState<string>("elevated");
-  const [padding, setPadding] = useState<string>("md");
-  const [hoverable, setHoverable] = useState(false);
+export default function BadgesPage() {
+  const [variant, setVariant] = useState<string>("primary");
+  const [size, setSize] = useState<string>("md");
+  const [hasDot, setHasDot] = useState(false);
   const [showCodeOverlay, setShowCodeOverlay] = useState(false);
 
   // Generate code snippet
@@ -20,13 +22,11 @@ export function CardsSection() {
     const props: string[] = [];
 
     if (variant !== "default") props.push(`variant="${variant}"`);
-    if (padding !== "md") props.push(`padding="${padding}"`);
-    if (hoverable) props.push("hoverable");
+    if (size !== "md") props.push(`size="${size}"`);
+    if (hasDot) props.push("dot");
 
-    const propsString = props.join("\n  ");
-    return `<Card${
-      props.length > 0 ? `\n  ${propsString}` : ""
-    }>\n  <CardContent>\n    Your content here\n  </CardContent>\n</Card>`;
+    const propsString = props.join(" ");
+    return `<Badge${props.length > 0 ? ` ${propsString}` : ""}>Label</Badge>`;
   };
 
   return (
@@ -38,7 +38,7 @@ export function CardsSection() {
             {/* Header */}
             <div className="flex items-center justify-between pb-3 border-b border-gray-200">
               <h2 className="text-lg font-semibold text-gray-900">
-                Cards Live Preview
+                Badges Live Preview
               </h2>
               <button
                 onClick={() => setShowCodeOverlay(!showCodeOverlay)}
@@ -53,19 +53,22 @@ export function CardsSection() {
             {/* Preview Content */}
             <div className="relative">
               <div className="p-6 bg-linear-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
-                <div className="max-w-md mx-auto">
-                  <Card
-                    variant={variant as "default" | "bordered" | "elevated"}
-                    padding={padding as "none" | "sm" | "md" | "lg"}
-                    hoverable={hoverable}
+                <div className="flex justify-center">
+                  <Badge
+                    variant={
+                      variant as
+                        | "default"
+                        | "primary"
+                        | "success"
+                        | "warning"
+                        | "danger"
+                        | "info"
+                    }
+                    size={size as "sm" | "md" | "lg"}
+                    dot={hasDot}
                   >
-                    <CardContent>
-                      <p className="text-sm text-gray-700">
-                        This is a card component with customizable variants and
-                        padding.
-                      </p>
-                    </CardContent>
-                  </Card>
+                    Label
+                  </Badge>
                 </div>
               </div>
 
@@ -82,7 +85,7 @@ export function CardsSection() {
                     <Card variant="elevated" padding="none">
                       <div className="p-4 border-b border-gray-200 flex items-center justify-between">
                         <h4 className="text-sm font-semibold text-gray-900">
-                          Card Code
+                          Badge Code
                         </h4>
                         <button
                           onClick={() => setShowCodeOverlay(false)}
@@ -121,29 +124,33 @@ export function CardsSection() {
               orientation="horizontal"
               options={[
                 { value: "default", label: "Default" },
-                { value: "bordered", label: "Bordered" },
-                { value: "elevated", label: "Elevated" },
+                { value: "primary", label: "Primary" },
+                { value: "success", label: "Success" },
+                { value: "warning", label: "Warning" },
+                { value: "danger", label: "Danger" },
+                { value: "info", label: "Info" },
               ]}
             />
 
             <RadioGroup
-              label="Padding"
-              name="padding"
-              value={padding}
-              onChange={setPadding}
+              label="Size"
+              name="size"
+              value={size}
+              onChange={setSize}
               orientation="horizontal"
               options={[
-                { value: "none", label: "None" },
+                { value: "xs", label: "Extra Small" },
                 { value: "sm", label: "Small" },
                 { value: "md", label: "Medium" },
                 { value: "lg", label: "Large" },
+                { value: "xl", label: "Extra Large" },
               ]}
             />
 
             <Checkbox
-              label="Hoverable"
-              checked={hoverable}
-              onChange={setHoverable}
+              label="Show Indicator Dot"
+              checked={hasDot}
+              onChange={setHasDot}
             />
           </div>
         </Card>
@@ -180,34 +187,34 @@ export function CardsSection() {
                     variant
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                    &quot;default&quot; | &quot;bordered&quot; |
-                    &quot;elevated&quot;
+                    &quot;default&quot; | &quot;primary&quot; |
+                    &quot;success&quot; | &quot;warning&quot; |
+                    &quot;danger&quot; | &quot;info&quot;
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
                     &quot;default&quot;
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-700">
-                    Visual style variant of the card
+                    Color scheme of the badge
                   </td>
                 </tr>
                 <tr>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                    padding
+                    size
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                    &quot;none&quot; | &quot;sm&quot; | &quot;md&quot; |
-                    &quot;lg&quot;
+                    &quot;sm&quot; | &quot;md&quot; | &quot;lg&quot;
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
                     &quot;md&quot;
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-700">
-                    Internal padding size of the card
+                    Size of the badge
                   </td>
                 </tr>
                 <tr>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                    hoverable
+                    dot
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600 font-mono">
                     boolean
@@ -216,7 +223,7 @@ export function CardsSection() {
                     false
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-700">
-                    Adds hover effect with enhanced shadow
+                    Shows an indicator dot before the label
                   </td>
                 </tr>
                 <tr>
@@ -230,7 +237,7 @@ export function CardsSection() {
                     required
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-700">
-                    Content to be displayed inside the card
+                    Label text or content
                   </td>
                 </tr>
                 <tr>

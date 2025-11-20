@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Button,
   Input,
@@ -10,7 +12,7 @@ import {
 import { SectionLayout } from "@yomologic/react-ui";
 import { Mail, Lock, Search, ArrowRight } from "lucide-react";
 
-export function ExamplesSection() {
+export default function ExamplesPage() {
   return (
     <SectionLayout>
       <section>

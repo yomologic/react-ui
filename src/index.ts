@@ -17,7 +17,9 @@ export { Container } from './layout/container';
 export { SectionLayout } from './layout/section-layout';
 export { Nav } from './layout/nav';
 export type { NavItem, NavProps } from './layout/nav';
-/** @deprecated Use Nav component instead. SidebarNav will be removed in v1.0.0 */
+export { Drawer } from './layout/drawer';
+export type { DrawerProps, NavItem as DrawerNavItem, NavSection as DrawerNavSection } from './layout/drawer';
+/** @deprecated Use Drawer component instead. SidebarNav will be removed in v1.0.0 */
 export { SidebarNav } from './layout/sidebar-nav';
 export type { NavItem as SidebarNavItem, NavSection } from './layout/sidebar-nav';
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import {
   Card,
@@ -19,7 +21,7 @@ import {
   User,
 } from "lucide-react";
 
-export default function NavSection() {
+export default function NavPage() {
   // State for component props
   const [variant, setVariant] = useState<string>("primary");
   const [orientation, setOrientation] = useState<string>("horizontal");
@@ -29,6 +31,7 @@ export default function NavSection() {
   const [showActions, setShowActions] = useState(true);
   const [showBadges, setShowBadges] = useState(true);
   const [showCodeOverlay, setShowCodeOverlay] = useState(false);
+  const [mobileMenuDirection, setMobileMenuDirection] = useState<string>("top");
 
   // Mock navigation items
   const navItems = [
@@ -70,6 +73,8 @@ export default function NavSection() {
       props.push(`orientation="${orientation}"`);
     if (size !== "md") props.push(`size="${size}"`);
     if (sticky) props.push("sticky");
+    if (mobileMenuDirection !== "top")
+      props.push(`mobileMenuDirection="${mobileMenuDirection}"`);
 
     // Generate items array
     itemsCode.push("const items = [");
@@ -151,6 +156,9 @@ export default function NavSection() {
                     orientation={orientation as "horizontal" | "vertical"}
                     size={size as "sm" | "md" | "lg"}
                     sticky={sticky}
+                    mobileMenuDirection={
+                      mobileMenuDirection as "top" | "left" | "right"
+                    }
                     logo={
                       showLogo ? (
                         <div className="font-bold text-lg">Logo</div>
@@ -255,6 +263,20 @@ export default function NavSection() {
                 { value: "md", label: "Medium" },
                 { value: "lg", label: "Large" },
                 { value: "xl", label: "Extra Large" },
+              ]}
+            />
+
+            {/* Mobile Menu Direction */}
+            <RadioGroup
+              label="Mobile Menu Direction"
+              name="mobileMenuDirection"
+              value={mobileMenuDirection}
+              onChange={setMobileMenuDirection}
+              orientation="horizontal"
+              options={[
+                { value: "top", label: "Top (Dropdown)" },
+                { value: "left", label: "Left (Drawer)" },
+                { value: "right", label: "Right (Drawer)" },
               ]}
             />
 
@@ -367,6 +389,20 @@ export default function NavSection() {
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-700">
                     Breakpoint at which mobile menu is activated
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                    mobileMenuDirection
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                    &quot;top&quot; | &quot;left&quot; | &quot;right&quot;
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                    &quot;top&quot;
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-700">
+                    Direction from which mobile menu slides in
                   </td>
                 </tr>
                 <tr>

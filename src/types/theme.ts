@@ -240,6 +240,30 @@ export interface NavTheme {
   gap: string;
 }
 
+export interface ZIndexScale {
+  // Dropdowns and popovers
+  dropdown: number;
+  popover: number;
+  tooltip: number;
+  // Overlays
+  overlay: number;
+  // Navigation
+  nav: number;
+  navMobileOverlay: number;
+  navMobileMenu: number;
+  // Drawer
+  drawerHeader: number;
+  drawerButton: number;
+  drawerOverlay: number;
+  drawerPanel: number;
+  // Modals
+  modalBackdrop: number;
+  modal: number;
+  // Notifications
+  snackbar: number;
+  toast: number;
+}
+
 export interface ComponentThemes {
   button: ButtonTheme;
   card: CardTheme;
@@ -257,6 +281,7 @@ export interface Theme {
   spacing: ThemeSpacing;
   borderRadius: ThemeBorderRadius;
   typography: ThemeTypography;
+  zIndex: ZIndexScale;
   components: ComponentThemes;
 }
 

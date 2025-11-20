@@ -100,6 +100,23 @@
       "bold": "700"
     }
   },
+  "zIndex": {
+    "dropdown": 1000,
+    "popover": 1100,
+    "tooltip": 1500,
+    "overlay": 1200,
+    "nav": 50,
+    "navMobileOverlay": 60,
+    "navMobileMenu": 70,
+    "drawerHeader": 100,
+    "drawerButton": 101,
+    "drawerOverlay": 90,
+    "drawerPanel": 95,
+    "modalBackdrop": 1300,
+    "modal": 1400,
+    "snackbar": 1600,
+    "toast": 1700
+  },
   "components": {
     "button": {
       "padding": {

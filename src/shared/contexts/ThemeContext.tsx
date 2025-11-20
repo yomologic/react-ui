@@ -188,6 +188,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     root.style.setProperty("--nav-border-radius", nav.borderRadius);
     root.style.setProperty("--nav-gap", nav.gap);
 
+    // Z-Index Scale
+    Object.entries(newTheme.zIndex).forEach(([key, value]) => {
+      root.style.setProperty(`--z-index-${key}`, value.toString());
+    });
+
     setThemeState(newTheme);
   };
 

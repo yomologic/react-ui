@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import {
   Dropdown,
@@ -11,7 +13,7 @@ import {
 import { SectionLayout } from "@yomologic/react-ui";
 import { Settings2, BookOpen, Code2 } from "lucide-react";
 
-export function DropdownSection() {
+export default function DropdownPage() {
   const [selectedValue, setSelectedValue] = useState<string | number>("");
   const [dropdownState, setDropdownState] = useState<string>("normal");
   const [hasLabel, setHasLabel] = useState(true);

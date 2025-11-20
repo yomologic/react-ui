@@ -1,9 +1,11 @@
+"use client";
+
 import { useState } from "react";
 import { Card, RadioGroup, Checkbox, CodeSnippet } from "@yomologic/react-ui";
 import { SectionLayout } from "@yomologic/react-ui";
 import { Settings2, Code2, BookOpen } from "lucide-react";
 
-export function RadioSection() {
+export default function RadioPage() {
   const [selectedValue, setSelectedValue] = useState("apple");
   const [orientation, setOrientation] = useState<string>("vertical");
   const [hasLabel, setHasLabel] = useState(true);

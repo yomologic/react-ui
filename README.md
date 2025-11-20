@@ -60,7 +60,8 @@ function App() {
 
 - **Container** - Responsive page container
 - **SectionLayout** - Layout wrapper for sections
-- **SidebarNav** - Navigation sidebar
+- **Drawer** - Navigation drawer/sidebar
+- **SidebarNav** - (Deprecated, use Drawer instead)
 
 ### Shared Components
 

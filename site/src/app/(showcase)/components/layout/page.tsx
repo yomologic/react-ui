@@ -1,8 +1,10 @@
+"use client";
+
 import { Card } from "@yomologic/react-ui";
 import { Container } from "@yomologic/react-ui";
 import { SectionLayout } from "@yomologic/react-ui";
 
-export function LayoutSection() {
+export default function LayoutPage() {
   return (
     <SectionLayout>
       <section>

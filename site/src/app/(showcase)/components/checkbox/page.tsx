@@ -1,7 +1,9 @@
+"use client";
+
 import { useState } from "react";
 import {
   Card,
-  Spinner,
+  CheckboxGroup,
   RadioGroup,
   Checkbox,
   CodeSnippet,
@@ -9,23 +11,40 @@ import {
 import { SectionLayout } from "@yomologic/react-ui";
 import { Settings2, Code2, BookOpen } from "lucide-react";
 
-export function SpinnerSection() {
+export default function CheckboxPage() {
+  const [selectedValues, setSelectedValues] = useState<string[]>(["email"]);
+  const [orientation, setOrientation] = useState<string>("vertical");
+  const [showLabel, setShowLabel] = useState(true);
+  const [hasDisabledOption, setHasDisabledOption] = useState(false);
+  const [groupDisabled, setGroupDisabled] = useState(false);
   const [size, setSize] = useState<string>("md");
-  const [color, setColor] = useState<string>("primary");
-  const [hasLabel, setHasLabel] = useState(false);
   const [showCodeOverlay, setShowCodeOverlay] = useState(false);
 
   // Generate code snippet
   const generateCode = () => {
     const props: string[] = [];
 
-    if (size !== "md") props.push(`size="${size}"`);
-    if (color !== "primary") props.push(`color="${color}"`);
-    if (hasLabel) props.push('label="Loading..."');
+    if (showLabel) props.push('label="Notification Preferences"');
+    props.push('name="notifications"');
 
-    if (props.length === 0) return "<Spinner />";
-    const propsString = props.join(" ");
-    return `<Spinner ${propsString} />`;
+    // Generate options array
+    const options = [
+      '{ value: "email", label: "Email notifications" }',
+      '{ value: "sms", label: "SMS notifications" }',
+      hasDisabledOption
+        ? '{ value: "push", label: "Push notifications", disabled: true }'
+        : '{ value: "push", label: "Push notifications" }',
+    ];
+    props.push(`options={[\n    ${options.join(",\n    ")}\n  ]}`);
+
+    props.push("value={selectedValues}");
+    props.push("onChange={setSelectedValues}");
+    if (orientation !== "vertical") props.push(`orientation="${orientation}"`);
+    if (size !== "md") props.push(`size="${size}"`);
+    if (groupDisabled) props.push("disabled");
+
+    const propsString = props.join("\n  ");
+    return `<CheckboxGroup\n  ${propsString}\n/>`;
   };
 
   return (
@@ -37,7 +56,7 @@ export function SpinnerSection() {
             {/* Header */}
             <div className="flex items-center justify-between pb-3 border-b border-gray-200">
               <h2 className="text-lg font-semibold text-gray-900">
-                Spinners Live Preview
+                Checkbox Group Live Preview
               </h2>
               <button
                 onClick={() => setShowCodeOverlay(!showCodeOverlay)}
@@ -52,11 +71,24 @@ export function SpinnerSection() {
             {/* Preview Content */}
             <div className="relative">
               <div className="p-6 bg-linear-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
-                <div className="flex justify-center">
-                  <Spinner
-                    size={size as "sm" | "md" | "lg" | "xl"}
-                    color={color as "primary" | "secondary" | "white"}
-                    label={hasLabel ? "Loading..." : undefined}
+                <div className="max-w-md mx-auto">
+                  <CheckboxGroup
+                    label={showLabel ? "Notification Preferences" : undefined}
+                    name="notifications"
+                    options={[
+                      { value: "email", label: "Email notifications" },
+                      { value: "sms", label: "SMS notifications" },
+                      {
+                        value: "push",
+                        label: "Push notifications",
+                        disabled: hasDisabledOption,
+                      },
+                    ]}
+                    value={selectedValues}
+                    onChange={setSelectedValues}
+                    orientation={orientation as "vertical" | "horizontal"}
+                    size={size as "sm" | "md" | "lg"}
+                    disabled={groupDisabled}
                   />
                 </div>
               </div>
@@ -74,7 +106,7 @@ export function SpinnerSection() {
                     <Card variant="elevated" padding="none">
                       <div className="p-4 border-b border-gray-200 flex items-center justify-between">
                         <h4 className="text-sm font-semibold text-gray-900">
-                          Spinner Code
+                          Checkbox Code
                         </h4>
                         <button
                           onClick={() => setShowCodeOverlay(false)}
@@ -106,37 +138,51 @@ export function SpinnerSection() {
         <Card variant="elevated" padding="lg">
           <div className="space-y-6">
             <RadioGroup
+              label="Orientation"
+              name="orientation"
+              value={orientation}
+              onChange={setOrientation}
+              orientation="horizontal"
+              options={[
+                { value: "vertical", label: "Vertical" },
+                { value: "horizontal", label: "Horizontal" },
+              ]}
+            />
+
+            <RadioGroup
               label="Size"
               name="size"
               value={size}
               onChange={setSize}
               orientation="horizontal"
               options={[
+                { value: "xs", label: "Extra Small" },
                 { value: "sm", label: "Small" },
                 { value: "md", label: "Medium" },
                 { value: "lg", label: "Large" },
-                { value: "xl", label: "X-Large" },
+                { value: "xl", label: "Extra Large" },
               ]}
             />
 
-            <RadioGroup
-              label="Color"
-              name="color"
-              value={color}
-              onChange={setColor}
-              orientation="horizontal"
-              options={[
-                { value: "primary", label: "Primary" },
-                { value: "secondary", label: "Secondary" },
-                { value: "white", label: "White" },
-              ]}
-            />
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Checkbox
+                label="Show Label"
+                checked={showLabel}
+                onChange={setShowLabel}
+              />
 
-            <Checkbox
-              label="Show Label"
-              checked={hasLabel}
-              onChange={setHasLabel}
-            />
+              <Checkbox
+                label="Disable Third Option"
+                checked={hasDisabledOption}
+                onChange={setHasDisabledOption}
+              />
+
+              <Checkbox
+                label="Disable Entire Group"
+                checked={groupDisabled}
+                onChange={setGroupDisabled}
+              />
+            </div>
           </div>
         </Card>
       </section>
@@ -169,36 +215,6 @@ export function SpinnerSection() {
               <tbody className="bg-white divide-y divide-gray-200">
                 <tr>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                    size
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                    &quot;sm&quot; | &quot;md&quot; | &quot;lg&quot; |
-                    &quot;xl&quot;
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                    &quot;md&quot;
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-700">
-                    Size of the spinner
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                    color
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                    &quot;primary&quot; | &quot;secondary&quot; |
-                    &quot;white&quot;
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                    &quot;primary&quot;
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-700">
-                    Color scheme of the spinner
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
                     label
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600 font-mono">
@@ -208,21 +224,106 @@ export function SpinnerSection() {
                     undefined
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-700">
-                    Optional text label displayed below spinner
+                    Group label displayed above the checkboxes
                   </td>
                 </tr>
                 <tr>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                    className
+                    name
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600 font-mono">
                     string
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                    required
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-700">
+                    Name attribute for the checkbox group
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                    options
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                    CheckboxOption[]
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                    required
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-700">
+                    Array of checkbox options (value, label, disabled)
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                    value
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                    string[]
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                    []
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-700">
+                    Array of selected checkbox values
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                    onChange
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                    (value: string[]) =&gt; void
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
                     undefined
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-700">
-                    Additional CSS classes to apply
+                    Callback fired when selection changes
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                    orientation
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                    &quot;vertical&quot; | &quot;horizontal&quot;
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                    &quot;vertical&quot;
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-700">
+                    Layout direction of the checkbox group
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                    required
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                    boolean
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                    false
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-700">
+                    Shows asterisk (*) next to label if true
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                    disabled
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                    boolean
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                    false
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-700">
+                    Disables the entire checkbox group (overrides individual
+                    option disabled states)
                   </td>
                 </tr>
               </tbody>

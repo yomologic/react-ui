@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import {
   Input,
@@ -18,7 +20,7 @@ import {
   BookOpen,
 } from "lucide-react";
 
-export function InputsSection() {
+export default function InputsPage() {
   const [inputType, setInputType] = useState<string>("text");
   const [hasIcon, setHasIcon] = useState<string>("left");
   const [inputState, setInputState] = useState<string>("normal");

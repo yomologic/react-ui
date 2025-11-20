@@ -1,27 +1,34 @@
+"use client";
+
 import { useState } from "react";
-import { Card, RadioGroup, Checkbox, CodeSnippet } from "@yomologic/react-ui";
-import { Alert } from "@yomologic/react-ui";
+import {
+  Card,
+  CardContent,
+  RadioGroup,
+  Checkbox,
+  CodeSnippet,
+} from "@yomologic/react-ui";
 import { SectionLayout } from "@yomologic/react-ui";
 import { Settings2, Code2, BookOpen } from "lucide-react";
 
-export function AlertSection() {
-  const [variant, setVariant] = useState<string>("info");
-  const [dismissible, setDismissible] = useState(false);
+export default function CardsPage() {
+  const [variant, setVariant] = useState<string>("elevated");
+  const [padding, setPadding] = useState<string>("md");
+  const [hoverable, setHoverable] = useState(false);
   const [showCodeOverlay, setShowCodeOverlay] = useState(false);
 
   // Generate code snippet
   const generateCode = () => {
     const props: string[] = [];
 
-    if (variant !== "info") props.push(`variant="${variant}"`);
-    props.push('title="Alert Title"');
-    if (dismissible) {
-      props.push("dismissible");
-      props.push("onDismiss={() => {}}");
-    }
+    if (variant !== "default") props.push(`variant="${variant}"`);
+    if (padding !== "md") props.push(`padding="${padding}"`);
+    if (hoverable) props.push("hoverable");
 
     const propsString = props.join("\n  ");
-    return `<Alert\n  ${propsString}\n>\n  Alert message content here\n</Alert>`;
+    return `<Card${
+      props.length > 0 ? `\n  ${propsString}` : ""
+    }>\n  <CardContent>\n    Your content here\n  </CardContent>\n</Card>`;
   };
 
   return (
@@ -33,7 +40,7 @@ export function AlertSection() {
             {/* Header */}
             <div className="flex items-center justify-between pb-3 border-b border-gray-200">
               <h2 className="text-lg font-semibold text-gray-900">
-                Alerts Live Preview
+                Cards Live Preview
               </h2>
               <button
                 onClick={() => setShowCodeOverlay(!showCodeOverlay)}
@@ -49,17 +56,18 @@ export function AlertSection() {
             <div className="relative">
               <div className="p-6 bg-linear-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
                 <div className="max-w-md mx-auto">
-                  <Alert
-                    variant={
-                      variant as "info" | "success" | "warning" | "error"
-                    }
-                    title="Alert Title"
-                    dismissible={dismissible}
-                    onDismiss={dismissible ? () => {} : undefined}
+                  <Card
+                    variant={variant as "default" | "bordered" | "elevated"}
+                    padding={padding as "none" | "sm" | "md" | "lg"}
+                    hoverable={hoverable}
                   >
-                    This is an alert message with important information for the
-                    user.
-                  </Alert>
+                    <CardContent>
+                      <p className="text-sm text-gray-700">
+                        This is a card component with customizable variants and
+                        padding.
+                      </p>
+                    </CardContent>
+                  </Card>
                 </div>
               </div>
 
@@ -76,7 +84,7 @@ export function AlertSection() {
                     <Card variant="elevated" padding="none">
                       <div className="p-4 border-b border-gray-200 flex items-center justify-between">
                         <h4 className="text-sm font-semibold text-gray-900">
-                          Alert Code
+                          Card Code
                         </h4>
                         <button
                           onClick={() => setShowCodeOverlay(false)}
@@ -114,17 +122,30 @@ export function AlertSection() {
               onChange={setVariant}
               orientation="horizontal"
               options={[
-                { value: "info", label: "Info" },
-                { value: "success", label: "Success" },
-                { value: "warning", label: "Warning" },
-                { value: "error", label: "Error" },
+                { value: "default", label: "Default" },
+                { value: "bordered", label: "Bordered" },
+                { value: "elevated", label: "Elevated" },
+              ]}
+            />
+
+            <RadioGroup
+              label="Padding"
+              name="padding"
+              value={padding}
+              onChange={setPadding}
+              orientation="horizontal"
+              options={[
+                { value: "none", label: "None" },
+                { value: "sm", label: "Small" },
+                { value: "md", label: "Medium" },
+                { value: "lg", label: "Large" },
               ]}
             />
 
             <Checkbox
-              label="Dismissible"
-              checked={dismissible}
-              onChange={setDismissible}
+              label="Hoverable"
+              checked={hoverable}
+              onChange={setHoverable}
             />
           </div>
         </Card>
@@ -161,28 +182,43 @@ export function AlertSection() {
                     variant
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                    &quot;info&quot; | &quot;success&quot; | &quot;warning&quot;
-                    | &quot;error&quot;
+                    &quot;default&quot; | &quot;bordered&quot; |
+                    &quot;elevated&quot;
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                    &quot;info&quot;
+                    &quot;default&quot;
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-700">
-                    Color scheme and icon of the alert
+                    Visual style variant of the card
                   </td>
                 </tr>
                 <tr>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                    title
+                    padding
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                    string
+                    &quot;none&quot; | &quot;sm&quot; | &quot;md&quot; |
+                    &quot;lg&quot;
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                    required
+                    &quot;md&quot;
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-700">
-                    Title text of the alert
+                    Internal padding size of the card
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                    hoverable
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                    boolean
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                    false
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-700">
+                    Adds hover effect with enhanced shadow
                   </td>
                 </tr>
                 <tr>
@@ -193,38 +229,24 @@ export function AlertSection() {
                     ReactNode
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                    undefined
+                    required
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-700">
-                    Alert message content
+                    Content to be displayed inside the card
                   </td>
                 </tr>
                 <tr>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                    dismissible
+                    className
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                    boolean
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                    false
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-700">
-                    Shows a close button to dismiss the alert
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                    onDismiss
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                    () =&gt; void
+                    string
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
                     undefined
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-700">
-                    Callback when alert is dismissed
+                    Additional CSS classes to apply
                   </td>
                 </tr>
               </tbody>

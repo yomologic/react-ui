@@ -1,25 +1,29 @@
+"use client";
+
 import { useState } from "react";
 import { Card, RadioGroup, Checkbox, CodeSnippet } from "@yomologic/react-ui";
-import { Spinner } from "@yomologic/react-ui";
+import { Alert } from "@yomologic/react-ui";
 import { SectionLayout } from "@yomologic/react-ui";
 import { Settings2, Code2, BookOpen } from "lucide-react";
 
-export function LoadingSection() {
-  const [size, setSize] = useState<string>("md");
-  const [color, setColor] = useState<string>("primary");
-  const [hasLabel, setHasLabel] = useState(false);
+export default function AlertPage() {
+  const [variant, setVariant] = useState<string>("info");
+  const [dismissible, setDismissible] = useState(false);
   const [showCodeOverlay, setShowCodeOverlay] = useState(false);
 
   // Generate code snippet
   const generateCode = () => {
     const props: string[] = [];
 
-    if (size !== "md") props.push(`size="${size}"`);
-    if (color !== "primary") props.push(`color="${color}"`);
-    if (hasLabel) props.push('label="Loading..."');
+    if (variant !== "info") props.push(`variant="${variant}"`);
+    props.push('title="Alert Title"');
+    if (dismissible) {
+      props.push("dismissible");
+      props.push("onDismiss={() => {}}");
+    }
 
-    const propsString = props.length > 0 ? ` ${props.join(" ")}` : "";
-    return `<Spinner${propsString} />`;
+    const propsString = props.join("\n  ");
+    return `<Alert\n  ${propsString}\n>\n  Alert message content here\n</Alert>`;
   };
 
   return (
@@ -31,7 +35,7 @@ export function LoadingSection() {
             {/* Header */}
             <div className="flex items-center justify-between pb-3 border-b border-gray-200">
               <h2 className="text-lg font-semibold text-gray-900">
-                Loading States Live Preview
+                Alerts Live Preview
               </h2>
               <button
                 onClick={() => setShowCodeOverlay(!showCodeOverlay)}
@@ -46,12 +50,18 @@ export function LoadingSection() {
             {/* Preview Content */}
             <div className="relative">
               <div className="p-6 bg-linear-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
-                <div className="flex items-center justify-center min-h-32">
-                  <Spinner
-                    size={size as "sm" | "md" | "lg" | "xl"}
-                    color={color as "primary" | "secondary" | "white"}
-                    label={hasLabel ? "Loading..." : undefined}
-                  />
+                <div className="max-w-md mx-auto">
+                  <Alert
+                    variant={
+                      variant as "info" | "success" | "warning" | "error"
+                    }
+                    title="Alert Title"
+                    dismissible={dismissible}
+                    onDismiss={dismissible ? () => {} : undefined}
+                  >
+                    This is an alert message with important information for the
+                    user.
+                  </Alert>
                 </div>
               </div>
 
@@ -68,7 +78,7 @@ export function LoadingSection() {
                     <Card variant="elevated" padding="none">
                       <div className="p-4 border-b border-gray-200 flex items-center justify-between">
                         <h4 className="text-sm font-semibold text-gray-900">
-                          Spinner Code
+                          Alert Code
                         </h4>
                         <button
                           onClick={() => setShowCodeOverlay(false)}
@@ -100,36 +110,23 @@ export function LoadingSection() {
         <Card variant="elevated" padding="lg">
           <div className="space-y-6">
             <RadioGroup
-              label="Size"
-              name="size"
-              value={size}
-              onChange={setSize}
+              label="Variant"
+              name="variant"
+              value={variant}
+              onChange={setVariant}
               orientation="horizontal"
               options={[
-                { value: "sm", label: "Small" },
-                { value: "md", label: "Medium" },
-                { value: "lg", label: "Large" },
-                { value: "xl", label: "Extra Large" },
-              ]}
-            />
-
-            <RadioGroup
-              label="Color"
-              name="color"
-              value={color}
-              onChange={setColor}
-              orientation="horizontal"
-              options={[
-                { value: "primary", label: "Primary" },
-                { value: "secondary", label: "Secondary" },
-                { value: "white", label: "White" },
+                { value: "info", label: "Info" },
+                { value: "success", label: "Success" },
+                { value: "warning", label: "Warning" },
+                { value: "error", label: "Error" },
               ]}
             />
 
             <Checkbox
-              label="Show Label"
-              checked={hasLabel}
-              onChange={setHasLabel}
+              label="Dismissible"
+              checked={dismissible}
+              onChange={setDismissible}
             />
           </div>
         </Card>
@@ -163,46 +160,73 @@ export function LoadingSection() {
               <tbody className="bg-white divide-y divide-gray-200">
                 <tr>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                    size
+                    variant
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                    &quot;sm&quot; | &quot;md&quot; | &quot;lg&quot; |
-                    &quot;xl&quot;
+                    &quot;info&quot; | &quot;success&quot; | &quot;warning&quot;
+                    | &quot;error&quot;
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                    &quot;md&quot;
+                    &quot;info&quot;
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-700">
-                    Size of the spinner
+                    Color scheme and icon of the alert
                   </td>
                 </tr>
                 <tr>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                    color
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                    &quot;primary&quot; | &quot;secondary&quot; |
-                    &quot;white&quot;
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                    &quot;primary&quot;
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-700">
-                    Color scheme of the spinner
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                    label
+                    title
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600 font-mono">
                     string
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                    required
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-700">
+                    Title text of the alert
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                    children
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                    ReactNode
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
                     undefined
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-700">
-                    Optional label text shown below the spinner
+                    Alert message content
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                    dismissible
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                    boolean
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                    false
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-700">
+                    Shows a close button to dismiss the alert
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                    onDismiss
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                    () =&gt; void
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                    undefined
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-700">
+                    Callback when alert is dismissed
                   </td>
                 </tr>
               </tbody>

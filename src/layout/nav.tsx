@@ -24,6 +24,7 @@ export interface NavProps extends React.HTMLAttributes<HTMLElement> {
   orientation?: "horizontal" | "vertical";
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   mobileBreakpoint?: "sm" | "md" | "lg";
+  mobileMenuDirection?: "top" | "left" | "right";
   logo?: React.ReactNode;
   actions?: React.ReactNode;
   sticky?: boolean;
@@ -40,6 +41,7 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
       orientation = "horizontal",
       size = "md",
       mobileBreakpoint = "md",
+      mobileMenuDirection = "top",
       logo,
       actions,
       sticky = false,
@@ -85,10 +87,15 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
       };
     }, []);
 
+    // Close mobile menu when direction changes
+    useEffect(() => {
+      setIsMobileMenuOpen(false);
+    }, [mobileMenuDirection]);
+
     // Base styles using CSS variables
     const baseStyles = cn(
       "bg-[var(--color-background)] border-b border-[var(--color-border)]",
-      sticky && "sticky top-0 z-50"
+      sticky && "sticky top-0 [z-index:var(--z-index-nav)]"
     );
 
     // Container styles
@@ -338,18 +345,46 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
 
         {/* Mobile Menu Overlay */}
         {isMobileMenuOpen && (
-          <>
-            <div
-              className="fixed inset-0 bg-black/20 z-40"
-              onClick={() => setIsMobileMenuOpen(false)}
-            />
-            <div className="fixed top-[var(--nav-height)] left-0 right-0 bg-[var(--color-background)] border-b border-[var(--color-border)] shadow-lg z-50 max-h-[calc(100vh-var(--nav-height))] overflow-y-auto">
-              <div className="flex flex-col py-2">
-                {items.map((item) => renderNavItem(item, true))}
-              </div>
-            </div>
-          </>
+          <div
+            className={cn(
+              "fixed inset-0 bg-black/50 [z-index:var(--z-index-nav-mobile-overlay)]",
+              breakpointClasses[mobileBreakpoint]
+            )}
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
         )}
+
+        {/* Mobile Menu Panel */}
+        <div
+          className={cn(
+            "fixed bg-[var(--color-background)] shadow-lg [z-index:var(--z-index-nav-mobile-menu)] overflow-y-auto transition-transform duration-300 ease-in-out",
+            breakpointClasses[mobileBreakpoint],
+            // Always hide when closed
+            !isMobileMenuOpen && "invisible",
+            // Direction-specific positioning and animation
+            mobileMenuDirection === "top" && [
+              "top-0 left-0 right-0 border-b border-[var(--color-border)] max-h-screen",
+              isMobileMenuOpen ? "translate-y-0" : "-translate-y-full",
+            ],
+            mobileMenuDirection === "left" && [
+              "top-0 left-0 bottom-0 w-64 border-r border-[var(--color-border)]",
+              isMobileMenuOpen ? "translate-x-0" : "-translate-x-full",
+            ],
+            mobileMenuDirection === "right" && [
+              "top-0 right-0 bottom-0 w-64 border-l border-[var(--color-border)]",
+              isMobileMenuOpen ? "translate-x-0" : "translate-x-full",
+            ]
+          )}
+        >
+          <div
+            className={cn(
+              "flex flex-col",
+              mobileMenuDirection === "top" ? "py-2" : "space-y-1 px-2 pt-2"
+            )}
+          >
+            {items.map((item) => renderNavItem(item, true))}
+          </div>
+        </div>
       </>
     );
 
@@ -357,16 +392,14 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
       <nav ref={ref} className={cn(baseStyles, className)} {...props}>
         <div className={containerStyles}>
           {/* Logo */}
-          {logo && <div className="flex-shrink-0">{logo}</div>}
+          {logo && <div className="shrink-0">{logo}</div>}
 
           {/* Desktop Navigation */}
           {desktopNav}
 
           {/* Actions (right side) */}
           {actions && (
-            <div className="flex-shrink-0 flex items-center gap-2">
-              {actions}
-            </div>
+            <div className="shrink-0 flex items-center gap-2">{actions}</div>
           )}
 
           {/* Mobile Menu Button */}

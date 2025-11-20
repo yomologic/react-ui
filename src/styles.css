@@ -88,4 +88,45 @@
   --container-max-width-lg: 1024px;
   --container-max-width-xl: 1280px;
   --container-max-width-2xl: 1536px;
+
+  /* Z-Index Scale - Will be overridden by theme */
+  --z-index-dropdown: 1000;
+  --z-index-popover: 1100;
+  --z-index-tooltip: 1500;
+  --z-index-overlay: 1200;
+  --z-index-nav: 50;
+  --z-index-nav-mobile-overlay: 60;
+  --z-index-nav-mobile-menu: 70;
+  --z-index-drawer-header: 100;
+  --z-index-drawer-button: 101;
+  --z-index-drawer-overlay: 90;
+  --z-index-drawer-panel: 95;
+  --z-index-modal-backdrop: 1300;
+  --z-index-modal: 1400;
+  --z-index-snackbar: 1600;
+  --z-index-toast: 1700;
+
+  /* Component: Nav */
+  --nav-height: 4rem;
+  --nav-gap: 0.5rem;
+  --nav-border-radius: 0.5rem;
+  
+  /* Nav Item Padding */
+  --nav-item-padding-xs-x: 0.5rem;
+  --nav-item-padding-xs-y: 0.25rem;
+  --nav-item-padding-sm-x: 0.75rem;
+  --nav-item-padding-sm-y: 0.5rem;
+  --nav-item-padding-md-x: 1rem;
+  --nav-item-padding-md-y: 0.625rem;
+  --nav-item-padding-lg-x: 1.5rem;
+  --nav-item-padding-lg-y: 0.75rem;
+  --nav-item-padding-xl-x: 2rem;
+  --nav-item-padding-xl-y: 1rem;
+  
+  /* Nav Font Sizes */
+  --nav-font-size-xs: 0.75rem;
+  --nav-font-size-sm: 0.875rem;
+  --nav-font-size-md: 1rem;
+  --nav-font-size-lg: 1.125rem;
+  --nav-font-size-xl: 1.25rem;
 }
