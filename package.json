@@ -1,7 +1,7 @@
 {
   "name": "@yomologic/react-ui",
   "version": "0.2.7",
-  "private": false,
+  "private": true,
   "workspaces": [
     "site"
   ],
