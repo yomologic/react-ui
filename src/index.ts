@@ -8,6 +8,7 @@ export { RadioGroup } from './ui/radio';
 export { Dropdown } from './ui/dropdown';
 export { Spinner } from './ui/spinner';
 export { CodeSnippet } from './ui/code-snippet';
+export { Rating } from './ui/rating';
 
 // Feedback Components
 export { Alert } from './feedback/alert';
