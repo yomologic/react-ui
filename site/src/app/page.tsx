@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Button, Badge } from "@yomologic/react-ui";
 import {
   Zap,
@@ -20,20 +21,33 @@ export default function HomePage() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-5" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24 text-center">
-          <Badge variant="primary" className="mb-6 inline-block">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <Image
+              src="/yomologic-logo-symbol.png"
+              alt="Yomologic"
+              width={60}
+              height={60}
+              className="w-14 h-14 sm:w-20 sm:h-20"
+            />
+            <div className="text-left">
+              <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent leading-tight">
+                Yomologic
+              </h1>
+            </div>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+            React UI Components
+          </h2>
+          <p className="text-lg sm:text-xl text-gray-600 mb-8">
+            Build Beautiful UIs Lightning Fast
+          </p>
+          <Badge variant="primary" className="mb-8 inline-block">
             v0.2.7 - Now with Density System
           </Badge>
-          <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
-            Build Beautiful UIs
-            <br />
-            <span className="bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Lightning Fast
-            </span>
-          </h1>
           <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-            A modern React component library with TypeScript, Tailwind CSS, and
-            a powerful theming system. Production-ready components that work out
-            of the box.
+            A modern React component library by Yomologic. Built with
+            TypeScript, Tailwind CSS, and a powerful theming system.
+            Production-ready components that work out of the box.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link href="/components/buttons">
@@ -57,8 +71,11 @@ export default function HomePage() {
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 max-w-4xl mx-auto">
             <div>
-              <div className="text-3xl font-bold text-blue-600 mb-2">15+</div>
-              <div className="text-sm text-gray-600">Components</div>
+              <div className="text-3xl font-bold text-blue-600 mb-2 flex items-center justify-center gap-1">
+                <Sparkles className="w-6 h-6" />
+                Active
+              </div>
+              <div className="text-sm text-gray-600">In Development</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-purple-600 mb-2">
@@ -74,9 +91,9 @@ export default function HomePage() {
             </div>
             <div>
               <div className="text-3xl font-bold text-orange-600 mb-2">
-                Responsive
+                Open Source
               </div>
-              <div className="text-sm text-gray-600">Mobile First</div>
+              <div className="text-sm text-gray-600">MIT License</div>
             </div>
           </div>
         </div>
@@ -87,7 +104,8 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              Why Choose Yomologic UI?
+              Why Choose <span className="text-blue-600">Yomologic</span> React
+              UI?
             </h2>
             <p className="text-xl text-gray-600">
               Everything you need to build modern web applications
@@ -242,7 +260,8 @@ export default function HomePage() {
             <Link href="/components/buttons">
               <Button
                 size="lg"
-                className="bg-white text-blue-600 hover:bg-gray-100"
+                variant="outline"
+                className="border-2 border-white text-white hover:bg-white hover:text-blue-600 transition-all"
               >
                 Start Exploring
               </Button>
@@ -255,7 +274,7 @@ export default function HomePage() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-white text-white hover:bg-white/10"
+                className="border-2 border-white text-white hover:bg-white hover:text-blue-600 transition-all"
               >
                 View Documentation
               </Button>
@@ -267,15 +286,32 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="bg-gray-900 text-gray-400 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <a
+            href="https://yomologic.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mb-6 inline-flex items-center gap-2 hover:opacity-80 transition-opacity"
+          >
+            <Image
+              src="/yomologic-logo-symbol.png"
+              alt="Yomologic"
+              width={40}
+              height={40}
+              className="w-10 h-10"
+            />
+            <span className="text-2xl font-bold bg-linear-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent tracking-tight">
+              Yomologic
+            </span>
+          </a>
           <p className="mb-4">
-            Built with ❤️ by{" "}
+            Building modern tools for developers.{" "}
             <a
               href="https://github.com/yomologic"
-              className="text-blue-400 hover:text-blue-300"
+              className="text-blue-400 hover:text-blue-300 underline"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Yomologic
+              View our GitHub
             </a>
           </p>
           <p className="text-sm">
