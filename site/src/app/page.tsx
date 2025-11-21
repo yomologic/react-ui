@@ -20,7 +20,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-5" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-24 text-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center">
           <div className="flex items-center justify-center gap-3 mb-6">
             <Image
               src="/yomologic-logo-symbol.png"
@@ -38,12 +38,9 @@ export default function HomePage() {
           <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
             React UI Components
           </h2>
-          <p className="text-lg sm:text-xl text-gray-600 mb-8">
+          <p className="text-lg sm:text-xl text-gray-600 mb-10">
             Build Beautiful UIs Lightning Fast
           </p>
-          <Badge variant="primary" className="mb-8 inline-block">
-            v0.2.7 - Now with Density System
-          </Badge>
           <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
             A modern React component library by Yomologic. Built with
             TypeScript, Tailwind CSS, and a powerful theming system.
@@ -69,7 +66,7 @@ export default function HomePage() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 max-w-4xl mx-auto">
             <div>
               <div className="text-3xl font-bold text-blue-600 mb-2 flex items-center justify-center gap-1">
                 <Sparkles className="w-6 h-6" />
@@ -100,7 +97,7 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-white">
+      <section className="pb-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
