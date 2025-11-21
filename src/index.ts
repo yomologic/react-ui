@@ -29,7 +29,7 @@ export { EmptyState } from './shared/empty-state';
 
 // Theme System
 export { ThemeProvider, useTheme } from './shared/contexts/ThemeContext';
-export type { Theme } from './types/theme';
+export type { Theme, DensityLevel } from './types/theme';
 
 // Re-export utility function
 export { cn } from './lib/utils';

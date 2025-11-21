@@ -240,6 +240,32 @@ export interface NavTheme {
   gap: string;
 }
 
+export interface DrawerTheme {
+  width: string;
+  sectionPadding: {
+    comfortable: { y: string };
+    standard: { y: string };
+    compact: { y: string };
+  };
+  titleMarginBottom: {
+    comfortable: string;
+    standard: string;
+    compact: string;
+  };
+  itemPadding: {
+    comfortable: { x: string; y: string };
+    standard: { x: string; y: string };
+    compact: { x: string; y: string };
+  };
+  itemSpacing: {
+    comfortable: string;
+    standard: string;
+    compact: string;
+  };
+  fontSize: string;
+  borderRadius: string;
+}
+
 export interface ZIndexScale {
   // Dropdowns and popovers
   dropdown: number;
@@ -272,7 +298,10 @@ export interface ComponentThemes {
   radio: RadioTheme;
   dropdown: DropdownTheme;
   nav: NavTheme;
+  drawer: DrawerTheme;
 }
+
+export type DensityLevel = 'comfortable' | 'standard' | 'compact';
 
 export interface Theme {
   name: string;
@@ -282,6 +311,7 @@ export interface Theme {
   borderRadius: ThemeBorderRadius;
   typography: ThemeTypography;
   zIndex: ZIndexScale;
+  density: DensityLevel;
   components: ComponentThemes;
 }
 

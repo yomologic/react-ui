@@ -188,6 +188,33 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     root.style.setProperty("--nav-border-radius", nav.borderRadius);
     root.style.setProperty("--nav-gap", nav.gap);
 
+    // Component: Drawer
+    const drawer = newTheme.components.drawer;
+    const density = newTheme.density;
+    root.style.setProperty("--drawer-width", drawer.width);
+    root.style.setProperty(
+      "--drawer-section-padding-y",
+      drawer.sectionPadding[density].y
+    );
+    root.style.setProperty(
+      "--drawer-title-margin-bottom",
+      drawer.titleMarginBottom[density]
+    );
+    root.style.setProperty(
+      "--drawer-item-padding-x",
+      drawer.itemPadding[density].x
+    );
+    root.style.setProperty(
+      "--drawer-item-padding-y",
+      drawer.itemPadding[density].y
+    );
+    root.style.setProperty(
+      "--drawer-item-spacing",
+      drawer.itemSpacing[density]
+    );
+    root.style.setProperty("--drawer-font-size", drawer.fontSize);
+    root.style.setProperty("--drawer-border-radius", drawer.borderRadius);
+
     // Z-Index Scale
     Object.entries(newTheme.zIndex).forEach(([key, value]) => {
       root.style.setProperty(`--z-index-${key}`, value.toString());

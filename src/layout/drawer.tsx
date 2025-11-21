@@ -130,25 +130,48 @@ export function Drawer({
         {/* Navigation Items */}
         <nav className="p-4">
           {useSections.map((section, sectionIndex) => (
-            <div key={sectionIndex} className={sectionIndex > 0 ? "mt-6" : ""}>
+            <div
+              key={sectionIndex}
+              style={{
+                paddingTop:
+                  sectionIndex > 0 ? "var(--drawer-section-padding-y)" : "0",
+              }}
+            >
               {section.title && (
-                <h3 className="px-4 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                <h3
+                  className="px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"
+                  style={{ marginBottom: "var(--drawer-title-margin-bottom)" }}
+                >
                   {section.title}
                 </h3>
               )}
-              <ul className="space-y-1">
+              <ul
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "var(--drawer-item-spacing)",
+                }}
+              >
                 {section.items.map((item) => (
                   <li key={item.id}>
                     <button
                       onClick={() => handleItemClick(item.id)}
                       className={`
-                        w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors
+                        w-full flex items-center gap-3 rounded-lg font-medium transition-colors
                         ${
                           activeItem === item.id
                             ? "bg-blue-50 text-blue-700"
                             : "text-gray-700 hover:bg-gray-50"
                         }
                       `}
+                      style={{
+                        paddingLeft: "var(--drawer-item-padding-x)",
+                        paddingRight: "var(--drawer-item-padding-x)",
+                        paddingTop: "var(--drawer-item-padding-y)",
+                        paddingBottom: "var(--drawer-item-padding-y)",
+                        fontSize: "var(--drawer-font-size)",
+                        borderRadius: "var(--drawer-border-radius)",
+                      }}
                     >
                       {item.icon && (
                         <span className="shrink-0">{item.icon}</span>

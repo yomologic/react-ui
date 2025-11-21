@@ -75,6 +75,11 @@ const navSections: DrawerNavSection[] = [
         label: "Navigation",
         icon: <MenuIcon className="w-5 h-5" />,
       },
+      {
+        id: "drawer",
+        label: "Drawer",
+        icon: <MenuIcon className="w-5 h-5" />,
+      },
     ],
   },
   {
