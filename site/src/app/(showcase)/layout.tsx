@@ -18,7 +18,7 @@ import {
   PanelLeft,
   Home,
 } from "lucide-react";
-import { Drawer, DrawerNavSection, Nav } from "@yomologic/react-ui";
+import { Drawer, DrawerNavSection } from "@yomologic/react-ui";
 
 const navSections: DrawerNavSection[] = [
   {
@@ -115,42 +115,28 @@ export default function ShowcaseLayout({
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation using our Nav component */}
-      <div className="fixed top-0 left-0 right-0 lg:right-64 z-40 lg:z-0">
-        <Nav
-          items={[
-            {
-              id: "home",
-              label: "Home",
-              type: "link",
-              href: "/",
-              icon: <Home className="w-4 h-4" />,
-            },
-          ]}
-          logo={
-            <Link
-              href="/"
-              className="flex items-center gap-3 hover:opacity-80 transition-opacity group"
-            >
-              <Image
-                src="/yomologic-logo-symbol.png"
-                alt="Yomologic"
-                width={40}
-                height={40}
-                className="group-hover:scale-105 transition-transform"
-              />
-              <span className="font-semibold text-gray-900 text-lg">
-                React UI
-              </span>
-            </Link>
-          }
-          variant="primary"
-          sticky={false}
-          size="lg"
-        />
-      </div>
+      {/* Desktop-only header with logo - mobile uses Drawer header */}
+      <header className="hidden lg:block fixed top-0 left-0 right-64 bg-white border-b border-gray-200 z-10">
+        <div className="px-4 sm:px-6 lg:px-8 h-16 flex items-center">
+          <Link
+            href="/"
+            className="flex items-center gap-3 hover:opacity-80 transition-opacity group"
+          >
+            <Image
+              src="/yomologic-logo-symbol.png"
+              alt="Yomologic"
+              width={40}
+              height={40}
+              className="group-hover:scale-105 transition-transform"
+            />
+            <span className="font-semibold text-gray-900 text-lg">
+              React UI
+            </span>
+          </Link>
+        </div>
+      </header>
 
-      <main className="w-full pt-16">
+      <main className="w-full pt-8 lg:pt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:pr-72 py-8">
           {children}
         </div>
