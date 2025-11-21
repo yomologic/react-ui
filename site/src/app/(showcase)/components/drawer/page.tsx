@@ -14,6 +14,7 @@ export default function DrawerPage() {
   const [position, setPosition] = useState<string>("right");
   const [showTitle, setShowTitle] = useState(true);
   const [showSubtitle, setShowSubtitle] = useState(true);
+  const [showHomeUrl, setShowHomeUrl] = useState(true);
   const [showCodeOverlay, setShowCodeOverlay] = useState(false);
   const [density, setDensity] = useState<DensityLevel>(theme.density);
 
@@ -49,6 +50,7 @@ export default function DrawerPage() {
     if (showTitle) props.push('title="Application Menu"');
     if (showSubtitle) props.push('subtitle="Navigation"');
     if (position !== "right") props.push(`position="${position}"`);
+    if (showHomeUrl) props.push('homeUrl="/"');
 
     props.push("sections={sections}");
     props.push('activeItem="dashboard"');
@@ -313,6 +315,11 @@ export default function DrawerPage() {
                 label="Show subtitle"
                 checked={showSubtitle}
                 onChange={setShowSubtitle}
+              />
+              <Checkbox
+                label="Show home button (mobile)"
+                checked={showHomeUrl}
+                onChange={setShowHomeUrl}
               />
             </div>
           </div>
