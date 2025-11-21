@@ -3,7 +3,11 @@
 import { useState } from "react";
 import {
   Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
   CardContent,
+  CardFooter,
   RadioGroup,
   Checkbox,
   CodeSnippet,
@@ -15,7 +19,11 @@ export default function CardsPage() {
   const [variant, setVariant] = useState<string>("elevated");
   const [padding, setPadding] = useState<string>("md");
   const [hoverable, setHoverable] = useState(false);
-  const [withIcon, setWithIcon] = useState(true);
+  const [showHeader, setShowHeader] = useState(true);
+  const [showTitle, setShowTitle] = useState(true);
+  const [showDescription, setShowDescription] = useState(true);
+  const [showContent, setShowContent] = useState(true);
+  const [showFooter, setShowFooter] = useState(false);
   const [showCodeOverlay, setShowCodeOverlay] = useState(false);
 
   // Generate code snippet
@@ -27,16 +35,37 @@ export default function CardsPage() {
     if (hoverable) props.push("hoverable");
 
     const propsString = props.join("\n  ");
-    
-    if (withIcon) {
-      return `<Card${
-        props.length > 0 ? `\n  ${propsString}` : ""
-      }>\n  <CardHeader>\n    <div className="w-12 h-12 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center mb-4">\n      <Zap className="w-6 h-6" />\n    </div>\n  </CardHeader>\n  <CardContent>\n    <h3 className="text-xl font-semibold mb-2">Feature Title</h3>\n    <p className="text-gray-600">Your content here</p>\n  </CardContent>\n</Card>`;
+    const parts: string[] = [];
+
+    if (showHeader) {
+      const headerParts: string[] = [];
+      if (showTitle) headerParts.push("    <CardTitle>Card Title</CardTitle>");
+      if (showDescription)
+        headerParts.push(
+          "    <CardDescription>Card description</CardDescription>"
+        );
+      if (headerParts.length > 0) {
+        parts.push(
+          `  <CardHeader>\n${headerParts.join("\n")}\n  </CardHeader>`
+        );
+      }
     }
-    
-    return `<Card${
-      props.length > 0 ? `\n  ${propsString}` : ""
-    }>\n  <CardContent>\n    Your content here\n  </CardContent>\n</Card>`;
+
+    if (showContent) {
+      parts.push(
+        "  <CardContent>\n    <p>Your content here</p>\n  </CardContent>"
+      );
+    }
+
+    if (showFooter) {
+      parts.push(
+        "  <CardFooter>\n    <button>Action</button>\n  </CardFooter>"
+      );
+    }
+
+    return `<Card${props.length > 0 ? `\n  ${propsString}` : ""}>\n${parts.join(
+      "\n"
+    )}\n</Card>`;
   };
 
   return (
@@ -68,29 +97,31 @@ export default function CardsPage() {
                     variant={variant as "default" | "bordered" | "elevated"}
                     padding={padding as "none" | "sm" | "md" | "lg"}
                     hoverable={hoverable}
-                    className="group"
                   >
-                    {withIcon && (
-                      <div className="w-12 h-12 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center mb-4 transition-colors group-hover:bg-blue-200">
-                        <Zap className="w-6 h-6" />
-                      </div>
+                    {showHeader && (
+                      <CardHeader>
+                        {showTitle && <CardTitle>Card Title</CardTitle>}
+                        {showDescription && (
+                          <CardDescription>Card description</CardDescription>
+                        )}
+                      </CardHeader>
                     )}
-                    <CardContent>
-                      {withIcon ? (
-                        <>
-                          <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                            Feature Title
-                          </h3>
-                          <p className="text-gray-600">
-                            Place icons or any content in CardHeader for flexible layouts.
-                          </p>
-                        </>
-                      ) : (
+                    {showContent && (
+                      <CardContent>
                         <p className="text-sm text-gray-700">
-                          This is a card component with customizable variants and padding.
+                          This is a card component with customizable variants
+                          and padding. Use the checkboxes to toggle different
+                          card sections.
                         </p>
-                      )}
-                    </CardContent>
+                      </CardContent>
+                    )}
+                    {showFooter && (
+                      <CardFooter>
+                        <button className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700 transition-colors">
+                          Action
+                        </button>
+                      </CardFooter>
+                    )}
                   </Card>
                 </div>
               </div>
@@ -171,12 +202,43 @@ export default function CardsPage() {
               checked={hoverable}
               onChange={setHoverable}
             />
-            
-            <Checkbox
-              label="Show icon example"
-              checked={withIcon}
-              onChange={setWithIcon}
-            />
+
+            <div className="space-y-3">
+              <h3 className="text-sm font-semibold text-gray-700">
+                Card Sections
+              </h3>
+              <div className="space-y-2">
+                <Checkbox
+                  label="Show Header"
+                  checked={showHeader}
+                  onChange={setShowHeader}
+                />
+                {showHeader && (
+                  <div className="ml-6 space-y-2">
+                    <Checkbox
+                      label="Show Title"
+                      checked={showTitle}
+                      onChange={setShowTitle}
+                    />
+                    <Checkbox
+                      label="Show Description"
+                      checked={showDescription}
+                      onChange={setShowDescription}
+                    />
+                  </div>
+                )}
+                <Checkbox
+                  label="Show Content"
+                  checked={showContent}
+                  onChange={setShowContent}
+                />
+                <Checkbox
+                  label="Show Footer"
+                  checked={showFooter}
+                  onChange={setShowFooter}
+                />
+              </div>
+            </div>
           </div>
         </Card>
       </section>
@@ -281,6 +343,237 @@ export default function CardsPage() {
                 </tr>
               </tbody>
             </table>
+          </div>
+        </Card>
+
+        <div className="mt-6">
+          <h3 className="text-lg font-semibold text-gray-900 mb-3">
+            Card Subcomponents
+          </h3>
+          <Card variant="elevated" padding="none">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                      Component
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                      Description
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                      Default Styles
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                      CardHeader
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-700">
+                      Container for card header content (title, description,
+                      icons)
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                      flex flex-col space-y-1.5
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                      CardTitle
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-700">
+                      Semantic h3 heading for the card title
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                      text-lg font-semibold text-gray-800
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                      CardDescription
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-700">
+                      Muted text for card descriptions or subtitles
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                      text-sm text-gray-600
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                      CardContent
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-700">
+                      Main content area of the card
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                      pt-0
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                      CardFooter
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-700">
+                      Footer area for actions or additional content
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                      flex items-center pt-4
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </Card>
+        </div>
+      </section>
+
+      {/* Usage Examples Section */}
+      <section>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          Usage Examples
+        </h2>
+        <div className="space-y-6">
+          {/* Basic Card with Header */}
+          <div>
+            <h3 className="text-md font-semibold text-gray-800 mb-3">
+              Card with Header and Footer
+            </h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card variant="elevated">
+                <CardHeader>
+                  <CardTitle>Card Title</CardTitle>
+                  <CardDescription>Card description goes here</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-700">
+                    This is the main content area. Use CardContent to wrap your
+                    card body.
+                  </p>
+                </CardContent>
+                <CardFooter>
+                  <button className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700">
+                    Action
+                  </button>
+                </CardFooter>
+              </Card>
+              <CodeSnippet
+                code={`<Card variant="elevated">
+  <CardHeader>
+    <CardTitle>Card Title</CardTitle>
+    <CardDescription>
+      Card description goes here
+    </CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p>Main content...</p>
+  </CardContent>
+  <CardFooter>
+    <button>Action</button>
+  </CardFooter>
+</Card>`}
+              />
+            </div>
+          </div>
+
+          {/* Simple Card */}
+          <div>
+            <h3 className="text-md font-semibold text-gray-800 mb-3">
+              Simple Card with Content Only
+            </h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card variant="bordered">
+                <CardContent>
+                  <p className="text-sm text-gray-700">
+                    You don&apos;t always need a header or footer. Use
+                    CardContent alone for simple cards.
+                  </p>
+                </CardContent>
+              </Card>
+              <CodeSnippet
+                code={`<Card variant="bordered">
+  <CardContent>
+    <p>Simple content...</p>
+  </CardContent>
+</Card>`}
+              />
+            </div>
+          </div>
+
+          {/* Card with Icon */}
+          <div>
+            <h3 className="text-md font-semibold text-gray-800 mb-3">
+              Card with Custom Header Content
+            </h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card variant="elevated" hoverable className="group">
+                <CardHeader>
+                  <div className="w-12 h-12 rounded-lg [background-color:var(--card-icon-purple-bg)] [color:var(--card-icon-purple-text)] flex items-center justify-center transition-colors group-hover:[background-color:var(--card-icon-purple-bg-hover)]">
+                    <Zap className="w-6 h-6" />
+                  </div>
+                  <CardTitle>Powerful Feature</CardTitle>
+                  <CardDescription>
+                    Add icons or any custom content to headers
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-gray-700">
+                    CardHeader is flexible - you can add icons, badges, or any
+                    custom elements alongside titles and descriptions.
+                  </p>
+                </CardContent>
+              </Card>
+              <CodeSnippet
+                code={`<Card variant="elevated" hoverable>
+  <CardHeader>
+    <div className="icon-wrapper">
+      <Icon />
+    </div>
+    <CardTitle>Powerful Feature</CardTitle>
+    <CardDescription>
+      Add icons or custom content
+    </CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p>Main content...</p>
+  </CardContent>
+</Card>`}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Theme Variables Section */}
+      <section>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          Theme Variables
+        </h2>
+        <Card variant="elevated" padding="lg">
+          <p className="text-sm text-gray-700 mb-4">
+            Card icon colors are themeable via CSS variables. Customize these in
+            your theme configuration:
+          </p>
+          <div className="bg-gray-50 rounded-lg p-4 font-mono text-sm">
+            <div className="space-y-1">
+              <div className="text-gray-600">--card-icon-blue-bg</div>
+              <div className="text-gray-600">--card-icon-blue-bg-hover</div>
+              <div className="text-gray-600">--card-icon-blue-text</div>
+              <div className="text-gray-500 text-xs mt-2">
+                + purple, green, orange, pink, indigo variants
+              </div>
+            </div>
+          </div>
+          <p className="text-sm text-gray-600 mt-4">
+            Use these variables with Tailwind&apos;s arbitrary values:
+          </p>
+          <div className="bg-gray-50 rounded-lg p-4 font-mono text-xs mt-2 overflow-x-auto">
+            <code className="text-gray-800">
+              className=&quot;[background-color:var(--card-icon-blue-bg)]
+              [color:var(--card-icon-blue-text)]&quot;
+            </code>
           </div>
         </Card>
       </section>

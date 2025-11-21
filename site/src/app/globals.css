@@ -79,6 +79,26 @@
   --card-border-width: 1px;
   --card-shadow-flat: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --card-shadow-elevated: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  
+  /* Card Icon Colors */
+  --card-icon-blue-bg: #dbeafe;
+  --card-icon-blue-bg-hover: #bfdbfe;
+  --card-icon-blue-text: #2563eb;
+  --card-icon-purple-bg: #e9d5ff;
+  --card-icon-purple-bg-hover: #d8b4fe;
+  --card-icon-purple-text: #9333ea;
+  --card-icon-green-bg: #d1fae5;
+  --card-icon-green-bg-hover: #a7f3d0;
+  --card-icon-green-text: #059669;
+  --card-icon-orange-bg: #fed7aa;
+  --card-icon-orange-bg-hover: #fdba74;
+  --card-icon-orange-text: #ea580c;
+  --card-icon-pink-bg: #fce7f3;
+  --card-icon-pink-bg-hover: #fbcfe8;
+  --card-icon-pink-text: #db2777;
+  --card-icon-indigo-bg: #e0e7ff;
+  --card-icon-indigo-bg-hover: #c7d2fe;
+  --card-icon-indigo-text: #4f46e5;
 }
 
 @theme inline {

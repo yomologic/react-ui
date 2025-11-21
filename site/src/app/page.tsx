@@ -222,7 +222,7 @@ export default function HomePage() {
                 Built with React 18+, Tailwind CSS, and modern best practices.
                 Future-proof architecture.
               </p>
-            </div>
+            </Card>
           </div>
         </div>
       </section>

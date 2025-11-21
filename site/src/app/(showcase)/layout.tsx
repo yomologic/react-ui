@@ -11,7 +11,6 @@ import {
   Tag,
   MessageCircle,
   Layout,
-  Sparkles,
   ChevronDown,
   Star,
   Menu as MenuIcon,
@@ -83,16 +82,6 @@ const navSections: DrawerNavSection[] = [
         id: "drawer",
         label: "Drawer",
         icon: <PanelLeft className="w-5 h-5" />,
-      },
-    ],
-  },
-  {
-    title: "Advanced",
-    items: [
-      {
-        id: "examples",
-        label: "Examples",
-        icon: <Sparkles className="w-5 h-5" />,
       },
     ],
   },

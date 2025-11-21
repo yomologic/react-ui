@@ -117,6 +117,15 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     root.style.setProperty("--card-shadow-flat", card.shadow.flat);
     root.style.setProperty("--card-shadow-elevated", card.shadow.elevated);
 
+    // Card icon colors
+    if (card.iconColors) {
+      Object.entries(card.iconColors).forEach(([color, values]) => {
+        root.style.setProperty(`--card-icon-${color}-bg`, values.bg);
+        root.style.setProperty(`--card-icon-${color}-bg-hover`, values.bgHover);
+        root.style.setProperty(`--card-icon-${color}-text`, values.text);
+      });
+    }
+
     // Component: Input
     const input = newTheme.components.input;
     Object.entries(input.padding).forEach(([size, padding]) => {

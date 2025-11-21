@@ -110,6 +110,14 @@ export interface CardTheme {
     flat: string;
     elevated: string;
   };
+  iconColors?: {
+    blue: { bg: string; bgHover: string; text: string };
+    purple: { bg: string; bgHover: string; text: string };
+    green: { bg: string; bgHover: string; text: string };
+    orange: { bg: string; bgHover: string; text: string };
+    pink: { bg: string; bgHover: string; text: string };
+    indigo: { bg: string; bgHover: string; text: string };
+  };
 }
 
 export interface InputTheme {
