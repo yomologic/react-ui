@@ -23,6 +23,7 @@ export interface DrawerProps {
   onItemClick: (itemId: string) => void;
   footer?: React.ReactNode;
   position?: "left" | "right";
+  homeUrl?: string;
 }
 
 export function Drawer({
@@ -34,6 +35,7 @@ export function Drawer({
   onItemClick,
   footer,
   position = "right",
+  homeUrl,
 }: DrawerProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -56,17 +58,40 @@ export function Drawer({
             isLeft ? "justify-between" : "justify-between flex-row-reverse"
           }`}
         >
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors relative [z-index:var(--z-index-drawer-button)]"
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? (
-              <X className="w-6 h-6 text-gray-700" />
-            ) : (
-              <Menu className="w-6 h-6 text-gray-700" />
+          <div className="flex items-center gap-2">
+            {homeUrl && (
+              <a
+                href={homeUrl}
+                className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                aria-label="Go to home"
+              >
+                <svg
+                  className="w-5 h-5 text-gray-700"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                  />
+                </svg>
+              </a>
             )}
-          </button>
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors relative [z-index:var(--z-index-drawer-button)]"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6 text-gray-700" />
+              ) : (
+                <Menu className="w-6 h-6 text-gray-700" />
+              )}
+            </button>
+          </div>
           <div>
             <h1 className="text-lg font-bold text-gray-900">{title}</h1>
             {subtitle && <p className="text-xs text-gray-500">{subtitle}</p>}

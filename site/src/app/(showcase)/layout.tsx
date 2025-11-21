@@ -148,6 +148,7 @@ export default function ShowcaseLayout({
         activeItem={currentSection}
         onItemClick={handleSectionChange}
         position="right"
+        homeUrl="/"
       />
     </div>
   );
