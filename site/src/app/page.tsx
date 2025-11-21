@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Button, Badge } from "@yomologic/react-ui";
+import { Button, Badge, Card } from "@yomologic/react-ui";
 import {
   Zap,
   Palette,
@@ -111,9 +111,14 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Feature 1 */}
-            <div className="p-6 rounded-xl border border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                <Zap className="w-6 h-6 text-blue-600" />
+            <Card
+              variant="elevated"
+              hoverable
+              padding="lg"
+              className="group border-gray-200 hover:border-blue-300 transition-all"
+            >
+              <div className="w-12 h-12 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center mb-4 transition-colors group-hover:bg-blue-200">
+                <Zap className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
                 Lightning Fast
@@ -122,12 +127,17 @@ export default function HomePage() {
                 Optimized for performance with tree-shaking and minimal bundle
                 size. Only ship what you use.
               </p>
-            </div>
+            </Card>
 
             {/* Feature 2 */}
-            <div className="p-6 rounded-xl border border-gray-200 hover:border-purple-300 hover:shadow-lg transition-all">
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                <Palette className="w-6 h-6 text-purple-600" />
+            <Card
+              variant="elevated"
+              hoverable
+              padding="lg"
+              className="group border-gray-200 hover:border-purple-300 transition-all"
+            >
+              <div className="w-12 h-12 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center mb-4 transition-colors group-hover:bg-purple-200">
+                <Palette className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
                 Fully Themeable
@@ -136,12 +146,17 @@ export default function HomePage() {
                 Powerful theme system with CSS variables. Customize colors,
                 spacing, and density to match your brand.
               </p>
-            </div>
+            </Card>
 
             {/* Feature 3 */}
-            <div className="p-6 rounded-xl border border-gray-200 hover:border-green-300 hover:shadow-lg transition-all">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                <Code2 className="w-6 h-6 text-green-600" />
+            <Card
+              variant="elevated"
+              hoverable
+              padding="lg"
+              className="group border-gray-200 hover:border-green-300 transition-all"
+            >
+              <div className="w-12 h-12 rounded-lg bg-green-100 text-green-600 flex items-center justify-center mb-4 transition-colors group-hover:bg-green-200">
+                <Code2 className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
                 TypeScript First
@@ -150,12 +165,17 @@ export default function HomePage() {
                 Built with TypeScript for excellent IDE support and type safety.
                 Catch errors before they happen.
               </p>
-            </div>
+            </Card>
 
             {/* Feature 4 */}
-            <div className="p-6 rounded-xl border border-gray-200 hover:border-orange-300 hover:shadow-lg transition-all">
-              <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
-                <Smartphone className="w-6 h-6 text-orange-600" />
+            <Card
+              variant="elevated"
+              hoverable
+              padding="lg"
+              className="group border-gray-200 hover:border-orange-300 transition-all"
+            >
+              <div className="w-12 h-12 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center mb-4 transition-colors group-hover:bg-orange-200">
+                <Smartphone className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
                 Mobile Ready
@@ -164,12 +184,17 @@ export default function HomePage() {
                 Responsive by default with touch-friendly interactions. Works
                 perfectly on any device size.
               </p>
-            </div>
+            </Card>
 
             {/* Feature 5 */}
-            <div className="p-6 rounded-xl border border-gray-200 hover:border-pink-300 hover:shadow-lg transition-all">
-              <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-4">
-                <Layers className="w-6 h-6 text-pink-600" />
+            <Card
+              variant="elevated"
+              hoverable
+              padding="lg"
+              className="group border-gray-200 hover:border-pink-300 transition-all"
+            >
+              <div className="w-12 h-12 rounded-lg bg-pink-100 text-pink-600 flex items-center justify-center mb-4 transition-colors group-hover:bg-pink-200">
+                <Layers className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
                 Comprehensive
@@ -178,12 +203,17 @@ export default function HomePage() {
                 15+ production-ready components covering forms, navigation,
                 feedback, and more.
               </p>
-            </div>
+            </Card>
 
             {/* Feature 6 */}
-            <div className="p-6 rounded-xl border border-gray-200 hover:border-indigo-300 hover:shadow-lg transition-all">
-              <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
-                <Sparkles className="w-6 h-6 text-indigo-600" />
+            <Card
+              variant="elevated"
+              hoverable
+              padding="lg"
+              className="group border-gray-200 hover:border-indigo-300 transition-all"
+            >
+              <div className="w-12 h-12 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center mb-4 transition-colors group-hover:bg-indigo-200">
+                <Sparkles className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
                 Modern Stack

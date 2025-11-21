@@ -9,12 +9,13 @@ import {
   CodeSnippet,
 } from "@yomologic/react-ui";
 import { SectionLayout } from "@yomologic/react-ui";
-import { Settings2, Code2, BookOpen } from "lucide-react";
+import { Settings2, Code2, BookOpen, Zap } from "lucide-react";
 
 export default function CardsPage() {
   const [variant, setVariant] = useState<string>("elevated");
   const [padding, setPadding] = useState<string>("md");
   const [hoverable, setHoverable] = useState(false);
+  const [withIcon, setWithIcon] = useState(true);
   const [showCodeOverlay, setShowCodeOverlay] = useState(false);
 
   // Generate code snippet
@@ -26,6 +27,13 @@ export default function CardsPage() {
     if (hoverable) props.push("hoverable");
 
     const propsString = props.join("\n  ");
+    
+    if (withIcon) {
+      return `<Card${
+        props.length > 0 ? `\n  ${propsString}` : ""
+      }>\n  <CardHeader>\n    <div className="w-12 h-12 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center mb-4">\n      <Zap className="w-6 h-6" />\n    </div>\n  </CardHeader>\n  <CardContent>\n    <h3 className="text-xl font-semibold mb-2">Feature Title</h3>\n    <p className="text-gray-600">Your content here</p>\n  </CardContent>\n</Card>`;
+    }
+    
     return `<Card${
       props.length > 0 ? `\n  ${propsString}` : ""
     }>\n  <CardContent>\n    Your content here\n  </CardContent>\n</Card>`;
@@ -60,12 +68,28 @@ export default function CardsPage() {
                     variant={variant as "default" | "bordered" | "elevated"}
                     padding={padding as "none" | "sm" | "md" | "lg"}
                     hoverable={hoverable}
+                    className="group"
                   >
+                    {withIcon && (
+                      <div className="w-12 h-12 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center mb-4 transition-colors group-hover:bg-blue-200">
+                        <Zap className="w-6 h-6" />
+                      </div>
+                    )}
                     <CardContent>
-                      <p className="text-sm text-gray-700">
-                        This is a card component with customizable variants and
-                        padding.
-                      </p>
+                      {withIcon ? (
+                        <>
+                          <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                            Feature Title
+                          </h3>
+                          <p className="text-gray-600">
+                            Place icons or any content in CardHeader for flexible layouts.
+                          </p>
+                        </>
+                      ) : (
+                        <p className="text-sm text-gray-700">
+                          This is a card component with customizable variants and padding.
+                        </p>
+                      )}
                     </CardContent>
                   </Card>
                 </div>
@@ -146,6 +170,12 @@ export default function CardsPage() {
               label="Hoverable"
               checked={hoverable}
               onChange={setHoverable}
+            />
+            
+            <Checkbox
+              label="Show icon example"
+              checked={withIcon}
+              onChange={setWithIcon}
             />
           </div>
         </Card>
