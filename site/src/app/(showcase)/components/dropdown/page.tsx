@@ -180,7 +180,7 @@ export default function DropdownPage() {
                           >
                             {country.label}
                             {selectedValue === country.value && (
-                              <Badge variant="primary" size="sm">
+                              <Badge variant="info" size="sm">
                                 Selected
                               </Badge>
                             )}
@@ -205,7 +205,7 @@ export default function DropdownPage() {
                           >
                             {country.label}
                             {selectedValue === country.value && (
-                              <Badge variant="primary" size="sm">
+                              <Badge variant="info" size="sm">
                                 Selected
                               </Badge>
                             )}
@@ -230,7 +230,7 @@ export default function DropdownPage() {
                           >
                             {country.label}
                             {selectedValue === country.value && (
-                              <Badge variant="primary" size="sm">
+                              <Badge variant="info" size="sm">
                                 Selected
                               </Badge>
                             )}

@@ -20,7 +20,16 @@ import { SectionLayout } from "@yomologic/react-ui";
 
 export default function ButtonsPage() {
   // Interactive playground state
-  type VariantType = "primary" | "secondary" | "outline" | "ghost" | "default" | "info" | "success" | "warning" | "error";
+  type VariantType =
+    | "primary"
+    | "secondary"
+    | "outline"
+    | "ghost"
+    | "default"
+    | "info"
+    | "success"
+    | "warning"
+    | "error";
   type SizeType = "xs" | "sm" | "md" | "lg" | "xl";
 
   const [variant, setVariant] = useState<VariantType>("primary");
@@ -240,8 +249,9 @@ export default function ButtonsPage() {
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600 font-mono">
                     &quot;primary&quot; | &quot;secondary&quot; |
-                    &quot;outline&quot; | &quot;ghost&quot; | &quot;default&quot; |
-                    &quot;info&quot; | &quot;success&quot; | &quot;warning&quot; | &quot;error&quot;
+                    &quot;outline&quot; | &quot;ghost&quot; |
+                    &quot;default&quot; | &quot;info&quot; | &quot;success&quot;
+                    | &quot;warning&quot; | &quot;error&quot;
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
                     &quot;primary&quot;
