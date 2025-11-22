@@ -9,6 +9,7 @@ export { Dropdown } from './ui/dropdown';
 export { Spinner } from './ui/spinner';
 export { CodeSnippet } from './ui/code-snippet';
 export { Rating } from './ui/rating';
+export { Dialog, DialogHeader, DialogTitle, DialogDescription, DialogContent, DialogFooter } from './ui/dialog';
 
 // Feedback Components
 export { Alert } from './feedback/alert';

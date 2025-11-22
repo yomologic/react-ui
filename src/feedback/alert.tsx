@@ -23,18 +23,34 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
     },
     ref
   ) => {
-    const variants = {
-      info: "bg-blue-50 border-blue-200 text-blue-800",
-      success: "bg-green-50 border-green-200 text-green-800",
-      warning: "bg-yellow-50 border-yellow-200 text-yellow-800",
-      error: "bg-red-50 border-red-200 text-red-800",
+    const variantStyles = {
+      info: {
+        backgroundColor: "var(--color-info-muted)",
+        borderColor: "var(--color-info-border)",
+        color: "var(--color-info-muted-foreground)",
+      },
+      success: {
+        backgroundColor: "var(--color-success-muted)",
+        borderColor: "var(--color-success-border)",
+        color: "var(--color-success-muted-foreground)",
+      },
+      warning: {
+        backgroundColor: "var(--color-warning-muted)",
+        borderColor: "var(--color-warning-border)",
+        color: "var(--color-warning-muted-foreground)",
+      },
+      error: {
+        backgroundColor: "var(--color-error-muted)",
+        borderColor: "var(--color-error-border)",
+        color: "var(--color-error-muted-foreground)",
+      },
     };
 
-    const iconColors = {
-      info: "text-blue-500",
-      success: "text-green-500",
-      warning: "text-yellow-500",
-      error: "text-red-500",
+    const iconStyles = {
+      info: { color: "var(--color-info-border)" },
+      success: { color: "var(--color-success-border)" },
+      warning: { color: "var(--color-warning-border)" },
+      error: { color: "var(--color-error-border)" },
     };
 
     const defaultIcons = {
@@ -79,16 +95,13 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
     return (
       <div
         ref={ref}
-        className={cn(
-          "relative border rounded-lg p-4",
-          variants[variant],
-          className
-        )}
+        style={variantStyles[variant]}
+        className={cn("relative border rounded-lg p-4", className)}
         role="alert"
         {...props}
       >
         <div className="flex items-start gap-3">
-          <div className={cn("flex-shrink-0", iconColors[variant])}>
+          <div className="shrink-0" style={iconStyles[variant]}>
             {icon || defaultIcons[variant]}
           </div>
 
@@ -101,11 +114,37 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
             <button
               type="button"
               onClick={onDismiss}
-              className={cn(
-                "flex-shrink-0 rounded-lg p-1.5 inline-flex focus:outline-none focus:ring-2",
-                iconColors[variant],
-                "hover:bg-black hover:bg-opacity-10"
-              )}
+              style={{
+                color: iconStyles[variant].color,
+                transition: "background-color 0.2s ease",
+                backgroundColor: "transparent",
+              }}
+              onMouseEnter={(e) => {
+                const root = document.documentElement;
+                const color = getComputedStyle(root)
+                  .getPropertyValue(`--color-${variant}-border`)
+                  .trim();
+                // Convert hex to rgba with 15% opacity
+                const rgb = color.match(
+                  /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i
+                );
+                if (rgb) {
+                  const r = parseInt(rgb[1], 16);
+                  const g = parseInt(rgb[2], 16);
+                  const b = parseInt(rgb[3], 16);
+                  e.currentTarget.style.backgroundColor = `rgba(${r}, ${g}, ${b}, 0.15)`;
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "transparent";
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.boxShadow = `0 0 0 2px var(--color-${variant}-border)`;
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.boxShadow = "none";
+              }}
+              className="shrink-0 rounded-lg p-1.5 inline-flex focus:outline-none"
               aria-label="Close"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">

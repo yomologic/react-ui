@@ -18,13 +18,22 @@ export interface ColorShades {
   900?: string;
 }
 
+export interface SemanticColorShades {
+  default: string;
+  foreground: string;
+  muted: string;
+  'muted-foreground': string;
+  border: string;
+}
+
 export interface ThemeColors {
   primary: ColorShades;
   secondary: ColorShades;
-  success: string;
-  error: string;
-  warning: string;
-  info: string;
+  // Semantic colors with full shade definitions
+  info: SemanticColorShades;
+  success: SemanticColorShades;
+  warning: SemanticColorShades;
+  error: SemanticColorShades;
   // Neutral colors
   gray: ColorShades;
   // Background and text
@@ -95,6 +104,8 @@ export interface ButtonTheme {
   borderRadius: string;
   // Font weight
   fontWeight: string;
+  // Border width
+  borderWidth: string;
 }
 
 export interface CardTheme {
@@ -274,6 +285,24 @@ export interface DrawerTheme {
   borderRadius: string;
 }
 
+export interface DialogTheme {
+  maxWidth: {
+    sm: string;
+    md: string;
+    lg: string;
+    xl: string;
+    full: string;
+  };
+  padding: {
+    header: { x: string; y: string };
+    content: { x: string; y: string };
+    footer: { x: string; y: string };
+  };
+  borderRadius: string;
+  borderWidth: string;
+  backdropBlur: string;
+}
+
 export interface ZIndexScale {
   // Dropdowns and popovers
   dropdown: number;
@@ -307,6 +336,7 @@ export interface ComponentThemes {
   dropdown: DropdownTheme;
   nav: NavTheme;
   drawer: DrawerTheme;
+  dialog: DialogTheme;
 }
 
 export type DensityLevel = 'comfortable' | 'standard' | 'compact';

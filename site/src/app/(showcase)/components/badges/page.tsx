@@ -12,7 +12,7 @@ import { SectionLayout } from "@yomologic/react-ui";
 import { Settings2, Code2, BookOpen } from "lucide-react";
 
 export default function BadgesPage() {
-  const [variant, setVariant] = useState<string>("primary");
+  const [variant, setVariant] = useState<string>("info");
   const [size, setSize] = useState<string>("md");
   const [hasDot, setHasDot] = useState(false);
   const [showCodeOverlay, setShowCodeOverlay] = useState(false);
@@ -58,10 +58,9 @@ export default function BadgesPage() {
                     variant={
                       variant as
                         | "default"
-                        | "primary"
                         | "success"
                         | "warning"
-                        | "danger"
+                        | "error"
                         | "info"
                     }
                     size={size as "sm" | "md" | "lg"}
@@ -124,10 +123,10 @@ export default function BadgesPage() {
               orientation="horizontal"
               options={[
                 { value: "default", label: "Default" },
-                { value: "primary", label: "Primary" },
+
                 { value: "success", label: "Success" },
                 { value: "warning", label: "Warning" },
-                { value: "danger", label: "Danger" },
+                { value: "error", label: "Error" },
                 { value: "info", label: "Info" },
               ]}
             />
@@ -187,9 +186,8 @@ export default function BadgesPage() {
                     variant
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                    &quot;default&quot; | &quot;primary&quot; |
-                    &quot;success&quot; | &quot;warning&quot; |
-                    &quot;danger&quot; | &quot;info&quot;
+                    &quot;default&quot; | &quot;success&quot; |
+                    &quot;warning&quot; | &quot;error&quot; | &quot;info&quot;
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
                     &quot;default&quot;

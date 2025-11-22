@@ -16,16 +16,37 @@
   --color-primary-active: #1d4ed8;
   --color-secondary: #6b7280;
   --color-secondary-hover: #4b5563;
-  --color-success: #10b981;
-  --color-error: #ef4444;
-  --color-warning: #f59e0b;
-  --color-info: #3b82f6;
   --color-background: #ffffff;
   --color-foreground: #111827;
   --color-muted: #f3f4f6;
   --color-muted-foreground: #6b7280;
   --color-placeholder: #9ca3af;
   --color-border: #9ca3af;
+
+  /* Semantic Colors - Shared across all components */
+  --color-info: #3b82f6;
+  --color-info-foreground: #ffffff;
+  --color-info-muted: #eff6ff;
+  --color-info-muted-foreground: #1d4ed8;
+  --color-info-border: #3b82f6;
+  
+  --color-success: #22c55e;
+  --color-success-foreground: #ffffff;
+  --color-success-muted: #f0fdf4;
+  --color-success-muted-foreground: #15803d;
+  --color-success-border: #22c55e;
+  
+  --color-warning: #eab308;
+  --color-warning-foreground: #ffffff;
+  --color-warning-muted: #fefce8;
+  --color-warning-muted-foreground: #a16207;
+  --color-warning-border: #eab308;
+  
+  --color-error: #ef4444;
+  --color-error-foreground: #ffffff;
+  --color-error-muted: #fef2f2;
+  --color-error-muted-foreground: #b91c1c;
+  --color-error-border: #ef4444;
 
   /* Spacing */
   --spacing-xs: 0.25rem;
@@ -69,6 +90,7 @@
   --button-text-lg: 1.125rem;
   --button-radius: 0.5rem;
   --button-font-weight: 500;
+  --button-border-width: 2px;
 
   /* Component: Card */
   --card-padding-none: 0;
@@ -99,11 +121,104 @@
   --card-icon-indigo-bg: #e0e7ff;
   --card-icon-indigo-bg-hover: #c7d2fe;
   --card-icon-indigo-text: #4f46e5;
+
+  /* Dialog */
+  --dialog-max-width-sm: 24rem;
+  --dialog-max-width-md: 28rem;
+  --dialog-max-width-lg: 32rem;
+  --dialog-max-width-xl: 36rem;
+  --dialog-padding-header-x: 1.5rem;
+  --dialog-padding-header-y: 1rem;
+  --dialog-padding-content-x: 1.5rem;
+  --dialog-padding-content-y: 1rem;
+  --dialog-padding-footer-x: 1.5rem;
+  --dialog-padding-footer-y: 1rem;
+  --dialog-border-radius: 0.75rem;
+  --dialog-border-width: 1px;
+  --dialog-backdrop-blur: 4px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+@theme {
+  /* Define semantic colors - Tailwind will generate bg-*, text-*, border-* utilities */
+  --color-info: #3b82f6;
+  --color-info-foreground: #ffffff;
+  --color-info-muted: #eff6ff;
+  --color-info-muted-foreground: #1d4ed8;
+  --color-info-border: #3b82f6;
+  
+  --color-success: #22c55e;
+  --color-success-foreground: #ffffff;
+  --color-success-muted: #f0fdf4;
+  --color-success-muted-foreground: #15803d;
+  --color-success-border: #22c55e;
+  
+  --color-warning: #eab308;
+  --color-warning-foreground: #ffffff;
+  --color-warning-muted: #fefce8;
+  --color-warning-muted-foreground: #a16207;
+  --color-warning-border: #eab308;
+  
+  --color-error: #ef4444;
+  --color-error-foreground: #ffffff;
+  --color-error-muted: #fef2f2;
+  --color-error-muted-foreground: #b91c1c;
+  --color-error-border: #ef4444;
+}
+
+@utility text-warning-border {
+  color: var(--color-warning-border);
+}
+
+@utility text-error-border {
+  color: var(--color-error-border);
+}
+
+@utility bg-info {
+  background-color: var(--color-info);
+}
+
+@utility bg-success {
+  background-color: var(--color-success);
+}
+
+@utility bg-warning {
+  background-color: var(--color-warning);
+}
+
+@utility bg-error {
+  background-color: var(--color-error);
+}
+
+@utility text-info-foreground {
+  color: var(--color-info-foreground);
+}
+
+@utility text-success-foreground {
+  color: var(--color-success-foreground);
+}
+
+@utility text-warning-foreground {
+  color: var(--color-warning-foreground);
+}
+
+@utility text-error-foreground {
+  color: var(--color-error-foreground);
+}
+
+@utility border-info {
+  border-color: var(--color-info);
+}
+
+@utility border-success {
+  border-color: var(--color-success);
+}
+
+@utility border-warning {
+  border-color: var(--color-warning);
+}
+
+@utility border-error {
+  border-color: var(--color-error);
 }
 
 @media (prefers-color-scheme: dark) {

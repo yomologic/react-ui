@@ -1,0 +1,236 @@
+/**
+ * Base Component Styles
+ * 
+ * Semantic color utilities that reference CSS variables.
+ * These utilities work with any theme by referencing the CSS variables
+ * defined in theme CSS files.
+ * 
+ * Import this along with a theme CSS file:
+ *   import '@yomologic/react-ui/base.css';
+ *   import '@yomologic/react-ui/themes/default.css';
+ */
+
+/* ============================================
+   Semantic Background Colors
+   ============================================ */
+
+.bg-info {
+  background-color: var(--color-info);
+}
+
+.bg-info-muted {
+  background-color: var(--color-info-muted);
+}
+
+.bg-success {
+  background-color: var(--color-success);
+}
+
+.bg-success-muted {
+  background-color: var(--color-success-muted);
+}
+
+.bg-warning {
+  background-color: var(--color-warning);
+}
+
+.bg-warning-muted {
+  background-color: var(--color-warning-muted);
+}
+
+.bg-error {
+  background-color: var(--color-error);
+}
+
+.bg-error-muted {
+  background-color: var(--color-error-muted);
+}
+
+/* ============================================
+   Semantic Text Colors
+   ============================================ */
+
+.text-info {
+  color: var(--color-info);
+}
+
+.text-info-foreground {
+  color: var(--color-info-foreground);
+}
+
+.text-info-muted-foreground {
+  color: var(--color-info-muted-foreground);
+}
+
+.text-success {
+  color: var(--color-success);
+}
+
+.text-success-foreground {
+  color: var(--color-success-foreground);
+}
+
+.text-success-muted-foreground {
+  color: var(--color-success-muted-foreground);
+}
+
+.text-warning {
+  color: var(--color-warning);
+}
+
+.text-warning-foreground {
+  color: var(--color-warning-foreground);
+}
+
+.text-warning-muted-foreground {
+  color: var(--color-warning-muted-foreground);
+}
+
+.text-error {
+  color: var(--color-error);
+}
+
+.text-error-foreground {
+  color: var(--color-error-foreground);
+}
+
+.text-error-muted-foreground {
+  color: var(--color-error-muted-foreground);
+}
+
+/* ============================================
+   Semantic Border Colors
+   ============================================ */
+
+.border-info {
+  border-color: var(--color-info);
+}
+
+.border-info-border {
+  border-color: var(--color-info-border);
+}
+
+.border-success {
+  border-color: var(--color-success);
+}
+
+.border-success-border {
+  border-color: var(--color-success-border);
+}
+
+.border-warning {
+  border-color: var(--color-warning);
+}
+
+.border-warning-border {
+  border-color: var(--color-warning-border);
+}
+
+.border-error {
+  border-color: var(--color-error);
+}
+
+.border-error-border {
+  border-color: var(--color-error-border);
+}
+
+/* ============================================
+   Icon Colors (for Alert/Dialog icons)
+   ============================================ */
+
+.text-info-border {
+  color: var(--color-info-border);
+}
+
+.text-success-border {
+  color: var(--color-success-border);
+}
+
+.text-warning-border {
+  color: var(--color-warning-border);
+}
+
+.text-error-border {
+  color: var(--color-error-border);
+}
+
+/* ============================================
+   Hover States (opacity modifiers)
+   ============================================ */
+
+.hover\:bg-info-muted\/80:hover {
+  background-color: rgb(from var(--color-info-muted) r g b / 0.8);
+}
+
+.hover\:bg-success-muted\/80:hover {
+  background-color: rgb(from var(--color-success-muted) r g b / 0.8);
+}
+
+.hover\:bg-warning-muted\/80:hover {
+  background-color: rgb(from var(--color-warning-muted) r g b / 0.8);
+}
+
+.hover\:bg-error-muted\/80:hover {
+  background-color: rgb(from var(--color-error-muted) r g b / 0.8);
+}
+
+.hover\:bg-info\/90:hover {
+  background-color: rgb(from var(--color-info) r g b / 0.9);
+}
+
+.hover\:bg-error\/90:hover {
+  background-color: rgb(from var(--color-error) r g b / 0.9);
+}
+
+/* For browsers that don't support rgb from */
+@supports not (background-color: rgb(from white r g b / 0.5)) {
+  .hover\:bg-info-muted\/80:hover {
+    background-color: var(--color-info-muted);
+    opacity: 0.8;
+  }
+  
+  .hover\:bg-success-muted\/80:hover {
+    background-color: var(--color-success-muted);
+    opacity: 0.8;
+  }
+  
+  .hover\:bg-warning-muted\/80:hover {
+    background-color: var(--color-warning-muted);
+    opacity: 0.8;
+  }
+  
+  .hover\:bg-error-muted\/80:hover {
+    background-color: var(--color-error-muted);
+    opacity: 0.8;
+  }
+  
+  .hover\:bg-info\/90:hover {
+    background-color: var(--color-info);
+    opacity: 0.9;
+  }
+  
+  .hover\:bg-error\/90:hover {
+    background-color: var(--color-error);
+    opacity: 0.9;
+  }
+}
+
+/* ============================================
+   Focus Ring Colors
+   ============================================ */
+
+.focus\:ring-info:focus {
+  --tw-ring-color: var(--color-info);
+}
+
+.focus\:ring-success:focus {
+  --tw-ring-color: var(--color-success);
+}
+
+.focus\:ring-warning:focus {
+  --tw-ring-color: var(--color-warning);
+}
+
+.focus\:ring-error:focus {
+  --tw-ring-color: var(--color-error);
+}

@@ -2,7 +2,7 @@ import React from "react";
 import { cn } from "../lib/utils";
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
-  variant?: "default" | "primary" | "success" | "warning" | "danger" | "info";
+  variant?: "default" | "info" | "success" | "warning" | "error";
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   dot?: boolean;
 }
@@ -21,13 +21,27 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
   ) => {
     const baseStyles = "inline-flex items-center font-medium rounded-full";
 
-    const variants = {
-      default: "bg-gray-100 text-gray-800",
-      primary: "bg-blue-100 text-blue-800",
-      success: "bg-green-100 text-green-800",
-      warning: "bg-yellow-100 text-yellow-800",
-      danger: "bg-red-100 text-red-800",
-      info: "bg-cyan-100 text-cyan-800",
+    const variantStyles = {
+      default: {
+        backgroundColor: "#e5e7eb",
+        color: "#374151",
+      },
+      info: {
+        backgroundColor: "var(--color-info-muted)",
+        color: "var(--color-info-muted-foreground)",
+      },
+      success: {
+        backgroundColor: "var(--color-success-muted)",
+        color: "var(--color-success-muted-foreground)",
+      },
+      warning: {
+        backgroundColor: "var(--color-warning-muted)",
+        color: "var(--color-warning-muted-foreground)",
+      },
+      error: {
+        backgroundColor: "var(--color-error-muted)",
+        color: "var(--color-error-muted-foreground)",
+      },
     };
 
     const sizes = {
@@ -38,24 +52,25 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
       xl: "text-lg px-3.5 py-2",
     };
 
-    const dotVariants = {
-      default: "bg-gray-600",
-      primary: "bg-blue-600",
-      success: "bg-green-600",
-      warning: "bg-yellow-600",
-      danger: "bg-red-600",
-      info: "bg-cyan-600",
+    const dotStyles = {
+      default: { backgroundColor: "var(--color-muted-foreground)" },
+      info: { backgroundColor: "var(--color-info-border)" },
+      success: { backgroundColor: "var(--color-success-border)" },
+      warning: { backgroundColor: "var(--color-warning-border)" },
+      error: { backgroundColor: "var(--color-error-border)" },
     };
 
     return (
       <span
         ref={ref}
-        className={cn(baseStyles, variants[variant], sizes[size], className)}
+        style={variantStyles[variant]}
+        className={cn(baseStyles, sizes[size], className)}
         {...props}
       >
         {dot && (
           <span
-            className={cn("w-2 h-2 rounded-full mr-1.5", dotVariants[variant])}
+            style={dotStyles[variant]}
+            className="w-2 h-2 rounded-full mr-1.5"
           />
         )}
         {children}

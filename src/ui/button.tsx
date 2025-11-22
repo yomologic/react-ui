@@ -3,7 +3,16 @@ import { cn } from "../lib/utils";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline" | "ghost" | "danger";
+  variant?:
+    | "primary"
+    | "secondary"
+    | "outline"
+    | "ghost"
+    | "default"
+    | "info"
+    | "success"
+    | "warning"
+    | "error";
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   isLoading?: boolean;
   leftIcon?: React.ReactNode;
@@ -28,17 +37,68 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const baseStyles =
       "inline-flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed";
 
-    // Use CSS variables for theming
+    // Use inline styles with CSS variables for semantic variants
+    const getVariantStyles = (variant: string) => {
+      const styles: React.CSSProperties = {};
+
+      switch (variant) {
+        case "primary":
+          styles.backgroundColor = "var(--color-primary)";
+          styles.color = "#ffffff";
+          break;
+        case "secondary":
+          styles.backgroundColor = "var(--color-secondary)";
+          styles.color = "#ffffff";
+          break;
+        case "outline":
+          styles.borderWidth = "var(--button-border-width)";
+          styles.borderColor = "var(--color-primary)";
+          styles.color = "var(--color-primary)";
+          styles.backgroundColor = "transparent";
+          break;
+        case "ghost":
+          styles.backgroundColor = "transparent";
+          styles.color = "var(--color-foreground)";
+          break;
+        case "default":
+          styles.backgroundColor = "#e5e7eb";
+          styles.color = "#374151";
+          break;
+        case "info":
+          styles.backgroundColor = "var(--color-info-muted)";
+          styles.borderColor = "var(--color-info-border)";
+          styles.color = "var(--color-info-muted-foreground)";
+          break;
+        case "success":
+          styles.backgroundColor = "var(--color-success-muted)";
+          styles.borderColor = "var(--color-success-border)";
+          styles.color = "var(--color-success-muted-foreground)";
+          break;
+        case "warning":
+          styles.backgroundColor = "var(--color-warning-muted)";
+          styles.borderColor = "var(--color-warning-border)";
+          styles.color = "var(--color-warning-muted-foreground)";
+          break;
+        case "error":
+          styles.backgroundColor = "var(--color-error-muted)";
+          styles.borderColor = "var(--color-error-border)";
+          styles.color = "var(--color-error-muted-foreground)";
+          break;
+      }
+
+      return styles;
+    };
+
     const variants = {
-      primary:
-        "[background-color:var(--color-primary)] text-white hover:[background-color:var(--color-primary-hover)] focus:[--tw-ring-color:var(--color-primary)]",
-      secondary:
-        "[background-color:var(--color-secondary)] text-white hover:[background-color:var(--color-secondary-hover)] focus:[--tw-ring-color:var(--color-secondary)]",
-      outline:
-        "border-2 [border-color:var(--color-primary)] [color:var(--color-primary)] hover:bg-blue-50 focus:[--tw-ring-color:var(--color-primary)]",
-      ghost: "text-gray-700 hover:bg-gray-100 focus:ring-gray-500",
-      danger:
-        "[background-color:var(--color-error)] text-white hover:bg-red-700 focus:[--tw-ring-color:var(--color-error)]",
+      primary: "",
+      secondary: "",
+      outline: "border-2",
+      ghost: "hover:bg-gray-100",
+      default: "",
+      info: "border-2",
+      success: "border-2",
+      warning: "border-2",
+      error: "border-2",
     };
 
     const sizes = {
@@ -55,6 +115,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={ref}
+        style={getVariantStyles(variant)}
         className={cn(
           baseStyles,
           variants[variant],

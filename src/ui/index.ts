@@ -20,3 +20,6 @@ export { CodeSnippet } from "./code-snippet";
 
 export { Dropdown } from "./dropdown";
 export type { DropdownProps, DropdownOption } from "./dropdown";
+
+export { Dialog, DialogHeader, DialogTitle, DialogDescription, DialogContent, DialogFooter } from "./dialog";
+export type { DialogProps } from "./dialog";

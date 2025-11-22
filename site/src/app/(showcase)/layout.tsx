@@ -16,6 +16,8 @@ import {
   Menu as MenuIcon,
   PanelLeft,
   Home,
+  Code,
+  MessageSquare,
 } from "lucide-react";
 import { Drawer, DrawerNavSection } from "@yomologic/react-ui";
 
@@ -44,13 +46,23 @@ const navSections: DrawerNavSection[] = [
   {
     title: "UI Components",
     items: [
-      { id: "buttons", label: "Buttons", icon: <Circle className="w-5 h-5" /> },
-      { id: "badges", label: "Badges", icon: <Tag className="w-5 h-5" /> },
-      { id: "cards", label: "Cards", icon: <CreditCard className="w-5 h-5" /> },
       {
         id: "alert",
         label: "Alerts",
         icon: <MessageCircle className="w-5 h-5" />,
+      },
+      { id: "badges", label: "Badges", icon: <Tag className="w-5 h-5" /> },
+      { id: "buttons", label: "Buttons", icon: <Circle className="w-5 h-5" /> },
+      { id: "cards", label: "Cards", icon: <CreditCard className="w-5 h-5" /> },
+      {
+        id: "code-snippet",
+        label: "Code Snippet",
+        icon: <Code className="w-5 h-5" />,
+      },
+      {
+        id: "dialog",
+        label: "Dialog",
+        icon: <MessageSquare className="w-5 h-5" />,
       },
       {
         id: "rating",

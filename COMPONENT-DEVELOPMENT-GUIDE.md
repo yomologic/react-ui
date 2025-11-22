@@ -20,9 +20,10 @@
 Our component library follows a consistent pattern:
 
 - **Components** live in `src/ui/` (lowercase filenames)
-- **Showcase pages** live in `site/src/app/sections/` (lowercase filenames)
-- **Theming** uses CSS variables defined in `src/styles.css`
-- **Three-section showcase pattern**: Live Preview + Interactive Controls + API Reference
+- **Showcase pages** live in `site/src/app/(showcase)/components/` (lowercase filenames)
+- **Theming** uses JSON configuration in `src/styles/themes/` with CSS variables applied via ThemeContext
+- **Four-section showcase pattern**: Live Preview + Interactive Controls + API Reference + Usage Examples
+- **Navigation** uses Drawer component (right-side panel) configured in `site/src/app/(showcase)/layout.tsx`
 
 ---
 
@@ -99,14 +100,30 @@ ComponentName.displayName = "ComponentName";
 export { ComponentName };
 ```
 
-### Step 4: Export from Barrel File
+### Step 4: Export from Main Index
 
-Add to `src/ui/index.ts`:
+**CRITICAL**: Add exports to `src/index.ts` (not `src/ui/index.ts`):
 
 ```tsx
-export { ComponentName } from "./component-name";
-export type { ComponentNameProps } from "./component-name";
+// Add to src/index.ts
+export { ComponentName } from "./ui/component-name";
+export type { ComponentNameProps } from "./ui/component-name";
 ```
+
+**For compound components**, export all subcomponents:
+
+```tsx
+export {
+  ComponentName,
+  ComponentHeader,
+  ComponentTitle,
+  ComponentContent,
+  ComponentFooter,
+} from "./ui/component-name";
+export type { ComponentNameProps } from "./ui/component-name";
+```
+
+**Note**: The showcase site uses path mapping (`@yomologic/react-ui` → `../src`) configured in `site/tsconfig.json`, so all exports must be in `src/index.ts` to be importable.
 
 ### Step 5: Add CSS Variables (if needed)
 
@@ -127,69 +144,61 @@ Update `src/styles.css`:
 
 ## Showcase Page Structure
 
-### Three-Section Pattern
+### Four-Section Pattern
 
 Every showcase page should follow this structure:
 
 1. **Live Preview** (Sticky Section)
 2. **Interactive Controls**
 3. **API Reference**
+4. **Usage Examples** (Optional but recommended)
 
 ### Step 1: Create Showcase File
 
-**Location**: `site/src/app/sections/<component-name>.tsx`
+**Location**: `site/src/app/(showcase)/components/<component-name>/page.tsx`
 
-**Naming Convention**: Lowercase, matching component file name
+**Naming Convention**: Lowercase folder with `page.tsx` file
 
-- ✅ `rating.tsx`, `badges.tsx`, `code-snippet.tsx`
-- ❌ `Rating.tsx`, `rating-section.tsx`, `RatingSection.tsx`
+- ✅ `cards/page.tsx`, `badges/page.tsx`, `buttons/page.tsx`
+- ❌ `Cards/page.tsx`, `card-section.tsx`, `CardsSection.tsx`
 
-### Step 2: Export from Index
+### Step 2: Add to Drawer Navigation
 
-Add to `site/src/app/sections/index.ts`:
-
-```tsx
-export { default as ComponentNameSection } from "./component-name";
-```
-
-### Step 3: Add to Navigation
-
-Update `site/src/app/page.tsx`:
+Update `site/src/app/(showcase)/layout.tsx` in the `navSections` array:
 
 ```tsx
-// 1. Add to SectionId type (alphabetically)
-type SectionId =
-  | "alert"
-  | "badges"
-  | "component-name" // ← Add here
-  | "buttons";
-// ...
-
-// 2. Add to navItems array (alphabetically)
-const navItems: NavItem[] = [
-  { id: "alert", label: "Alerts", icon: <MessageCircle className="w-5 h-5" /> },
-  { id: "badges", label: "Badges", icon: <Tag className="w-5 h-5" /> },
+const navSections: DrawerNavSection[] = [
   {
-    id: "component-name",
-    label: "Component Name",
-    icon: <Icon className="w-5 h-5" />,
-  }, // ← Add here
-  // ...
+    title: "UI Components", // Choose appropriate section
+    items: [
+      { id: "buttons", label: "Buttons", icon: <Circle className="w-5 h-5" /> },
+      { id: "badges", label: "Badges", icon: <Tag className="w-5 h-5" /> },
+      { id: "cards", label: "Cards", icon: <CreditCard className="w-5 h-5" /> },
+      // Add your component here (alphabetically within section)
+      {
+        id: "component-name",
+        label: "Component Name",
+        icon: <Icon className="w-5 h-5" />,
+      },
+    ],
+  },
+  // ... other sections
 ];
-
-// 3. Add to renderSectionContent (alphabetically)
-function renderSectionContent(sectionId: SectionId) {
-  switch (sectionId) {
-    case "alert":
-      return <AlertSection />;
-    case "badges":
-      return <BadgesSection />;
-    case "component-name":
-      return <ComponentNameSection />; // ← Add here
-    // ...
-  }
-}
 ```
+
+**Navigation Sections**:
+
+- **Form Components**: Inputs, Checkboxes, Radio Buttons, Dropdown
+- **UI Components**: Buttons, Badges, Cards, Alerts, Rating
+- **Feedback & Loading**: Loading indicators, Spinners
+- **Layout**: Layout, Navigation, Drawer
+
+**Notes**:
+
+- Choose the most appropriate section for your component
+- Add items alphabetically within each section
+- The `id` must match your folder name in `components/`
+- Import the icon from `lucide-react`
 
 ---
 
@@ -428,6 +437,50 @@ export default function ComponentNameSection() {
           </div>
         </Card>
       </section>
+
+      {/* ========================================
+          SECTION 4: USAGE EXAMPLES (Optional)
+      ======================================== */}
+      <section>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          Usage Examples
+        </h2>
+        <div className="space-y-6">
+          {/* Example 1 */}
+          <div>
+            <h3 className="text-md font-semibold text-gray-800 mb-3">
+              Basic Usage
+            </h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <ComponentName variant="primary" size="md">
+                Example Content
+              </ComponentName>
+              <CodeSnippet
+                code={`<ComponentName variant="primary" size="md">
+  Example Content
+</ComponentName>`}
+              />
+            </div>
+          </div>
+
+          {/* Example 2 */}
+          <div>
+            <h3 className="text-md font-semibold text-gray-800 mb-3">
+              Advanced Usage
+            </h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <ComponentName variant="success" size="lg">
+                Advanced Example
+              </ComponentName>
+              <CodeSnippet
+                code={`<ComponentName variant="success" size="lg">
+  Advanced Example
+</ComponentName>`}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
     </SectionLayout>
   );
 }
@@ -437,22 +490,34 @@ export default function ComponentNameSection() {
 
 ## Theming & CSS Variables
 
+### Theme System Architecture
+
+Our theme system uses:
+
+1. **JSON Configuration**: Theme definitions in `src/styles/themes/default.json`
+2. **TypeScript Types**: Theme interfaces in `src/types/theme.ts`
+3. **CSS Variables**: Applied at runtime by `src/shared/contexts/ThemeContext.tsx`
+4. **Global Styles**: Base styles in `site/src/app/globals.css`
+
 ### Using CSS Variables
 
-All components should use CSS variables for theming consistency:
+All themeable properties should use CSS variables:
 
 ```tsx
-// ✅ Good: Use CSS variables
-const baseStyles =
-  "bg-[var(--color-background)] text-[var(--color-foreground)]";
+// ✅ Good: Use CSS variables with Tailwind arbitrary values
+const iconStyles =
+  "[background-color:var(--card-icon-blue-bg)] [color:var(--card-icon-blue-text)]";
 
-// ❌ Bad: Hardcoded values
-const baseStyles = "bg-white text-black";
+// ✅ Good: Tailwind utilities (for non-themeable styles)
+const baseStyles = "rounded-lg p-4 flex items-center";
+
+// ❌ Bad: Hardcoded theme colors
+const iconStyles = "bg-blue-100 text-blue-600";
 ```
 
 ### Available CSS Variables
 
-From `src/styles.css`:
+From `site/src/app/globals.css` (applied via ThemeContext):
 
 #### Colors
 
@@ -513,19 +578,82 @@ From `src/styles.css`:
 --font-bold      /* 700 */
 ```
 
-### Adding New CSS Variables
+### Adding New Theme Properties
 
-When creating a new component that needs custom variables:
+When a component needs themeable properties:
+
+**1. Update Theme Types** (`src/types/theme.ts`):
+
+```typescript
+export interface ComponentTheme {
+  padding: {
+    sm: string;
+    md: string;
+    lg: string;
+  };
+  colors?: {
+    primary: { bg: string; text: string; hover: string };
+    secondary: { bg: string; text: string; hover: string };
+  };
+}
+
+export interface Theme {
+  // ... existing themes
+  component: ComponentTheme; // Add your theme
+}
+```
+
+**2. Add Theme Configuration** (`src/styles/themes/default.json`):
+
+```json
+{
+  "component": {
+    "padding": {
+      "sm": "0.5rem",
+      "md": "1rem",
+      "lg": "1.5rem"
+    },
+    "colors": {
+      "primary": {
+        "bg": "#dbeafe",
+        "text": "#2563eb",
+        "hover": "#bfdbfe"
+      }
+    }
+  }
+}
+```
+
+**3. Apply CSS Variables** (`src/shared/contexts/ThemeContext.tsx`):
+
+```typescript
+// In useEffect where CSS variables are set
+const component = theme.component;
+if (component.colors) {
+  Object.entries(component.colors).forEach(([name, values]) => {
+    root.style.setProperty(`--component-${name}-bg`, values.bg);
+    root.style.setProperty(`--component-${name}-text`, values.text);
+    root.style.setProperty(`--component-${name}-hover`, values.hover);
+  });
+}
+```
+
+**4. Define CSS Variables** (`site/src/app/globals.css`):
 
 ```css
 :root {
   /* Component: YourComponent */
-  --your-component-padding-sm: 0.5rem;
-  --your-component-padding-md: 1rem;
-  --your-component-padding-lg: 1.5rem;
-  --your-component-border-radius: var(--radius-md);
-  --your-component-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --component-primary-bg: #dbeafe;
+  --component-primary-text: #2563eb;
+  --component-primary-hover: #bfdbfe;
 }
+```
+
+**5. Use in Component**:
+
+```tsx
+const styles =
+  "[background-color:var(--component-primary-bg)] [color:var(--component-primary-text)]";
 ```
 
 ---
@@ -542,32 +670,42 @@ When creating a new component that needs custom variables:
   - `Button.tsx` ❌
   - `Rating.tsx` ❌
 
-### Showcase Pages (`site/src/app/sections/`)
+### Showcase Pages (`site/src/app/(showcase)/components/`)
 
-- **Format**: `lowercase-with-hyphens.tsx` (matching component name)
-- **Export**: Default export named `ComponentNameSection`
+- **Format**: `lowercase-folder/page.tsx`
+- **Structure**: Each component gets its own folder with a `page.tsx` file
+- **Export**: Default export function (name doesn't matter due to Next.js file routing)
 - **Examples**:
-  - `rating.tsx` → `export default function RatingSection()` ✅
-  - `badges.tsx` → `export default function BadgesSection()` ✅
-  - `rating-section.tsx` ❌
-  - `RatingSection.tsx` ❌
+  - `cards/page.tsx` → `export default function CardsPage()` ✅
+  - `badges/page.tsx` → `export default function BadgesPage()` ✅
+  - `rating/page.tsx` → `export default function RatingPage()` ✅
+  - `rating.tsx` ❌ (must be in folder)
+  - `Cards/page.tsx` ❌ (folder must be lowercase)
 
 ### Imports & Exports
 
-**Component barrel export** (`src/ui/index.ts`):
+**Main index export** (`src/index.ts`):
 
 ```tsx
 // Export component and types
-export { Rating } from "./rating";
-export type { RatingProps } from "./rating";
+export { Rating } from "./ui/rating";
+export type { RatingProps } from "./ui/rating";
+
+// For compound components, export all subcomponents
+export {
+  Dialog,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogContent,
+  DialogFooter,
+} from "./ui/dialog";
+export type { DialogProps } from "./ui/dialog";
 ```
 
-**Showcase barrel export** (`site/src/app/sections/index.ts`):
+**Why `src/index.ts`?** The showcase site imports via `@yomologic/react-ui` which maps to `../src` in `site/tsconfig.json`. Only exports from `src/index.ts` are available.
 
-```tsx
-// Export with descriptive name
-export { default as RatingSection } from "./rating";
-```
+**Showcase pages**: No barrel export needed - Next.js uses file-based routing
 
 ---
 
@@ -583,7 +721,9 @@ export { default as RatingSection } from "./rating";
 
 - Keep components focused and single-purpose
 - Allow composition through children
-- Use compound components when appropriate
+- Use compound components for complex UI patterns (e.g., Card with CardHeader, CardContent, CardFooter)
+- Export all subcomponents from the same file
+- Document subcomponents in a separate API reference table
 
 ### 3. Accessibility
 
@@ -608,8 +748,10 @@ export { default as RatingSection } from "./rating";
 ### 6. Documentation
 
 - Document all props in API Reference table
-- Provide code examples in showcase
+- Provide real-world Usage Examples with side-by-side code
+- Use CodeSnippet component for all code examples
 - Include edge cases and variations
+- Show both basic and advanced usage patterns
 
 ### 7. Code Quality
 
@@ -617,6 +759,15 @@ export { default as RatingSection } from "./rating";
 - Keep functions small and focused
 - Follow existing patterns in the codebase
 - Add comments for complex logic
+
+### 8. Interactive Controls
+
+- Use RadioGroup for mutually exclusive options (variant, size, etc.)
+- Use Checkbox for boolean toggles
+- Group related controls with headings and spacing
+- For nested options, show/hide based on parent checkbox state
+- Keep control state in sync with live preview
+- Update code generation when controls change
 
 ---
 
@@ -633,31 +784,40 @@ Use this checklist when creating a new component:
 - [ ] Added `displayName` for debugging
 - [ ] Used `cn()` utility for class merging
 - [ ] Applied CSS variables for theming
-- [ ] Exported component and interface from `src/ui/index.ts`
+- [ ] **Exported component and all subcomponents from `src/index.ts`** (not `src/ui/index.ts`)
 
 ### Showcase Page
 
-- [ ] Created showcase file in `site/src/app/sections/<component-name>.tsx`
-- [ ] Used lowercase filename matching component name
-- [ ] Implemented Live Preview section (sticky)
-- [ ] Implemented Interactive Controls section
-- [ ] Implemented API Reference section
-- [ ] Added code generation function
-- [ ] Added code overlay functionality
-- [ ] Exported from `site/src/app/sections/index.ts`
+- [ ] Created folder `site/src/app/(showcase)/components/<component-name>/`
+- [ ] Created `page.tsx` file in component folder
+- [ ] Used lowercase folder name matching component name
+- [ ] Implemented Live Preview section (sticky with SectionLayout)
+- [ ] Implemented Interactive Controls section with RadioGroup/Checkbox
+- [ ] Implemented API Reference section with complete props table
+- [ ] Implemented Usage Examples section (optional but recommended)
+- [ ] Used CodeSnippet component for all code examples
+- [ ] Added code generation function for live preview
+- [ ] Added code overlay functionality with close button
+- [ ] Included lucide-react icons (Settings2, Code2, BookOpen)
 
 ### Navigation
 
-- [ ] Added to `SectionId` type (alphabetically)
-- [ ] Added to `navItems` array (alphabetically)
-- [ ] Added to `renderSectionContent` switch (alphabetically)
+- [ ] Added to `navSections` array in `site/src/app/(showcase)/layout.tsx`
+- [ ] Placed in appropriate section (Form Components, UI Components, etc.)
+- [ ] Added alphabetically within the section
+- [ ] Used correct `id` matching folder name in `components/`
 - [ ] Selected appropriate icon from lucide-react
+- [ ] Verified navigation works in Drawer (right-side panel)
 
-### CSS Variables (if needed)
+### Theme Integration (if needed)
 
-- [ ] Added component-specific CSS variables to `src/styles.css`
-- [ ] Used descriptive variable names
-- [ ] Referenced existing variables where applicable
+- [ ] Added TypeScript interface to `src/types/theme.ts`
+- [ ] Added theme configuration to `src/styles/themes/default.json`
+- [ ] Updated ThemeContext to apply CSS variables
+- [ ] Added CSS variable definitions to `site/src/app/globals.css`
+- [ ] Made theme properties optional with `?` for backwards compatibility
+- [ ] Added safety checks in ThemeContext (e.g., `if (theme.component?.property)`)
+- [ ] Documented theme variables in showcase page
 
 ### Testing
 
@@ -823,26 +983,50 @@ For components with unique props (like Rating's slider), create custom controls:
 
 ### Compound Components
 
-For complex components with sub-components:
+For complex components with multiple subcomponents (like Card):
 
 ```tsx
-// Component
-export const Card = () => {
-  /* ... */
-};
-export const CardHeader = () => {
-  /* ... */
-};
-export const CardTitle = () => {
-  /* ... */
-};
-export const CardContent = () => {
-  /* ... */
-};
+// card.tsx - Define all components in one file
+const Card = React.forwardRef<HTMLDivElement, CardProps>(/* ... */);
+Card.displayName = "Card";
 
-// Export
-export { Card, CardHeader, CardTitle, CardContent } from "./card";
+const CardHeader = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("flex flex-col space-y-1.5", className)}
+    {...props}
+  />
+));
+CardHeader.displayName = "CardHeader";
+
+const CardTitle = React.forwardRef<
+  HTMLHeadingElement,
+  React.HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => (
+  <h3 ref={ref} className={cn("text-lg font-semibold", className)} {...props} />
+));
+CardTitle.displayName = "CardTitle";
+
+const CardContent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("pt-0", className)} {...props} />
+));
+CardContent.displayName = "CardContent";
+
+// Export all from same file
+export { Card, CardHeader, CardTitle, CardContent };
 ```
+
+**Showcase Documentation**:
+
+- Add a separate "Subcomponents" table in API Reference
+- Show usage examples with proper composition
+- Include checkboxes to toggle subcomponents in interactive controls
 
 ---
 
@@ -861,4 +1045,4 @@ This guide should evolve with the component library. If you encounter patterns n
 
 ---
 
-**Last Updated**: November 14, 2025
+**Last Updated**: November 21, 2025

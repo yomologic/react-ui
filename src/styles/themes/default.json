@@ -26,10 +26,34 @@
       "800": "#1e293b",
       "900": "#0f172a"
     },
-    "success": "#10b981",
-    "error": "#ef4444",
-    "warning": "#f59e0b",
-    "info": "#3b82f6",
+    "info": {
+      "default": "#3b82f6",
+      "foreground": "#ffffff",
+      "muted": "#eff6ff",
+      "muted-foreground": "#1d4ed8",
+      "border": "#3b82f6"
+    },
+    "success": {
+      "default": "#22c55e",
+      "foreground": "#ffffff",
+      "muted": "#f0fdf4",
+      "muted-foreground": "#15803d",
+      "border": "#22c55e"
+    },
+    "warning": {
+      "default": "#eab308",
+      "foreground": "#ffffff",
+      "muted": "#fefce8",
+      "muted-foreground": "#a16207",
+      "border": "#eab308"
+    },
+    "error": {
+      "default": "#ef4444",
+      "foreground": "#ffffff",
+      "muted": "#fef2f2",
+      "muted-foreground": "#b91c1c",
+      "border": "#ef4444"
+    },
     "gray": {
       "50": "#f9fafb",
       "100": "#f3f4f6",
@@ -134,7 +158,8 @@
         "xl": "1.25rem"
       },
       "borderRadius": "0.5rem",
-      "fontWeight": "500"
+      "fontWeight": "500",
+      "borderWidth": "2px"
     },
     "card": {
       "padding": {
@@ -329,6 +354,23 @@
       },
       "fontSize": "0.875rem",
       "borderRadius": "0.375rem"
+    },
+    "dialog": {
+      "maxWidth": {
+        "sm": "24rem",
+        "md": "28rem",
+        "lg": "32rem",
+        "xl": "36rem",
+        "full": "100%"
+      },
+      "padding": {
+        "header": { "x": "1.5rem", "y": "1rem" },
+        "content": { "x": "1.5rem", "y": "1rem" },
+        "footer": { "x": "1.5rem", "y": "1rem" }
+      },
+      "borderRadius": "0.75rem",
+      "borderWidth": "1px",
+      "backdropBlur": "4px"
     }
   },
   "density": "standard"
