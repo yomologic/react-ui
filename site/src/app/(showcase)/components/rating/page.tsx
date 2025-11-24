@@ -13,7 +13,13 @@ export default function RatingPage() {
     const [max, setMax] = useState(5);
     const [readonly, setReadonly] = useState(false);
     const [interactive, setInteractive] = useState(false);
-    const [showValue, setShowValue] = useState(true);
+    const [showValue, setShowValue] = useState(false);
+    const [valuePosition, setValuePosition] = useState<"inline" | "bottom">(
+        "inline"
+    );
+    const [valueFormat, setValueFormat] = useState<"decimal" | "fraction">(
+        "decimal"
+    );
     const [showCodeOverlay, setShowCodeOverlay] = useState(false);
 
     // Size mapping
@@ -35,6 +41,13 @@ export default function RatingPage() {
         if (interactive) {
             props.push("interactive");
             props.push("onChange={setValue}");
+        }
+        if (showValue) {
+            props.push("showValue");
+            if (valuePosition !== "inline")
+                props.push(`valuePosition="${valuePosition}"`);
+            if (valueFormat !== "decimal")
+                props.push(`valueFormat="${valueFormat}"`);
         }
 
         const propsString = props.join(" ");
@@ -75,13 +88,10 @@ export default function RatingPage() {
                                         color={color}
                                         interactive={interactive}
                                         onChange={setValue}
+                                        showValue={showValue}
+                                        valuePosition={valuePosition}
+                                        valueFormat={valueFormat}
                                     />
-                                    {showValue && (
-                                        <div className="text-xl sm:text-2xl font-bold text-gray-700">
-                                            {value.toFixed(1)} /{" "}
-                                            {max.toFixed(1)}
-                                        </div>
-                                    )}
                                     {interactive && (
                                         <p className="text-sm text-gray-600">
                                             Click on stars to change rating
@@ -264,6 +274,28 @@ export default function RatingPage() {
                                 checked={showValue}
                                 onChange={setShowValue}
                             />
+                            {showValue && (
+                                <div className="ml-6 space-y-3">
+                                    <Checkbox
+                                        label="Show value below stars"
+                                        checked={valuePosition === "bottom"}
+                                        onChange={(checked) =>
+                                            setValuePosition(
+                                                checked ? "bottom" : "inline"
+                                            )
+                                        }
+                                    />
+                                    <Checkbox
+                                        label="Show as fraction (3.5/5)"
+                                        checked={valueFormat === "fraction"}
+                                        onChange={(checked) =>
+                                            setValueFormat(
+                                                checked ? "fraction" : "decimal"
+                                            )
+                                        }
+                                    />
+                                </div>
+                            )}
                             <Checkbox
                                 label="Interactive (clickable stars)"
                                 checked={interactive}
@@ -406,6 +438,51 @@ export default function RatingPage() {
                                     <td className="px-6 py-4 text-sm text-gray-700">
                                         Callback fired when a star is clicked
                                         (requires interactive=true)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                        showValue
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                        boolean
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                        false
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                        Display numeric value with the rating
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                        valuePosition
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                        &quot;inline&quot; | &quot;bottom&quot;
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                        &quot;inline&quot;
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                        Position of numeric value: inline with
+                                        stars or below
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                        valueFormat
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                        &quot;decimal&quot; |
+                                        &quot;fraction&quot;
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                        &quot;decimal&quot;
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                        Format for numeric value:
+                                        &quot;3.5&quot; or &quot;3.5/5&quot;
                                     </td>
                                 </tr>
                             </tbody>

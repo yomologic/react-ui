@@ -12,18 +12,24 @@ interface RatingProps {
     mobileSize?: number; // px (size for mobile when responsive is true)
     interactive?: boolean; // Allow clicking to set rating
     onChange?: (value: number) => void; // Callback when rating is clicked
+    showValue?: boolean; // Display numeric value
+    valuePosition?: "inline" | "bottom"; // Position of numeric value
+    valueFormat?: "decimal" | "fraction"; // Format: "3.5" or "3.5/5"
 }
 
 export const Rating: React.FC<RatingProps> = ({
     value,
     max = 5,
     size = 24,
-    color = "#FFD600",
+    color = "var(--color-warning, #FFD600)",
     className = "",
     responsive = false,
     mobileSize,
     interactive = false,
     onChange,
+    showValue = false,
+    valuePosition = "inline",
+    valueFormat = "decimal",
 }) => {
     // Generate unique ID for SVG gradients (stable across server/client)
     const uniqueId = useId();
@@ -101,7 +107,7 @@ export const Rating: React.FC<RatingProps> = ({
                 {/* Base star outline */}
                 <Star
                     size={displaySize}
-                    color={isEmpty ? "#E0E0E0" : color}
+                    color={isEmpty ? "var(--color-gray-300, #E0E0E0)" : color}
                     fill="none"
                     style={{ position: "absolute", left: 0, top: 0 }}
                 />
@@ -145,6 +151,44 @@ export const Rating: React.FC<RatingProps> = ({
         );
     }
 
+    const valueText =
+        valueFormat === "fraction"
+            ? `${value.toFixed(1)}/${max}`
+            : value.toFixed(1);
+
+    if (showValue && valuePosition === "bottom") {
+        return (
+            <div
+                className={className}
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: gap * 2,
+                }}
+            >
+                <div
+                    style={{
+                        display: "flex",
+                        gap,
+                        alignItems: "center",
+                    }}
+                >
+                    {stars}
+                </div>
+                <span
+                    style={{
+                        fontSize: size * 0.75,
+                        fontWeight: 600,
+                        color: "var(--color-gray-600, #4B5563)",
+                    }}
+                >
+                    {valueText}
+                </span>
+            </div>
+        );
+    }
+
     return (
         <div
             className={className}
@@ -157,6 +201,18 @@ export const Rating: React.FC<RatingProps> = ({
             }}
         >
             {stars}
+            {showValue && (
+                <span
+                    style={{
+                        marginLeft: gap * 2,
+                        fontSize: size * 0.75,
+                        fontWeight: 600,
+                        color: "var(--color-gray-600, #4B5563)",
+                    }}
+                >
+                    {valueText}
+                </span>
+            )}
         </div>
     );
 };
