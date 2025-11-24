@@ -60,6 +60,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "*.config.*",
+    "site/.next/**",
+    "**/build/**",
+    "vercel-setup.js",
   ]),
 ]);
 

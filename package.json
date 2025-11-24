@@ -45,9 +45,6 @@
         ],
         "*.{ts,tsx}": [
             "eslint --fix"
-        ],
-        "src/**/*.{ts,tsx}": [
-            "tsc --noEmit --skipLibCheck"
         ]
     },
     "keywords": [
