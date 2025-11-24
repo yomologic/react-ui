@@ -15,7 +15,6 @@ import {
   Star,
   Menu as MenuIcon,
   PanelLeft,
-  Home,
   Code,
   MessageSquare,
 } from "lucide-react";

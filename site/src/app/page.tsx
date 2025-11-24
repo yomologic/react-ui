@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Button, Badge, Card } from "@yomologic/react-ui";
+import { Button, Card } from "@yomologic/react-ui";
 import {
   Zap,
   Palette,
@@ -10,7 +10,6 @@ import {
   Smartphone,
   Layers,
   ArrowRight,
-  CheckCircle2,
   Sparkles,
 } from "lucide-react";
 

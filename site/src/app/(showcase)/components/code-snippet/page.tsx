@@ -3,9 +3,7 @@
 import { useState } from "react";
 import {
   Card,
-  CardContent,
   RadioGroup,
-  Checkbox,
   CodeSnippet,
 } from "@yomologic/react-ui";
 import { SectionLayout } from "@yomologic/react-ui";
