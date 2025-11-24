@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Running type check before push..."
+cd site && yarn tsc --noEmit
+if [ $? -ne 0 ]; then
+  echo "❌ Type check failed. Push aborted."
+  exit 1
+fi
+echo "✅ Type check passed!"
