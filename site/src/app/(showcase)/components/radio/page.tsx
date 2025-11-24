@@ -18,15 +18,8 @@ export default function RadioPage() {
         const baseOptions = [
             { value: "apple", label: "Apple" },
             { value: "banana", label: "Banana" },
-            { value: "orange", label: "Orange" },
+            { value: "orange", label: "Orange", disabled: hasDisabled },
         ];
-
-        if (hasDisabled) {
-            return [
-                ...baseOptions,
-                { value: "grape", label: "Grape (Disabled)", disabled: true },
-            ];
-        }
 
         return baseOptions;
     };
@@ -35,7 +28,7 @@ export default function RadioPage() {
     const generateCode = () => {
         const props: string[] = [];
 
-        if (hasLabel) props.push('label="Select a Fruit"');
+        if (hasLabel) props.push('label="Select Fruit"');
         props.push('name="fruit"');
         props.push("value={selectedFruit}");
         props.push("onChange={setSelectedFruit}");
@@ -94,7 +87,7 @@ export default function RadioPage() {
                                     <RadioGroup
                                         label={
                                             hasLabel
-                                                ? "Select a Fruit"
+                                                ? "Select Fruit"
                                                 : undefined
                                         }
                                         name="preview-fruit"

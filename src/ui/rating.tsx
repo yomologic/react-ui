@@ -10,6 +10,8 @@ interface RatingProps {
     className?: string;
     responsive?: boolean; // Auto-scale on small screens
     mobileSize?: number; // px (size for mobile when responsive is true)
+    interactive?: boolean; // Allow clicking to set rating
+    onChange?: (value: number) => void; // Callback when rating is clicked
 }
 
 export const Rating: React.FC<RatingProps> = ({
@@ -20,9 +22,32 @@ export const Rating: React.FC<RatingProps> = ({
     className = "",
     responsive = false,
     mobileSize,
+    interactive = false,
+    onChange,
 }) => {
     // Generate unique ID for SVG gradients (stable across server/client)
     const uniqueId = useId();
+    const [hoverValue, setHoverValue] = React.useState<number | null>(null);
+
+    const handleStarClick = (starIndex: number) => {
+        if (interactive && onChange) {
+            onChange(starIndex);
+        }
+    };
+
+    const handleMouseEnter = (starIndex: number) => {
+        if (interactive) {
+            setHoverValue(starIndex);
+        }
+    };
+
+    const handleMouseLeave = () => {
+        if (interactive) {
+            setHoverValue(null);
+        }
+    };
+
+    const displayValue = hoverValue !== null ? hoverValue : value;
 
     // Determine sizes
     const actualMobileSize = mobileSize || Math.max(16, Math.floor(size * 0.7));
@@ -31,19 +56,34 @@ export const Rating: React.FC<RatingProps> = ({
 
     const stars = [];
     for (let i = 1; i <= max; i++) {
-        const isFull = value >= i;
-        const isHalf = value >= i - 0.5 && value < i;
-        const isEmpty = value < i - 0.5;
+        const isFull = displayValue >= i;
+        const isHalf = displayValue >= i - 0.5 && displayValue < i;
+        const isEmpty = displayValue < i - 0.5;
 
         stars.push(
             <span
                 key={i}
+                onClick={() => handleStarClick(i)}
+                onMouseEnter={(e) => {
+                    handleMouseEnter(i);
+                    if (interactive) {
+                        e.currentTarget.style.transform = "scale(1.1)";
+                    }
+                }}
+                onMouseLeave={(e) => {
+                    handleMouseLeave();
+                    if (interactive) {
+                        e.currentTarget.style.transform = "scale(1)";
+                    }
+                }}
                 style={{
                     position: "relative",
                     display: "inline-block",
                     width: responsive ? undefined : displaySize,
                     height: responsive ? undefined : displaySize,
                     flexShrink: 0,
+                    cursor: interactive ? "pointer" : "default",
+                    transition: interactive ? "transform 0.15s ease" : "none",
                     ...(responsive &&
                         ({
                             "--star-size": `${displaySize}px`,

@@ -12,7 +12,7 @@ import { Settings2, Code2, BookOpen } from "lucide-react";
 import { useState } from "react";
 
 export default function CheckboxPage() {
-    const [selectedValues, setSelectedValues] = useState<string[]>(["email"]);
+    const [selectedValues, setSelectedValues] = useState<string[]>(["apple"]);
     const [orientation, setOrientation] = useState<string>("vertical");
     const [showLabel, setShowLabel] = useState(true);
     const [hasDisabledOption, setHasDisabledOption] = useState(false);
@@ -24,16 +24,16 @@ export default function CheckboxPage() {
     const generateCode = () => {
         const props: string[] = [];
 
-        if (showLabel) props.push('label="Notification Preferences"');
-        props.push('name="notifications"');
+        if (showLabel) props.push('label="Select Fruits"');
+        props.push('name="fruits"');
 
         // Generate options array
         const options = [
-            '{ value: "email", label: "Email notifications" }',
-            '{ value: "sms", label: "SMS notifications" }',
+            '{ value: "apple", label: "Apple" }',
+            '{ value: "banana", label: "Banana" }',
             hasDisabledOption
-                ? '{ value: "push", label: "Push notifications", disabled: true }'
-                : '{ value: "push", label: "Push notifications" }',
+                ? '{ value: "orange", label: "Orange", disabled: true }'
+                : '{ value: "orange", label: "Orange" }',
         ];
         props.push(`options={[\n    ${options.join(",\n    ")}\n  ]}`);
 
@@ -78,22 +78,22 @@ export default function CheckboxPage() {
                                     <CheckboxGroup
                                         label={
                                             showLabel
-                                                ? "Notification Preferences"
+                                                ? "Select Fruits"
                                                 : undefined
                                         }
-                                        name="notifications"
+                                        name="fruits"
                                         options={[
                                             {
-                                                value: "email",
-                                                label: "Email notifications",
+                                                value: "apple",
+                                                label: "Apple",
                                             },
                                             {
-                                                value: "sms",
-                                                label: "SMS notifications",
+                                                value: "banana",
+                                                label: "Banana",
                                             },
                                             {
-                                                value: "push",
-                                                label: "Push notifications",
+                                                value: "orange",
+                                                label: "Orange",
                                                 disabled: hasDisabledOption,
                                             },
                                         ]}

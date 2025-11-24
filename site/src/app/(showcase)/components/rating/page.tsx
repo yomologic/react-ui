@@ -12,6 +12,7 @@ export default function RatingPage() {
     const [color, setColor] = useState("var(--color-warning)");
     const [max, setMax] = useState(5);
     const [readonly, setReadonly] = useState(false);
+    const [interactive, setInteractive] = useState(false);
     const [showValue, setShowValue] = useState(true);
     const [showCodeOverlay, setShowCodeOverlay] = useState(false);
 
@@ -31,6 +32,10 @@ export default function RatingPage() {
         if (size !== "md") props.push(`size={${sizeMap[size]}}`);
         if (color !== "var(--color-warning)")
             props.push(`color="${color === "#FFD600" ? "#FFD600" : color}"`);
+        if (interactive) {
+            props.push("interactive");
+            props.push("onChange={setValue}");
+        }
 
         const propsString = props.join(" ");
         return `<Rating ${propsString} />`;
@@ -68,12 +73,19 @@ export default function RatingPage() {
                                         max={max}
                                         size={sizeMap[size]}
                                         color={color}
+                                        interactive={interactive}
+                                        onChange={setValue}
                                     />
                                     {showValue && (
                                         <div className="text-xl sm:text-2xl font-bold text-gray-700">
                                             {value.toFixed(1)} /{" "}
                                             {max.toFixed(1)}
                                         </div>
+                                    )}
+                                    {interactive && (
+                                        <p className="text-sm text-gray-600">
+                                            Click on stars to change rating
+                                        </p>
                                     )}
                                 </div>
                             </div>
@@ -253,6 +265,11 @@ export default function RatingPage() {
                                 onChange={setShowValue}
                             />
                             <Checkbox
+                                label="Interactive (clickable stars)"
+                                checked={interactive}
+                                onChange={setInteractive}
+                            />
+                            <Checkbox
                                 label="Read-only mode"
                                 checked={readonly}
                                 onChange={setReadonly}
@@ -359,6 +376,36 @@ export default function RatingPage() {
                                     <td className="px-6 py-4 text-sm text-gray-700">
                                         Additional CSS classes to apply to the
                                         container
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                        interactive
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                        boolean
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                        false
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                        Allow clicking stars to set rating with
+                                        hover preview
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                        onChange
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                        (value: number) =&gt; void
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                        -
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                        Callback fired when a star is clicked
+                                        (requires interactive=true)
                                     </td>
                                 </tr>
                             </tbody>

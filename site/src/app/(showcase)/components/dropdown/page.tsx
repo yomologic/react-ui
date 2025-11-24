@@ -5,7 +5,6 @@ import {
     Card,
     RadioGroup,
     Checkbox,
-    Badge,
     Input,
     CodeSnippet,
 } from "@yomologic/react-ui";
@@ -18,51 +17,29 @@ export default function DropdownPage() {
     const [dropdownState, setDropdownState] = useState<string>("normal");
     const [hasLabel, setHasLabel] = useState(true);
     const [hasHelper, setHasHelper] = useState(false);
-    const [contentType, setContentType] = useState<string>("standard");
     const [customPlaceholder, setCustomPlaceholder] = useState<string>("");
     const [size, setSize] = useState<string>("md");
     const [showCodeOverlay, setShowCodeOverlay] = useState(false);
 
-    // Sample options
+    // Sample options - using fruits for consistency
     const standardOptions = [
-        { value: "option1", label: "Option 1" },
-        { value: "option2", label: "Option 2" },
-        { value: "option3", label: "Option 3" },
-        { value: "option4", label: "Option 4 (Disabled)", disabled: true },
-    ];
-
-    const countryOptions = [
-        { value: "us", label: "United States" },
-        { value: "ca", label: "Canada" },
-        { value: "mx", label: "Mexico" },
-        { value: "uk", label: "United Kingdom" },
-        { value: "fr", label: "France" },
-        { value: "de", label: "Germany" },
-        { value: "jp", label: "Japan" },
-        { value: "au", label: "Australia" },
+        { value: "apple", label: "Apple" },
+        { value: "banana", label: "Banana" },
+        { value: "orange", label: "Orange" },
+        { value: "grape", label: "Grape (Disabled)", disabled: true },
     ];
 
     const generateCode = () => {
         const props: string[] = [];
 
         if (hasLabel) {
-            props.push(
-                contentType === "standard"
-                    ? 'label="Select an option"'
-                    : 'label="Select a country"'
-            );
+            props.push('label="Select Fruit"');
         }
 
-        const placeholderText =
-            customPlaceholder ||
-            (contentType === "standard"
-                ? "Choose an option"
-                : "Choose a country");
+        const placeholderText = customPlaceholder || "Choose a fruit";
         props.push(`placeholder="${placeholderText}"`);
 
-        if (contentType === "standard") {
-            props.push("options={options}");
-        }
+        props.push("options={options}");
 
         props.push("value={selectedValue}");
         props.push("onChange={setSelectedValue}");
@@ -84,22 +61,15 @@ export default function DropdownPage() {
         }
 
         const propsString = props.join("\n  ");
+        const fullCode =
+            `const options = [\n` +
+            `  { value: "apple", label: "Apple" },\n` +
+            `  { value: "banana", label: "Banana" },\n` +
+            `  { value: "orange", label: "Orange" }\n` +
+            `];\n\n` +
+            `<Dropdown\n  ${propsString}\n/>`;
 
-        if (contentType === "standard") {
-            return `<Dropdown
-  ${propsString}
-/>`;
-        } else {
-            return `<Dropdown
-  ${propsString}
->
-  {/* Custom content */}
-  <div className="py-1">
-    {/* Group headers and custom styled options */}
-    {/* See full example in documentation */}
-  </div>
-</Dropdown>`;
-        }
+        return fullCode;
     };
 
     return (
@@ -126,173 +96,32 @@ export default function DropdownPage() {
                         <div>
                             <div className="p-6 bg-linear-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
                                 <div className="max-w-md mx-auto">
-                                    {contentType === "standard" ? (
-                                        <Dropdown
-                                            label={
-                                                hasLabel
-                                                    ? "Select an option"
-                                                    : undefined
-                                            }
-                                            placeholder={
-                                                customPlaceholder ||
-                                                "Choose an option"
-                                            }
-                                            options={standardOptions}
-                                            value={selectedValue}
-                                            onChange={setSelectedValue}
-                                            disabled={
-                                                dropdownState === "disabled"
-                                            }
-                                            error={
-                                                dropdownState === "error"
-                                                    ? "This field has an error"
-                                                    : undefined
-                                            }
-                                            helperText={
-                                                hasHelper
-                                                    ? "This is a helper text"
-                                                    : undefined
-                                            }
-                                            size={size as "sm" | "md" | "lg"}
-                                        />
-                                    ) : (
-                                        <Dropdown
-                                            label={
-                                                hasLabel
-                                                    ? "Select a country"
-                                                    : undefined
-                                            }
-                                            placeholder={
-                                                customPlaceholder ||
-                                                "Choose a country"
-                                            }
-                                            value={selectedValue}
-                                            onChange={setSelectedValue}
-                                            disabled={
-                                                dropdownState === "disabled"
-                                            }
-                                            error={
-                                                dropdownState === "error"
-                                                    ? "This field has an error"
-                                                    : undefined
-                                            }
-                                            helperText={
-                                                hasHelper
-                                                    ? "This is a helper text"
-                                                    : undefined
-                                            }
-                                            size={size as "sm" | "md" | "lg"}
-                                        >
-                                            {/* Custom content */}
-                                            <div className="py-1">
-                                                <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">
-                                                    North America
-                                                </div>
-                                                {countryOptions
-                                                    .slice(0, 3)
-                                                    .map((country) => (
-                                                        <button
-                                                            key={country.value}
-                                                            onClick={() =>
-                                                                setSelectedValue(
-                                                                    country.value
-                                                                )
-                                                            }
-                                                            className={`
-                              w-full px-4 py-2 text-left text-sm flex items-center gap-2
-                              transition-colors duration-150
-                              ${
-                                  selectedValue === country.value
-                                      ? "bg-blue-50 text-blue-700"
-                                      : "text-gray-900 hover:bg-gray-100"
-                              }
-                            `}
-                                                        >
-                                                            {country.label}
-                                                            {selectedValue ===
-                                                                country.value && (
-                                                                <Badge
-                                                                    variant="info"
-                                                                    size="sm"
-                                                                >
-                                                                    Selected
-                                                                </Badge>
-                                                            )}
-                                                        </button>
-                                                    ))}
-                                                <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase border-t mt-1 pt-2">
-                                                    Europe
-                                                </div>
-                                                {countryOptions
-                                                    .slice(3, 6)
-                                                    .map((country) => (
-                                                        <button
-                                                            key={country.value}
-                                                            onClick={() =>
-                                                                setSelectedValue(
-                                                                    country.value
-                                                                )
-                                                            }
-                                                            className={`
-                              w-full px-4 py-2 text-left text-sm flex items-center gap-2
-                              transition-colors duration-150
-                              ${
-                                  selectedValue === country.value
-                                      ? "bg-blue-50 text-blue-700"
-                                      : "text-gray-900 hover:bg-gray-100"
-                              }
-                            `}
-                                                        >
-                                                            {country.label}
-                                                            {selectedValue ===
-                                                                country.value && (
-                                                                <Badge
-                                                                    variant="info"
-                                                                    size="sm"
-                                                                >
-                                                                    Selected
-                                                                </Badge>
-                                                            )}
-                                                        </button>
-                                                    ))}
-                                                <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase border-t mt-1 pt-2">
-                                                    Asia & Pacific
-                                                </div>
-                                                {countryOptions
-                                                    .slice(6)
-                                                    .map((country) => (
-                                                        <button
-                                                            key={country.value}
-                                                            onClick={() =>
-                                                                setSelectedValue(
-                                                                    country.value
-                                                                )
-                                                            }
-                                                            className={`
-                              w-full px-4 py-2 text-left text-sm flex items-center gap-2
-                              transition-colors duration-150
-                              ${
-                                  selectedValue === country.value
-                                      ? "bg-blue-50 text-blue-700"
-                                      : "text-gray-900 hover:bg-gray-100"
-                              }
-                            `}
-                                                        >
-                                                            {country.label}
-                                                            {selectedValue ===
-                                                                country.value && (
-                                                                <Badge
-                                                                    variant="info"
-                                                                    size="sm"
-                                                                >
-                                                                    Selected
-                                                                </Badge>
-                                                            )}
-                                                        </button>
-                                                    ))}
-                                            </div>
-                                        </Dropdown>
-                                    )}
+                                    <Dropdown
+                                        label={
+                                            hasLabel
+                                                ? "Select Fruit"
+                                                : undefined
+                                        }
+                                        placeholder={
+                                            customPlaceholder ||
+                                            "Choose a fruit"
+                                        }
+                                        options={standardOptions}
+                                        value={selectedValue}
+                                        onChange={setSelectedValue}
+                                        disabled={dropdownState === "disabled"}
+                                        error={
+                                            dropdownState === "error"
+                                                ? "This field has an error"
+                                                : undefined
+                                        }
+                                        helperText={
+                                            hasHelper
+                                                ? "This is a helper text"
+                                                : undefined
+                                        }
+                                        size={size as "sm" | "md" | "lg"}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -309,21 +138,6 @@ export default function DropdownPage() {
                 </h2>
                 <Card variant="elevated" padding="lg">
                     <div className="space-y-6">
-                        <RadioGroup
-                            label="Content Type"
-                            name="contentType"
-                            value={contentType}
-                            onChange={setContentType}
-                            orientation="horizontal"
-                            options={[
-                                {
-                                    value: "standard",
-                                    label: "Standard Options",
-                                },
-                                { value: "custom", label: "Custom Content" },
-                            ]}
-                        />
-
                         <RadioGroup
                             label="State"
                             name="dropdownState"
@@ -569,14 +383,14 @@ export default function DropdownPage() {
                         </h3>
                         <CodeSnippet
                             code={`const options = [
-  { value: "1", label: "Option 1" },
-  { value: "2", label: "Option 2" },
-  { value: "3", label: "Option 3" },
+  { value: "apple", label: "Apple" },
+  { value: "banana", label: "Banana" },
+  { value: "orange", label: "Orange" },
 ];
 
 <Dropdown
-  label="Select an option"
-  placeholder="Choose an option"
+  label="Select Fruit"
+  placeholder="Choose a fruit"
   options={options}
   value={selectedValue}
   onChange={setSelectedValue}
@@ -591,12 +405,12 @@ export default function DropdownPage() {
                         </h3>
                         <CodeSnippet
                             code={`<Dropdown
-  label="Country"
-  placeholder="Select your country"
-  options={countryOptions}
-  value={country}
-  onChange={setCountry}
-  error="Please select a country"
+  label="Select Fruit"
+  placeholder="Choose a fruit"
+  options={fruitOptions}
+  value={fruit}
+  onChange={setFruit}
+  error="Please select a fruit"
   required
 />`}
                             language="tsx"
@@ -609,26 +423,26 @@ export default function DropdownPage() {
                         </h3>
                         <CodeSnippet
                             code={`<Dropdown
-  label="Choose a country"
-  placeholder="Select country"
-  value={selectedCountry}
-  onChange={setSelectedCountry}
+  label="Select Fruit"
+  placeholder="Choose a fruit"
+  value={selectedFruit}
+  onChange={setSelectedFruit}
 >
   <div className="py-1">
     <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">
-      North America
+      Popular Fruits
     </div>
-    {northAmericaCountries.map((country) => (
+    {fruits.map((fruit) => (
       <button
-        key={country.value}
-        onClick={() => setSelectedCountry(country.value)}
+        key={fruit.value}
+        onClick={() => setSelectedFruit(fruit.value)}
         className={cn(
           "w-full px-4 py-2 text-left text-sm",
           "hover:bg-gray-100 transition-colors",
-          selectedCountry === country.value && "bg-blue-50 text-blue-700"
+          selectedFruit === fruit.value && "bg-blue-50 text-blue-700"
         )}
       >
-        {country.label}
+        {fruit.label}
       </button>
     ))}
   </div>
