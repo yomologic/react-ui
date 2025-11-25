@@ -42,10 +42,10 @@ Our component library follows a consistent pattern:
 
 ```tsx
 export interface ComponentNameProps
-  extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: "default" | "primary" | "success" | "warning" | "danger";
-  size?: "sm" | "md" | "lg";
-  // ... other props
+    extends React.HTMLAttributes<HTMLDivElement> {
+    variant?: "default" | "primary" | "success" | "warning" | "danger";
+    size?: "sm" | "md" | "lg";
+    // ... other props
 }
 ```
 
@@ -62,37 +62,42 @@ import React from "react";
 import { cn } from "../lib/utils";
 
 const ComponentName = React.forwardRef<HTMLDivElement, ComponentNameProps>(
-  (
-    { className, variant = "default", size = "md", children, ...props },
-    ref
-  ) => {
-    // Base styles using CSS variables
-    const baseStyles = "...";
+    (
+        { className, variant = "default", size = "md", children, ...props },
+        ref
+    ) => {
+        // Base styles using CSS variables
+        const baseStyles = "...";
 
-    // Variant styles
-    const variants = {
-      default: "...",
-      primary: "...",
-      // ...
-    };
+        // Variant styles
+        const variants = {
+            default: "...",
+            primary: "...",
+            // ...
+        };
 
-    // Size styles
-    const sizes = {
-      sm: "...",
-      md: "...",
-      lg: "...",
-    };
+        // Size styles
+        const sizes = {
+            sm: "...",
+            md: "...",
+            lg: "...",
+        };
 
-    return (
-      <div
-        ref={ref}
-        className={cn(baseStyles, variants[variant], sizes[size], className)}
-        {...props}
-      >
-        {children}
-      </div>
-    );
-  }
+        return (
+            <div
+                ref={ref}
+                className={cn(
+                    baseStyles,
+                    variants[variant],
+                    sizes[size],
+                    className
+                )}
+                {...props}
+            >
+                {children}
+            </div>
+        );
+    }
 );
 
 ComponentName.displayName = "ComponentName";
@@ -114,11 +119,11 @@ export type { ComponentNameProps } from "./ui/component-name";
 
 ```tsx
 export {
-  ComponentName,
-  ComponentHeader,
-  ComponentTitle,
-  ComponentContent,
-  ComponentFooter,
+    ComponentName,
+    ComponentHeader,
+    ComponentTitle,
+    ComponentContent,
+    ComponentFooter,
 } from "./ui/component-name";
 export type { ComponentNameProps } from "./ui/component-name";
 ```
@@ -131,12 +136,12 @@ Update `src/styles.css`:
 
 ```css
 :root {
-  /* Component: ComponentName */
-  --component-name-padding-sm: 0.5rem;
-  --component-name-padding-md: 1rem;
-  --component-name-padding-lg: 1.5rem;
-  --component-name-border-radius: 0.5rem;
-  /* ... */
+    /* Component: ComponentName */
+    --component-name-padding-sm: 0.5rem;
+    --component-name-padding-md: 1rem;
+    --component-name-padding-lg: 1.5rem;
+    --component-name-border-radius: 0.5rem;
+    /* ... */
 }
 ```
 
@@ -168,21 +173,33 @@ Update `site/src/app/(showcase)/layout.tsx` in the `navSections` array:
 
 ```tsx
 const navSections: DrawerNavSection[] = [
-  {
-    title: "UI Components", // Choose appropriate section
-    items: [
-      { id: "buttons", label: "Buttons", icon: <Circle className="w-5 h-5" /> },
-      { id: "badges", label: "Badges", icon: <Tag className="w-5 h-5" /> },
-      { id: "cards", label: "Cards", icon: <CreditCard className="w-5 h-5" /> },
-      // Add your component here (alphabetically within section)
-      {
-        id: "component-name",
-        label: "Component Name",
-        icon: <Icon className="w-5 h-5" />,
-      },
-    ],
-  },
-  // ... other sections
+    {
+        title: "UI Components", // Choose appropriate section
+        items: [
+            {
+                id: "buttons",
+                label: "Buttons",
+                icon: <Circle className="w-5 h-5" />,
+            },
+            {
+                id: "badges",
+                label: "Badges",
+                icon: <Tag className="w-5 h-5" />,
+            },
+            {
+                id: "cards",
+                label: "Cards",
+                icon: <CreditCard className="w-5 h-5" />,
+            },
+            // Add your component here (alphabetically within section)
+            {
+                id: "component-name",
+                label: "Component Name",
+                icon: <Icon className="w-5 h-5" />,
+            },
+        ],
+    },
+    // ... other sections
 ];
 ```
 
@@ -212,277 +229,302 @@ import { ComponentName } from "../../../../src/ui";
 import { Settings2, Code2, BookOpen } from "lucide-react";
 
 export default function ComponentNameSection() {
-  // State for component props
-  const [variant, setVariant] = useState<string>("default");
-  const [size, setSize] = useState<string>("md");
-  const [showCodeOverlay, setShowCodeOverlay] = useState(false);
+    // State for component props
+    const [variant, setVariant] = useState<string>("default");
+    const [size, setSize] = useState<string>("md");
+    const [showCodeOverlay, setShowCodeOverlay] = useState(false);
 
-  // Generate code snippet
-  const generateCode = () => {
-    const props: string[] = [];
+    // Generate code snippet
+    const generateCode = () => {
+        const props: string[] = [];
 
-    if (variant !== "default") props.push(`variant="${variant}"`);
-    if (size !== "md") props.push(`size="${size}"`);
+        if (variant !== "default") props.push(`variant="${variant}"`);
+        if (size !== "md") props.push(`size="${size}"`);
 
-    const propsString = props.join(" ");
-    return `<ComponentName${
-      props.length > 0 ? ` ${propsString}` : ""
-    }>Content</ComponentName>`;
-  };
+        const propsString = props.join(" ");
+        return `<ComponentName${
+            props.length > 0 ? ` ${propsString}` : ""
+        }>Content</ComponentName>`;
+    };
 
-  return (
-    <SectionLayout hasStickyPreview>
-      {/* ========================================
+    return (
+        <SectionLayout hasStickyPreview>
+            {/* ========================================
           SECTION 1: STICKY LIVE PREVIEW
       ======================================== */}
-      <section className="sticky top-0 z-15 py-4 bg-gray-50">
-        <Card variant="elevated" padding="lg">
-          <div className="space-y-4">
-            {/* Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-gray-200">
-              <h2 className="text-lg font-semibold text-gray-900">
-                Component Name Live Preview
-              </h2>
-              <button
-                onClick={() => setShowCodeOverlay(!showCodeOverlay)}
-                className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:border-gray-400 transition-colors"
-                title="View code"
-              >
-                <Code2 className="w-3.5 h-3.5" />
-                Code
-              </button>
-            </div>
+            <section className="sticky top-0 z-15 py-4 bg-gray-50">
+                <Card variant="elevated" padding="lg">
+                    <div className="space-y-4">
+                        {/* Header */}
+                        <div className="flex items-center justify-between pb-3 border-b border-gray-200">
+                            <h2 className="text-lg font-semibold text-gray-900">
+                                Component Name Live Preview
+                            </h2>
+                            <button
+                                onClick={() =>
+                                    setShowCodeOverlay(!showCodeOverlay)
+                                }
+                                className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:border-gray-400 transition-colors"
+                                title="View code"
+                            >
+                                <Code2 className="w-3.5 h-3.5" />
+                                Code
+                            </button>
+                        </div>
 
-            {/* Preview Content */}
-            <div className="relative">
-              <div className="p-6 bg-linear-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
-                <div className="flex justify-center">
-                  <ComponentName variant={variant as any} size={size as any}>
-                    Preview Content
-                  </ComponentName>
-                </div>
-              </div>
+                        {/* Preview Content */}
+                        <div className="relative">
+                            <div className="p-6 bg-linear-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
+                                <div className="flex justify-center">
+                                    <ComponentName
+                                        variant={variant as any}
+                                        size={size as any}
+                                    >
+                                        Preview Content
+                                    </ComponentName>
+                                </div>
+                            </div>
 
-              {/* Code Overlay */}
-              {showCodeOverlay && (
-                <>
-                  {/* Backdrop */}
-                  <div
-                    className="fixed inset-0 bg-black/20 z-40"
-                    onClick={() => setShowCodeOverlay(false)}
-                  />
-                  {/* Overlay Card */}
-                  <div className="absolute top-12 right-0 z-50 w-full max-w-md">
-                    <Card variant="elevated" padding="none">
-                      <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-                        <h4 className="text-sm font-semibold text-gray-900">
-                          Component Code
-                        </h4>
-                        <button
-                          onClick={() => setShowCodeOverlay(false)}
-                          className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded transition-colors"
-                          title="Close"
-                        >
-                          <span className="text-2xl leading-none">×</span>
-                        </button>
-                      </div>
-                      <div className="p-4">
-                        <CodeSnippet code={generateCode()} />
-                      </div>
-                    </Card>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-        </Card>
-      </section>
+                            {/* Code Overlay */}
+                            {showCodeOverlay && (
+                                <>
+                                    {/* Backdrop */}
+                                    <div
+                                        className="fixed inset-0 bg-black/20 z-40"
+                                        onClick={() =>
+                                            setShowCodeOverlay(false)
+                                        }
+                                    />
+                                    {/* Overlay Card */}
+                                    <div className="absolute top-12 right-0 z-50 w-full max-w-md">
+                                        <Card variant="elevated" padding="none">
+                                            <div className="p-4 border-b border-gray-200 flex items-center justify-between">
+                                                <h4 className="text-sm font-semibold text-gray-900">
+                                                    Component Code
+                                                </h4>
+                                                <button
+                                                    onClick={() =>
+                                                        setShowCodeOverlay(
+                                                            false
+                                                        )
+                                                    }
+                                                    className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded transition-colors"
+                                                    title="Close"
+                                                >
+                                                    <span className="text-2xl leading-none">
+                                                        ×
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div className="p-4">
+                                                <CodeSnippet
+                                                    code={generateCode()}
+                                                />
+                                            </div>
+                                        </Card>
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    </div>
+                </Card>
+            </section>
 
-      {/* ========================================
+            {/* ========================================
           SECTION 2: INTERACTIVE CONTROLS
       ======================================== */}
-      <section>
-        <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-          <Settings2 className="w-5 h-5" />
-          Interactive Controls
-        </h2>
-        <Card variant="elevated" padding="lg">
-          <div className="space-y-6">
-            {/* Variant Selection */}
-            <RadioGroup
-              label="Variant"
-              name="variant"
-              value={variant}
-              onChange={setVariant}
-              orientation="horizontal"
-              options={[
-                { value: "default", label: "Default" },
-                { value: "primary", label: "Primary" },
-                { value: "success", label: "Success" },
-                { value: "warning", label: "Warning" },
-                { value: "danger", label: "Danger" },
-              ]}
-            />
+            <section>
+                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                    <Settings2 className="w-5 h-5" />
+                    Interactive Controls
+                </h2>
+                <Card variant="elevated" padding="lg">
+                    <div className="space-y-6">
+                        {/* Variant Selection */}
+                        <RadioGroup
+                            label="Variant"
+                            name="variant"
+                            value={variant}
+                            onChange={setVariant}
+                            orientation="horizontal"
+                            options={[
+                                { value: "default", label: "Default" },
+                                { value: "primary", label: "Primary" },
+                                { value: "success", label: "Success" },
+                                { value: "warning", label: "Warning" },
+                                { value: "danger", label: "Danger" },
+                            ]}
+                        />
 
-            {/* Size Selection */}
-            <RadioGroup
-              label="Size"
-              name="size"
-              value={size}
-              onChange={setSize}
-              orientation="horizontal"
-              options={[
-                { value: "sm", label: "Small" },
-                { value: "md", label: "Medium" },
-                { value: "lg", label: "Large" },
-              ]}
-            />
+                        {/* Size Selection */}
+                        <RadioGroup
+                            label="Size"
+                            name="size"
+                            value={size}
+                            onChange={setSize}
+                            orientation="horizontal"
+                            options={[
+                                { value: "sm", label: "Small" },
+                                { value: "md", label: "Medium" },
+                                { value: "lg", label: "Large" },
+                            ]}
+                        />
 
-            {/* Additional Options */}
-            <div className="space-y-3 pt-2 border-t border-gray-200">
-              <Checkbox label="Option 1" checked={false} onChange={() => {}} />
-              <Checkbox label="Option 2" checked={false} onChange={() => {}} />
-            </div>
-          </div>
-        </Card>
-      </section>
+                        {/* Additional Options */}
+                        <div className="space-y-3 pt-2 border-t border-gray-200">
+                            <Checkbox
+                                label="Option 1"
+                                checked={false}
+                                onChange={() => {}}
+                            />
+                            <Checkbox
+                                label="Option 2"
+                                checked={false}
+                                onChange={() => {}}
+                            />
+                        </div>
+                    </div>
+                </Card>
+            </section>
 
-      {/* ========================================
+            {/* ========================================
           SECTION 3: API REFERENCE
       ======================================== */}
-      <section>
-        <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-          <BookOpen className="w-5 h-5" />
-          API Reference
-        </h2>
-        <Card variant="elevated" padding="none">
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-50 border-b border-gray-200">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                    Prop
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                    Type
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                    Default
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                    Description
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                    variant
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                    &quot;default&quot; | &quot;primary&quot; |
-                    &quot;success&quot;
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                    &quot;default&quot;
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-700">
-                    Visual style variant
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                    size
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                    &quot;sm&quot; | &quot;md&quot; | &quot;lg&quot;
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                    &quot;md&quot;
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-700">
-                    Component size
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                    children
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                    ReactNode
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                    required
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-700">
-                    Component content
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                    className
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                    string
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                    undefined
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-700">
-                    Additional CSS classes
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </Card>
-      </section>
+            <section>
+                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                    <BookOpen className="w-5 h-5" />
+                    API Reference
+                </h2>
+                <Card variant="elevated" padding="none">
+                    <div className="overflow-x-auto">
+                        <table className="w-full">
+                            <thead className="bg-gray-50 border-b border-gray-200">
+                                <tr>
+                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                        Prop
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                        Type
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                        Default
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                        Description
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody className="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                        variant
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                        &quot;default&quot; |
+                                        &quot;primary&quot; |
+                                        &quot;success&quot;
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                        &quot;default&quot;
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                        Visual style variant
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                        size
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                        &quot;sm&quot; | &quot;md&quot; |
+                                        &quot;lg&quot;
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                        &quot;md&quot;
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                        Component size
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                        children
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                        ReactNode
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                        required
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                        Component content
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                        className
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                        string
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                        undefined
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                        Additional CSS classes
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </Card>
+            </section>
 
-      {/* ========================================
+            {/* ========================================
           SECTION 4: USAGE EXAMPLES (Optional)
       ======================================== */}
-      <section>
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">
-          Usage Examples
-        </h2>
-        <div className="space-y-6">
-          {/* Example 1 */}
-          <div>
-            <h3 className="text-md font-semibold text-gray-800 mb-3">
-              Basic Usage
-            </h3>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <ComponentName variant="primary" size="md">
-                Example Content
-              </ComponentName>
-              <CodeSnippet
-                code={`<ComponentName variant="primary" size="md">
+            <section>
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                    Usage Examples
+                </h2>
+                <div className="space-y-6">
+                    {/* Example 1 */}
+                    <div>
+                        <h3 className="text-md font-semibold text-gray-800 mb-3">
+                            Basic Usage
+                        </h3>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <ComponentName variant="primary" size="md">
+                                Example Content
+                            </ComponentName>
+                            <CodeSnippet
+                                code={`<ComponentName variant="primary" size="md">
   Example Content
 </ComponentName>`}
-              />
-            </div>
-          </div>
+                            />
+                        </div>
+                    </div>
 
-          {/* Example 2 */}
-          <div>
-            <h3 className="text-md font-semibold text-gray-800 mb-3">
-              Advanced Usage
-            </h3>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <ComponentName variant="success" size="lg">
-                Advanced Example
-              </ComponentName>
-              <CodeSnippet
-                code={`<ComponentName variant="success" size="lg">
+                    {/* Example 2 */}
+                    <div>
+                        <h3 className="text-md font-semibold text-gray-800 mb-3">
+                            Advanced Usage
+                        </h3>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <ComponentName variant="success" size="lg">
+                                Advanced Example
+                            </ComponentName>
+                            <CodeSnippet
+                                code={`<ComponentName variant="success" size="lg">
   Advanced Example
 </ComponentName>`}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-    </SectionLayout>
-  );
+                            />
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </SectionLayout>
+    );
 }
 ```
 
@@ -506,7 +548,7 @@ All themeable properties should use CSS variables:
 ```tsx
 // ✅ Good: Use CSS variables with Tailwind arbitrary values
 const iconStyles =
-  "[background-color:var(--card-icon-blue-bg)] [color:var(--card-icon-blue-text)]";
+    "[background-color:var(--card-icon-blue-bg)] [color:var(--card-icon-blue-text)]";
 
 // ✅ Good: Tailwind utilities (for non-themeable styles)
 const baseStyles = "rounded-lg p-4 flex items-center";
@@ -586,20 +628,20 @@ When a component needs themeable properties:
 
 ```typescript
 export interface ComponentTheme {
-  padding: {
-    sm: string;
-    md: string;
-    lg: string;
-  };
-  colors?: {
-    primary: { bg: string; text: string; hover: string };
-    secondary: { bg: string; text: string; hover: string };
-  };
+    padding: {
+        sm: string;
+        md: string;
+        lg: string;
+    };
+    colors?: {
+        primary: { bg: string; text: string; hover: string };
+        secondary: { bg: string; text: string; hover: string };
+    };
 }
 
 export interface Theme {
-  // ... existing themes
-  component: ComponentTheme; // Add your theme
+    // ... existing themes
+    component: ComponentTheme; // Add your theme
 }
 ```
 
@@ -607,20 +649,20 @@ export interface Theme {
 
 ```json
 {
-  "component": {
-    "padding": {
-      "sm": "0.5rem",
-      "md": "1rem",
-      "lg": "1.5rem"
-    },
-    "colors": {
-      "primary": {
-        "bg": "#dbeafe",
-        "text": "#2563eb",
-        "hover": "#bfdbfe"
-      }
+    "component": {
+        "padding": {
+            "sm": "0.5rem",
+            "md": "1rem",
+            "lg": "1.5rem"
+        },
+        "colors": {
+            "primary": {
+                "bg": "#dbeafe",
+                "text": "#2563eb",
+                "hover": "#bfdbfe"
+            }
+        }
     }
-  }
 }
 ```
 
@@ -630,11 +672,11 @@ export interface Theme {
 // In useEffect where CSS variables are set
 const component = theme.component;
 if (component.colors) {
-  Object.entries(component.colors).forEach(([name, values]) => {
-    root.style.setProperty(`--component-${name}-bg`, values.bg);
-    root.style.setProperty(`--component-${name}-text`, values.text);
-    root.style.setProperty(`--component-${name}-hover`, values.hover);
-  });
+    Object.entries(component.colors).forEach(([name, values]) => {
+        root.style.setProperty(`--component-${name}-bg`, values.bg);
+        root.style.setProperty(`--component-${name}-text`, values.text);
+        root.style.setProperty(`--component-${name}-hover`, values.hover);
+    });
 }
 ```
 
@@ -642,10 +684,10 @@ if (component.colors) {
 
 ```css
 :root {
-  /* Component: YourComponent */
-  --component-primary-bg: #dbeafe;
-  --component-primary-text: #2563eb;
-  --component-primary-hover: #bfdbfe;
+    /* Component: YourComponent */
+    --component-primary-bg: #dbeafe;
+    --component-primary-text: #2563eb;
+    --component-primary-hover: #bfdbfe;
 }
 ```
 
@@ -653,7 +695,7 @@ if (component.colors) {
 
 ```tsx
 const styles =
-  "[background-color:var(--component-primary-bg)] [color:var(--component-primary-text)]";
+    "[background-color:var(--component-primary-bg)] [color:var(--component-primary-text)]";
 ```
 
 ---
@@ -664,11 +706,11 @@ const styles =
 
 - **Format**: `lowercase-with-hyphens.tsx`
 - **Examples**:
-  - `button.tsx` ✅
-  - `rating.tsx` ✅
-  - `code-snippet.tsx` ✅
-  - `Button.tsx` ❌
-  - `Rating.tsx` ❌
+    - `button.tsx` ✅
+    - `rating.tsx` ✅
+    - `code-snippet.tsx` ✅
+    - `Button.tsx` ❌
+    - `Rating.tsx` ❌
 
 ### Showcase Pages (`site/src/app/(showcase)/components/`)
 
@@ -676,11 +718,11 @@ const styles =
 - **Structure**: Each component gets its own folder with a `page.tsx` file
 - **Export**: Default export function (name doesn't matter due to Next.js file routing)
 - **Examples**:
-  - `cards/page.tsx` → `export default function CardsPage()` ✅
-  - `badges/page.tsx` → `export default function BadgesPage()` ✅
-  - `rating/page.tsx` → `export default function RatingPage()` ✅
-  - `rating.tsx` ❌ (must be in folder)
-  - `Cards/page.tsx` ❌ (folder must be lowercase)
+    - `cards/page.tsx` → `export default function CardsPage()` ✅
+    - `badges/page.tsx` → `export default function BadgesPage()` ✅
+    - `rating/page.tsx` → `export default function RatingPage()` ✅
+    - `rating.tsx` ❌ (must be in folder)
+    - `Cards/page.tsx` ❌ (folder must be lowercase)
 
 ### Imports & Exports
 
@@ -693,12 +735,12 @@ export type { RatingProps } from "./ui/rating";
 
 // For compound components, export all subcomponents
 export {
-  Dialog,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogContent,
-  DialogFooter,
+    Dialog,
+    DialogHeader,
+    DialogTitle,
+    DialogDescription,
+    DialogContent,
+    DialogFooter,
 } from "./ui/dialog";
 export type { DialogProps } from "./ui/dialog";
 ```
@@ -769,6 +811,41 @@ export type { DialogProps } from "./ui/dialog";
 - Keep control state in sync with live preview
 - Update code generation when controls change
 
+**Nested Checkbox Pattern** (for compound components):
+
+```tsx
+<div className="space-y-3">
+    <h3 className="text-sm font-semibold text-gray-700">Card Sections</h3>
+    <div className="space-y-2">
+        <Checkbox
+            label="Show Header"
+            checked={showHeader}
+            onChange={setShowHeader}
+        />
+        {showHeader && (
+            <div className="ml-6 space-y-2">
+                <Checkbox
+                    label="Show Title"
+                    checked={showTitle}
+                    onChange={setShowTitle}
+                />
+                <Checkbox
+                    label="Show Description"
+                    checked={showDescription}
+                    onChange={setShowDescription}
+                />
+            </div>
+        )}
+    </div>
+</div>
+```
+
+This pattern allows users to:
+
+- Toggle parent component visibility
+- Conditionally show child component controls
+- Maintain logical hierarchy in the UI
+
 ---
 
 ## Component Checklist
@@ -793,7 +870,9 @@ Use this checklist when creating a new component:
 - [ ] Used lowercase folder name matching component name
 - [ ] Implemented Live Preview section (sticky with SectionLayout)
 - [ ] Implemented Interactive Controls section with RadioGroup/Checkbox
+- [ ] Added nested checkboxes if component has subcomponents
 - [ ] Implemented API Reference section with complete props table
+- [ ] Added separate Subcomponents table if applicable (see Cards example)
 - [ ] Implemented Usage Examples section (optional but recommended)
 - [ ] Used CodeSnippet component for all code examples
 - [ ] Added code generation function for live preview
@@ -855,64 +934,72 @@ import React from "react";
 import { cn } from "../lib/utils";
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
-  variant?: "default" | "primary" | "success" | "warning" | "danger" | "info";
-  size?: "sm" | "md" | "lg";
-  dot?: boolean;
+    variant?: "default" | "primary" | "success" | "warning" | "danger" | "info";
+    size?: "sm" | "md" | "lg";
+    dot?: boolean;
 }
 
 const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
-  (
-    {
-      className,
-      variant = "default",
-      size = "md",
-      dot = false,
-      children,
-      ...props
-    },
-    ref
-  ) => {
-    const baseStyles = "inline-flex items-center font-medium rounded-full";
+    (
+        {
+            className,
+            variant = "default",
+            size = "md",
+            dot = false,
+            children,
+            ...props
+        },
+        ref
+    ) => {
+        const baseStyles = "inline-flex items-center font-medium rounded-full";
 
-    const variants = {
-      default: "bg-gray-100 text-gray-800",
-      primary: "bg-blue-100 text-blue-800",
-      success: "bg-green-100 text-green-800",
-      warning: "bg-yellow-100 text-yellow-800",
-      danger: "bg-red-100 text-red-800",
-      info: "bg-cyan-100 text-cyan-800",
-    };
+        const variants = {
+            default: "bg-gray-100 text-gray-800",
+            primary: "bg-blue-100 text-blue-800",
+            success: "bg-green-100 text-green-800",
+            warning: "bg-yellow-100 text-yellow-800",
+            danger: "bg-red-100 text-red-800",
+            info: "bg-cyan-100 text-cyan-800",
+        };
 
-    const sizes = {
-      sm: "text-xs px-2 py-0.5",
-      md: "text-sm px-2.5 py-1",
-      lg: "text-base px-3 py-1.5",
-    };
+        const sizes = {
+            sm: "text-xs px-2 py-0.5",
+            md: "text-sm px-2.5 py-1",
+            lg: "text-base px-3 py-1.5",
+        };
 
-    const dotVariants = {
-      default: "bg-gray-600",
-      primary: "bg-blue-600",
-      success: "bg-green-600",
-      warning: "bg-yellow-600",
-      danger: "bg-red-600",
-      info: "bg-cyan-600",
-    };
+        const dotVariants = {
+            default: "bg-gray-600",
+            primary: "bg-blue-600",
+            success: "bg-green-600",
+            warning: "bg-yellow-600",
+            danger: "bg-red-600",
+            info: "bg-cyan-600",
+        };
 
-    return (
-      <span
-        ref={ref}
-        className={cn(baseStyles, variants[variant], sizes[size], className)}
-        {...props}
-      >
-        {dot && (
-          <span
-            className={cn("w-2 h-2 rounded-full mr-1.5", dotVariants[variant])}
-          />
-        )}
-        {children}
-      </span>
-    );
-  }
+        return (
+            <span
+                ref={ref}
+                className={cn(
+                    baseStyles,
+                    variants[variant],
+                    sizes[size],
+                    className
+                )}
+                {...props}
+            >
+                {dot && (
+                    <span
+                        className={cn(
+                            "w-2 h-2 rounded-full mr-1.5",
+                            dotVariants[variant]
+                        )}
+                    />
+                )}
+                {children}
+            </span>
+        );
+    }
 );
 
 Badge.displayName = "Badge";
@@ -944,40 +1031,40 @@ For components with unique props (like Rating's slider), create custom controls:
 
 ```tsx
 {
-  /* Custom Slider with Visual Feedback */
+    /* Custom Slider with Visual Feedback */
 }
 <div className="space-y-3">
-  <label className="block text-sm font-semibold text-gray-700">
-    Rating Value: {value.toFixed(1)}
-  </label>
-  <div className="relative">
-    <input
-      type="range"
-      min={0}
-      max={5}
-      step={0.5}
-      value={value}
-      onChange={(e) => setValue(Number(e.target.value))}
-      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-(--color-warning)"
-      style={{
-        background: `linear-gradient(to right, var(--color-warning) 0%, var(--color-warning) ${
-          (value / 5) * 100
-        }%, #e5e7eb ${(value / 5) * 100}%, #e5e7eb 100%)`,
-      }}
-    />
-    {/* Add visual indicators */}
-    <div className="flex justify-between mt-2">
-      {[0, 1, 2, 3, 4, 5].map((num) => (
-        <button
-          key={num}
-          onClick={() => setValue(num)}
-          className="text-xs text-gray-500"
-        >
-          {num}
-        </button>
-      ))}
+    <label className="block text-sm font-semibold text-gray-700">
+        Rating Value: {value.toFixed(1)}
+    </label>
+    <div className="relative">
+        <input
+            type="range"
+            min={0}
+            max={5}
+            step={0.5}
+            value={value}
+            onChange={(e) => setValue(Number(e.target.value))}
+            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-(--color-warning)"
+            style={{
+                background: `linear-gradient(to right, var(--color-warning) 0%, var(--color-warning) ${
+                    (value / 5) * 100
+                }%, #e5e7eb ${(value / 5) * 100}%, #e5e7eb 100%)`,
+            }}
+        />
+        {/* Add visual indicators */}
+        <div className="flex justify-between mt-2">
+            {[0, 1, 2, 3, 4, 5].map((num) => (
+                <button
+                    key={num}
+                    onClick={() => setValue(num)}
+                    className="text-xs text-gray-500"
+                >
+                    {num}
+                </button>
+            ))}
+        </div>
     </div>
-  </div>
 </div>;
 ```
 
@@ -991,30 +1078,34 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(/* ... */);
 Card.displayName = "Card";
 
 const CardHeader = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
+    HTMLDivElement,
+    React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("flex flex-col space-y-1.5", className)}
-    {...props}
-  />
+    <div
+        ref={ref}
+        className={cn("flex flex-col space-y-1.5", className)}
+        {...props}
+    />
 ));
 CardHeader.displayName = "CardHeader";
 
 const CardTitle = React.forwardRef<
-  HTMLHeadingElement,
-  React.HTMLAttributes<HTMLHeadingElement>
+    HTMLHeadingElement,
+    React.HTMLAttributes<HTMLHeadingElement>
 >(({ className, ...props }, ref) => (
-  <h3 ref={ref} className={cn("text-lg font-semibold", className)} {...props} />
+    <h3
+        ref={ref}
+        className={cn("text-lg font-semibold", className)}
+        {...props}
+    />
 ));
 CardTitle.displayName = "CardTitle";
 
 const CardContent = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
+    HTMLDivElement,
+    React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("pt-0", className)} {...props} />
+    <div ref={ref} className={cn("pt-0", className)} {...props} />
 ));
 CardContent.displayName = "CardContent";
 
@@ -1024,9 +1115,53 @@ export { Card, CardHeader, CardTitle, CardContent };
 
 **Showcase Documentation**:
 
-- Add a separate "Subcomponents" table in API Reference
+- Add a separate "Card Subcomponents" table after the main API Reference (see Cards example)
+- Include columns: Component, Description, Default Styles
 - Show usage examples with proper composition
-- Include checkboxes to toggle subcomponents in interactive controls
+- Include nested checkboxes to toggle subcomponents in interactive controls
+
+Example Subcomponents Table Structure:
+
+```tsx
+<div className="mt-6">
+    <h3 className="text-lg font-semibold text-gray-900 mb-3">
+        Card Subcomponents
+    </h3>
+    <Card variant="elevated" padding="none">
+        <div className="overflow-x-auto">
+            <table className="w-full">
+                <thead className="bg-gray-50 border-b border-gray-200">
+                    <tr>
+                        <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            Component
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            Description
+                        </th>
+                        <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            Default Styles
+                        </th>
+                    </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                    <tr>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                            CardHeader
+                        </td>
+                        <td className="px-6 py-4 text-sm text-gray-700">
+                            Container for card header content
+                        </td>
+                        <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                            flex flex-col space-y-1.5
+                        </td>
+                    </tr>
+                    {/* More rows... */}
+                </tbody>
+            </table>
+        </div>
+    </Card>
+</div>
+```
 
 ---
 

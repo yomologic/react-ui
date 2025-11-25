@@ -15,6 +15,8 @@ import {
     PanelLeft,
     Code,
     MessageSquare,
+    Minus,
+    Sliders,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -80,9 +82,19 @@ const navSections: DrawerNavSection[] = [
                 icon: <MessageSquare className="w-5 h-5" />,
             },
             {
+                id: "divider",
+                label: "Divider",
+                icon: <Minus className="w-5 h-5" />,
+            },
+            {
                 id: "rating",
                 label: "Rating",
                 icon: <Star className="w-5 h-5" />,
+            },
+            {
+                id: "slider",
+                label: "Slider",
+                icon: <Sliders className="w-5 h-5" />,
             },
         ],
     },

@@ -7,6 +7,9 @@ import {
     CardDescription,
     CardContent,
     CardFooter,
+    CardMedia,
+    CardActions,
+    CardActionArea,
     RadioGroup,
     Checkbox,
     CodeSnippet,
@@ -459,6 +462,42 @@ export default function CardsPage() {
                                             flex items-center pt-4
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                            CardMedia
+                                        </td>
+                                        <td className="px-6 py-4 text-sm text-gray-700">
+                                            Display images or videos with proper
+                                            aspect ratios
+                                        </td>
+                                        <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                            w-full object-cover
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                            CardActions
+                                        </td>
+                                        <td className="px-6 py-4 text-sm text-gray-700">
+                                            Footer area for action buttons with
+                                            proper spacing
+                                        </td>
+                                        <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                            flex items-center gap-2 p-4
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                            CardActionArea
+                                        </td>
+                                        <td className="px-6 py-4 text-sm text-gray-700">
+                                            Makes entire card clickable with
+                                            hover/focus states
+                                        </td>
+                                        <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                            cursor-pointer hover:bg-gray-50
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -584,6 +623,100 @@ export default function CardsPage() {
   <CardContent>
     <p>Main content...</p>
   </CardContent>
+</Card>`}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Card with Media */}
+                    <div>
+                        <h3 className="text-md font-semibold text-gray-800 mb-3">
+                            Card with Image Media
+                        </h3>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <Card variant="elevated">
+                                <CardMedia
+                                    component="img"
+                                    image="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400"
+                                    alt="Example"
+                                    aspectRatio="16/9"
+                                />
+                                <CardContent>
+                                    <h3 className="font-semibold text-gray-800 mb-2">
+                                        Mountain Landscape
+                                    </h3>
+                                    <p className="text-sm text-gray-600">
+                                        Use CardMedia to display images with
+                                        proper aspect ratios.
+                                    </p>
+                                </CardContent>
+                                <CardActions>
+                                    <button className="px-3 py-1.5 text-sm text-blue-600 hover:bg-blue-50 rounded-md">
+                                        Share
+                                    </button>
+                                    <button className="px-3 py-1.5 text-sm text-blue-600 hover:bg-blue-50 rounded-md">
+                                        Learn More
+                                    </button>
+                                </CardActions>
+                            </Card>
+                            <CodeSnippet
+                                code={`<Card variant="elevated">
+  <CardMedia
+    component="img"
+    image="/path/to/image.jpg"
+    alt="Description"
+    aspectRatio="16/9"
+  />
+  <CardContent>
+    <h3>Title</h3>
+    <p>Description...</p>
+  </CardContent>
+  <CardActions>
+    <button>Share</button>
+    <button>Learn More</button>
+  </CardActions>
+</Card>`}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Card with Action Area */}
+                    <div>
+                        <h3 className="text-md font-semibold text-gray-800 mb-3">
+                            Clickable Card with Action Area
+                        </h3>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <Card variant="elevated">
+                                <CardActionArea
+                                    onClick={() => alert("Card clicked!")}
+                                >
+                                    <CardMedia
+                                        image="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400"
+                                        aspectRatio="16/9"
+                                    />
+                                    <CardContent>
+                                        <h3 className="font-semibold text-gray-800 mb-2">
+                                            Interactive Card
+                                        </h3>
+                                        <p className="text-sm text-gray-600">
+                                            Click anywhere on this card to
+                                            trigger an action.
+                                        </p>
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>
+                            <CodeSnippet
+                                code={`<Card variant="elevated">
+  <CardActionArea onClick={handleClick}>
+    <CardMedia
+      image="/path/to/image.jpg"
+      aspectRatio="16/9"
+    />
+    <CardContent>
+      <h3>Interactive Card</h3>
+      <p>Click anywhere...</p>
+    </CardContent>
+  </CardActionArea>
 </Card>`}
                             />
                         </div>
