@@ -74,13 +74,6 @@ export const Divider: React.FC<DividerProps> = ({
     // Flex item classes
     const flexClasses = flexItem && isVertical ? "self-stretch !h-auto" : "";
 
-    // Text alignment classes for children
-    const textAlignClasses = {
-        left: "justify-start",
-        center: "justify-center",
-        right: "justify-end",
-    };
-
     // Text styles with CSS variables
     const textStyles: React.CSSProperties = {
         fontSize: "var(--text-sm, 0.875rem)",

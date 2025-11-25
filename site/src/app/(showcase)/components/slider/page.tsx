@@ -19,6 +19,7 @@ export default function SliderPage() {
     const [max, setMax] = useState(10);
     const [step, setStep] = useState(1);
     const [showMarks, setShowMarks] = useState(false);
+    const [useCustomMarks, setUseCustomMarks] = useState(false);
     const [disabled, setDisabled] = useState(false);
     const [orientation, setOrientation] = useState<"horizontal" | "vertical">(
         "horizontal"
@@ -30,6 +31,7 @@ export default function SliderPage() {
     >("auto");
     const [track, setTrack] = useState<"normal" | "inverted" | false>("normal");
     const [isRange, setIsRange] = useState(false);
+    const [showMarkLabelsOnHover, setShowMarkLabelsOnHover] = useState(false);
     const [showCodeOverlay, setShowCodeOverlay] = useState(false);
     const [maxError, setMaxError] = useState("");
 
@@ -48,7 +50,18 @@ export default function SliderPage() {
         if (min !== 0) props.push(`min={${min}}`);
         if (max !== 100) props.push(`max={${max}}`);
         if (step !== 1) props.push(`step={${step}}`);
-        if (showMarks) props.push("marks");
+        if (showMarks) {
+            if (useCustomMarks) {
+                props.push(`marks={[
+    { value: ${min}, label: "${min}" },
+    { value: ${Math.round((min + max) / 2)}, label: "${Math.round((min + max) / 2)}" },
+    { value: ${max}, label: "${max}" },
+  ]}`);
+            } else {
+                props.push("marks");
+            }
+        }
+        if (showMarkLabelsOnHover) props.push("showMarkLabelsOnHover");
         if (disabled) props.push("disabled");
         if (orientation !== "horizontal")
             props.push(`orientation="${orientation}"`);
@@ -104,7 +117,43 @@ export default function SliderPage() {
                                             min={min}
                                             max={max}
                                             step={step}
-                                            marks={showMarks}
+                                            marks={
+                                                showMarks
+                                                    ? useCustomMarks
+                                                        ? [
+                                                              {
+                                                                  value: min,
+                                                                  label: String(
+                                                                      min
+                                                                  ),
+                                                              },
+                                                              {
+                                                                  value: Math.round(
+                                                                      (min +
+                                                                          max) /
+                                                                          2
+                                                                  ),
+                                                                  label: String(
+                                                                      Math.round(
+                                                                          (min +
+                                                                              max) /
+                                                                              2
+                                                                      )
+                                                                  ),
+                                                              },
+                                                              {
+                                                                  value: max,
+                                                                  label: String(
+                                                                      max
+                                                                  ),
+                                                              },
+                                                          ]
+                                                        : true
+                                                    : false
+                                            }
+                                            showMarkLabelsOnHover={
+                                                showMarkLabelsOnHover
+                                            }
                                             disabled={disabled}
                                             orientation={orientation}
                                             size={size}
@@ -123,7 +172,43 @@ export default function SliderPage() {
                                             min={min}
                                             max={max}
                                             step={step}
-                                            marks={showMarks}
+                                            marks={
+                                                showMarks
+                                                    ? useCustomMarks
+                                                        ? [
+                                                              {
+                                                                  value: min,
+                                                                  label: String(
+                                                                      min
+                                                                  ),
+                                                              },
+                                                              {
+                                                                  value: Math.round(
+                                                                      (min +
+                                                                          max) /
+                                                                          2
+                                                                  ),
+                                                                  label: String(
+                                                                      Math.round(
+                                                                          (min +
+                                                                              max) /
+                                                                              2
+                                                                      )
+                                                                  ),
+                                                              },
+                                                              {
+                                                                  value: max,
+                                                                  label: String(
+                                                                      max
+                                                                  ),
+                                                              },
+                                                          ]
+                                                        : true
+                                                    : false
+                                            }
+                                            showMarkLabelsOnHover={
+                                                showMarkLabelsOnHover
+                                            }
                                             disabled={disabled}
                                             orientation={orientation}
                                             size={size}
@@ -340,6 +425,20 @@ export default function SliderPage() {
                                 checked={showMarks}
                                 onChange={setShowMarks}
                             />
+                            {showMarks && (
+                                <div className="ml-6">
+                                    <Checkbox
+                                        label="Use custom mark labels"
+                                        checked={useCustomMarks}
+                                        onChange={setUseCustomMarks}
+                                    />
+                                </div>
+                            )}
+                            <Checkbox
+                                label="Show mark labels on hover"
+                                checked={showMarkLabelsOnHover}
+                                onChange={setShowMarkLabelsOnHover}
+                            />
                             <Checkbox
                                 label="Disabled"
                                 checked={disabled}
@@ -554,6 +653,20 @@ export default function SliderPage() {
                                 </tr>
                                 <tr>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                        showMarkLabelsOnHover
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                        boolean
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                        false
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                        Show value labels on hover over marks
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
                                         track
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-600 font-mono">
@@ -736,6 +849,42 @@ export default function SliderPage() {
                             <div>
                                 <CodeSnippet
                                     code={`<Slider\n  defaultValue={40}\n  color="secondary"\n  valueLabelDisplay="auto"\n/>`}
+                                />
+                            </div>
+                        </div>
+                    </Card>
+
+                    {/* Example 6: Custom Mark Labels */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Custom Mark Labels
+                        </h3>
+                        <div className="grid md:grid-cols-2 gap-6">
+                            <div className="space-y-4">
+                                <p className="text-sm text-gray-600">
+                                    Slider with custom labels displayed below
+                                    marks. Labels are always visible with
+                                    consistent styling. Automatically snaps to
+                                    mark positions.
+                                </p>
+                                <div className="p-6 pb-12 bg-gray-50 rounded-lg border border-gray-200">
+                                    <Slider
+                                        defaultValue={67}
+                                        marks={[
+                                            { value: 0, label: "Apple" },
+                                            { value: 33, label: "Banana" },
+                                            { value: 67, label: "Orange" },
+                                            { value: 100, label: "Grape" },
+                                        ]}
+                                        min={0}
+                                        max={100}
+                                        valueLabelDisplay="auto"
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <CodeSnippet
+                                    code={`<Slider\n  defaultValue={67}\n  marks={[\n    { value: 0, label: "Apple" },\n    { value: 33, label: "Banana" },\n    { value: 67, label: "Orange" },\n    { value: 100, label: "Grape" },\n  ]}\n  min={0}\n  max={100}\n  valueLabelDisplay="auto"\n/>`}
                                 />
                             </div>
                         </div>

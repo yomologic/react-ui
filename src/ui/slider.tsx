@@ -32,9 +32,10 @@ export interface SliderProps {
     max?: number;
     /**
      * The granularity with which the slider can step through values.
+     * Set to null to restrict values to marks only.
      * @default 1
      */
-    step?: number;
+    step?: number | null;
     /**
      * Marks indicate predetermined values to which the user can move the slider.
      * If `true`, marks are generated automatically. If `false`, no marks are shown.
@@ -62,6 +63,11 @@ export interface SliderProps {
      * @default "auto"
      */
     valueLabelDisplay?: "on" | "auto" | "off";
+    /**
+     * Show value labels on hover over marks.
+     * @default false
+     */
+    showMarkLabelsOnHover?: boolean;
     /**
      * The color of the slider.
      * @default "primary"
@@ -110,6 +116,7 @@ export const Slider: React.FC<SliderProps> = ({
     orientation = "horizontal",
     size = "medium",
     valueLabelDisplay = "auto",
+    showMarkLabelsOnHover = false,
     color = "primary",
     track = "normal",
     valueLabelFormat = (v) => String(v),
@@ -176,8 +183,19 @@ export const Slider: React.FC<SliderProps> = ({
         const clampedPercent = Math.max(0, Math.min(100, percent));
         let newValue = min + (clampedPercent / 100) * (max - min);
 
-        // Snap to step
-        if (step) {
+        // Snap to step or marks
+        if (step === null || (Array.isArray(marks) && marks.length > 0)) {
+            // Snap to nearest mark (when step is null or when custom marks are provided)
+            if (marksList.length > 0) {
+                const closest = marksList.reduce((prev, curr) =>
+                    Math.abs(curr.value - newValue) <
+                    Math.abs(prev.value - newValue)
+                        ? curr
+                        : prev
+                );
+                newValue = closest.value;
+            }
+        } else if (step) {
             newValue = Math.round(newValue / step) * step;
         }
 
@@ -266,7 +284,8 @@ export const Slider: React.FC<SliderProps> = ({
         if (marks === false) return [];
         if (marks === true) {
             const marksList: SliderMark[] = [];
-            for (let i = min; i <= max; i += step) {
+            const stepValue = step || 1;
+            for (let i = min; i <= max; i += stepValue) {
                 marksList.push({ value: i });
             }
             return marksList;
@@ -283,14 +302,18 @@ export const Slider: React.FC<SliderProps> = ({
             thumb: "bg-blue-500",
             thumbHover: "hover:bg-blue-600",
             thumbRing: "ring-blue-500/30",
-            thumbRingHover: "group-hover:ring-blue-500/30",
+            thumbRingHover: "group-hover/thumb:ring-blue-500/30",
+            labelSelected: "text-gray-700",
+            labelUnselected: "text-gray-700",
         },
         secondary: {
             track: "bg-purple-500",
             thumb: "bg-purple-500",
             thumbHover: "hover:bg-purple-600",
             thumbRing: "ring-purple-500/30",
-            thumbRingHover: "group-hover:ring-purple-500/30",
+            thumbRingHover: "group-hover/thumb:ring-purple-500/30",
+            labelSelected: "text-gray-700",
+            labelUnselected: "text-gray-700",
         },
     };
 
@@ -302,14 +325,14 @@ export const Slider: React.FC<SliderProps> = ({
             rail: isVertical ? "w-1" : "h-1",
             thumb: "w-3 h-3",
             thumbActive: "w-4 h-4",
-            ringHover: "group-hover:ring-4",
+            ringHover: "group-hover/thumb:ring-4",
             ringActive: "ring-6",
         },
         medium: {
             rail: isVertical ? "w-1" : "h-1",
             thumb: "w-4 h-4",
             thumbActive: "w-5 h-5",
-            ringHover: "group-hover:ring-4",
+            ringHover: "group-hover/thumb:ring-4",
             ringActive: "ring-8",
         },
     };
@@ -374,9 +397,8 @@ export const Slider: React.FC<SliderProps> = ({
         return values.map((val, index) => {
             const percent = valueToPercent(val);
             const isActive = isDragging && activeThumb === index;
-            const showLabel =
-                valueLabelDisplay === "on" ||
-                (valueLabelDisplay === "auto" && isActive);
+            const showLabelAlways = valueLabelDisplay === "on";
+            const showLabelOnActiveOrHover = valueLabelDisplay === "auto";
 
             const thumbStyle = isVertical
                 ? { bottom: `${percent}%` }
@@ -385,19 +407,32 @@ export const Slider: React.FC<SliderProps> = ({
             return (
                 <div
                     key={index}
-                    className={`absolute ${isVertical ? "-right-1.5" : "-top-1.5"} transform ${isVertical ? "" : "-translate-x-1/2"} ${isVertical ? "translate-y-1/2" : ""} cursor-pointer ${disabled ? "cursor-not-allowed opacity-50" : ""} group`}
+                    className={`absolute ${isVertical ? "left-1/2 -translate-x-1/2" : "top-1/2 -translate-y-1/2"} cursor-pointer ${disabled ? "cursor-not-allowed opacity-50" : ""} group/thumb`}
                     style={thumbStyle}
                     onMouseDown={handleMouseDown(index)}
                     onTouchStart={handleMouseDown(index)}
                 >
                     <div
-                        className={`${isActive ? currentSizeStyles.thumbActive : currentSizeStyles.thumb} ${currentColorStyles.thumb} ${!isActive && currentColorStyles.thumbHover} rounded-full shadow-md transition-all ${isActive ? `${currentSizeStyles.ringActive} ${currentColorStyles.thumbRing}` : `group-hover:shadow-lg ${currentSizeStyles.ringHover} ${currentColorStyles.thumbRingHover}`} ${disabled ? "pointer-events-none" : ""}`}
+                        className={`absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 ${isActive ? currentSizeStyles.thumbActive : currentSizeStyles.thumb} ${currentColorStyles.thumb} ${!isActive && currentColorStyles.thumbHover} rounded-full shadow-md transition-all ${isActive ? `${currentSizeStyles.ringActive} ${currentColorStyles.thumbRing}` : `group-hover/thumb:shadow-lg ${currentSizeStyles.ringHover} ${currentColorStyles.thumbRingHover}`} ${disabled ? "pointer-events-none" : ""}`}
                     />
-                    {showLabel && (
+                    {showLabelAlways && (
                         <div
-                            className={`absolute ${isVertical ? "left-6" : "-top-8"} ${isVertical ? "top-1/2 -translate-y-1/2" : "left-1/2 -translate-x-1/2"} px-2 py-1 text-xs font-medium text-white bg-gray-900 rounded whitespace-nowrap`}
+                            className={`absolute ${isVertical ? "left-6" : "-top-10"} ${isVertical ? "top-1/2 -translate-y-1/2" : "left-1/2 -translate-x-1/2"} px-2 py-1 text-xs font-semibold text-white ${color === "primary" ? "bg-blue-500" : "bg-purple-500"} rounded shadow-lg whitespace-nowrap z-50`}
                         >
                             {valueLabelFormat(val)}
+                            <div
+                                className={`absolute ${isVertical ? "left-0 top-1/2 -translate-y-1/2 -translate-x-full" : "left-1/2 -translate-x-1/2 top-full"} w-0 h-0 ${isVertical ? "border-t-4 border-t-transparent border-b-4 border-b-transparent" : "border-l-4 border-l-transparent border-r-4 border-r-transparent"} ${isVertical ? (color === "primary" ? "border-r-4 border-r-blue-500" : "border-r-4 border-r-purple-500") : color === "primary" ? "border-t-4 border-t-blue-500" : "border-t-4 border-t-purple-500"}`}
+                            />
+                        </div>
+                    )}
+                    {showLabelOnActiveOrHover && (
+                        <div
+                            className={`absolute ${isVertical ? "left-6" : "-top-10"} ${isVertical ? "top-1/2 -translate-y-1/2" : "left-1/2 -translate-x-1/2"} px-2 py-1 text-xs font-semibold text-white ${color === "primary" ? "bg-blue-500" : "bg-purple-500"} rounded shadow-lg whitespace-nowrap opacity-0 scale-90 ${isActive ? "opacity-100 scale-100" : "group-hover/thumb:opacity-100 group-hover/thumb:scale-100"} transition-all duration-300 ease-out pointer-events-none z-50`}
+                        >
+                            {valueLabelFormat(val)}
+                            <div
+                                className={`absolute ${isVertical ? "left-0 top-1/2 -translate-y-1/2 -translate-x-full" : "left-1/2 -translate-x-1/2 top-full"} w-0 h-0 ${isVertical ? "border-t-4 border-t-transparent border-b-4 border-b-transparent" : "border-l-4 border-l-transparent border-r-4 border-r-transparent"} ${isVertical ? (color === "primary" ? "border-r-4 border-r-blue-500" : "border-r-4 border-r-purple-500") : color === "primary" ? "border-t-4 border-t-blue-500" : "border-t-4 border-t-purple-500"}`}
+                            />
                         </div>
                     )}
                 </div>
@@ -438,13 +473,13 @@ export const Slider: React.FC<SliderProps> = ({
             >
                 {/* Rail */}
                 <div
-                    className={`absolute ${isVertical ? "inset-x-0 h-full" : "inset-y-0 w-full"} bg-gray-300 rounded-full ${disabled ? "opacity-50" : ""}`}
+                    className={`absolute ${isVertical ? "inset-x-0 h-full" : "inset-y-0 w-full"} bg-gray-300 rounded-full ${disabled ? "opacity-50" : ""} z-0`}
                 />
 
                 {/* Track */}
                 {track !== false && (
                     <div
-                        className={`absolute ${isVertical ? "inset-x-0" : "inset-y-0"} ${currentColorStyles.track} rounded-full ${disabled ? "opacity-50" : ""}`}
+                        className={`absolute ${isVertical ? "inset-x-0" : "inset-y-0"} ${currentColorStyles.track} rounded-full ${disabled ? "opacity-50" : ""} z-0`}
                         style={getTrackStyle()}
                     />
                 )}
@@ -456,18 +491,62 @@ export const Slider: React.FC<SliderProps> = ({
                         ? { bottom: `${markPercent}%` }
                         : { left: `${markPercent}%` };
 
+                    // Check if mark is in selected range
+                    let isInSelectedRange = false;
+                    if (isRange && Array.isArray(currentValue)) {
+                        const [start, end] = currentValue;
+                        isInSelectedRange =
+                            mark.value >= start && mark.value <= end;
+                    } else if (typeof currentValue === "number") {
+                        if (track === "inverted") {
+                            isInSelectedRange = mark.value >= currentValue;
+                        } else {
+                            isInSelectedRange = mark.value <= currentValue;
+                        }
+                    }
+
+                    // Check if mark is at thumb position (with tolerance for floating point)
+                    const isAtThumbPosition =
+                        isRange && Array.isArray(currentValue)
+                            ? Math.abs(mark.value - currentValue[0]) < 0.01 ||
+                              Math.abs(mark.value - currentValue[1]) < 0.01
+                            : Math.abs(mark.value - (currentValue as number)) <
+                              0.01;
+
+                    const markColor = isInSelectedRange
+                        ? "bg-white shadow-sm group-hover/mark:bg-white group-hover/mark:shadow-md"
+                        : "bg-gray-600 group-hover/mark:bg-gray-800";
+                    const labelColor = isInSelectedRange
+                        ? currentColorStyles.labelSelected
+                        : currentColorStyles.labelUnselected;
+
                     return (
-                        <div key={mark.value}>
+                        <div
+                            key={mark.value}
+                            className={`group/mark absolute ${isVertical ? "left-1/2 -translate-x-1/2" : "top-1/2 -translate-y-1/2"} z-20`}
+                            style={markStyle}
+                        >
                             <div
-                                className={`absolute ${isVertical ? "left-1/2 -translate-x-1/2" : "top-1/2 -translate-y-1/2"} w-1 h-1 bg-gray-300 rounded-full`}
-                                style={markStyle}
+                                className={`absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 ${markColor} rounded-full transition-all duration-200 ${isAtThumbPosition ? "" : "cursor-pointer group-hover/mark:w-2 group-hover/mark:h-2"} ${!disabled ? "" : "cursor-not-allowed"}`}
                             />
+                            {/* Always visible mark label at the bottom */}
                             {mark.label && (
                                 <div
-                                    className={`absolute ${isVertical ? "left-6" : "top-4"} text-xs text-gray-400 ${isVertical ? "top-0 -translate-y-1/2" : "left-0 -translate-x-1/2"}`}
-                                    style={markStyle}
+                                    className={`absolute ${isVertical ? "left-4 top-1/2 -translate-y-1/2" : "top-3 left-1/2 -translate-x-1/2"} text-xs font-medium ${labelColor} transition-colors duration-200 whitespace-nowrap pointer-events-none z-30`}
                                 >
                                     {mark.label}
+                                </div>
+                            )}
+                            {/* Hover tooltip showing value (only if no permanent label) */}
+                            {showMarkLabelsOnHover && !mark.label && (
+                                <div
+                                    className={`absolute ${isVertical ? "left-6 top-1/2 -translate-y-1/2" : "-top-8 left-1/2 -translate-x-1/2"} px-2 py-1 text-xs font-semibold text-white ${color === "primary" ? "bg-blue-500" : "bg-purple-500"} rounded shadow-lg whitespace-nowrap opacity-0 scale-90 group-hover/mark:opacity-100 group-hover/mark:scale-100 transition-all duration-300 ease-out pointer-events-none z-30`}
+                                >
+                                    {valueLabelFormat(mark.value)}
+                                    {/* Arrow triangle */}
+                                    <div
+                                        className={`absolute ${isVertical ? "right-full top-1/2 -translate-y-1/2 border-y-4 border-y-transparent border-r-4" : "top-full left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4"} ${color === "primary" ? (isVertical ? "border-r-blue-500" : "border-t-blue-500") : isVertical ? "border-r-purple-500" : "border-t-purple-500"}`}
+                                    />
                                 </div>
                             )}
                         </div>
