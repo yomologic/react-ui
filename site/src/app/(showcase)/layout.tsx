@@ -1,6 +1,6 @@
 "use client";
 
-import { Drawer, DrawerNavSection } from "@yomologic/react-ui";
+import { Drawer, DrawerNavSection, Header } from "@yomologic/react-ui";
 import {
     Circle,
     Type,
@@ -147,8 +147,11 @@ export default function ShowcaseLayout({
 
     return (
         <div className="min-h-screen bg-gray-50">
-            {/* Desktop-only header with logo - mobile uses Drawer header */}
-            <header className="hidden lg:block fixed top-0 left-0 right-64 bg-white border-b border-gray-200 z-10">
+            {/* Header with auto-hide on scroll - desktop only, mobile uses Drawer header */}
+            <Header
+                autoHideOnScroll={true}
+                className="hidden lg:block left-0 right-64 bg-white border-b border-gray-200 z-10"
+            >
                 <div className="px-4 sm:px-6 lg:px-8 h-16 flex items-center">
                     <Link
                         href="/"
@@ -166,9 +169,9 @@ export default function ShowcaseLayout({
                         </span>
                     </Link>
                 </div>
-            </header>
+            </Header>
 
-            <main className="w-full pt-8 lg:pt-16">
+            <main className="w-full pt-16 lg:pt-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:pr-72 py-8">
                     {children}
                 </div>
@@ -181,6 +184,7 @@ export default function ShowcaseLayout({
                 onItemClick={handleSectionChange}
                 position="right"
                 homeUrl="/"
+                autoHideOnScroll={true}
             />
         </div>
     );

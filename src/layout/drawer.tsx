@@ -1,7 +1,7 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export interface NavItem {
     id: string;
@@ -24,6 +24,7 @@ export interface DrawerProps {
     footer?: React.ReactNode;
     position?: "left" | "right";
     homeUrl?: string;
+    autoHideOnScroll?: boolean;
 }
 
 export function Drawer({
@@ -36,8 +37,11 @@ export function Drawer({
     footer,
     position = "right",
     homeUrl,
+    autoHideOnScroll = true,
 }: DrawerProps) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
 
     const isLeft = position === "left";
 
@@ -49,10 +53,42 @@ export function Drawer({
     // Use sections if provided, otherwise fall back to items
     const useSections = sections || (items ? [{ title: "", items }] : []);
 
+    // Auto-hide mobile header on scroll
+    useEffect(() => {
+        if (!autoHideOnScroll) {
+            setIsHeaderVisible(true);
+            return;
+        }
+
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+
+            // Show header when at top
+            if (currentScrollY < 10) {
+                setIsHeaderVisible(true);
+            }
+            // Hide on scroll down, show on scroll up
+            else if (currentScrollY > lastScrollY) {
+                // Scrolling down
+                setIsHeaderVisible(false);
+            } else {
+                // Scrolling up
+                setIsHeaderVisible(true);
+            }
+
+            setLastScrollY(currentScrollY);
+        };
+
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [lastScrollY, autoHideOnScroll]);
+
     return (
         <>
-            {/* Mobile Header */}
-            <div className="lg:hidden fixed top-0 left-0 right-0 bg-white border-b border-gray-200 px-4 py-3 [z-index:var(--z-index-drawer-header)]">
+            {/* Mobile Header with auto-hide on scroll */}
+            <div
+                className={`lg:hidden fixed top-0 left-0 right-0 bg-white border-b border-gray-200 px-4 py-3 [z-index:var(--z-index-drawer-header)] transition-transform duration-500 ease-in-out ${isHeaderVisible ? "translate-y-0" : "-translate-y-full"}`}
+            >
                 <div
                     className={`flex items-center ${
                         isLeft
@@ -118,7 +154,7 @@ export function Drawer({
             <aside
                 className={`
           fixed top-0 bottom-0 w-64 bg-white
-          transition-transform duration-300 ease-in-out overflow-y-auto
+          transition-transform duration-500 ease-in-out overflow-y-auto
           ${isLeft ? "left-0 border-r" : "right-0 border-l"} border-gray-200
           lg:translate-x-0 lg:top-0
           ${

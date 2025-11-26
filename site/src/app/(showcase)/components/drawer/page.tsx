@@ -546,6 +546,21 @@ export default function DrawerPage() {
                                         clicked
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                        autoHideOnScroll
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                        boolean
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                        true
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                        Auto-hide mobile header when scrolling
+                                        down, show on scroll up
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
