@@ -7,9 +7,21 @@ import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 interface CodeSnippetProps {
     code: string;
     language?: string;
+    fontSize?: "xs" | "sm" | "base";
+    wrap?: boolean;
 }
 
-export function CodeSnippet({ code, language = "tsx" }: CodeSnippetProps) {
+export function CodeSnippet({
+    code,
+    language = "tsx",
+    fontSize = "sm",
+    wrap = false,
+}: CodeSnippetProps) {
+    const fontSizeMap = {
+        xs: "0.75rem",
+        sm: "0.875rem",
+        base: "1rem",
+    };
     const [copied, setCopied] = useState(false);
     const [showTooltip, setShowTooltip] = useState(false);
 
@@ -24,9 +36,9 @@ export function CodeSnippet({ code, language = "tsx" }: CodeSnippetProps) {
     };
 
     return (
-        <div className="relative group">
+        <div className="relative group w-full min-w-0">
             {/* Copy Button */}
-            <div className="absolute right-3 top-3 z-0">
+            <div className="absolute right-3 top-3 z-10">
                 <button
                     onClick={handleCopy}
                     onMouseEnter={() => setShowTooltip(true)}
@@ -84,7 +96,7 @@ export function CodeSnippet({ code, language = "tsx" }: CodeSnippetProps) {
             </div>
 
             {/* Code Block with Syntax Highlighting */}
-            <div className="rounded-lg overflow-hidden border border-gray-800">
+            <div className="rounded-lg overflow-x-auto border border-gray-800">
                 {/* @ts-expect-error - SyntaxHighlighter has typing issues with React 19 */}
                 <SyntaxHighlighter
                     language={language}
@@ -92,10 +104,12 @@ export function CodeSnippet({ code, language = "tsx" }: CodeSnippetProps) {
                     customStyle={{
                         margin: 0,
                         padding: "1rem 3.5rem 1rem 1rem",
-                        fontSize: "0.875rem",
+                        fontSize: fontSizeMap[fontSize],
                         lineHeight: "1.5",
                         background: "#1a1b26",
                     }}
+                    wrapLines={wrap}
+                    wrapLongLines={wrap}
                     showLineNumbers={false}
                 >
                     {code}
