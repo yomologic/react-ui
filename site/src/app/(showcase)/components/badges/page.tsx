@@ -23,7 +23,7 @@ export default function BadgesPage() {
             ======================================== */}
             <section>
                 <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                    Usage Examples
+                    Badge
                 </h2>
                 <div className="space-y-6">
                     {/* Example 1: Badge Variants */}

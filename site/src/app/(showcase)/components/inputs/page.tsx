@@ -3,64 +3,53 @@
 import {
     Input,
     Card,
+    CodeSnippet,
+    SectionLayout,
     RadioGroup,
     Checkbox,
-    CodeSnippet,
+    Divider,
 } from "@yomologic/react-ui";
-import { SectionLayout } from "@yomologic/react-ui";
-import {
-    Search,
-    Mail,
-    DollarSign,
-    MapPin,
-    Lock,
-    Settings2,
-    Code2,
-    BookOpen,
-} from "lucide-react";
+import { Search, Mail, Lock, BookOpen } from "lucide-react";
 import { useState } from "react";
 
 export default function InputsPage() {
-    const [inputType, setInputType] = useState<string>("text");
-    const [hasIcon, setHasIcon] = useState<string>("left");
+    // State for Type example
+    const [selectedType, setSelectedType] = useState<string>("text");
+
+    // State for Icons example
+    const [iconPosition, setIconPosition] = useState<string>("left");
+
+    // State for State example
     const [inputState, setInputState] = useState<string>("normal");
-    const [hasLabel, setHasLabel] = useState(true);
-    const [hasHelper, setHasHelper] = useState(false);
-    const [customPlaceholder, setCustomPlaceholder] = useState<string>("");
-    const [showCodeOverlay, setShowCodeOverlay] = useState(false);
 
-    // Helper to get the icon based on type
+    // State for Label & Helper example
+    const [showLabel, setShowLabel] = useState(true);
+    const [showHelper, setShowHelper] = useState(true);
+
+    // Helper functions
     const getIcon = () => {
-        if (hasIcon === "none") return undefined;
-
-        switch (inputType) {
+        switch (selectedType) {
             case "email":
                 return <Mail className="w-5 h-5" />;
             case "search":
                 return <Search className="w-5 h-5" />;
-            case "number":
-                return <DollarSign className="w-5 h-5" />;
             case "password":
                 return <Lock className="w-5 h-5" />;
             default:
-                return <MapPin className="w-5 h-5" />;
+                return <Search className="w-5 h-5" />;
         }
     };
 
-    // Helper to get placeholder based on type
     const getPlaceholder = () => {
-        // Use custom placeholder if provided
-        if (customPlaceholder) return customPlaceholder;
-
-        switch (inputType) {
+        switch (selectedType) {
             case "email":
                 return "you@example.com";
             case "search":
                 return "Search...";
+            case "password":
+                return "Enter password";
             case "number":
                 return "0.00";
-            case "password":
-                return "••••••••";
             case "tel":
                 return "+1 (555) 000-0000";
             case "url":
@@ -70,19 +59,16 @@ export default function InputsPage() {
         }
     };
 
-    // Helper to get label text
     const getLabel = () => {
-        if (!hasLabel) return undefined;
-
-        switch (inputType) {
+        switch (selectedType) {
             case "email":
                 return "Email Address";
             case "search":
                 return "Search";
-            case "number":
-                return "Amount";
             case "password":
                 return "Password";
+            case "number":
+                return "Amount";
             case "tel":
                 return "Phone Number";
             case "url":
@@ -92,236 +78,306 @@ export default function InputsPage() {
         }
     };
 
-    // Helper to get icon component name for code
     const getIconName = () => {
-        switch (inputType) {
+        switch (selectedType) {
             case "email":
                 return "Mail";
             case "search":
                 return "Search";
-            case "number":
-                return "DollarSign";
             case "password":
                 return "Lock";
             default:
-                return "MapPin";
+                return "Search";
         }
-    };
-
-    // Generate code snippet
-    const generateCode = () => {
-        const props: string[] = [];
-
-        if (inputType !== "text") props.push(`type="${inputType}"`);
-        if (hasLabel) props.push(`label="${getLabel()}"`);
-        props.push(`placeholder="${getPlaceholder()}"`);
-
-        if (hasIcon === "left") {
-            props.push(`leftIcon={<${getIconName()} className="w-5 h-5" />}`);
-        }
-        if (hasIcon === "right") {
-            props.push(`rightIcon={<${getIconName()} className="w-5 h-5" />}`);
-        }
-
-        if (hasHelper) {
-            props.push('helperText="This is a helper text"');
-        }
-
-        if (inputState === "error") {
-            props.push('error="This field has an error"');
-        } else if (inputState === "disabled") {
-            props.push("disabled");
-        } else if (inputState === "readonly") {
-            props.push("readOnly");
-        }
-
-        const propsString = props.join("\n  ");
-        return `<Input\n  ${propsString}\n/>`;
     };
 
     return (
-        <SectionLayout hasStickyPreview>
-            {/* Sticky Preview Section */}
-            <section className="sticky top-0 z-15 py-4 bg-gray-50">
-                <Card variant="elevated" padding="lg">
-                    <div className="space-y-4">
-                        {/* Header */}
-                        <div className="flex items-center justify-between pb-3 border-b border-gray-200">
-                            <h2 className="text-lg font-semibold text-gray-900">
-                                Inputs Live Preview
-                            </h2>
-                            <button
-                                onClick={() =>
-                                    setShowCodeOverlay(!showCodeOverlay)
-                                }
-                                className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:border-gray-400 transition-colors"
-                                title="View code"
-                            >
-                                <Code2 className="w-3.5 h-3.5" />
-                                Code
-                            </button>
-                        </div>
+        <SectionLayout>
+            {/* ========================================
+                SECTION 1: USAGE EXAMPLES
+            ======================================== */}
+            <section>
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                    Input
+                </h2>
+                <div className="space-y-6">
+                    {/* Example 1: Input Types */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Input Types
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Inputs support various HTML5 input types
+                                including text, email, password, search, number,
+                                tel, and url.
+                            </p>
 
-                        {/* Preview Content */}
-                        <div className="relative">
-                            <div className="p-6 bg-linear-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
-                                <div className="max-w-md mx-auto">
-                                    <Input
-                                        type={inputType}
-                                        label={getLabel()}
-                                        placeholder={getPlaceholder()}
-                                        leftIcon={
-                                            hasIcon === "left"
-                                                ? getIcon()
-                                                : undefined
-                                        }
-                                        rightIcon={
-                                            hasIcon === "right"
-                                                ? getIcon()
-                                                : undefined
-                                        }
-                                        helperText={
-                                            hasHelper
-                                                ? "This is a helper text"
-                                                : undefined
-                                        }
-                                        error={
-                                            inputState === "error"
-                                                ? "This field has an error"
-                                                : undefined
-                                        }
-                                        disabled={inputState === "disabled"}
-                                        readOnly={inputState === "readonly"}
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                            <Input
+                                                type={selectedType}
+                                                label={getLabel()}
+                                                placeholder={getPlaceholder()}
+                                            />
+                                        </div>
+
+                                        <RadioGroup
+                                            label="Select Type"
+                                            name="inputType"
+                                            value={selectedType}
+                                            onChange={setSelectedType}
+                                            orientation="horizontal"
+                                            options={[
+                                                {
+                                                    value: "text",
+                                                    label: "Text",
+                                                },
+                                                {
+                                                    value: "email",
+                                                    label: "Email",
+                                                },
+                                                {
+                                                    value: "password",
+                                                    label: "Password",
+                                                },
+                                                {
+                                                    value: "search",
+                                                    label: "Search",
+                                                },
+                                                {
+                                                    value: "number",
+                                                    label: "Number",
+                                                },
+                                                { value: "tel", label: "Tel" },
+                                                { value: "url", label: "URL" },
+                                            ]}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<Input${selectedType !== "text" ? `\n  type="${selectedType}"` : ""}\n  label="${getLabel()}"\n  placeholder="${getPlaceholder()}"\n/>`}
                                     />
                                 </div>
                             </div>
+                        </div>
+                    </Card>
 
-                            {/* Code Overlay */}
-                            {showCodeOverlay && (
-                                <>
-                                    {/* Backdrop */}
-                                    <div
-                                        className="fixed inset-0 bg-black/20 z-40"
-                                        onClick={() =>
-                                            setShowCodeOverlay(false)
-                                        }
-                                    />
-                                    {/* Overlay Card */}
-                                    <div className="absolute top-12 right-0 z-50 w-full max-w-md">
-                                        <Card variant="elevated" padding="none">
-                                            <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-                                                <h4 className="text-sm font-semibold text-gray-900">
-                                                    Input Code
-                                                </h4>
-                                                <button
-                                                    onClick={() =>
-                                                        setShowCodeOverlay(
-                                                            false
-                                                        )
-                                                    }
-                                                    className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded transition-colors"
-                                                    title="Close"
-                                                >
-                                                    <span className="text-2xl leading-none">
-                                                        ×
-                                                    </span>
-                                                </button>
-                                            </div>
-                                            <div className="p-4">
-                                                <CodeSnippet
-                                                    code={generateCode()}
-                                                />
-                                            </div>
-                                        </Card>
+                    {/* Example 2: Icons */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Input Icons
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Add icons to the left or right side of the input
+                                to provide visual context.
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                            <Input
+                                                type={selectedType}
+                                                label={getLabel()}
+                                                placeholder={getPlaceholder()}
+                                                leftIcon={
+                                                    iconPosition === "left" ||
+                                                    iconPosition === "both"
+                                                        ? getIcon()
+                                                        : undefined
+                                                }
+                                                rightIcon={
+                                                    iconPosition === "right" ||
+                                                    iconPosition === "both"
+                                                        ? getIcon()
+                                                        : undefined
+                                                }
+                                            />
+                                        </div>
+
+                                        <RadioGroup
+                                            label="Icon Position"
+                                            name="iconPosition"
+                                            value={iconPosition}
+                                            onChange={setIconPosition}
+                                            orientation="horizontal"
+                                            options={[
+                                                {
+                                                    value: "none",
+                                                    label: "None",
+                                                },
+                                                {
+                                                    value: "left",
+                                                    label: "Left",
+                                                },
+                                                {
+                                                    value: "right",
+                                                    label: "Right",
+                                                },
+                                                {
+                                                    value: "both",
+                                                    label: "Both",
+                                                },
+                                            ]}
+                                        />
                                     </div>
-                                </>
-                            )}
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<Input\n  type="${selectedType}"\n  label="${getLabel()}"\n  placeholder="${getPlaceholder()}"${iconPosition === "left" || iconPosition === "both" ? `\n  leftIcon={<${getIconName()} />}` : ""}${iconPosition === "right" || iconPosition === "both" ? `\n  rightIcon={<${getIconName()} />}` : ""}\n/>`}
+                                    />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </Card>
+                    </Card>
+
+                    {/* Example 3: Input States */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Input States
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Display validation errors, disable the input, or
+                                make it read-only.
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                            <Input
+                                                label="Email Address"
+                                                placeholder="you@example.com"
+                                                leftIcon={
+                                                    <Mail className="w-5 h-5" />
+                                                }
+                                                error={
+                                                    inputState === "error"
+                                                        ? "This field is required"
+                                                        : undefined
+                                                }
+                                                disabled={
+                                                    inputState === "disabled"
+                                                }
+                                                readOnly={
+                                                    inputState === "readonly"
+                                                }
+                                            />
+                                        </div>
+
+                                        <RadioGroup
+                                            label="Select State"
+                                            name="inputState"
+                                            value={inputState}
+                                            onChange={setInputState}
+                                            orientation="horizontal"
+                                            options={[
+                                                {
+                                                    value: "normal",
+                                                    label: "Normal",
+                                                },
+                                                {
+                                                    value: "error",
+                                                    label: "Error",
+                                                },
+                                                {
+                                                    value: "disabled",
+                                                    label: "Disabled",
+                                                },
+                                                {
+                                                    value: "readonly",
+                                                    label: "Read Only",
+                                                },
+                                            ]}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<Input\n  label="Email Address"\n  placeholder="you@example.com"\n  leftIcon={<Mail />}${inputState === "error" ? '\n  error="This field is required"' : ""}${inputState === "disabled" ? "\n  disabled" : ""}${inputState === "readonly" ? "\n  readOnly" : ""}\n/>`}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+
+                    {/* Example 4: Label & Helper Text */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Label & Helper Text
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Add labels above the input and helper text below
+                                for additional context.
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                            <Input
+                                                label={
+                                                    showLabel
+                                                        ? "Email Address"
+                                                        : undefined
+                                                }
+                                                placeholder="you@example.com"
+                                                leftIcon={
+                                                    <Mail className="w-5 h-5" />
+                                                }
+                                                helperText={
+                                                    showHelper
+                                                        ? "We'll never share your email"
+                                                        : undefined
+                                                }
+                                            />
+                                        </div>
+
+                                        <div className="flex flex-wrap gap-4">
+                                            <Checkbox
+                                                label="Show Label"
+                                                checked={showLabel}
+                                                onChange={setShowLabel}
+                                            />
+                                            <Checkbox
+                                                label="Show Helper Text"
+                                                checked={showHelper}
+                                                onChange={setShowHelper}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<Input${showLabel ? '\n  label="Email Address"' : ""}\n  placeholder="you@example.com"\n  leftIcon={<Mail />}${showHelper ? '\n  helperText="We\'ll never share your email"' : ""}\n/>`}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+                </div>
             </section>
 
-            {/* Scrollable Content */}
-            {/* Interactive Controls */}
-            <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <Settings2 className="w-5 h-5" />
-                    Interactive Controls
-                </h2>
-                <Card variant="elevated" padding="lg">
-                    <div className="space-y-6">
-                        <RadioGroup
-                            label="Input Type"
-                            name="inputType"
-                            value={inputType}
-                            onChange={setInputType}
-                            orientation="horizontal"
-                            options={[
-                                { value: "text", label: "Text" },
-                                { value: "email", label: "Email" },
-                                { value: "search", label: "Search" },
-                                { value: "number", label: "Number" },
-                                { value: "password", label: "Password" },
-                                { value: "tel", label: "Tel" },
-                                { value: "url", label: "URL" },
-                            ]}
-                        />
+            <Divider className="my-12" />
 
-                        <RadioGroup
-                            label="State"
-                            name="inputState"
-                            value={inputState}
-                            onChange={setInputState}
-                            orientation="horizontal"
-                            options={[
-                                { value: "normal", label: "Normal" },
-                                { value: "error", label: "Error" },
-                                { value: "disabled", label: "Disabled" },
-                                { value: "readonly", label: "Read Only" },
-                            ]}
-                        />
-
-                        <RadioGroup
-                            label="Icon Position"
-                            name="hasIcon"
-                            value={hasIcon}
-                            onChange={setHasIcon}
-                            orientation="horizontal"
-                            options={[
-                                { value: "none", label: "None" },
-                                { value: "left", label: "Left Icon" },
-                                { value: "right", label: "Right Icon" },
-                            ]}
-                        />
-
-                        <div className="flex flex-col sm:flex-row gap-4">
-                            <Checkbox
-                                label="Show Label"
-                                checked={hasLabel}
-                                onChange={setHasLabel}
-                            />
-
-                            <Checkbox
-                                label="Show Helper Text"
-                                checked={hasHelper}
-                                onChange={setHasHelper}
-                            />
-                        </div>
-
-                        <Input
-                            label="Custom Placeholder"
-                            placeholder="Type custom placeholder..."
-                            value={customPlaceholder}
-                            onChange={(e) =>
-                                setCustomPlaceholder(e.target.value)
-                            }
-                            helperText="Leave empty for default"
-                        />
-                    </div>
-                </Card>
-            </section>
-
-            {/* API Documentation */}
+            {/* ========================================
+                SECTION 2: API REFERENCE
+            ======================================== */}
             <section>
                 <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
                     <BookOpen className="w-5 h-5" />
@@ -405,7 +461,7 @@ export default function InputsPage() {
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-700">
                                         Icon or element displayed on the left
-                                        side of input
+                                        side
                                     </td>
                                 </tr>
                                 <tr>
@@ -420,7 +476,7 @@ export default function InputsPage() {
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-700">
                                         Icon or element displayed on the right
-                                        side of input
+                                        side
                                     </td>
                                 </tr>
                                 <tr>
@@ -448,8 +504,7 @@ export default function InputsPage() {
                                         undefined
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-700">
-                                        Error message displayed below the input
-                                        (shows red styling)
+                                        Error message with red styling
                                     </td>
                                 </tr>
                                 <tr>
@@ -463,8 +518,7 @@ export default function InputsPage() {
                                         false
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-700">
-                                        Disables the input and prevents user
-                                        interaction
+                                        Disables the input
                                     </td>
                                 </tr>
                                 <tr>
@@ -478,8 +532,7 @@ export default function InputsPage() {
                                         false
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-700">
-                                        Makes the input read-only (visible but
-                                        not editable)
+                                        Makes the input read-only
                                     </td>
                                 </tr>
                                 <tr>
@@ -493,37 +546,7 @@ export default function InputsPage() {
                                         false
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-700">
-                                        Marks the input as required (shows
-                                        asterisk in label)
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                        value
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                        string
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                                        undefined
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
-                                        Controlled component value
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                        onChange
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                        (e: ChangeEvent) =&gt; void
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                                        undefined
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
-                                        Callback fired when the input value
-                                        changes
+                                        Marks the input as required
                                     </td>
                                 </tr>
                             </tbody>

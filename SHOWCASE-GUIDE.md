@@ -13,8 +13,9 @@ Showcase pages demonstrate component variations through **interactive examples**
 3. **Side-by-Side Layout**: Live component on left, code snippet on right (stacks on mobile)
 4. **Always-Visible Code**: Keep code snippets visible at all times for immediate feedback
 5. **Horizontal Controls**: RadioGroups use horizontal orientation with automatic wrapping
-6. **Standardized Text**: Use "YOMOLOGIC" for all button/badge/component text labels
+6. **Simple Component Titles**: Use just the component name (e.g., "Button", "Input", "Checkbox") without "Usage Examples"
 7. **Dynamic Code**: Code snippets update in real-time to reflect current selections
+8. **SectionLayout Wrapper**: Always wrap pages in `<SectionLayout>` component for consistent structure
 
 ## File Structure
 
@@ -22,26 +23,48 @@ Showcase pages demonstrate component variations through **interactive examples**
 "use client";
 
 import { useState } from "react";
-import { Card } from "@/ui/card";
-import { CodeSnippet } from "@/ui/code-snippet";
-import { RadioGroup } from "@/ui/radio";
-import { ComponentName } from "@/ui/component-name"; // Your component
+import {
+  Card,
+  CodeSnippet,
+  SectionLayout,
+  RadioGroup,
+  Checkbox,
+  Divider,
+} from "@yomologic/react-ui";
+import { ComponentName } from "@yomologic/react-ui";
+import { BookOpen } from "lucide-react";
 
 export default function ComponentNamePage() {
-  // State management
+  // State management for each example
   const [stateVariable, setStateVariable] = useState<Type>("defaultValue");
 
   return (
-    <div className="space-y-12">
-      <div>
-        <h1 className="text-4xl font-bold mb-4">Component Name</h1>
-        <p className="text-lg text-gray-400">
-          Brief description of the component and its purpose.
-        </p>
-      </div>
+    <SectionLayout>
+      {/* ========================================
+          SECTION 1: COMPONENT EXAMPLES
+      ======================================== */}
+      <section>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          Component Name
+        </h2>
+        <div className="space-y-6">
+          {/* Example sections */}
+        </div>
+      </section>
 
-      {/* Example sections */}
-    </div>
+      <Divider className="my-12" />
+
+      {/* ========================================
+          SECTION 2: API REFERENCE
+      ======================================== */}
+      <section>
+        <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <BookOpen className="w-5 h-5" />
+          API Reference
+        </h2>
+        {/* API table */}
+      </section>
+    </SectionLayout>
   );
 }
 ```
@@ -215,6 +238,7 @@ Use **simple, meaningful, static text** that reflects real-world usage:
 - Badges: "New", "Beta", "Featured", "Active"
 - Alerts: Contextual messages matching the variant
 - Form inputs: Placeholder text like "Enter email", "Search..."
+- Helper text: Use proper apostrophes without escaping (e.g., "We'll never share your email")
 
 **Why?** Clear, contextual labels help users understand typical use cases without being overly branded or repetitive. Static text (no dynamic generation) keeps examples simple and readable.
 
@@ -224,20 +248,23 @@ Use **simple, meaningful, static text** that reflects real-world usage:
 
 ```typescript
 <SectionLayout>
-  {/* Section 1: Usage Examples */}
+  {/* ========================================
+      SECTION 1: COMPONENT EXAMPLES
+  ======================================== */}
   <section>
     <h2 className="text-xl font-semibold text-gray-900 mb-4">
-      Usage Examples
+      Component Name
     </h2>
     <div className="space-y-6">
       {/* Multiple example cards */}
     </div>
   </section>
 
-  {/* Visual separator before API */}
   <Divider className="my-12" />
 
-  {/* Section 2: API Reference */}
+  {/* ========================================
+      SECTION 2: API REFERENCE
+  ======================================== */}
   <section>
     <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
       <BookOpen className="w-5 h-5" />
@@ -248,11 +275,18 @@ Use **simple, meaningful, static text** that reflects real-world usage:
 </SectionLayout>
 ```
 
+### Key Structure Requirements
+
+1. **Always use `<SectionLayout>` wrapper** - Never use plain `<div>` wrapper
+2. **Component name as title** - Use just "Button", "Input", etc. (not "Button Usage Examples")
+3. **Section comments** - Add visual separator comments above each section
+4. **Two main sections** - Examples first, then API Reference after divider
+5. **Consistent spacing** - Use `space-y-6` for examples container
+
 ### Required Imports
 
 ```typescript
 import {
-    ComponentName,
     Card,
     CodeSnippet,
     SectionLayout,
@@ -260,9 +294,24 @@ import {
     Checkbox,
     Divider,
 } from "@yomologic/react-ui";
+import { ComponentName } from "@yomologic/react-ui"; // Your component
 import { BookOpen } from "lucide-react";
 import { useState } from "react";
 ```
+
+**Note:** Always import `SectionLayout` - it's required for all showcase pages.ort {
+ComponentName,
+Card,
+CodeSnippet,
+SectionLayout,
+RadioGroup,
+Checkbox,
+Divider,
+} from "@yomologic/react-ui";
+import { BookOpen } from "lucide-react";
+import { useState } from "react";
+
+````
 
 ### Key Visual Elements
 
@@ -299,21 +348,24 @@ See `/site/src/app/(showcase)/components/buttons/page.tsx` for a fully implement
 - **Animations**: For components with transition effects
 
 ## Mobile Responsiveness Checklist
-
-- [ ] Layout uses `flex flex-col sm:flex-row gap-6`
-- [ ] All columns have `min-w-0` class (critical!)
-- [ ] RadioGroups use `orientation="horizontal"`
-- [ ] RadioGroups have `label` and `name` props
-- [ ] Checkboxes use the Checkbox component (not raw HTML)
-- [ ] CodeSnippet has `wrap` prop if code is long
-- [ ] Display area has proper background: `bg-gray-50 rounded-lg border border-gray-200`
-- [ ] Card content doesn't cause horizontal overflow
-- [ ] Controls are accessible with touch
-- [ ] Text is readable at mobile sizes
-- [ ] Divider before API Reference: `<Divider className="my-12" />`
-
 ## Code Quality Checklist
 
+- [ ] Page uses `<SectionLayout>` wrapper (not `<div>`)
+- [ ] All imports are used (including SectionLayout, Divider, BookOpen)
+- [ ] Section title is just component name (e.g., "Button" not "Button Usage Examples")
+- [ ] Section comments added above each section
+- [ ] State types are properly defined
+- [ ] RadioGroup has `label` and `name` props
+- [ ] RadioGroup options have consistent structure
+- [ ] Checkboxes use Checkbox component (not HTML input)
+- [ ] Code snippets match actual rendered component
+- [ ] Dynamic code includes all conditional props
+- [ ] No apostrophe escaping issues in template literals
+- [ ] No console errors or warnings
+- [ ] Page follows "use client" directive
+- [ ] Display appears BEFORE controls
+- [ ] Divider separates examples from API Reference
+- [ ] API Reference has BookOpen icon
 - [ ] All imports are used (including Divider, BookOpen)
 - [ ] State types are properly defined
 - [ ] RadioGroup has `label` and `name` props
@@ -325,63 +377,91 @@ See `/site/src/app/(showcase)/components/buttons/page.tsx` for a fully implement
 - [ ] Page follows "use client" directive
 - [ ] Component description is clear and concise
 - [ ] Display appears BEFORE controls
-- [ ] Divider separates examples from API Reference
-- [ ] API Reference has BookOpen icon
-
-## Migration Guide
-
 ### Converting Static to Interactive Showcase:
 
-1. **Remove** grid layouts showing all variations
-2. **Add** useState hooks for each controllable property
-3. **Replace** multiple components with single instance
-4. **Add** RadioGroups/Checkboxes for user control
-5. **Update** layout to `flex flex-col sm:flex-row gap-6`
-6. **Change** RadioGroup orientation to horizontal
-7. **Add** dynamic code generation
-8. **Standardize** text to "YOMOLOGIC"
-9. **Test** mobile responsiveness
-
-### Example Transformation:
-
-**Before (Static):**
+1. **Wrap** page in `<SectionLayout>` (remove plain div wrapper)
+2. **Update** title to just component name
+3. **Add** section comments above each section
+4. **Remove** grid layouts showing all variations
+5. **Add** useState hooks for each controllable property
+6. **Replace** multiple components with single instance
+7. **Add** RadioGroups/Checkboxes for user control
+8. **Update** layout to `flex flex-col sm:flex-row gap-6`
+9. **Change** RadioGroup orientation to horizontal
+10. **Add** dynamic code generation
+11. **Add** Divider before API Reference
+12. **Test** mobile responsiveness and no parsing errors for user control
+**Before (Static with old wrapper):**
 
 ```typescript
-<div className="grid grid-cols-3 gap-4">
-  <Button variant="default">Button</Button>
-  <Button variant="primary">Button</Button>
-  <Button variant="secondary">Button</Button>
+<div className="space-y-12">
+  <div>
+    <h1 className="text-4xl font-bold mb-4">Button</h1>
+    <p className="text-lg text-gray-600">Description...</p>
+  </div>
+
+  <div className="grid grid-cols-3 gap-4">
+    <Button variant="default">Button</Button>
+    <Button variant="primary">Button</Button>
+    <Button variant="secondary">Button</Button>
+  </div>
 </div>
-```
+````
 
-**After (Interactive):**
+**After (Interactive with SectionLayout):**
 
-```typescript
+````typescript
 const [selectedVariant, setSelectedVariant] = useState<"default" | "primary" | "secondary">("default");
 
-<div className="flex flex-col sm:flex-row gap-6">
-  <Card className="flex-1 p-6 min-w-0">
-    <div className="space-y-4">
-      <div>
-        <label className="block text-sm font-medium mb-2">Variant</label>
-        <RadioGroup
-          options={[
-            { value: "default", label: "Default" },
-            { value: "primary", label: "Primary" },
-            { value: "secondary", label: "Secondary" },
-          ]}
-          value={selectedVariant}
-          onChange={setSelectedVariant}
-          orientation="horizontal"
-        />
-      </div>
-      <div className="pt-4 border-t border-gray-800">
-        <Button variant={selectedVariant}>YOMOLOGIC</Button>
-      </div>
+<SectionLayout>
+  {/* ========================================
+      SECTION 1: COMPONENT EXAMPLES
+  ======================================== */}
+  <section>
+    <h2 className="text-xl font-semibold text-gray-900 mb-4">
+      Button
+    </h2>
+    <div className="space-y-6">
+      <Card variant="bordered" padding="lg">
+        <h3 className="text-lg font-semibold text-gray-900 mb-3">Button Variants</h3>
+        <div className="space-y-4">
+          <div className="flex flex-col sm:flex-row gap-6">
+            <div className="flex-1 min-w-0">
+              <div className="space-y-4">
+                <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                  <Button variant={selectedVariant}>Click Me</Button>
+                </div>
+
+                <RadioGroup
+                  label="Select Variant"
+                  name="buttonVariant"
+                  value={selectedVariant}
+                  onChange={setSelectedVariant}
+                  orientation="horizontal"
+                  options={[
+                    { value: "default", label: "Default" },
+                    { value: "primary", label: "Primary" },
+                    { value: "secondary", label: "Secondary" },
+                  ]}
+                />
+              </div>
+            </div>
+
+            <div className="flex-1 min-w-0">
+              <CodeSnippet
+                language="tsx"
+                code={`<Button variant="${selectedVariant}">
+  Click Me
+</Button>`}
+              />
+            </div>
+          </div>
+        </div>
+      </Card>
     </div>
-  </Card>
-  <div className="flex-1 min-w-0">
-    <CodeSnippet
+  </section>
+</SectionLayout>
+``` <CodeSnippet
       language="tsx"
       code={`<Button variant="${selectedVariant}">
   YOMOLOGIC
@@ -389,7 +469,7 @@ const [selectedVariant, setSelectedVariant] = useState<"default" | "primary" | "
     />
   </div>
 </div>
-```
+````
 
 ## Tips & Tricks
 

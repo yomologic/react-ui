@@ -1,162 +1,203 @@
 "use client";
 
-import { Card, RadioGroup, Checkbox, CodeSnippet } from "@yomologic/react-ui";
+import {
+    Card,
+    CodeSnippet,
+    SectionLayout,
+    RadioGroup,
+    Checkbox,
+    Divider,
+} from "@yomologic/react-ui";
 import { Spinner } from "@yomologic/react-ui";
-import { SectionLayout } from "@yomologic/react-ui";
-import { Settings2, Code2, BookOpen } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import { useState } from "react";
 
 export default function LoadingPage() {
-    const [size, setSize] = useState<string>("md");
-    const [color, setColor] = useState<string>("primary");
-    const [hasLabel, setHasLabel] = useState(false);
-    const [showCodeOverlay, setShowCodeOverlay] = useState(false);
+    // State for Size example
+    const [selectedSize, setSelectedSize] = useState<string>("md");
 
-    // Generate code snippet
-    const generateCode = () => {
-        const props: string[] = [];
+    // State for Color example
+    const [selectedColor, setSelectedColor] = useState<string>("primary");
 
-        if (size !== "md") props.push(`size="${size}"`);
-        if (color !== "primary") props.push(`color="${color}"`);
-        if (hasLabel) props.push('label="Loading..."');
-
-        const propsString = props.length > 0 ? ` ${props.join(" ")}` : "";
-        return `<Spinner${propsString} />`;
-    };
+    // State for Label example
+    const [showLabel, setShowLabel] = useState(true);
 
     return (
-        <SectionLayout hasStickyPreview>
-            {/* Sticky Preview Section */}
-            <section className="sticky top-0 z-15 py-4 bg-gray-50">
-                <Card variant="elevated" padding="lg">
-                    <div className="space-y-4">
-                        {/* Header */}
-                        <div className="flex items-center justify-between pb-3 border-b border-gray-200">
-                            <h2 className="text-lg font-semibold text-gray-900">
-                                Loading States Live Preview
-                            </h2>
-                            <button
-                                onClick={() =>
-                                    setShowCodeOverlay(!showCodeOverlay)
-                                }
-                                className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:border-gray-400 transition-colors"
-                                title="View code"
-                            >
-                                <Code2 className="w-3.5 h-3.5" />
-                                Code
-                            </button>
-                        </div>
+        <SectionLayout>
+            {/* ========================================
+                SECTION 1: USAGE EXAMPLES
+            ======================================== */}
+            <section>
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                    Spinner
+                </h2>
+                <div className="space-y-6">
+                    {/* Example 1: Spinner Sizes */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Spinner Sizes
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Choose from four size options: small, medium,
+                                large, or extra large.
+                            </p>
 
-                        {/* Preview Content */}
-                        <div className="relative">
-                            <div className="p-6 bg-linear-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
-                                <div className="flex items-center justify-center min-h-32">
-                                    <Spinner
-                                        size={size as "sm" | "md" | "lg" | "xl"}
-                                        color={
-                                            color as
-                                                | "primary"
-                                                | "secondary"
-                                                | "white"
-                                        }
-                                        label={
-                                            hasLabel ? "Loading..." : undefined
-                                        }
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center min-h-32">
+                                            <Spinner
+                                                size={
+                                                    selectedSize as
+                                                        | "sm"
+                                                        | "md"
+                                                        | "lg"
+                                                        | "xl"
+                                                }
+                                            />
+                                        </div>
+
+                                        <RadioGroup
+                                            label="Select Size"
+                                            name="spinnerSize"
+                                            value={selectedSize}
+                                            onChange={setSelectedSize}
+                                            orientation="horizontal"
+                                            options={[
+                                                { value: "sm", label: "Small" },
+                                                {
+                                                    value: "md",
+                                                    label: "Medium",
+                                                },
+                                                { value: "lg", label: "Large" },
+                                                {
+                                                    value: "xl",
+                                                    label: "Extra Large",
+                                                },
+                                            ]}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<Spinner${selectedSize !== "md" ? ` size="${selectedSize}"` : ""} />`}
                                     />
                                 </div>
                             </div>
-
-                            {/* Code Overlay */}
-                            {showCodeOverlay && (
-                                <>
-                                    {/* Backdrop */}
-                                    <div
-                                        className="fixed inset-0 bg-black/20 z-40"
-                                        onClick={() =>
-                                            setShowCodeOverlay(false)
-                                        }
-                                    />
-                                    {/* Overlay Card */}
-                                    <div className="absolute top-12 right-0 z-50 w-full max-w-md">
-                                        <Card variant="elevated" padding="none">
-                                            <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-                                                <h4 className="text-sm font-semibold text-gray-900">
-                                                    Spinner Code
-                                                </h4>
-                                                <button
-                                                    onClick={() =>
-                                                        setShowCodeOverlay(
-                                                            false
-                                                        )
-                                                    }
-                                                    className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded transition-colors"
-                                                    title="Close"
-                                                >
-                                                    <span className="text-2xl leading-none">
-                                                        ×
-                                                    </span>
-                                                </button>
-                                            </div>
-                                            <div className="p-4">
-                                                <CodeSnippet
-                                                    code={generateCode()}
-                                                />
-                                            </div>
-                                        </Card>
-                                    </div>
-                                </>
-                            )}
                         </div>
-                    </div>
-                </Card>
+                    </Card>
+
+                    {/* Example 2: Spinner Colors */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Spinner Colors
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Customize the spinner color to match your design
+                                system.
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center min-h-32">
+                                            <Spinner
+                                                color={
+                                                    selectedColor as
+                                                        | "primary"
+                                                        | "secondary"
+                                                        | "white"
+                                                }
+                                            />
+                                        </div>
+
+                                        <RadioGroup
+                                            label="Select Color"
+                                            name="spinnerColor"
+                                            value={selectedColor}
+                                            onChange={setSelectedColor}
+                                            orientation="horizontal"
+                                            options={[
+                                                {
+                                                    value: "primary",
+                                                    label: "Primary",
+                                                },
+                                                {
+                                                    value: "secondary",
+                                                    label: "Secondary",
+                                                },
+                                                {
+                                                    value: "white",
+                                                    label: "White",
+                                                },
+                                            ]}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<Spinner${selectedColor !== "primary" ? ` color="${selectedColor}"` : ""} />`}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+
+                    {/* Example 3: Spinner with Label */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Spinner with Label
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Add a label below the spinner to provide context
+                                about the loading state.
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center min-h-32">
+                                            <Spinner
+                                                label={
+                                                    showLabel
+                                                        ? "Loading..."
+                                                        : undefined
+                                                }
+                                            />
+                                        </div>
+
+                                        <Checkbox
+                                            label="Show Label"
+                                            checked={showLabel}
+                                            onChange={setShowLabel}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<Spinner${showLabel ? ' label="Loading..."' : ""} />`}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+                </div>
             </section>
 
-            {/* Scrollable Content */}
-            {/* Interactive Controls */}
-            <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <Settings2 className="w-5 h-5" />
-                    Interactive Controls
-                </h2>
-                <Card variant="elevated" padding="lg">
-                    <div className="space-y-6">
-                        <RadioGroup
-                            label="Size"
-                            name="size"
-                            value={size}
-                            onChange={setSize}
-                            orientation="horizontal"
-                            options={[
-                                { value: "sm", label: "Small" },
-                                { value: "md", label: "Medium" },
-                                { value: "lg", label: "Large" },
-                                { value: "xl", label: "Extra Large" },
-                            ]}
-                        />
+            <Divider className="my-12" />
 
-                        <RadioGroup
-                            label="Color"
-                            name="color"
-                            value={color}
-                            onChange={setColor}
-                            orientation="horizontal"
-                            options={[
-                                { value: "primary", label: "Primary" },
-                                { value: "secondary", label: "Secondary" },
-                                { value: "white", label: "White" },
-                            ]}
-                        />
-
-                        <Checkbox
-                            label="Show Label"
-                            checked={hasLabel}
-                            onChange={setHasLabel}
-                        />
-                    </div>
-                </Card>
-            </section>
-
-            {/* API Documentation */}
+            {/* ========================================
+                SECTION 2: API REFERENCE
+            ======================================== */}
             <section>
                 <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
                     <BookOpen className="w-5 h-5" />

@@ -1,215 +1,358 @@
 "use client";
 
-import { Card, RadioGroup, Checkbox, CodeSnippet } from "@yomologic/react-ui";
+import {
+    Card,
+    RadioGroup,
+    CodeSnippet,
+    Divider,
+} from "@yomologic/react-ui";
 import { SectionLayout } from "@yomologic/react-ui";
-import { Settings2, Code2, BookOpen } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import { useState } from "react";
 
 export default function RadioPage() {
-    const [selectedValue, setSelectedValue] = useState("apple");
-    const [orientation, setOrientation] = useState<string>("vertical");
-    const [hasLabel, setHasLabel] = useState(true);
-    const [hasDisabled, setHasDisabled] = useState(false);
-    const [groupDisabled, setGroupDisabled] = useState(false);
-    const [size, setSize] = useState<string>("md");
-    const [showCodeOverlay, setShowCodeOverlay] = useState(false);
+    // Example 1: Orientation
+    const [orientationDemo, setOrientationDemo] = useState("option1");
+    const [orientationControl, setOrientationControl] =
+        useState<string>("vertical");
 
-    const getOptions = () => {
-        const baseOptions = [
-            { value: "apple", label: "Apple" },
-            { value: "banana", label: "Banana" },
-            { value: "orange", label: "Orange", disabled: hasDisabled },
-        ];
+    // Example 2: Sizes
+    const [sizeDemo, setSizeDemo] = useState("option2");
+    const [sizeControl, setSizeControl] = useState<string>("md");
 
-        return baseOptions;
-    };
+    // Example 3: Disabled Options
+    const [disabledDemo, setDisabledDemo] = useState("option1");
 
-    // Generate code snippet
-    const generateCode = () => {
-        const props: string[] = [];
+    // Example 4: Required Field
+    const [requiredDemo, setRequiredDemo] = useState("");
 
-        if (hasLabel) props.push('label="Select Fruit"');
-        props.push('name="fruit"');
-        props.push("value={selectedFruit}");
-        props.push("onChange={setSelectedFruit}");
-
-        const options = getOptions();
-        const optionsCode = options
-            .map((opt) => {
-                const disabled =
-                    "disabled" in opt && opt.disabled ? ", disabled: true" : "";
-                return `    { value: "${opt.value}", label: "${opt.label}"${disabled} }`;
-            })
-            .join(",\n");
-
-        if (orientation === "horizontal") {
-            props.push('orientation="horizontal"');
-        }
-
-        if (size !== "md") {
-            props.push(`size="${size}"`);
-        }
-
-        if (groupDisabled) {
-            props.push("disabled");
-        }
-
-        const propsString = props.join("\n  ");
-        return `<RadioGroup\n  ${propsString}\n  options={[\n${optionsCode}\n  ]}\n/>`;
-    };
     return (
-        <SectionLayout hasStickyPreview>
-            {/* Sticky Preview Section */}
-            <section className="sticky top-0 z-15 py-4 bg-gray-50">
-                <Card variant="elevated" padding="lg">
-                    <div className="space-y-4">
-                        {/* Header */}
-                        <div className="flex items-center justify-between pb-3 border-b border-gray-200">
-                            <h2 className="text-lg font-semibold text-gray-900">
-                                Radio Buttons Live Preview
-                            </h2>
-                            <button
-                                onClick={() =>
-                                    setShowCodeOverlay(!showCodeOverlay)
-                                }
-                                className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:border-gray-400 transition-colors"
-                                title="View code"
-                            >
-                                <Code2 className="w-3.5 h-3.5" />
-                                Code
-                            </button>
-                        </div>
+        <SectionLayout>
+            {/* ========================================
+                RADIO COMPONENT SHOWCASE
+            ======================================== */}
+            <section>
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Radio</h2>
 
-                        {/* Preview Content */}
-                        <div className="relative">
-                            <div className="p-6 bg-linear-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
-                                <div className="max-w-md mx-auto">
+                <div className="space-y-6">
+                    {/* ========================================
+                        EXAMPLE 1: ORIENTATION
+                    ======================================== */}
+                    <Card variant="elevated" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                            Radio Group Orientation
+                        </h3>
+                        <p className="text-sm text-gray-600 mb-6">
+                            Individual radio options can be disabled to prevent
+                            selection.
+                        </p>
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            {/* Display */}
+                            <div className="lg:col-span-1">
+                                <div className="p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
                                     <RadioGroup
-                                        label={
-                                            hasLabel
-                                                ? "Select Fruit"
-                                                : undefined
-                                        }
-                                        name="preview-fruit"
-                                        value={selectedValue}
-                                        onChange={setSelectedValue}
-                                        options={getOptions()}
+                                        label="Choose an option"
+                                        name="orientation-demo"
+                                        value={orientationDemo}
+                                        onChange={setOrientationDemo}
                                         orientation={
-                                            orientation as
+                                            orientationControl as
                                                 | "vertical"
                                                 | "horizontal"
                                         }
-                                        size={size as "sm" | "md" | "lg"}
-                                        disabled={groupDisabled}
+                                        options={[
+                                            {
+                                                value: "option1",
+                                                label: "Option 1",
+                                            },
+                                            {
+                                                value: "option2",
+                                                label: "Option 2",
+                                            },
+                                            {
+                                                value: "option3",
+                                                label: "Option 3",
+                                            },
+                                        ]}
                                     />
                                 </div>
                             </div>
 
-                            {/* Code Overlay */}
-                            {showCodeOverlay && (
-                                <>
-                                    {/* Backdrop */}
-                                    <div
-                                        className="fixed inset-0 bg-black/20 z-40"
-                                        onClick={() =>
-                                            setShowCodeOverlay(false)
-                                        }
+                            {/* Controls */}
+                            <div className="lg:col-span-1">
+                                <h3 className="text-sm font-semibold text-gray-700 mb-4">
+                                    Controls
+                                </h3>
+                                <div className="space-y-4">
+                                    <RadioGroup
+                                        label="Orientation"
+                                        name="orientation-control"
+                                        value={orientationControl}
+                                        onChange={setOrientationControl}
+                                        orientation="horizontal"
+                                        options={[
+                                            {
+                                                value: "vertical",
+                                                label: "Vertical",
+                                            },
+                                            {
+                                                value: "horizontal",
+                                                label: "Horizontal",
+                                            },
+                                        ]}
                                     />
-                                    {/* Overlay Card */}
-                                    <div className="absolute top-12 right-0 z-50 w-full max-w-md">
-                                        <Card variant="elevated" padding="none">
-                                            <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-                                                <h4 className="text-sm font-semibold text-gray-900">
-                                                    RadioGroup Code
-                                                </h4>
-                                                <button
-                                                    onClick={() =>
-                                                        setShowCodeOverlay(
-                                                            false
-                                                        )
-                                                    }
-                                                    className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded transition-colors"
-                                                    title="Close"
-                                                >
-                                                    <span className="text-2xl leading-none">
-                                                        ×
-                                                    </span>
-                                                </button>
-                                            </div>
-                                            <div className="p-4">
-                                                <CodeSnippet
-                                                    code={generateCode()}
-                                                />
-                                            </div>
-                                        </Card>
-                                    </div>
-                                </>
-                            )}
+                                </div>
+                            </div>
+
+                            {/* Code */}
+                            <div className="lg:col-span-1">
+                                <h3 className="text-sm font-semibold text-gray-700 mb-4">
+                                    Code
+                                </h3>
+                                <CodeSnippet
+                                    code={`<RadioGroup
+  label="Choose an option"
+  name="demo"
+  value={selected}
+  onChange={setSelected}${orientationControl === "horizontal" ? '\n  orientation="horizontal"' : ""}
+  options={[
+    { value: "option1", label: "Option 1" },
+    { value: "option2", label: "Option 2" },
+    { value: "option3", label: "Option 3" }
+  ]}
+/>`}
+                                />
+                            </div>
                         </div>
-                    </div>
-                </Card>
+                    </Card>
+
+                    {/* ========================================
+                        EXAMPLE 2: SIZES
+                    ======================================== */}
+                    <Card variant="elevated" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                            Radio Button Sizes
+                        </h3>
+                        <p className="text-sm text-gray-600 mb-6">
+                            Radio buttons come in three sizes: small, medium,
+                            and large.
+                        </p>
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            {/* Display */}
+                            <div className="lg:col-span-1">
+                                <div className="p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
+                                    <RadioGroup
+                                        label="Select size"
+                                        name="size-demo"
+                                        value={sizeDemo}
+                                        onChange={setSizeDemo}
+                                        size={sizeControl as "sm" | "md" | "lg"}
+                                        options={[
+                                            {
+                                                value: "option1",
+                                                label: "Option 1",
+                                            },
+                                            {
+                                                value: "option2",
+                                                label: "Option 2",
+                                            },
+                                            {
+                                                value: "option3",
+                                                label: "Option 3",
+                                            },
+                                        ]}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Controls */}
+                            <div className="lg:col-span-1">
+                                <h3 className="text-sm font-semibold text-gray-700 mb-4">
+                                    Controls
+                                </h3>
+                                <div className="space-y-4">
+                                    <RadioGroup
+                                        label="Size"
+                                        name="size-control"
+                                        value={sizeControl}
+                                        onChange={setSizeControl}
+                                        orientation="horizontal"
+                                        options={[
+                                            { value: "sm", label: "Small" },
+                                            { value: "md", label: "Medium" },
+                                            { value: "lg", label: "Large" },
+                                        ]}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Code */}
+                            <div className="lg:col-span-1">
+                                <h3 className="text-sm font-semibold text-gray-700 mb-4">
+                                    Code
+                                </h3>
+                                <CodeSnippet
+                                    code={`<RadioGroup
+  label="Select size"
+  name="demo"
+  value={selected}
+  onChange={setSelected}${sizeControl !== "md" ? `\n  size="${sizeControl}"` : ""}
+  options={[
+    { value: "option1", label: "Option 1" },
+    { value: "option2", label: "Option 2" },
+    { value: "option3", label: "Option 3" }
+  ]}
+/>`}
+                                />
+                            </div>
+                        </div>
+                    </Card>
+
+                    {/* ========================================
+                        EXAMPLE 3: DISABLED OPTIONS
+                    ======================================== */}
+                    <Card variant="elevated" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                            Disabled Radio Options
+                        </h3>
+                        <p className="text-sm text-gray-600 mb-6">
+                            Individual radio options can be disabled to prevent
+                            selection.
+                        </p>
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            {/* Display */}
+                            <div className="lg:col-span-1">
+                                <div className="p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
+                                    <RadioGroup
+                                        label="Select option"
+                                        name="disabled-demo"
+                                        value={disabledDemo}
+                                        onChange={setDisabledDemo}
+                                        options={[
+                                            {
+                                                value: "option1",
+                                                label: "Available Option 1",
+                                            },
+                                            {
+                                                value: "option2",
+                                                label: "Disabled Option",
+                                                disabled: true,
+                                            },
+                                            {
+                                                value: "option3",
+                                                label: "Available Option 2",
+                                            },
+                                        ]}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Controls */}
+                            <div className="lg:col-span-1">
+                                <h3 className="text-sm font-semibold text-gray-700 mb-4">
+                                    Controls
+                                </h3>
+                                <p className="text-sm text-gray-600">
+                                    Individual options can be disabled by
+                                    setting the disabled property in the options
+                                    array.
+                                </p>
+                            </div>
+
+                            {/* Code */}
+                            <div className="lg:col-span-1">
+                                <h3 className="text-sm font-semibold text-gray-700 mb-4">
+                                    Code
+                                </h3>
+                                <CodeSnippet
+                                    code={`<RadioGroup
+  label="Select option"
+  name="demo"
+  value={selected}
+  onChange={setSelected}
+  options={[
+    { value: "option1", label: "Available Option 1" },
+    { value: "option2", label: "Disabled Option", disabled: true },
+    { value: "option3", label: "Available Option 2" }
+  ]}
+/>`}
+                                />
+                            </div>
+                        </div>
+                    </Card>
+
+                    {/* ========================================
+                        EXAMPLE 4: REQUIRED FIELD
+                    ======================================== */}
+                    <Card variant="elevated" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                            Required Radio Field
+                        </h3>
+                        <p className="text-sm text-gray-600 mb-6">
+                            Mark a radio group as required to indicate it must
+                            be filled.
+                        </p>
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            {/* Display */}
+                            <div className="lg:col-span-1">
+                                <div className="p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
+                                    <RadioGroup
+                                        label="Required field"
+                                        name="required-demo"
+                                        value={requiredDemo}
+                                        onChange={setRequiredDemo}
+                                        required
+                                        options={[
+                                            { value: "yes", label: "Yes" },
+                                            { value: "no", label: "No" },
+                                            { value: "maybe", label: "Maybe" },
+                                        ]}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Controls */}
+                            <div className="lg:col-span-1">
+                                <h3 className="text-sm font-semibold text-gray-700 mb-4">
+                                    Controls
+                                </h3>
+                                <p className="text-sm text-gray-600">
+                                    The required prop adds an asterisk to the
+                                    label, indicating that the field must be
+                                    filled.
+                                </p>
+                            </div>
+
+                            {/* Code */}
+                            <div className="lg:col-span-1">
+                                <h3 className="text-sm font-semibold text-gray-700 mb-4">
+                                    Code
+                                </h3>
+                                <CodeSnippet
+                                    code={`<RadioGroup
+  label="Required field"
+  name="demo"
+  value={selected}
+  onChange={setSelected}
+  required
+  options={[
+    { value: "yes", label: "Yes" },
+    { value: "no", label: "No" },
+    { value: "maybe", label: "Maybe" }
+  ]}
+/>`}
+                                />
+                            </div>
+                        </div>
+                    </Card>
+                </div>
             </section>
 
-            {/* Scrollable Content */}
-            {/* Interactive Controls */}
-            <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <Settings2 className="w-5 h-5" />
-                    Interactive Controls
-                </h2>
-                <Card variant="elevated" padding="lg">
-                    <div className="space-y-6">
-                        <RadioGroup
-                            label="Orientation"
-                            name="orientation"
-                            value={orientation}
-                            onChange={setOrientation}
-                            orientation="horizontal"
-                            options={[
-                                { value: "vertical", label: "Vertical" },
-                                { value: "horizontal", label: "Horizontal" },
-                            ]}
-                        />
+            <Divider className="my-12" />
 
-                        <RadioGroup
-                            label="Size"
-                            name="size"
-                            value={size}
-                            onChange={setSize}
-                            orientation="horizontal"
-                            options={[
-                                { value: "xs", label: "Extra Small" },
-                                { value: "sm", label: "Small" },
-                                { value: "md", label: "Medium" },
-                                { value: "lg", label: "Large" },
-                                { value: "xl", label: "Extra Large" },
-                            ]}
-                        />
-
-                        <div className="flex flex-col sm:flex-row gap-4">
-                            <Checkbox
-                                label="Show Label"
-                                checked={hasLabel}
-                                onChange={setHasLabel}
-                            />
-
-                            <Checkbox
-                                label="Include Disabled Option"
-                                checked={hasDisabled}
-                                onChange={setHasDisabled}
-                            />
-
-                            <Checkbox
-                                label="Disable Entire Group"
-                                checked={groupDisabled}
-                                onChange={setGroupDisabled}
-                            />
-                        </div>
-                    </div>
-                </Card>
-            </section>
-
-            {/* API Documentation */}
+            {/* ========================================
+                API REFERENCE
+            ======================================== */}
             <section>
                 <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
                     <BookOpen className="w-5 h-5" />

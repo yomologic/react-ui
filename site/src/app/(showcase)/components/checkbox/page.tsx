@@ -2,219 +2,343 @@
 
 import {
     Card,
+    CodeSnippet,
+    SectionLayout,
     CheckboxGroup,
     RadioGroup,
     Checkbox,
-    CodeSnippet,
+    Divider,
 } from "@yomologic/react-ui";
-import { SectionLayout } from "@yomologic/react-ui";
-import { Settings2, Code2, BookOpen } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import { useState } from "react";
 
 export default function CheckboxPage() {
-    const [selectedValues, setSelectedValues] = useState<string[]>(["apple"]);
-    const [orientation, setOrientation] = useState<string>("vertical");
-    const [showLabel, setShowLabel] = useState(true);
-    const [hasDisabledOption, setHasDisabledOption] = useState(false);
+    // State for Orientation example
+    const [orientationValues, setOrientationValues] = useState<string[]>([
+        "apple",
+    ]);
+    const [selectedOrientation, setSelectedOrientation] =
+        useState<string>("vertical");
+
+    // State for Sizes example
+    const [sizeValues, setSizeValues] = useState<string[]>(["apple", "banana"]);
+    const [selectedSize, setSelectedSize] = useState<string>("md");
+
+    // State for Disabled example
+    const [disabledValues, setDisabledValues] = useState<string[]>(["apple"]);
+    const [hasDisabledOption, setHasDisabledOption] = useState(true);
     const [groupDisabled, setGroupDisabled] = useState(false);
-    const [size, setSize] = useState<string>("md");
-    const [showCodeOverlay, setShowCodeOverlay] = useState(false);
 
-    // Generate code snippet
-    const generateCode = () => {
-        const props: string[] = [];
-
-        if (showLabel) props.push('label="Select Fruits"');
-        props.push('name="fruits"');
-
-        // Generate options array
-        const options = [
-            '{ value: "apple", label: "Apple" }',
-            '{ value: "banana", label: "Banana" }',
-            hasDisabledOption
-                ? '{ value: "orange", label: "Orange", disabled: true }'
-                : '{ value: "orange", label: "Orange" }',
-        ];
-        props.push(`options={[\n    ${options.join(",\n    ")}\n  ]}`);
-
-        props.push("value={selectedValues}");
-        props.push("onChange={setSelectedValues}");
-        if (orientation !== "vertical")
-            props.push(`orientation="${orientation}"`);
-        if (size !== "md") props.push(`size="${size}"`);
-        if (groupDisabled) props.push("disabled");
-
-        const propsString = props.join("\n  ");
-        return `<CheckboxGroup\n  ${propsString}\n/>`;
-    };
+    // State for Single Checkbox example
+    const [agreeToTerms, setAgreeToTerms] = useState(false);
+    const [subscribeNewsletter, setSubscribeNewsletter] = useState(true);
 
     return (
-        <SectionLayout hasStickyPreview>
-            {/* Sticky Preview Section */}
-            <section className="sticky top-0 z-15 py-4 bg-gray-50">
-                <Card variant="elevated" padding="lg">
-                    <div className="space-y-4">
-                        {/* Header */}
-                        <div className="flex items-center justify-between pb-3 border-b border-gray-200">
-                            <h2 className="text-lg font-semibold text-gray-900">
-                                Checkbox Group Live Preview
-                            </h2>
-                            <button
-                                onClick={() =>
-                                    setShowCodeOverlay(!showCodeOverlay)
-                                }
-                                className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:border-gray-400 transition-colors"
-                                title="View code"
-                            >
-                                <Code2 className="w-3.5 h-3.5" />
-                                Code
-                            </button>
-                        </div>
+        <SectionLayout>
+            {/* ========================================
+                SECTION 1: USAGE EXAMPLES
+            ======================================== */}
+            <section>
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                    Checkbox
+                </h2>
+                <div className="space-y-6">
+                    {/* Example 1: Orientation */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Checkbox Orientation
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Display checkboxes vertically (stacked) or
+                                horizontally (in a row).
+                            </p>
 
-                        {/* Preview Content */}
-                        <div className="relative">
-                            <div className="p-6 bg-linear-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
-                                <div className="max-w-md mx-auto">
-                                    <CheckboxGroup
-                                        label={
-                                            showLabel
-                                                ? "Select Fruits"
-                                                : undefined
-                                        }
-                                        name="fruits"
-                                        options={[
-                                            {
-                                                value: "apple",
-                                                label: "Apple",
-                                            },
-                                            {
-                                                value: "banana",
-                                                label: "Banana",
-                                            },
-                                            {
-                                                value: "orange",
-                                                label: "Orange",
-                                                disabled: hasDisabledOption,
-                                            },
-                                        ]}
-                                        value={selectedValues}
-                                        onChange={setSelectedValues}
-                                        orientation={
-                                            orientation as
-                                                | "vertical"
-                                                | "horizontal"
-                                        }
-                                        size={size as "sm" | "md" | "lg"}
-                                        disabled={groupDisabled}
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                            <CheckboxGroup
+                                                label="Select Fruits"
+                                                name="fruits"
+                                                options={[
+                                                    {
+                                                        value: "apple",
+                                                        label: "Apple",
+                                                    },
+                                                    {
+                                                        value: "banana",
+                                                        label: "Banana",
+                                                    },
+                                                    {
+                                                        value: "orange",
+                                                        label: "Orange",
+                                                    },
+                                                ]}
+                                                value={orientationValues}
+                                                onChange={setOrientationValues}
+                                                orientation={
+                                                    selectedOrientation as
+                                                        | "vertical"
+                                                        | "horizontal"
+                                                }
+                                            />
+                                        </div>
+
+                                        <RadioGroup
+                                            label="Select Orientation"
+                                            name="checkboxOrientation"
+                                            value={selectedOrientation}
+                                            onChange={setSelectedOrientation}
+                                            orientation="horizontal"
+                                            options={[
+                                                {
+                                                    value: "vertical",
+                                                    label: "Vertical",
+                                                },
+                                                {
+                                                    value: "horizontal",
+                                                    label: "Horizontal",
+                                                },
+                                            ]}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<CheckboxGroup
+  label="Select Fruits"
+  name="fruits"
+  options={[
+    { value: "apple", label: "Apple" },
+    { value: "banana", label: "Banana" },
+    { value: "orange", label: "Orange" },
+  ]}
+  value={selectedValues}
+  onChange={setSelectedValues}${selectedOrientation !== "vertical" ? `\n  orientation="${selectedOrientation}"` : ""}
+/>`}
                                     />
                                 </div>
                             </div>
+                        </div>
+                    </Card>
 
-                            {/* Code Overlay */}
-                            {showCodeOverlay && (
-                                <>
-                                    {/* Backdrop */}
-                                    <div
-                                        className="fixed inset-0 bg-black/20 z-40"
-                                        onClick={() =>
-                                            setShowCodeOverlay(false)
-                                        }
-                                    />
-                                    {/* Overlay Card */}
-                                    <div className="absolute top-12 right-0 z-50 w-full max-w-md">
-                                        <Card variant="elevated" padding="none">
-                                            <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-                                                <h4 className="text-sm font-semibold text-gray-900">
-                                                    Checkbox Code
-                                                </h4>
-                                                <button
-                                                    onClick={() =>
-                                                        setShowCodeOverlay(
-                                                            false
-                                                        )
-                                                    }
-                                                    className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded transition-colors"
-                                                    title="Close"
-                                                >
-                                                    <span className="text-2xl leading-none">
-                                                        ×
-                                                    </span>
-                                                </button>
-                                            </div>
-                                            <div className="p-4">
-                                                <CodeSnippet
-                                                    code={generateCode()}
-                                                />
-                                            </div>
-                                        </Card>
+                    {/* Example 2: Sizes */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Checkbox Sizes
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Choose from five size options: extra small,
+                                small, medium, large, or extra large.
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                            <CheckboxGroup
+                                                label="Select Fruits"
+                                                name="fruits-size"
+                                                options={[
+                                                    {
+                                                        value: "apple",
+                                                        label: "Apple",
+                                                    },
+                                                    {
+                                                        value: "banana",
+                                                        label: "Banana",
+                                                    },
+                                                    {
+                                                        value: "orange",
+                                                        label: "Orange",
+                                                    },
+                                                ]}
+                                                value={sizeValues}
+                                                onChange={setSizeValues}
+                                                size={
+                                                    selectedSize as
+                                                        | "xs"
+                                                        | "sm"
+                                                        | "md"
+                                                        | "lg"
+                                                        | "xl"
+                                                }
+                                            />
+                                        </div>
+
+                                        <RadioGroup
+                                            label="Select Size"
+                                            name="checkboxSize"
+                                            value={selectedSize}
+                                            onChange={setSelectedSize}
+                                            orientation="horizontal"
+                                            options={[
+                                                { value: "xs", label: "XS" },
+                                                { value: "sm", label: "SM" },
+                                                { value: "md", label: "MD" },
+                                                { value: "lg", label: "LG" },
+                                                { value: "xl", label: "XL" },
+                                            ]}
+                                        />
                                     </div>
-                                </>
-                            )}
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<CheckboxGroup
+  label="Select Fruits"
+  name="fruits"
+  options={[
+    { value: "apple", label: "Apple" },
+    { value: "banana", label: "Banana" },
+    { value: "orange", label: "Orange" },
+  ]}
+  value={selectedValues}
+  onChange={setSelectedValues}${selectedSize !== "md" ? `\n  size="${selectedSize}"` : ""}
+/>`}
+                                    />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </Card>
+                    </Card>
+
+                    {/* Example 3: Disabled Options */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Disabled Checkboxes
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Disable individual options or the entire
+                                checkbox group.
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                            <CheckboxGroup
+                                                label="Select Fruits"
+                                                name="fruits-disabled"
+                                                options={[
+                                                    {
+                                                        value: "apple",
+                                                        label: "Apple",
+                                                    },
+                                                    {
+                                                        value: "banana",
+                                                        label: "Banana",
+                                                    },
+                                                    {
+                                                        value: "orange",
+                                                        label: "Orange (Disabled)",
+                                                        disabled:
+                                                            hasDisabledOption,
+                                                    },
+                                                ]}
+                                                value={disabledValues}
+                                                onChange={setDisabledValues}
+                                                disabled={groupDisabled}
+                                            />
+                                        </div>
+
+                                        <div className="flex flex-wrap gap-4">
+                                            <Checkbox
+                                                label="Disable third option"
+                                                checked={hasDisabledOption}
+                                                onChange={setHasDisabledOption}
+                                            />
+                                            <Checkbox
+                                                label="Disable entire group"
+                                                checked={groupDisabled}
+                                                onChange={setGroupDisabled}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<CheckboxGroup
+  label="Select Fruits"
+  name="fruits"
+  options={[
+    { value: "apple", label: "Apple" },
+    { value: "banana", label: "Banana" },
+    {
+      value: "orange",
+      label: "Orange",${hasDisabledOption ? "\n      disabled: true," : ""}
+    },
+  ]}
+  value={selectedValues}
+  onChange={setSelectedValues}${groupDisabled ? "\n  disabled" : ""}
+/>`}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+
+                    {/* Example 4: Single Checkbox */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Single Checkbox
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Use standalone checkboxes for simple boolean
+                                choices.
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                                        <Checkbox
+                                            label="I agree to the terms and conditions"
+                                            checked={agreeToTerms}
+                                            onChange={setAgreeToTerms}
+                                        />
+                                        <Checkbox
+                                            label="Subscribe to newsletter"
+                                            checked={subscribeNewsletter}
+                                            onChange={setSubscribeNewsletter}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<Checkbox
+  label="I agree to the terms and conditions"
+  checked={agreeToTerms}
+  onChange={setAgreeToTerms}
+/>
+
+<Checkbox
+  label="Subscribe to newsletter"
+  checked={subscribeNewsletter}
+  onChange={setSubscribeNewsletter}
+/>`}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+                </div>
             </section>
 
-            {/* Scrollable Content */}
-            {/* Interactive Controls */}
-            <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <Settings2 className="w-5 h-5" />
-                    Interactive Controls
-                </h2>
-                <Card variant="elevated" padding="lg">
-                    <div className="space-y-6">
-                        <RadioGroup
-                            label="Orientation"
-                            name="orientation"
-                            value={orientation}
-                            onChange={setOrientation}
-                            orientation="horizontal"
-                            options={[
-                                { value: "vertical", label: "Vertical" },
-                                { value: "horizontal", label: "Horizontal" },
-                            ]}
-                        />
+            <Divider className="my-12" />
 
-                        <RadioGroup
-                            label="Size"
-                            name="size"
-                            value={size}
-                            onChange={setSize}
-                            orientation="horizontal"
-                            options={[
-                                { value: "xs", label: "Extra Small" },
-                                { value: "sm", label: "Small" },
-                                { value: "md", label: "Medium" },
-                                { value: "lg", label: "Large" },
-                                { value: "xl", label: "Extra Large" },
-                            ]}
-                        />
-
-                        <div className="flex flex-col sm:flex-row gap-4">
-                            <Checkbox
-                                label="Show Label"
-                                checked={showLabel}
-                                onChange={setShowLabel}
-                            />
-
-                            <Checkbox
-                                label="Disable Third Option"
-                                checked={hasDisabledOption}
-                                onChange={setHasDisabledOption}
-                            />
-
-                            <Checkbox
-                                label="Disable Entire Group"
-                                checked={groupDisabled}
-                                onChange={setGroupDisabled}
-                            />
-                        </div>
-                    </div>
-                </Card>
-            </section>
-
-            {/* API Documentation */}
+            {/* ========================================
+                SECTION 2: API REFERENCE
+            ======================================== */}
             <section>
                 <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
                     <BookOpen className="w-5 h-5" />

@@ -1,317 +1,374 @@
 "use client";
 
-import { Card, RadioGroup, Checkbox, CodeSnippet } from "@yomologic/react-ui";
-import { SectionLayout } from "@yomologic/react-ui";
+import {
+    Card,
+    CodeSnippet,
+    SectionLayout,
+    RadioGroup,
+    Checkbox,
+    Divider,
+} from "@yomologic/react-ui";
 import { Rating } from "@yomologic/react-ui";
-import { Settings2, Code2, BookOpen, Star } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import { useState } from "react";
 
 export default function RatingPage() {
-    const [value, setValue] = useState(3.5);
-    const [size, setSize] = useState<"sm" | "md" | "lg">("md");
-    const [color, setColor] = useState("var(--color-warning)");
-    const [max, setMax] = useState(5);
-    const [readonly, setReadonly] = useState(false);
-    const [interactive, setInteractive] = useState(false);
-    const [showValue, setShowValue] = useState(false);
+    // State for Size example
+    const [selectedSize, setSelectedSize] = useState<"sm" | "md" | "lg">("md");
+
+    // State for Interactive example
+    const [interactiveValue, setInteractiveValue] = useState(3.5);
+
+    // State for Display Value example
+    const [displayValue, setDisplayValue] = useState(4);
+    const [showValue, setShowValue] = useState(true);
     const [valuePosition, setValuePosition] = useState<"inline" | "bottom">(
         "inline"
     );
     const [valueFormat, setValueFormat] = useState<"decimal" | "fraction">(
         "decimal"
     );
-    const [showCodeOverlay, setShowCodeOverlay] = useState(false);
 
-    // Size mapping
+    // State for Color example
+    const [selectedColor, setSelectedColor] = useState("var(--color-warning)");
+
+    // State for Max Stars example
+    const [maxStars, setMaxStars] = useState(5);
+    const [maxStarsValue, setMaxStarsValue] = useState(7);
+
     const sizeMap = {
         sm: 20,
         md: 28,
         lg: 36,
     };
 
-    // Generate code snippet
-    const generateCode = () => {
-        const props: string[] = [];
-
-        props.push(`value={${value}}`);
-        if (max !== 5) props.push(`max={${max}}`);
-        if (size !== "md") props.push(`size={${sizeMap[size]}}`);
-        if (color !== "var(--color-warning)")
-            props.push(`color="${color === "#FFD600" ? "#FFD600" : color}"`);
-        if (interactive) {
-            props.push("interactive");
-            props.push("onChange={setValue}");
-        }
-        if (showValue) {
-            props.push("showValue");
-            if (valuePosition !== "inline")
-                props.push(`valuePosition="${valuePosition}"`);
-            if (valueFormat !== "decimal")
-                props.push(`valueFormat="${valueFormat}"`);
-        }
-
-        const propsString = props.join(" ");
-        return `<Rating ${propsString} />`;
-    };
-
     return (
-        <SectionLayout hasStickyPreview>
-            {/* Sticky Preview Section */}
-            <section className="sticky top-0 z-15 py-4 bg-gray-50">
-                <Card variant="elevated" padding="lg">
-                    <div className="space-y-4">
-                        {/* Header */}
-                        <div className="flex items-center justify-between pb-3 border-b border-gray-200">
-                            <h2 className="text-lg font-semibold text-gray-900">
-                                Rating Live Preview
-                            </h2>
-                            <button
-                                onClick={() =>
-                                    setShowCodeOverlay(!showCodeOverlay)
-                                }
-                                className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:border-gray-400 transition-colors"
-                                title="View code"
-                            >
-                                <Code2 className="w-3.5 h-3.5" />
-                                Code
-                            </button>
-                        </div>
-
-                        {/* Preview Content */}
-                        <div className="relative">
-                            <div className="p-4 sm:p-8 bg-linear-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
-                                <div className="flex flex-col items-center gap-4">
-                                    <Rating
-                                        value={value}
-                                        max={max}
-                                        size={sizeMap[size]}
-                                        color={color}
-                                        interactive={interactive}
-                                        onChange={setValue}
-                                        showValue={showValue}
-                                        valuePosition={valuePosition}
-                                        valueFormat={valueFormat}
-                                    />
-                                    {interactive && (
-                                        <p className="text-sm text-gray-600">
-                                            Click on stars to change rating
-                                        </p>
-                                    )}
-                                </div>
-                            </div>
-
-                            {/* Code Overlay */}
-                            {showCodeOverlay && (
-                                <>
-                                    {/* Backdrop */}
-                                    <div
-                                        className="fixed inset-0 bg-black/20 z-40"
-                                        onClick={() =>
-                                            setShowCodeOverlay(false)
-                                        }
-                                    />
-                                    {/* Overlay Card */}
-                                    <div className="absolute top-12 left-0 right-0 sm:right-0 sm:left-auto z-50 w-full sm:max-w-md mx-2 sm:mx-0">
-                                        <Card variant="elevated" padding="none">
-                                            <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-                                                <h4 className="text-sm font-semibold text-gray-900">
-                                                    Rating Code
-                                                </h4>
-                                                <button
-                                                    onClick={() =>
-                                                        setShowCodeOverlay(
-                                                            false
-                                                        )
-                                                    }
-                                                    className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded transition-colors"
-                                                    title="Close"
-                                                >
-                                                    <span className="text-2xl leading-none">
-                                                        ×
-                                                    </span>
-                                                </button>
-                                            </div>
-                                            <div className="p-4">
-                                                <CodeSnippet
-                                                    code={generateCode()}
-                                                />
-                                            </div>
-                                        </Card>
-                                    </div>
-                                </>
-                            )}
-                        </div>
-                    </div>
-                </Card>
-            </section>
-
-            {/* Interactive Controls */}
+        <SectionLayout>
+            {/* ========================================
+                SECTION 1: USAGE EXAMPLES
+            ======================================== */}
             <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <Settings2 className="w-5 h-5" />
-                    Interactive Controls
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                    Rating
                 </h2>
-                <Card variant="elevated" padding="lg">
-                    <div className="space-y-6">
-                        {/* Rating Value Slider */}
-                        <div className="space-y-3">
-                            <label className="block text-sm font-semibold text-gray-700">
-                                Rating Value: {value.toFixed(1)}
-                            </label>
-                            <div className="relative">
-                                {/* Custom styled range slider */}
-                                <input
-                                    type="range"
-                                    min={0}
-                                    max={max}
-                                    step={0.5}
-                                    value={value}
-                                    onChange={(e) =>
-                                        setValue(Number(e.target.value))
-                                    }
-                                    disabled={readonly}
-                                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-(--color-warning) disabled:opacity-50 disabled:cursor-not-allowed"
-                                    style={{
-                                        background: `linear-gradient(to right, var(--color-warning) 0%, var(--color-warning) ${
-                                            (value / max) * 100
-                                        }%, #e5e7eb ${(value / max) * 100}%, #e5e7eb 100%)`,
-                                    }}
-                                />
-                                {/* Star indicators on slider */}
-                                <div className="flex justify-between mt-2 px-1">
-                                    {Array.from(
-                                        { length: max + 1 },
-                                        (_, i) => i
-                                    ).map((num) => (
-                                        <button
-                                            key={num}
-                                            onClick={() =>
-                                                !readonly && setValue(num)
-                                            }
-                                            disabled={readonly}
-                                            className="flex flex-col items-center gap-1 group disabled:opacity-50 disabled:cursor-not-allowed"
-                                            title={`Set rating to ${num}`}
-                                        >
-                                            <Star
-                                                className={`w-4 h-4 transition-colors ${
-                                                    value >= num
-                                                        ? "fill-(--color-warning) text-(--color-warning)"
-                                                        : "text-gray-300"
-                                                } group-hover:text-(--color-warning) group-disabled:group-hover:text-gray-300`}
+                <div className="space-y-6">
+                    {/* Example 1: Sizes */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Rating Sizes
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Choose from three size options: small (20px),
+                                medium (28px), or large (36px).
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center">
+                                            <Rating
+                                                value={4}
+                                                size={sizeMap[selectedSize]}
                                             />
-                                            <span className="text-xs text-gray-500 font-medium">
-                                                {num}
-                                            </span>
-                                        </button>
-                                    ))}
+                                        </div>
+
+                                        <RadioGroup
+                                            label="Select Size"
+                                            name="ratingSize"
+                                            value={selectedSize}
+                                            onChange={(val) =>
+                                                setSelectedSize(
+                                                    val as "sm" | "md" | "lg"
+                                                )
+                                            }
+                                            orientation="horizontal"
+                                            options={[
+                                                { value: "sm", label: "Small" },
+                                                {
+                                                    value: "md",
+                                                    label: "Medium",
+                                                },
+                                                { value: "lg", label: "Large" },
+                                            ]}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<Rating value={4}${selectedSize !== "md" ? ` size={${sizeMap[selectedSize]}}` : ""} />`}
+                                    />
                                 </div>
                             </div>
                         </div>
+                    </Card>
 
-                        {/* Max Stars Selection */}
-                        <RadioGroup
-                            label="Maximum Stars"
-                            name="max"
-                            value={max.toString()}
-                            onChange={(val) => {
-                                const newMax = Number(val);
-                                setMax(newMax);
-                                // Adjust value if it exceeds new max
-                                if (value > newMax) setValue(newMax);
-                            }}
-                            orientation="horizontal"
-                            options={[
-                                { value: "5", label: "5 Stars" },
-                                { value: "10", label: "10 Stars" },
-                            ]}
-                        />
+                    {/* Example 2: Interactive Mode */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Interactive Rating
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Enable interactive mode to allow users to click
+                                stars and change the rating value.
+                            </p>
 
-                        {/* Size Selection */}
-                        <RadioGroup
-                            label="Size"
-                            name="size"
-                            value={size}
-                            onChange={(val) =>
-                                setSize(val as "sm" | "md" | "lg")
-                            }
-                            orientation="horizontal"
-                            options={[
-                                { value: "sm", label: "Small (20px)" },
-                                { value: "md", label: "Medium (28px)" },
-                                { value: "lg", label: "Large (36px)" },
-                            ]}
-                        />
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 flex flex-col items-center gap-3">
+                                        <Rating
+                                            value={interactiveValue}
+                                            interactive
+                                            onChange={setInteractiveValue}
+                                        />
+                                        <p className="text-sm text-gray-500">
+                                            Click stars to rate
+                                        </p>
+                                    </div>
+                                </div>
 
-                        {/* Color Selection */}
-                        <RadioGroup
-                            label="Color"
-                            name="color"
-                            value={color}
-                            onChange={setColor}
-                            orientation="horizontal"
-                            options={[
-                                {
-                                    value: "var(--color-warning)",
-                                    label: "Warning (Default)",
-                                },
-                                { value: "#FFD600", label: "Gold" },
-                                {
-                                    value: "var(--color-primary)",
-                                    label: "Primary",
-                                },
-                                {
-                                    value: "var(--color-success)",
-                                    label: "Success",
-                                },
-                                { value: "var(--color-error)", label: "Error" },
-                            ]}
-                        />
-
-                        {/* Additional Options */}
-                        <div className="space-y-3 pt-2 border-t border-gray-200">
-                            <Checkbox
-                                label="Show numeric value"
-                                checked={showValue}
-                                onChange={setShowValue}
-                            />
-                            {showValue && (
-                                <div className="ml-6 space-y-3">
-                                    <Checkbox
-                                        label="Show value below stars"
-                                        checked={valuePosition === "bottom"}
-                                        onChange={(checked) =>
-                                            setValuePosition(
-                                                checked ? "bottom" : "inline"
-                                            )
-                                        }
-                                    />
-                                    <Checkbox
-                                        label="Show as fraction (3.5/5)"
-                                        checked={valueFormat === "fraction"}
-                                        onChange={(checked) =>
-                                            setValueFormat(
-                                                checked ? "fraction" : "decimal"
-                                            )
-                                        }
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<Rating
+  value={${interactiveValue}}
+  interactive
+  onChange={setValue}
+/>`}
                                     />
                                 </div>
-                            )}
-                            <Checkbox
-                                label="Interactive (clickable stars)"
-                                checked={interactive}
-                                onChange={setInteractive}
-                            />
-                            <Checkbox
-                                label="Read-only mode"
-                                checked={readonly}
-                                onChange={setReadonly}
-                            />
+                            </div>
                         </div>
-                    </div>
-                </Card>
+                    </Card>
+
+                    {/* Example 3: Display Value Options */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Display Value
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Show numeric value alongside stars with
+                                customizable position and format.
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center">
+                                            <Rating
+                                                value={displayValue}
+                                                showValue={showValue}
+                                                valuePosition={valuePosition}
+                                                valueFormat={valueFormat}
+                                            />
+                                        </div>
+
+                                        <div className="space-y-3">
+                                            <Checkbox
+                                                label="Show numeric value"
+                                                checked={showValue}
+                                                onChange={setShowValue}
+                                            />
+                                            {showValue && (
+                                                <div className="ml-6 space-y-2">
+                                                    <RadioGroup
+                                                        label="Value Position"
+                                                        name="valuePosition"
+                                                        value={valuePosition}
+                                                        onChange={(val) =>
+                                                            setValuePosition(
+                                                                val as
+                                                                    | "inline"
+                                                                    | "bottom"
+                                                            )
+                                                        }
+                                                        orientation="horizontal"
+                                                        options={[
+                                                            {
+                                                                value: "inline",
+                                                                label: "Inline",
+                                                            },
+                                                            {
+                                                                value: "bottom",
+                                                                label: "Bottom",
+                                                            },
+                                                        ]}
+                                                    />
+                                                    <RadioGroup
+                                                        label="Value Format"
+                                                        name="valueFormat"
+                                                        value={valueFormat}
+                                                        onChange={(val) =>
+                                                            setValueFormat(
+                                                                val as
+                                                                    | "decimal"
+                                                                    | "fraction"
+                                                            )
+                                                        }
+                                                        orientation="horizontal"
+                                                        options={[
+                                                            {
+                                                                value: "decimal",
+                                                                label: "Decimal",
+                                                            },
+                                                            {
+                                                                value: "fraction",
+                                                                label: "Fraction",
+                                                            },
+                                                        ]}
+                                                    />
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<Rating
+  value={${displayValue}}${showValue ? "\n  showValue" : ""}${showValue && valuePosition !== "inline" ? `\n  valuePosition="${valuePosition}"` : ""}${showValue && valueFormat !== "decimal" ? `\n  valueFormat="${valueFormat}"` : ""}
+/>`}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+
+                    {/* Example 4: Color Customization */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Custom Colors
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Customize the star fill color using CSS
+                                variables or hex values.
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center">
+                                            <Rating
+                                                value={4.5}
+                                                color={selectedColor}
+                                            />
+                                        </div>
+
+                                        <RadioGroup
+                                            label="Select Color"
+                                            name="ratingColor"
+                                            value={selectedColor}
+                                            onChange={setSelectedColor}
+                                            orientation="horizontal"
+                                            options={[
+                                                {
+                                                    value: "var(--color-warning)",
+                                                    label: "Warning",
+                                                },
+                                                {
+                                                    value: "#FFD600",
+                                                    label: "Gold",
+                                                },
+                                                {
+                                                    value: "var(--color-primary)",
+                                                    label: "Primary",
+                                                },
+                                                {
+                                                    value: "var(--color-error)",
+                                                    label: "Error",
+                                                },
+                                            ]}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<Rating
+  value={4.5}${selectedColor !== "var(--color-warning)" ? `\n  color="${selectedColor}"` : ""}
+/>`}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+
+                    {/* Example 5: Max Stars */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Maximum Stars
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Set the maximum number of stars to display
+                                (default is 5).
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center">
+                                            <Rating
+                                                value={maxStarsValue}
+                                                max={maxStars}
+                                                showValue
+                                                valueFormat="fraction"
+                                            />
+                                        </div>
+
+                                        <RadioGroup
+                                            label="Maximum Stars"
+                                            name="maxStars"
+                                            value={maxStars.toString()}
+                                            onChange={(val) => {
+                                                const newMax = Number(val);
+                                                setMaxStars(newMax);
+                                                if (maxStarsValue > newMax)
+                                                    setMaxStarsValue(newMax);
+                                            }}
+                                            orientation="horizontal"
+                                            options={[
+                                                {
+                                                    value: "5",
+                                                    label: "5 Stars",
+                                                },
+                                                {
+                                                    value: "10",
+                                                    label: "10 Stars",
+                                                },
+                                            ]}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<Rating
+  value={${maxStarsValue}}${maxStars !== 5 ? `\n  max={${maxStars}}` : ""}
+  showValue
+  valueFormat="fraction"
+/>`}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+                </div>
             </section>
 
-            {/* API Documentation */}
+            <Divider className="my-12" />
+
+            {/* ========================================
+                SECTION 2: API REFERENCE
+            ======================================== */}
             <section>
                 <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
                     <BookOpen className="w-5 h-5" />
