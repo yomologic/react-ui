@@ -34,84 +34,80 @@ export default function CardsPage() {
     return (
         <SectionLayout>
             {/* ========================================
-                CARD COMPONENT SHOWCASE
+                SECTION 1: COMPONENT EXAMPLES
             ======================================== */}
             <section>
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Card</h2>
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                    Card
+                </h2>
 
                 <div className="space-y-6">
-                    {/* ========================================
-                        EXAMPLE 1: VARIANTS
-                    ======================================== */}
-                    <Card variant="elevated" padding="lg">
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            {/* Display */}
-                            <div className="lg:col-span-1">
-                                <h3 className="text-sm font-semibold text-gray-700 mb-4">
-                                    Display
-                                </h3>
-                                <div className="p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
-                                    <Card
-                                        variant={
-                                            variantControl as
-                                                | "default"
-                                                | "bordered"
-                                                | "elevated"
-                                        }
-                                        hoverable
-                                    >
-                                        <CardHeader>
-                                            <CardTitle>Card Title</CardTitle>
-                                            <CardDescription>
-                                                Card description text
-                                            </CardDescription>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <p className="text-sm text-gray-700">
-                                                This card demonstrates different
-                                                visual variants.
-                                            </p>
-                                        </CardContent>
-                                    </Card>
+                    {/* Example 1: Card Variants */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Card Variants
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Choose between default, bordered, or elevated
+                                card styles.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                            <Card
+                                                variant={
+                                                    variantControl as
+                                                        | "default"
+                                                        | "bordered"
+                                                        | "elevated"
+                                                }
+                                                hoverable
+                                            >
+                                                <CardHeader>
+                                                    <CardTitle>
+                                                        Card Title
+                                                    </CardTitle>
+                                                    <CardDescription>
+                                                        Card description text
+                                                    </CardDescription>
+                                                </CardHeader>
+                                                <CardContent>
+                                                    <p className="text-sm text-gray-700">
+                                                        This card demonstrates
+                                                        different visual
+                                                        variants.
+                                                    </p>
+                                                </CardContent>
+                                            </Card>
+                                        </div>
+                                        <RadioGroup
+                                            label="Variant"
+                                            name="variant-control"
+                                            value={variantControl}
+                                            onChange={setVariantControl}
+                                            orientation="horizontal"
+                                            options={[
+                                                {
+                                                    value: "default",
+                                                    label: "Default",
+                                                },
+                                                {
+                                                    value: "bordered",
+                                                    label: "Bordered",
+                                                },
+                                                {
+                                                    value: "elevated",
+                                                    label: "Elevated",
+                                                },
+                                            ]}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-
-                            {/* Controls */}
-                            <div className="lg:col-span-1">
-                                <h3 className="text-sm font-semibold text-gray-700 mb-4">
-                                    Controls
-                                </h3>
-                                <div className="space-y-4">
-                                    <RadioGroup
-                                        label="Variant"
-                                        name="variant-control"
-                                        value={variantControl}
-                                        onChange={setVariantControl}
-                                        options={[
-                                            {
-                                                value: "default",
-                                                label: "Default",
-                                            },
-                                            {
-                                                value: "bordered",
-                                                label: "Bordered",
-                                            },
-                                            {
-                                                value: "elevated",
-                                                label: "Elevated",
-                                            },
-                                        ]}
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Code */}
-                            <div className="lg:col-span-1">
-                                <h3 className="text-sm font-semibold text-gray-700 mb-4">
-                                    Code
-                                </h3>
-                                <CodeSnippet
-                                    code={`<Card${variantControl !== "default" ? ` variant="${variantControl}"` : ""} hoverable>
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        code={`<Card${variantControl !== "default" ? ` variant="${variantControl}"` : ""} hoverable>
   <CardHeader>
     <CardTitle>Card Title</CardTitle>
     <CardDescription>
@@ -122,84 +118,83 @@ export default function CardsPage() {
     <p>Card content...</p>
   </CardContent>
 </Card>`}
-                                />
+                                    />
+                                </div>
                             </div>
                         </div>
                     </Card>
 
-                    {/* ========================================
-                        EXAMPLE 2: PADDING & STRUCTURE
-                    ======================================== */}
-                    <Card variant="elevated" padding="lg">
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            {/* Display */}
-                            <div className="lg:col-span-1">
-                                <h3 className="text-sm font-semibold text-gray-700 mb-4">
-                                    Display
-                                </h3>
-                                <div className="p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
-                                    <Card
-                                        variant="elevated"
-                                        padding={
-                                            paddingControl as
-                                                | "none"
-                                                | "sm"
-                                                | "md"
-                                                | "lg"
-                                        }
-                                    >
-                                        <CardHeader>
-                                            <CardTitle>
-                                                Card with Footer
-                                            </CardTitle>
-                                            <CardDescription>
-                                                Complete card structure
-                                            </CardDescription>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <p className="text-sm text-gray-700">
-                                                Cards can have headers, content,
-                                                and footers. Adjust padding to
-                                                control spacing.
-                                            </p>
-                                        </CardContent>
-                                        <CardFooter>
-                                            <button className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700">
-                                                Action
-                                            </button>
-                                        </CardFooter>
-                                    </Card>
+                    {/* Example 2: Padding & Structure */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Padding & Structure
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Cards support header, content, and footer
+                                sections with adjustable padding.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                            <Card
+                                                variant="elevated"
+                                                padding={
+                                                    paddingControl as
+                                                        | "none"
+                                                        | "sm"
+                                                        | "md"
+                                                        | "lg"
+                                                }
+                                            >
+                                                <CardHeader>
+                                                    <CardTitle>
+                                                        Card with Footer
+                                                    </CardTitle>
+                                                    <CardDescription>
+                                                        Complete card structure
+                                                    </CardDescription>
+                                                </CardHeader>
+                                                <CardContent>
+                                                    <p className="text-sm text-gray-700">
+                                                        Cards can have headers,
+                                                        content, and footers.
+                                                        Adjust padding to
+                                                        control spacing.
+                                                    </p>
+                                                </CardContent>
+                                                <CardFooter>
+                                                    <button className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700">
+                                                        Action
+                                                    </button>
+                                                </CardFooter>
+                                            </Card>
+                                        </div>
+                                        <RadioGroup
+                                            label="Padding"
+                                            name="padding-control"
+                                            value={paddingControl}
+                                            onChange={setPaddingControl}
+                                            orientation="horizontal"
+                                            options={[
+                                                {
+                                                    value: "none",
+                                                    label: "None",
+                                                },
+                                                { value: "sm", label: "Small" },
+                                                {
+                                                    value: "md",
+                                                    label: "Medium",
+                                                },
+                                                { value: "lg", label: "Large" },
+                                            ]}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-
-                            {/* Controls */}
-                            <div className="lg:col-span-1">
-                                <h3 className="text-sm font-semibold text-gray-700 mb-4">
-                                    Controls
-                                </h3>
-                                <div className="space-y-4">
-                                    <RadioGroup
-                                        label="Padding"
-                                        name="padding-control"
-                                        value={paddingControl}
-                                        onChange={setPaddingControl}
-                                        options={[
-                                            { value: "none", label: "None" },
-                                            { value: "sm", label: "Small" },
-                                            { value: "md", label: "Medium" },
-                                            { value: "lg", label: "Large" },
-                                        ]}
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Code */}
-                            <div className="lg:col-span-1">
-                                <h3 className="text-sm font-semibold text-gray-700 mb-4">
-                                    Code
-                                </h3>
-                                <CodeSnippet
-                                    code={`<Card variant="elevated"${paddingControl !== "md" ? ` padding="${paddingControl}"` : ""}>
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        code={`<Card variant="elevated"${paddingControl !== "md" ? ` padding="${paddingControl}"` : ""}>
   <CardHeader>
     <CardTitle>Card with Footer</CardTitle>
     <CardDescription>
@@ -213,71 +208,61 @@ export default function CardsPage() {
     <button>Action</button>
   </CardFooter>
 </Card>`}
-                                />
+                                    />
+                                </div>
                             </div>
                         </div>
                     </Card>
 
-                    {/* ========================================
-                        EXAMPLE 3: CARD WITH MEDIA
-                    ======================================== */}
-                    <Card variant="elevated" padding="lg">
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            {/* Display */}
-                            <div className="lg:col-span-1">
-                                <h3 className="text-sm font-semibold text-gray-700 mb-4">
-                                    Display
-                                </h3>
-                                <div className="p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
-                                    <Card variant="elevated">
-                                        <CardMedia
-                                            component="img"
-                                            image="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400"
-                                            alt="Mountain landscape"
-                                            aspectRatio="16/9"
-                                        />
-                                        <CardContent>
-                                            <h3 className="font-semibold text-gray-800 mb-2">
-                                                Mountain Landscape
-                                            </h3>
-                                            <p className="text-sm text-gray-600">
-                                                CardMedia displays images with
-                                                proper aspect ratios.
-                                            </p>
-                                        </CardContent>
-                                        <CardActions>
-                                            <button className="px-3 py-1.5 text-sm text-blue-600 hover:bg-blue-50 rounded-md">
-                                                Share
-                                            </button>
-                                            <button className="px-3 py-1.5 text-sm text-blue-600 hover:bg-blue-50 rounded-md">
-                                                Learn More
-                                            </button>
-                                        </CardActions>
-                                    </Card>
+                    {/* Example 3: Card with Media */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Card with Media
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                CardMedia displays images with proper aspect
+                                ratios. CardActions provides action buttons.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                        <Card
+                                            variant="elevated"
+                                            className="max-w-sm"
+                                        >
+                                            <CardMedia
+                                                component="next-image"
+                                                image="/yomologic-logo-symbol.png"
+                                                alt="Yomologic logo"
+                                                aspectRatio="16/9"
+                                                className="bg-white p-8"
+                                            />
+                                            <CardContent>
+                                                <h3 className="font-semibold text-gray-800 mb-2">
+                                                    Featured Content
+                                                </h3>
+                                                <p className="text-sm text-gray-600">
+                                                    CardMedia displays images
+                                                    with proper aspect ratios.
+                                                </p>
+                                            </CardContent>
+                                            <CardActions>
+                                                <button className="px-3 py-1.5 text-sm text-blue-600 hover:bg-blue-50 rounded-md">
+                                                    Share
+                                                </button>
+                                                <button className="px-3 py-1.5 text-sm text-blue-600 hover:bg-blue-50 rounded-md">
+                                                    Learn More
+                                                </button>
+                                            </CardActions>
+                                        </Card>
+                                    </div>
                                 </div>
-                            </div>
-
-                            {/* Controls */}
-                            <div className="lg:col-span-1">
-                                <h3 className="text-sm font-semibold text-gray-700 mb-4">
-                                    Controls
-                                </h3>
-                                <p className="text-sm text-gray-600">
-                                    CardMedia handles images and videos.
-                                    CardActions provides a footer for action
-                                    buttons with proper spacing.
-                                </p>
-                            </div>
-
-                            {/* Code */}
-                            <div className="lg:col-span-1">
-                                <h3 className="text-sm font-semibold text-gray-700 mb-4">
-                                    Code
-                                </h3>
-                                <CodeSnippet
-                                    code={`<Card variant="elevated">
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        code={`<Card variant="elevated">
   <CardMedia
-    component="img"
+    component="next-image"
     image="/path/to/image.jpg"
     alt="Description"
     aspectRatio="16/9"
@@ -291,79 +276,62 @@ export default function CardsPage() {
     <button>Learn More</button>
   </CardActions>
 </Card>`}
-                                />
+                                    />
+                                </div>
                             </div>
                         </div>
                     </Card>
 
-                    {/* ========================================
-                        EXAMPLE 4: CLICKABLE CARD WITH ICON
-                    ======================================== */}
-                    <Card variant="elevated" padding="lg">
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            {/* Display */}
-                            <div className="lg:col-span-1">
-                                <h3 className="text-sm font-semibold text-gray-700 mb-4">
-                                    Display
-                                </h3>
-                                <div className="p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
-                                    <Card
-                                        variant="elevated"
-                                        hoverable
-                                        className="group"
-                                    >
-                                        <CardActionArea
-                                            onClick={() =>
-                                                alert("Card clicked!")
-                                            }
+                    {/* Example 4: Clickable Card with Icon */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Clickable Card with Icon
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                CardActionArea makes the entire card clickable
+                                with hover and focus states.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                        <Card
+                                            variant="elevated"
+                                            hoverable
+                                            className="group"
                                         >
-                                            <CardHeader>
-                                                <div className="w-12 h-12 rounded-lg [background-color:var(--card-icon-purple-bg)] [color:var(--card-icon-purple-text)] flex items-center justify-center transition-colors group-hover:[background-color:var(--card-icon-purple-bg-hover)]">
-                                                    <Zap className="w-6 h-6" />
-                                                </div>
-                                                <CardTitle>
-                                                    Interactive Card
-                                                </CardTitle>
-                                                <CardDescription>
-                                                    Click anywhere to trigger
-                                                    action
-                                                </CardDescription>
-                                            </CardHeader>
-                                            <CardContent>
-                                                <p className="text-sm text-gray-700">
-                                                    CardActionArea makes the
-                                                    entire card clickable with
-                                                    hover and focus states.
-                                                </p>
-                                            </CardContent>
-                                        </CardActionArea>
-                                    </Card>
+                                            <CardActionArea
+                                                onClick={() =>
+                                                    alert("Card clicked!")
+                                                }
+                                            >
+                                                <CardHeader>
+                                                    <div className="w-12 h-12 rounded-lg [background-color:var(--card-icon-purple-bg)] [color:var(--card-icon-purple-text)] flex items-center justify-center transition-colors group-hover:[background-color:var(--card-icon-purple-bg-hover)]">
+                                                        <Zap className="w-6 h-6" />
+                                                    </div>
+                                                    <CardTitle>
+                                                        Interactive Card
+                                                    </CardTitle>
+                                                    <CardDescription>
+                                                        Click anywhere to
+                                                        trigger action
+                                                    </CardDescription>
+                                                </CardHeader>
+                                                <CardContent>
+                                                    <p className="text-sm text-gray-700">
+                                                        CardActionArea makes the
+                                                        entire card clickable
+                                                        with hover and focus
+                                                        states.
+                                                    </p>
+                                                </CardContent>
+                                            </CardActionArea>
+                                        </Card>
+                                    </div>
                                 </div>
-                            </div>
-
-                            {/* Controls */}
-                            <div className="lg:col-span-1">
-                                <h3 className="text-sm font-semibold text-gray-700 mb-4">
-                                    Controls
-                                </h3>
-                                <p className="text-sm text-gray-600 mb-3">
-                                    Wrap content in CardActionArea to make the
-                                    entire card interactive.
-                                </p>
-                                <p className="text-sm text-gray-600">
-                                    Use CSS variables for themed icon colors:
-                                    --card-icon-purple-bg, --card-icon-blue-bg,
-                                    etc.
-                                </p>
-                            </div>
-
-                            {/* Code */}
-                            <div className="lg:col-span-1">
-                                <h3 className="text-sm font-semibold text-gray-700 mb-4">
-                                    Code
-                                </h3>
-                                <CodeSnippet
-                                    code={`<Card variant="elevated" hoverable>
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        code={`<Card variant="elevated" hoverable>
   <CardActionArea onClick={handleClick}>
     <CardHeader>
       <div className="icon-wrapper">
@@ -379,7 +347,8 @@ export default function CardsPage() {
     </CardContent>
   </CardActionArea>
 </Card>`}
-                                />
+                                    />
+                                </div>
                             </div>
                         </div>
                     </Card>

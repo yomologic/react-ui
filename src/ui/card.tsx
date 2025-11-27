@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 import { cn } from "../lib/utils";
 
@@ -117,9 +118,13 @@ CardFooter.displayName = "CardFooter";
 export interface CardMediaProps extends React.HTMLAttributes<HTMLDivElement> {
     image?: string;
     video?: string;
-    component?: "img" | "video" | "div";
+    component?: "img" | "video" | "div" | "next-image";
     aspectRatio?: "16/9" | "4/3" | "1/1" | "21/9" | string;
     alt?: string;
+    fill?: boolean;
+    width?: number;
+    height?: number;
+    priority?: boolean;
 }
 
 const CardMedia = React.forwardRef<HTMLDivElement, CardMediaProps>(
@@ -132,6 +137,10 @@ const CardMedia = React.forwardRef<HTMLDivElement, CardMediaProps>(
             aspectRatio = "16/9",
             alt = "",
             style,
+            fill = true,
+            width,
+            height,
+            priority = false,
             ...props
         },
         ref
@@ -140,6 +149,30 @@ const CardMedia = React.forwardRef<HTMLDivElement, CardMediaProps>(
             aspectRatio,
             ...style,
         };
+
+        if (component === "next-image" && image) {
+            return (
+                <div
+                    ref={ref}
+                    className={cn("relative w-full overflow-hidden", className)}
+                    style={aspectRatioStyle}
+                >
+                    <Image
+                        src={image}
+                        alt={alt}
+                        fill={fill}
+                        width={!fill ? width : undefined}
+                        height={!fill ? height : undefined}
+                        className={cn(
+                            "w-full h-full",
+                            fill ? "object-contain" : ""
+                        )}
+                        priority={priority}
+                        {...(props as any)}
+                    />
+                </div>
+            );
+        }
 
         if (component === "img" && image) {
             return (

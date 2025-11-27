@@ -440,9 +440,12 @@ export const Slider: React.FC<SliderProps> = ({
         });
     };
 
+    // Check if we have marks with labels for bottom spacing
+    const hasMarkLabels = marksList.some((mark) => mark.label);
+
     const containerClasses = isVertical
         ? "flex flex-col items-center py-4"
-        : "flex items-center w-full px-2";
+        : `flex items-center w-full px-2 ${hasMarkLabels ? "pb-6" : ""}`;
 
     const railClasses = isVertical
         ? `${currentSizeStyles.rail} relative overflow-visible`

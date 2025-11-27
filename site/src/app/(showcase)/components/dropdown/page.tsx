@@ -5,195 +5,280 @@ import {
     Card,
     RadioGroup,
     Checkbox,
-    Input,
     CodeSnippet,
+    SectionLayout,
+    Divider,
 } from "@yomologic/react-ui";
-import { SectionLayout } from "@yomologic/react-ui";
-import { Settings2, BookOpen, Code2 } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import { useState } from "react";
 
 export default function DropdownPage() {
-    const [selectedValue, setSelectedValue] = useState<string | number>("");
-    const [dropdownState, setDropdownState] = useState<string>("normal");
-    const [hasLabel, setHasLabel] = useState(true);
-    const [hasHelper, setHasHelper] = useState(false);
-    const [customPlaceholder, setCustomPlaceholder] = useState<string>("");
-    const [size, setSize] = useState<string>("md");
-    const [showCodeOverlay, setShowCodeOverlay] = useState(false);
+    // Example 1: Dropdown Sizes
+    const [size1, setSize1] = useState<"xs" | "sm" | "md" | "lg" | "xl">("md");
+    const [selected1, setSelected1] = useState<string | number>("");
 
-    // Sample options - using fruits for consistency
-    const standardOptions = [
+    // Example 2: Dropdown States
+    const [state2, setState2] = useState<"normal" | "error" | "disabled">(
+        "normal"
+    );
+    const [selected2, setSelected2] = useState<string | number>("");
+
+    // Example 3: With Helper Text
+    const [showHelper3, setShowHelper3] = useState(true);
+    const [selected3, setSelected3] = useState<string | number>("");
+
+    // Sample options
+    const fruitOptions = [
         { value: "apple", label: "Apple" },
         { value: "banana", label: "Banana" },
         { value: "orange", label: "Orange" },
-        { value: "grape", label: "Grape (Disabled)", disabled: true },
+        { value: "grape", label: "Grape" },
     ];
 
-    const generateCode = () => {
-        const props: string[] = [];
-
-        if (hasLabel) {
-            props.push('label="Select Fruit"');
-        }
-
-        const placeholderText = customPlaceholder || "Choose a fruit";
-        props.push(`placeholder="${placeholderText}"`);
-
-        props.push("options={options}");
-
-        props.push("value={selectedValue}");
-        props.push("onChange={setSelectedValue}");
-
-        if (dropdownState === "disabled") {
-            props.push("disabled");
-        }
-
-        if (dropdownState === "error") {
-            props.push('error="This field has an error"');
-        }
-
-        if (hasHelper) {
-            props.push('helperText="This is a helper text"');
-        }
-
-        if (size !== "md") {
-            props.push(`size="${size}"`);
-        }
-
-        const propsString = props.join("\n  ");
-        const fullCode =
-            `const options = [\n` +
-            `  { value: "apple", label: "Apple" },\n` +
-            `  { value: "banana", label: "Banana" },\n` +
-            `  { value: "orange", label: "Orange" }\n` +
-            `];\n\n` +
-            `<Dropdown\n  ${propsString}\n/>`;
-
-        return fullCode;
-    };
-
     return (
-        <SectionLayout hasStickyPreview>
-            {/* Sticky Preview Section */}
-            <section className="sticky top-0 z-15 py-4 bg-gray-50">
-                <Card variant="elevated" padding="lg">
-                    <div className="space-y-4">
-                        {/* Header */}
-                        <div className="flex items-center justify-between pb-3 border-b border-gray-200">
-                            <h2 className="text-lg font-semibold text-gray-900">
-                                Dropdowns Live Preview
-                            </h2>
-                            <button
-                                onClick={() => setShowCodeOverlay(true)}
-                                className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-colors duration-150"
-                            >
-                                <Code2 className="w-4 h-4" />
-                                Code
-                            </button>
-                        </div>
-
-                        {/* Preview Content */}
-                        <div>
-                            <div className="p-6 bg-linear-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
-                                <div className="max-w-md mx-auto">
-                                    <Dropdown
-                                        label={
-                                            hasLabel
-                                                ? "Select Fruit"
-                                                : undefined
+        <SectionLayout>
+            {/* ========================================
+                SECTION 1: COMPONENT EXAMPLES
+            ======================================== */}
+            <section>
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                    Dropdown
+                </h2>
+                <div className="space-y-6">
+                    {/* Example 1: Dropdown Sizes */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Dropdown Sizes
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Dropdowns come in five sizes from extra small to
+                                extra large.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                            <Dropdown
+                                                label="Select Fruit"
+                                                placeholder="Choose a fruit"
+                                                options={fruitOptions}
+                                                value={selected1}
+                                                onChange={setSelected1}
+                                                size={size1}
+                                            />
+                                        </div>
+                                        <RadioGroup
+                                            label="Size"
+                                            name="size-example1"
+                                            value={size1}
+                                            onChange={(val) =>
+                                                setSize1(
+                                                    val as
+                                                        | "xs"
+                                                        | "sm"
+                                                        | "md"
+                                                        | "lg"
+                                                        | "xl"
+                                                )
+                                            }
+                                            orientation="horizontal"
+                                            options={[
+                                                { value: "xs", label: "XS" },
+                                                { value: "sm", label: "SM" },
+                                                { value: "md", label: "MD" },
+                                                { value: "lg", label: "LG" },
+                                                { value: "xl", label: "XL" },
+                                            ]}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        code={
+                                            size1 === "md"
+                                                ? `<Dropdown
+  label="Select Fruit"
+  placeholder="Choose a fruit"
+  options={fruitOptions}
+  value={selected}
+  onChange={setSelected}
+/>`
+                                                : `<Dropdown
+  label="Select Fruit"
+  placeholder="Choose a fruit"
+  options={fruitOptions}
+  value={selected}
+  onChange={setSelected}
+  size="${size1}"
+/>`
                                         }
-                                        placeholder={
-                                            customPlaceholder ||
-                                            "Choose a fruit"
-                                        }
-                                        options={standardOptions}
-                                        value={selectedValue}
-                                        onChange={setSelectedValue}
-                                        disabled={dropdownState === "disabled"}
-                                        error={
-                                            dropdownState === "error"
-                                                ? "This field has an error"
-                                                : undefined
-                                        }
-                                        helperText={
-                                            hasHelper
-                                                ? "This is a helper text"
-                                                : undefined
-                                        }
-                                        size={size as "sm" | "md" | "lg"}
                                     />
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </Card>
-            </section>
+                    </Card>
 
-            {/* Scrollable Content */}
-            {/* Interactive Controls */}
-            <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <Settings2 className="w-5 h-5" />
-                    Interactive Controls
-                </h2>
-                <Card variant="elevated" padding="lg">
-                    <div className="space-y-6">
-                        <RadioGroup
-                            label="State"
-                            name="dropdownState"
-                            value={dropdownState}
-                            onChange={setDropdownState}
-                            orientation="horizontal"
-                            options={[
-                                { value: "normal", label: "Normal" },
-                                { value: "error", label: "Error" },
-                                { value: "disabled", label: "Disabled" },
-                            ]}
-                        />
-
-                        <RadioGroup
-                            label="Size"
-                            name="size"
-                            value={size}
-                            onChange={setSize}
-                            orientation="horizontal"
-                            options={[
-                                { value: "xs", label: "Extra Small" },
-                                { value: "sm", label: "Small" },
-                                { value: "md", label: "Medium" },
-                                { value: "lg", label: "Large" },
-                                { value: "xl", label: "Extra Large" },
-                            ]}
-                        />
-
-                        <div className="flex flex-col sm:flex-row gap-4">
-                            <Checkbox
-                                label="Show Label"
-                                checked={hasLabel}
-                                onChange={setHasLabel}
-                            />
-
-                            <Checkbox
-                                label="Show Helper Text"
-                                checked={hasHelper}
-                                onChange={setHasHelper}
-                            />
+                    {/* Example 2: Dropdown States */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Dropdown States
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Dropdowns support normal, error, and disabled
+                                states.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                            <Dropdown
+                                                label="Select Fruit"
+                                                placeholder="Choose a fruit"
+                                                options={fruitOptions}
+                                                value={selected2}
+                                                onChange={setSelected2}
+                                                disabled={state2 === "disabled"}
+                                                error={
+                                                    state2 === "error"
+                                                        ? "Please select a fruit"
+                                                        : undefined
+                                                }
+                                            />
+                                        </div>
+                                        <RadioGroup
+                                            label="State"
+                                            name="state-example2"
+                                            value={state2}
+                                            onChange={(val) =>
+                                                setState2(
+                                                    val as
+                                                        | "normal"
+                                                        | "error"
+                                                        | "disabled"
+                                                )
+                                            }
+                                            orientation="horizontal"
+                                            options={[
+                                                {
+                                                    value: "normal",
+                                                    label: "Normal",
+                                                },
+                                                {
+                                                    value: "error",
+                                                    label: "Error",
+                                                },
+                                                {
+                                                    value: "disabled",
+                                                    label: "Disabled",
+                                                },
+                                            ]}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        code={
+                                            state2 === "normal"
+                                                ? `<Dropdown
+  label="Select Fruit"
+  placeholder="Choose a fruit"
+  options={fruitOptions}
+  value={selected}
+  onChange={setSelected}
+/>`
+                                                : state2 === "error"
+                                                  ? `<Dropdown
+  label="Select Fruit"
+  placeholder="Choose a fruit"
+  options={fruitOptions}
+  value={selected}
+  onChange={setSelected}
+  error="Please select a fruit"
+/>`
+                                                  : `<Dropdown
+  label="Select Fruit"
+  placeholder="Choose a fruit"
+  options={fruitOptions}
+  value={selected}
+  onChange={setSelected}
+  disabled
+/>`
+                                        }
+                                    />
+                                </div>
+                            </div>
                         </div>
+                    </Card>
 
-                        <Input
-                            label="Custom Placeholder"
-                            placeholder="Type custom placeholder..."
-                            value={customPlaceholder}
-                            onChange={(e) =>
-                                setCustomPlaceholder(e.target.value)
-                            }
-                            helperText="Leave empty for default"
-                        />
-                    </div>
-                </Card>
+                    {/* Example 3: With Helper Text */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            With Helper Text
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Add helper text to provide additional context or
+                                instructions.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                            <Dropdown
+                                                label="Select Fruit"
+                                                placeholder="Choose a fruit"
+                                                options={fruitOptions}
+                                                value={selected3}
+                                                onChange={setSelected3}
+                                                helperText={
+                                                    showHelper3
+                                                        ? "Choose your favorite fruit"
+                                                        : undefined
+                                                }
+                                            />
+                                        </div>
+                                        <Checkbox
+                                            label="Show Helper Text"
+                                            checked={showHelper3}
+                                            onChange={setShowHelper3}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        code={
+                                            showHelper3
+                                                ? `<Dropdown
+  label="Select Fruit"
+  placeholder="Choose a fruit"
+  options={fruitOptions}
+  value={selected}
+  onChange={setSelected}
+  helperText="Choose your favorite fruit"
+/>`
+                                                : `<Dropdown
+  label="Select Fruit"
+  placeholder="Choose a fruit"
+  options={fruitOptions}
+  value={selected}
+  onChange={setSelected}
+/>`
+                                        }
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+                </div>
             </section>
 
-            {/* API Documentation */}
+            <Divider className="my-12" />
+
+            {/* ========================================
+                SECTION 2: API REFERENCE
+            ======================================== */}
             <section>
                 <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
                     <BookOpen className="w-5 h-5" />
@@ -369,142 +454,6 @@ export default function DropdownPage() {
                     </div>
                 </Card>
             </section>
-
-            {/* Usage Examples */}
-            <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <BookOpen className="w-5 h-5" />
-                    Usage Examples
-                </h2>
-                <div className="space-y-6">
-                    <Card variant="elevated" padding="lg">
-                        <h3 className="text-sm font-semibold text-gray-900 mb-3">
-                            Basic Dropdown
-                        </h3>
-                        <CodeSnippet
-                            code={`const options = [
-  { value: "apple", label: "Apple" },
-  { value: "banana", label: "Banana" },
-  { value: "orange", label: "Orange" },
-];
-
-<Dropdown
-  label="Select Fruit"
-  placeholder="Choose a fruit"
-  options={options}
-  value={selectedValue}
-  onChange={setSelectedValue}
-/>`}
-                            language="tsx"
-                        />
-                    </Card>
-
-                    <Card variant="elevated" padding="lg">
-                        <h3 className="text-sm font-semibold text-gray-900 mb-3">
-                            With Error State
-                        </h3>
-                        <CodeSnippet
-                            code={`<Dropdown
-  label="Select Fruit"
-  placeholder="Choose a fruit"
-  options={fruitOptions}
-  value={fruit}
-  onChange={setFruit}
-  error="Please select a fruit"
-  required
-/>`}
-                            language="tsx"
-                        />
-                    </Card>
-
-                    <Card variant="elevated" padding="lg">
-                        <h3 className="text-sm font-semibold text-gray-900 mb-3">
-                            Custom Content
-                        </h3>
-                        <CodeSnippet
-                            code={`<Dropdown
-  label="Select Fruit"
-  placeholder="Choose a fruit"
-  value={selectedFruit}
-  onChange={setSelectedFruit}
->
-  <div className="py-1">
-    <div className="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">
-      Popular Fruits
-    </div>
-    {fruits.map((fruit) => (
-      <button
-        key={fruit.value}
-        onClick={() => setSelectedFruit(fruit.value)}
-        className={cn(
-          "w-full px-4 py-2 text-left text-sm",
-          "hover:bg-gray-100 transition-colors",
-          selectedFruit === fruit.value && "bg-blue-50 text-blue-700"
-        )}
-      >
-        {fruit.label}
-      </button>
-    ))}
-  </div>
-</Dropdown>`}
-                            language="tsx"
-                        />
-                    </Card>
-
-                    <Card variant="elevated" padding="lg">
-                        <h3 className="text-sm font-semibold text-gray-900 mb-3">
-                            With Disabled Options
-                        </h3>
-                        <CodeSnippet
-                            code={`const options = [
-  { value: "1", label: "Available Option" },
-  { value: "2", label: "Another Available" },
-  { value: "3", label: "Disabled Option", disabled: true },
-  { value: "4", label: "Also Disabled", disabled: true },
-];
-
-<Dropdown
-  label="Select option"
-  options={options}
-  value={selected}
-  onChange={setSelected}
-  helperText="Some options may be disabled"
-/>`}
-                            language="tsx"
-                        />
-                    </Card>
-                </div>
-            </section>
-
-            {/* Code Overlay */}
-            {showCodeOverlay && (
-                <>
-                    <div
-                        className="fixed inset-0 bg-black/50 z-40"
-                        onClick={() => setShowCodeOverlay(false)}
-                    />
-                    <div className="fixed inset-4 z-50 flex items-center justify-center pointer-events-none">
-                        <Card
-                            variant="elevated"
-                            padding="lg"
-                            className="max-w-3xl w-full max-h-[80vh] overflow-auto pointer-events-auto"
-                        >
-                            <div className="flex items-center justify-between mb-4">
-                                <h3 className="text-lg font-semibold text-gray-900">
-                                    Generated Code
-                                </h3>
-                                <button
-                                    onClick={() => setShowCodeOverlay(false)}
-                                    className="text-gray-500 hover:text-gray-700"
-                                >
-                                    ✕
-                                </button>
-                            </div>
-                            <CodeSnippet code={generateCode()} language="tsx" />
-                        </Card>
-                    </div>
-                </>
-            )}
         </SectionLayout>
     );
 }

@@ -1,11 +1,6 @@
 "use client";
 
-import {
-    Card,
-    RadioGroup,
-    CodeSnippet,
-    Divider,
-} from "@yomologic/react-ui";
+import { Card, RadioGroup, CodeSnippet, Divider } from "@yomologic/react-ui";
 import { SectionLayout } from "@yomologic/react-ui";
 import { BookOpen } from "lucide-react";
 import { useState } from "react";

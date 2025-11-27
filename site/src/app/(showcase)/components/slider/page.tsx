@@ -1,17 +1,23 @@
 "use client";
 
-import { Card, CodeSnippet, Slider, SectionLayout } from "@yomologic/react-ui";
+import {
+    Card,
+    CodeSnippet,
+    Slider,
+    SectionLayout,
+    Divider,
+} from "@yomologic/react-ui";
 import { BookOpen } from "lucide-react";
 
 export default function SliderPage() {
     return (
         <SectionLayout>
             {/* ========================================
-                SECTION 1: USAGE EXAMPLES
+                SECTION 1: COMPONENT EXAMPLES
             ======================================== */}
             <section>
                 <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                    Usage Examples
+                    Slider
                 </h2>
                 <div className="space-y-6">
                     {/* Example 1: Basic Slider */}
@@ -367,6 +373,8 @@ export default function SliderPage() {
                 </div>
             </section>
 
+            <Divider className="my-12" />
+
             {/* ========================================
                 SECTION 2: API REFERENCE
             ======================================== */}
@@ -375,7 +383,7 @@ export default function SliderPage() {
                     <BookOpen className="w-5 h-5" />
                     API Reference
                 </h2>
-                <Card variant="bordered" padding="none">
+                <Card variant="elevated" padding="none">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left">
                             <thead className="bg-gray-50 border-b border-gray-200">
