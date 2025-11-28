@@ -172,10 +172,12 @@ export function Drawer({
                 }
             >
                 {/* Desktop Header */}
-                <div className="hidden lg:block p-6 border-b border-gray-200">
-                    <h1 className="text-xl font-bold text-gray-900">{title}</h1>
+                <div className="hidden lg:block px-6 py-5 border-b border-gray-200 bg-linear-to-b from-gray-50 to-white">
+                    <h1 className="text-lg font-bold text-gray-900">{title}</h1>
                     {subtitle && (
-                        <p className="text-xs text-gray-500 mt-1">{subtitle}</p>
+                        <p className="text-sm text-gray-600 mt-0.5">
+                            {subtitle}
+                        </p>
                     )}
                 </div>
 
@@ -201,7 +203,7 @@ export function Drawer({
                 </div>
 
                 {/* Navigation Items */}
-                <nav className="p-4">
+                <nav className="px-3 py-4">
                     {useSections.map((section, sectionIndex) => (
                         <div
                             key={sectionIndex}
@@ -214,7 +216,7 @@ export function Drawer({
                         >
                             {section.title && (
                                 <h3
-                                    className="px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"
+                                    className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wide"
                                     style={{
                                         marginBottom:
                                             "var(--drawer-title-margin-bottom)",
@@ -237,11 +239,11 @@ export function Drawer({
                                                 handleItemClick(item.id)
                                             }
                                             className={`
-                        w-full flex items-center gap-3 rounded-lg font-medium transition-colors
+                        w-full flex items-center gap-3 rounded-lg font-medium transition-all duration-200
                         ${
                             activeItem === item.id
-                                ? "bg-blue-50 text-blue-700"
-                                : "text-gray-700 hover:bg-gray-50"
+                                ? "bg-blue-50 text-blue-700 shadow-sm"
+                                : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                         }
                       `}
                                             style={{
@@ -260,7 +262,7 @@ export function Drawer({
                                             }}
                                         >
                                             {item.icon && (
-                                                <span className="shrink-0">
+                                                <span className="shrink-0 opacity-75">
                                                     {item.icon}
                                                 </span>
                                             )}

@@ -50,7 +50,7 @@ export function SidebarNav({
     return (
         <>
             {/* Mobile Header */}
-            <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 px-4 py-3">
+            <div className="lg:hidden fixed top-0 left-0 right-0 [z-index:var(--z-index-nav)] bg-white border-b border-gray-200 px-4 py-3">
                 <div
                     className={`flex items-center ${
                         isLeft
@@ -92,7 +92,7 @@ export function SidebarNav({
             {/* Sidebar Navigation */}
             <aside
                 className={`
-          fixed top-0 h-screen w-64 bg-white z-40
+          fixed top-0 h-screen w-64 bg-white [z-index:var(--z-index-drawer)]
           transition-transform duration-300 ease-in-out overflow-y-auto
           ${isLeft ? "left-0 border-r" : "right-0 border-l"} border-gray-200
           lg:translate-x-0

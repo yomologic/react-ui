@@ -38,12 +38,12 @@ export function CodeSnippet({
     return (
         <div className="relative group w-full min-w-0">
             {/* Copy Button */}
-            <div className="absolute right-3 top-3 z-10">
+            <div className="absolute right-3 top-3 [z-index:var(--z-index-code-button)]">
                 <button
                     onClick={handleCopy}
                     onMouseEnter={() => setShowTooltip(true)}
                     onMouseLeave={() => setShowTooltip(false)}
-                    className="p-2 rounded-md bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-gray-200 transition-all duration-200 border border-gray-700 hover:border-gray-600 shadow-lg"
+                    className="relative p-2 rounded-md bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-gray-200 transition-all duration-200 border border-gray-700 hover:border-gray-600 shadow-lg"
                     aria-label="Copy code"
                 >
                     {copied ? (

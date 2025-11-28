@@ -1165,6 +1165,122 @@ Example Subcomponents Table Structure:
 
 ---
 
+## Z-Index Management
+
+### Overview
+
+All z-index values are defined as CSS variables in `src/styles.css` to prevent stacking context conflicts. Always use these variables instead of hardcoded values.
+
+### Z-Index Layers
+
+#### Base Layer (0-9)
+
+For normal content flow and relative positioning within components.
+
+| Variable                | Value | Usage                     |
+| ----------------------- | ----- | ------------------------- |
+| `--z-index-base`        | 0     | Default layer for content |
+| `--z-index-code-button` | 1     | Code snippet copy buttons |
+
+**When to use:** Elements needing slight elevation within their container.
+
+#### Sticky/Fixed Layer (10-99)
+
+For sticky headers, fixed footers, and persistent navigation.
+
+| Variable                       | Value | Usage                   |
+| ------------------------------ | ----- | ----------------------- |
+| `--z-index-sticky`             | 10    | Generic sticky elements |
+| `--z-index-nav`                | 50    | Main navigation bar     |
+| `--z-index-nav-mobile-overlay` | 60    | Mobile nav backdrop     |
+| `--z-index-nav-mobile-menu`    | 70    | Mobile nav menu panel   |
+
+**When to use:** Elements that stick to viewport edges.
+
+#### Overlay Layer (100-999)
+
+For dropdowns, popovers, drawers, and other overlays.
+
+| Variable                   | Value | Usage                          |
+| -------------------------- | ----- | ------------------------------ |
+| `--z-index-drawer-overlay` | 100   | Drawer backdrop                |
+| `--z-index-drawer-panel`   | 110   | Drawer sliding panel           |
+| `--z-index-drawer-header`  | 120   | Drawer header                  |
+| `--z-index-drawer-button`  | 121   | Drawer close button            |
+| `--z-index-dropdown`       | 200   | Dropdown menus                 |
+| `--z-index-popover`        | 300   | Popovers and floating elements |
+| `--z-index-overlay`        | 400   | General purpose overlays       |
+
+**When to use:** Interactive overlays above normal content.
+
+#### Modal Layer (1000-1999)
+
+For modal dialogs and tooltips.
+
+| Variable                   | Value | Usage                  |
+| -------------------------- | ----- | ---------------------- |
+| `--z-index-modal-backdrop` | 1000  | Modal backdrop/overlay |
+| `--z-index-modal`          | 1100  | Modal dialog content   |
+| `--z-index-tooltip`        | 1200  | Tooltips               |
+
+**When to use:** Full-screen takeover elements.
+
+#### Notification Layer (2000+)
+
+For system notifications.
+
+| Variable             | Value | Usage                  |
+| -------------------- | ----- | ---------------------- |
+| `--z-index-snackbar` | 2000  | Snackbar notifications |
+| `--z-index-toast`    | 2100  | Toast notifications    |
+
+**When to use:** Critical system messages.
+
+### Best Practices
+
+✅ **DO**
+
+```tsx
+// Use CSS variables
+<div className="[z-index:var(--z-index-dropdown)]">
+  <Dropdown />
+</div>
+
+// Create stacking context for complex components
+<div className="relative">
+  <div className="[z-index:var(--z-index-code-button)]">
+    <button className="relative">
+      {/* Tooltips positioned relative to button */}
+    </button>
+  </div>
+</div>
+```
+
+❌ **DON'T**
+
+```tsx
+// Don't use arbitrary z-index values
+<div className="z-50">  ❌ Magic number
+<div className="z-[999]">  ❌ Magic number
+```
+
+### Adding New Z-Index Values
+
+1. **Identify the layer** - Determine which layer your component belongs to
+2. **Add to `src/styles.css`** - Add variable in appropriate section
+3. **Use descriptive names** - Format: `--z-index-{component}-{element}`
+4. **Test stacking** - Verify no conflicts with other components
+
+Example:
+
+```css
+/* Overlay Layer (100-999) */
+--z-index-combobox: 210;
+--z-index-combobox-dropdown: 211;
+```
+
+---
+
 ## Resources
 
 - **Tailwind CSS**: https://tailwindcss.com/docs

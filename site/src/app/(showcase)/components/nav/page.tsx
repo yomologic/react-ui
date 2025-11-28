@@ -3,38 +3,30 @@
 import {
     Card,
     RadioGroup,
-    Checkbox,
     CodeSnippet,
     Nav,
+    SectionLayout,
+    Divider,
 } from "@yomologic/react-ui";
-import { SectionLayout } from "@yomologic/react-ui";
 import {
-    Settings2,
-    Code2,
     BookOpen,
     Home,
     Users,
     Settings,
     Bell,
-    HelpCircle,
     User,
 } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
 
 export default function NavPage() {
-    // State for component props
-    const [variant, setVariant] = useState<string>("primary");
-    const [orientation, setOrientation] = useState<string>("horizontal");
-    const [size, setSize] = useState<string>("md");
-    const [sticky, setSticky] = useState(false);
-    const [showLogo, setShowLogo] = useState(true);
-    const [showActions, setShowActions] = useState(true);
-    const [showBadges, setShowBadges] = useState(true);
-    const [showCodeOverlay, setShowCodeOverlay] = useState(false);
-    const [mobileMenuDirection, setMobileMenuDirection] =
-        useState<string>("top");
+    // Example 1: Nav Variants
+    const [variant1, setVariant1] = useState<string>("primary");
 
-    // Mock navigation items
+    // Example 2: Nav Orientation
+    const [orientation2, setOrientation2] = useState<string>("horizontal");
+
+    // Navigation items
     const navItems = [
         {
             id: "home",
@@ -47,15 +39,8 @@ export default function NavPage() {
             label: "Users",
             icon: <Users className="w-4 h-4" />,
             href: "#users",
-            badge: showBadges ? "5" : undefined,
+            badge: "5",
         },
-        {
-            id: "about",
-            label: "About",
-            icon: <HelpCircle className="w-4 h-4" />,
-            href: "#about",
-        },
-        { id: "divider", type: "divider" as const },
         {
             id: "settings",
             label: "Settings",
@@ -64,672 +49,580 @@ export default function NavPage() {
         },
     ];
 
-    // Generate code snippet
-    const generateCode = () => {
-        const props: string[] = [];
-        const itemsCode: string[] = [];
+    const logoElement = (
+        <Image
+            src="/yomologic-logo-symbol.png"
+            alt="Yomologic"
+            width={32}
+            height={32}
+            className="w-8 h-8"
+        />
+    );
 
-        if (variant !== "primary") props.push(`variant="${variant}"`);
-        if (orientation !== "horizontal")
-            props.push(`orientation="${orientation}"`);
-        if (size !== "md") props.push(`size="${size}"`);
-        if (sticky) props.push("sticky");
-        if (mobileMenuDirection !== "top")
-            props.push(`mobileMenuDirection="${mobileMenuDirection}"`);
-
-        // Generate items array
-        itemsCode.push("const items = [");
-        itemsCode.push(
-            '  { id: "home", label: "Home", icon: <Home />, href: "#home" },'
-        );
-        if (showBadges) {
-            itemsCode.push(
-                '  { id: "users", label: "Users", icon: <Users />, href: "#users", badge: "5" },'
-            );
-        } else {
-            itemsCode.push(
-                '  { id: "users", label: "Users", icon: <Users />, href: "#users" },'
-            );
-        }
-        itemsCode.push(
-            '  { id: "about", label: "About", icon: <HelpCircle />, href: "#about" },'
-        );
-        itemsCode.push('  { id: "divider", type: "divider" },');
-        itemsCode.push(
-            '  { id: "settings", label: "Settings", icon: <Settings />, href: "#settings" }'
-        );
-        itemsCode.push("];");
-
-        const logoCode = showLogo
-            ? '  logo={<div className="font-bold">Logo</div>}'
-            : "";
-        const actionsCode = showActions
-            ? `  actions={
-    <>
-      <Bell className="w-5 h-5" />
-      <User className="w-5 h-5" />
-    </>
-  }`
-            : "";
-
-        const propsString = props.length > 0 ? `\n  ${props.join("\n  ")}` : "";
-        const additionalProps = [logoCode, actionsCode]
-            .filter(Boolean)
-            .join("\n");
-
-        return `${itemsCode.join("\n")}
-
-<Nav
-  items={items}${propsString}${additionalProps ? `\n${additionalProps}` : ""}
-/>`;
-    };
+    const actionElements = (
+        <div className="flex items-center gap-3">
+            <Bell className="w-5 h-5 text-gray-600 cursor-pointer hover:text-gray-900" />
+            <User className="w-5 h-5 text-gray-600 cursor-pointer hover:text-gray-900" />
+        </div>
+    );
 
     return (
-        <SectionLayout hasStickyPreview>
-            {/* ========================================
-          SECTION 1: STICKY LIVE PREVIEW
-      ======================================== */}
-            <section className="sticky top-0 z-15 py-4 bg-gray-50">
-                <Card variant="elevated" padding="lg">
-                    <div className="space-y-4">
-                        {/* Header */}
-                        <div className="flex items-center justify-between pb-3 border-b border-gray-200">
-                            <h2 className="text-lg font-semibold text-gray-900">
-                                Nav Live Preview
-                            </h2>
-                            <button
-                                onClick={() =>
-                                    setShowCodeOverlay(!showCodeOverlay)
-                                }
-                                className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:border-gray-400 transition-colors"
-                                title="View code"
-                            >
-                                <Code2 className="w-3.5 h-3.5" />
-                                Code
-                            </button>
-                        </div>
+        <SectionLayout>
+            <div className="space-y-8">
+                {/* Header */}
+                <div>
+                    <h2 className="text-3xl font-bold text-gray-900">Nav</h2>
+                    <p className="mt-2 text-base text-gray-600">
+                        A versatile navigation component with support for icons,
+                        badges, dividers, and responsive mobile menus.
+                    </p>
+                </div>
 
-                        {/* Preview Content */}
-                        <div className="relative">
-                            <div className="p-6 bg-linear-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
-                                <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                {/* Example 1: Nav Variants */}
+                <Card variant="bordered">
+                    <div className="flex flex-col sm:flex-row gap-6">
+                        {/* Left: Display + Controls */}
+                        <div className="flex-1 min-w-0 space-y-4">
+                            <div className="relative p-6 pb-16 md:pb-6 bg-gray-50 rounded-lg border border-gray-200 overflow-x-auto overflow-y-visible">
+                                <div className="bg-white rounded-lg border border-gray-200">
                                     <Nav
                                         items={navItems}
                                         variant={
-                                            variant as
+                                            variant1 as
                                                 | "primary"
                                                 | "secondary"
-                                                | "outline"
                                                 | "ghost"
-                                        }
-                                        orientation={
-                                            orientation as
-                                                | "horizontal"
-                                                | "vertical"
-                                        }
-                                        size={size as "sm" | "md" | "lg"}
-                                        sticky={sticky}
-                                        mobileMenuDirection={
-                                            mobileMenuDirection as
-                                                | "top"
-                                                | "left"
-                                                | "right"
-                                        }
-                                        logo={
-                                            showLogo ? (
-                                                <div className="font-bold text-lg">
-                                                    Logo
-                                                </div>
-                                            ) : undefined
-                                        }
-                                        actions={
-                                            showActions ? (
-                                                <div className="flex items-center gap-3">
-                                                    <Bell className="w-5 h-5 text-gray-600 cursor-pointer hover:text-gray-900" />
-                                                    <User className="w-5 h-5 text-gray-600 cursor-pointer hover:text-gray-900" />
-                                                </div>
-                                            ) : undefined
                                         }
                                         activeId="home"
                                     />
                                 </div>
                             </div>
 
-                            {/* Code Overlay */}
-                            {showCodeOverlay && (
-                                <>
-                                    {/* Backdrop */}
-                                    <div
-                                        className="fixed inset-0 bg-black/20 z-40"
-                                        onClick={() =>
-                                            setShowCodeOverlay(false)
+                            <RadioGroup
+                                label="Variant"
+                                name="variant1"
+                                value={variant1}
+                                onChange={setVariant1}
+                                orientation="horizontal"
+                                options={[
+                                    { value: "primary", label: "Primary" },
+                                    { value: "secondary", label: "Secondary" },
+                                    { value: "ghost", label: "Ghost" },
+                                ]}
+                            />
+                        </div>
+
+                        {/* Right: Code */}
+                        <div className="flex-1 min-w-0">
+                            <CodeSnippet
+                                language="tsx"
+                                code={`<Nav
+  items={[
+    {
+      id: "home",
+      label: "Home",
+      icon: <Home className="w-4 h-4" />,
+      href: "#home",
+    },
+    {
+      id: "users",
+      label: "Users",
+      icon: <Users className="w-4 h-4" />,
+      href: "#users",
+      badge: "5",
+    },
+    {
+      id: "settings",
+      label: "Settings",
+      icon: <Settings className="w-4 h-4" />,
+      href: "#settings",
+    },
+  ]}
+  variant="${variant1}"
+  activeId="home"
+/>`}
+                            />
+                        </div>
+                    </div>
+                </Card>
+
+                {/* Example 2: Nav Orientation */}
+                <Card variant="bordered">
+                    <div className="flex flex-col sm:flex-row gap-6">
+                        {/* Left: Display + Controls */}
+                        <div className="flex-1 min-w-0 space-y-4">
+                            <div className="relative p-6 pb-16 md:pb-6 bg-gray-50 rounded-lg border border-gray-200 overflow-x-auto overflow-y-visible">
+                                <div className="bg-white rounded-lg border border-gray-200">
+                                    <Nav
+                                        items={navItems}
+                                        orientation={
+                                            orientation2 as
+                                                | "horizontal"
+                                                | "vertical"
                                         }
+                                        activeId="home"
                                     />
-                                    {/* Overlay Card */}
-                                    <div className="absolute top-12 right-0 z-50 w-full max-w-2xl">
-                                        <Card variant="elevated" padding="none">
-                                            <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-                                                <h4 className="text-sm font-semibold text-gray-900">
-                                                    Component Code
-                                                </h4>
-                                                <button
-                                                    onClick={() =>
-                                                        setShowCodeOverlay(
-                                                            false
-                                                        )
-                                                    }
-                                                    className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded transition-colors"
-                                                    title="Close"
-                                                >
-                                                    <span className="text-2xl leading-none">
-                                                        ×
-                                                    </span>
-                                                </button>
-                                            </div>
-                                            <div className="p-4 max-h-[400px] overflow-y-auto">
-                                                <CodeSnippet
-                                                    code={generateCode()}
-                                                />
-                                            </div>
-                                        </Card>
-                                    </div>
-                                </>
-                            )}
+                                </div>
+                            </div>
+
+                            <RadioGroup
+                                label="Orientation"
+                                name="orientation2"
+                                value={orientation2}
+                                onChange={setOrientation2}
+                                orientation="horizontal"
+                                options={[
+                                    {
+                                        value: "horizontal",
+                                        label: "Horizontal",
+                                    },
+                                    { value: "vertical", label: "Vertical" },
+                                ]}
+                            />
+                        </div>
+
+                        {/* Right: Code */}
+                        <div className="flex-1 min-w-0">
+                            <CodeSnippet
+                                language="tsx"
+                                code={`<Nav
+  items={navItems}
+  orientation="${orientation2}"
+  activeId="home"
+/>`}
+                            />
                         </div>
                     </div>
                 </Card>
-            </section>
 
-            {/* ========================================
-          SECTION 2: INTERACTIVE CONTROLS
-      ======================================== */}
-            <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <Settings2 className="w-5 h-5" />
-                    Interactive Controls
-                </h2>
-                <Card variant="elevated" padding="lg">
-                    <div className="space-y-6">
-                        {/* Variant Selection */}
-                        <RadioGroup
-                            label="Variant"
-                            name="variant"
-                            value={variant}
-                            onChange={setVariant}
-                            orientation="horizontal"
-                            options={[
-                                { value: "primary", label: "Primary" },
-                                { value: "secondary", label: "Secondary" },
-                                { value: "outline", label: "Outline" },
-                                { value: "ghost", label: "Ghost" },
-                            ]}
-                        />
+                {/* Example 3: With Logo and Actions */}
+                <Card variant="bordered">
+                    <div className="flex flex-col sm:flex-row gap-6">
+                        {/* Left: Display */}
+                        <div className="flex-1 min-w-0">
+                            <div className="relative p-6 pb-16 md:pb-6 bg-gray-50 rounded-lg border border-gray-200 overflow-x-auto overflow-y-visible">
+                                <div className="bg-white rounded-lg border border-gray-200">
+                                    <Nav
+                                        items={navItems}
+                                        logo={logoElement}
+                                        actions={actionElements}
+                                        activeId="home"
+                                    />
+                                </div>
+                            </div>
+                        </div>
 
-                        {/* Orientation Selection */}
-                        <RadioGroup
-                            label="Orientation"
-                            name="orientation"
-                            value={orientation}
-                            onChange={setOrientation}
-                            orientation="horizontal"
-                            options={[
-                                { value: "horizontal", label: "Horizontal" },
-                                { value: "vertical", label: "Vertical" },
-                            ]}
-                        />
+                        {/* Right: Code */}
+                        <div className="flex-1 min-w-0">
+                            <CodeSnippet
+                                language="tsx"
+                                code={`<Nav
+  items={navItems}
+  logo={
+    <Image
+      src="/yomologic-logo-symbol.png"
+      alt="Yomologic"
+      width={32}
+      height={32}
+      className="w-8 h-8"
+    />
+  }
+  actions={
+    <div className="flex items-center gap-3">
+      <Bell className="w-5 h-5" />
+      <User className="w-5 h-5" />
+    </div>
+  }
+  activeId="home"
+/>`}
+                            />
+                        </div>
+                    </div>
+                </Card>
 
-                        {/* Size Selection */}
-                        <RadioGroup
-                            label="Size"
-                            name="size"
-                            value={size}
-                            onChange={setSize}
-                            orientation="horizontal"
-                            options={[
-                                { value: "xs", label: "Extra Small" },
-                                { value: "sm", label: "Small" },
-                                { value: "md", label: "Medium" },
-                                { value: "lg", label: "Large" },
-                                { value: "xl", label: "Extra Large" },
-                            ]}
-                        />
+                <Divider className="my-12" />
 
-                        {/* Mobile Menu Direction */}
-                        <RadioGroup
-                            label="Mobile Menu Direction"
-                            name="mobileMenuDirection"
-                            value={mobileMenuDirection}
-                            onChange={setMobileMenuDirection}
-                            orientation="horizontal"
-                            options={[
-                                { value: "top", label: "Top (Dropdown)" },
-                                { value: "left", label: "Left (Drawer)" },
-                                { value: "right", label: "Right (Drawer)" },
-                            ]}
-                        />
+                {/* API Reference */}
+                <div>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                        <BookOpen className="w-6 h-6" />
+                        API Reference
+                    </h2>
 
-                        {/* Additional Options */}
-                        <div className="space-y-3 pt-2 border-t border-gray-200">
-                            <h3 className="text-sm font-semibold text-gray-700 mb-2">
-                                Options
+                    <div className="space-y-8">
+                        {/* Nav Props */}
+                        <div>
+                            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                                Nav Props
                             </h3>
-                            <Checkbox
-                                label="Sticky"
-                                checked={sticky}
-                                onChange={setSticky}
-                            />
-                            <Checkbox
-                                label="Show Logo"
-                                checked={showLogo}
-                                onChange={setShowLogo}
-                            />
-                            <Checkbox
-                                label="Show Actions"
-                                checked={showActions}
-                                onChange={setShowActions}
-                            />
-                            <Checkbox
-                                label="Show Badges"
-                                checked={showBadges}
-                                onChange={setShowBadges}
-                            />
+                            <div className="overflow-x-auto">
+                                <table className="w-full border-collapse">
+                                    <thead>
+                                        <tr className="bg-gray-50 border-b-2 border-gray-200">
+                                            <th className="text-left p-3 font-semibold text-gray-900">
+                                                Prop
+                                            </th>
+                                            <th className="text-left p-3 font-semibold text-gray-900">
+                                                Type
+                                            </th>
+                                            <th className="text-left p-3 font-semibold text-gray-900">
+                                                Default
+                                            </th>
+                                            <th className="text-left p-3 font-semibold text-gray-900">
+                                                Description
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-gray-200">
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-blue-600">
+                                                items
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-700">
+                                                NavItem[]
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-600">
+                                                required
+                                            </td>
+                                            <td className="p-3 text-sm text-gray-600">
+                                                Array of navigation items to
+                                                display
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-blue-600">
+                                                variant
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-700">
+                                                &quot;primary&quot; |
+                                                &quot;secondary&quot; |
+                                                &quot;outline&quot; |
+                                                &quot;ghost&quot;
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-600">
+                                                &quot;primary&quot;
+                                            </td>
+                                            <td className="p-3 text-sm text-gray-600">
+                                                Visual style variant
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-blue-600">
+                                                orientation
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-700">
+                                                &quot;horizontal&quot; |
+                                                &quot;vertical&quot;
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-600">
+                                                &quot;horizontal&quot;
+                                            </td>
+                                            <td className="p-3 text-sm text-gray-600">
+                                                Layout direction of navigation
+                                                items
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-blue-600">
+                                                size
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-700">
+                                                &quot;xs&quot; | &quot;sm&quot;
+                                                | &quot;md&quot; |
+                                                &quot;lg&quot; | &quot;xl&quot;
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-600">
+                                                &quot;md&quot;
+                                            </td>
+                                            <td className="p-3 text-sm text-gray-600">
+                                                Size of navigation items
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-blue-600">
+                                                activeId
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-700">
+                                                string
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-600">
+                                                -
+                                            </td>
+                                            <td className="p-3 text-sm text-gray-600">
+                                                ID of the currently active item
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-blue-600">
+                                                logo
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-700">
+                                                React.ReactNode
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-600">
+                                                -
+                                            </td>
+                                            <td className="p-3 text-sm text-gray-600">
+                                                Logo element to display
+                                                (typically on the left)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-blue-600">
+                                                actions
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-700">
+                                                React.ReactNode
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-600">
+                                                -
+                                            </td>
+                                            <td className="p-3 text-sm text-gray-600">
+                                                Action elements to display
+                                                (typically on the right)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-blue-600">
+                                                sticky
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-700">
+                                                boolean
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-600">
+                                                false
+                                            </td>
+                                            <td className="p-3 text-sm text-gray-600">
+                                                Whether the nav should stick to
+                                                the top on scroll
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-blue-600">
+                                                mobileMenuDirection
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-700">
+                                                &quot;top&quot; |
+                                                &quot;left&quot; |
+                                                &quot;right&quot;
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-600">
+                                                &quot;top&quot;
+                                            </td>
+                                            <td className="p-3 text-sm text-gray-600">
+                                                Direction for mobile menu
+                                                (dropdown or drawer)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-blue-600">
+                                                className
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-700">
+                                                string
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-600">
+                                                -
+                                            </td>
+                                            <td className="p-3 text-sm text-gray-600">
+                                                Additional CSS classes
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        {/* NavItem Interface */}
+                        <div>
+                            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                                NavItem Interface
+                            </h3>
+                            <div className="overflow-x-auto">
+                                <table className="w-full border-collapse">
+                                    <thead>
+                                        <tr className="bg-gray-50 border-b-2 border-gray-200">
+                                            <th className="text-left p-3 font-semibold text-gray-900">
+                                                Property
+                                            </th>
+                                            <th className="text-left p-3 font-semibold text-gray-900">
+                                                Type
+                                            </th>
+                                            <th className="text-left p-3 font-semibold text-gray-900">
+                                                Required
+                                            </th>
+                                            <th className="text-left p-3 font-semibold text-gray-900">
+                                                Description
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-gray-200">
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-blue-600">
+                                                id
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-700">
+                                                string
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-600">
+                                                Yes
+                                            </td>
+                                            <td className="p-3 text-sm text-gray-600">
+                                                Unique identifier for the item
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-blue-600">
+                                                label
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-700">
+                                                string
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-600">
+                                                No
+                                            </td>
+                                            <td className="p-3 text-sm text-gray-600">
+                                                Display text for the item
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-blue-600">
+                                                type
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-700">
+                                                &quot;link&quot; |
+                                                &quot;divider&quot;
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-600">
+                                                No
+                                            </td>
+                                            <td className="p-3 text-sm text-gray-600">
+                                                Type of item (link by default,
+                                                or divider)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-blue-600">
+                                                href
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-700">
+                                                string
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-600">
+                                                No
+                                            </td>
+                                            <td className="p-3 text-sm text-gray-600">
+                                                URL to navigate to when clicked
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-blue-600">
+                                                onClick
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-700">
+                                                function
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-600">
+                                                No
+                                            </td>
+                                            <td className="p-3 text-sm text-gray-600">
+                                                Click handler function
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-blue-600">
+                                                icon
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-700">
+                                                React.ReactNode
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-600">
+                                                No
+                                            </td>
+                                            <td className="p-3 text-sm text-gray-600">
+                                                Icon element to display
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-blue-600">
+                                                badge
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-700">
+                                                string | number
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-600">
+                                                No
+                                            </td>
+                                            <td className="p-3 text-sm text-gray-600">
+                                                Badge content to display
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-blue-600">
+                                                disabled
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-700">
+                                                boolean
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-600">
+                                                No
+                                            </td>
+                                            <td className="p-3 text-sm text-gray-600">
+                                                Whether the item is disabled
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-blue-600">
+                                                target
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-700">
+                                                string
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-600">
+                                                No
+                                            </td>
+                                            <td className="p-3 text-sm text-gray-600">
+                                                Link target attribute (e.g.,
+                                                _blank)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-blue-600">
+                                                children
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-700">
+                                                NavItem[]
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-600">
+                                                No
+                                            </td>
+                                            <td className="p-3 text-sm text-gray-600">
+                                                Nested child items for dropdown
+                                                menus
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-blue-600">
+                                                render
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-700">
+                                                function
+                                            </td>
+                                            <td className="p-3 font-mono text-sm text-gray-600">
+                                                No
+                                            </td>
+                                            <td className="p-3 text-sm text-gray-600">
+                                                Custom render function for the
+                                                item
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </Card>
-            </section>
-
-            {/* ========================================
-          SECTION 3: API REFERENCE
-      ======================================== */}
-            <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <BookOpen className="w-5 h-5" />
-                    API Reference
-                </h2>
-                <Card variant="elevated" padding="none">
-                    <div className="overflow-x-auto">
-                        <table className="w-full">
-                            <thead className="bg-gray-50 border-b border-gray-200">
-                                <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                        Prop
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                        Type
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                        Default
-                                    </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                        Description
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                        items
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                        NavItem[]
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                                        required
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
-                                        Array of navigation items to display
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                        variant
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                        &quot;horizontal&quot; |
-                                        &quot;vertical&quot; | &quot;pills&quot;
-                                        | &quot;underline&quot;
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                                        &quot;horizontal&quot;
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
-                                        Visual style variant of the navigation
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                        size
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                        &quot;sm&quot; | &quot;md&quot; |
-                                        &quot;lg&quot;
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                                        &quot;md&quot;
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
-                                        Size of navigation items (padding and
-                                        font-size)
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                        mobileBreakpoint
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                        &quot;sm&quot; | &quot;md&quot; |
-                                        &quot;lg&quot;
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                                        &quot;md&quot;
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
-                                        Breakpoint at which mobile menu is
-                                        activated
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                        mobileMenuDirection
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                        &quot;top&quot; | &quot;left&quot; |
-                                        &quot;right&quot;
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                                        &quot;top&quot;
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
-                                        Direction from which mobile menu slides
-                                        in
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                        logo
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                        ReactNode
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                                        undefined
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
-                                        Logo element to display on the left
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                        actions
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                        ReactNode
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                                        undefined
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
-                                        Action elements to display on the right
-                                        (e.g., icons, buttons)
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                        sticky
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                        boolean
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                                        false
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
-                                        Whether navigation sticks to top on
-                                        scroll
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                        activeId
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                        string
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                                        undefined
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
-                                        ID of the currently active navigation
-                                        item
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                        onItemClick
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                        (item: NavItem) =&gt; void
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                                        undefined
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
-                                        Callback when a navigation item is
-                                        clicked
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                        className
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                        string
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
-                                        undefined
-                                    </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
-                                        Additional CSS classes
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </Card>
-
-                {/* NavItem Interface */}
-                <div className="mt-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                        NavItem Interface
-                    </h3>
-                    <Card variant="elevated" padding="none">
-                        <div className="overflow-x-auto">
-                            <table className="w-full">
-                                <thead className="bg-gray-50 border-b border-gray-200">
-                                    <tr>
-                                        <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                            Property
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                            Type
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                            Required
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                                            Description
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
-                                    <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                            id
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                            string
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600">
-                                            Yes
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-700">
-                                            Unique identifier for the item
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                            label
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                            string
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600">
-                                            Yes
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-700">
-                                            Display text for the item
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                            type
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                            &quot;link&quot; |
-                                            &quot;button&quot; |
-                                            &quot;dropdown&quot; |
-                                            &quot;divider&quot; |
-                                            &quot;custom&quot;
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600">
-                                            No
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-700">
-                                            Type of navigation item (default:
-                                            &quot;button&quot;)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                            href
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                            string
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600">
-                                            No
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-700">
-                                            URL for link items
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                            onClick
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                            () =&gt; void
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600">
-                                            No
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-700">
-                                            Click handler for the item
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                            icon
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                            ReactNode
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600">
-                                            No
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-700">
-                                            Icon element to display before label
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                            badge
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                            string | number
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600">
-                                            No
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-700">
-                                            Badge content (e.g., notification
-                                            count)
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                            disabled
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                            boolean
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600">
-                                            No
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-700">
-                                            Whether the item is disabled
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                            target
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                            &quot;_blank&quot; |
-                                            &quot;_self&quot;
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600">
-                                            No
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-700">
-                                            Link target for link items
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                            children
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                            NavItem[]
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600">
-                                            No
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-700">
-                                            Child items for dropdown menus
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
-                                            render
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                            () =&gt; ReactNode
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600">
-                                            No
-                                        </td>
-                                        <td className="px-6 py-4 text-sm text-gray-700">
-                                            Custom render function for custom
-                                            type items
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </Card>
                 </div>
-            </section>
+            </div>
         </SectionLayout>
     );
 }

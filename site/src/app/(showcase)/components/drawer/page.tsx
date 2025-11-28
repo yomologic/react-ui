@@ -1,28 +1,23 @@
 "use client";
 
-import { Card, RadioGroup, Checkbox, CodeSnippet } from "@yomologic/react-ui";
-import { SectionLayout, DrawerNavSection } from "@yomologic/react-ui";
-import { useTheme } from "@yomologic/react-ui";
-import type { DensityLevel } from "@yomologic/react-ui";
-import { Settings2, Code2, BookOpen, LayoutDashboard } from "lucide-react";
+import {
+    Card,
+    RadioGroup,
+    Checkbox,
+    CodeSnippet,
+    Divider,
+    SectionLayout,
+    DrawerNavSection,
+} from "@yomologic/react-ui";
+import { BookOpen, LayoutDashboard, Settings, Home } from "lucide-react";
 import { useState } from "react";
 
 export default function DrawerPage() {
-    const { theme, setTheme } = useTheme();
-
     // State for component props
-    const [position, setPosition] = useState<string>("right");
+    const [position, setPosition] = useState<"left" | "right">("right");
     const [showTitle, setShowTitle] = useState(true);
     const [showSubtitle, setShowSubtitle] = useState(true);
     const [showHomeUrl, setShowHomeUrl] = useState(true);
-    const [showCodeOverlay, setShowCodeOverlay] = useState(false);
-    const [density, setDensity] = useState<DensityLevel>(theme.density);
-
-    const handleDensityChange = (newDensity: string) => {
-        const densityLevel = newDensity as DensityLevel;
-        setDensity(densityLevel);
-        setTheme({ ...theme, density: densityLevel });
-    };
 
     // Mock navigation sections
     const navSections: DrawerNavSection[] = [
@@ -34,12 +29,22 @@ export default function DrawerPage() {
                     label: "Dashboard",
                     icon: <LayoutDashboard className="w-5 h-5" />,
                 },
-                { id: "analytics", label: "Analytics" },
+                {
+                    id: "analytics",
+                    label: "Analytics",
+                    icon: <Home className="w-5 h-5" />,
+                },
             ],
         },
         {
             title: "Settings",
-            items: [{ id: "profile", label: "Profile" }],
+            items: [
+                {
+                    id: "profile",
+                    label: "Profile",
+                    icon: <Settings className="w-5 h-5" />,
+                },
+            ],
         },
     ];
 
@@ -47,391 +52,291 @@ export default function DrawerPage() {
     const generateCode = () => {
         const props: string[] = [];
 
-        if (showTitle) props.push('title="Application Menu"');
-        if (showSubtitle) props.push('subtitle="Navigation"');
-        if (position !== "right") props.push(`position="${position}"`);
-        if (showHomeUrl) props.push('homeUrl="/"');
+        if (showTitle) props.push('  title="Application Menu"');
+        if (showSubtitle) props.push('  subtitle="Navigation"');
+        if (position !== "right") props.push(`  position="${position}"`);
+        if (showHomeUrl) props.push('  homeUrl="/"');
 
-        props.push("sections={sections}");
-        props.push('activeItem="dashboard"');
-        props.push("onItemClick={(id) => console.log(id)}");
+        props.push("  sections={sections}");
+        props.push('  activeItem="dashboard"');
+        props.push("  onItemClick={(id) => console.log(id)}");
 
-        const propsString = props.join("\n  ");
-
-        const sectionsCode = `const sections: DrawerNavSection[] = [
+        return `const sections: DrawerNavSection[] = [
   {
     title: "Main",
     items: [
       { id: "dashboard", label: "Dashboard", icon: <Icon /> },
-      { id: "analytics", label: "Analytics" },
+      { id: "analytics", label: "Analytics", icon: <Icon /> },
     ],
   },
   {
     title: "Settings",
     items: [
-      { id: "profile", label: "Profile" },
+      { id: "profile", label: "Profile", icon: <Icon /> },
     ],
   },
-];`;
+];
 
-        const densityNote =
-            density !== "standard"
-                ? `\n// Note: Density is controlled via theme.density = "${density}"\n// Set in ThemeProvider or via setTheme({ ...theme, density: "${density}" })\n\n`
-                : "\n";
-
-        return `${sectionsCode}${densityNote}<Drawer\n  ${propsString}\n/>`;
+<Drawer
+${props.join("\n")}
+/>`;
     };
 
     return (
-        <SectionLayout hasStickyPreview>
+        <SectionLayout>
             {/* ========================================
-          SECTION 1: STICKY LIVE PREVIEW
+          SECTION 1: COMPONENT EXAMPLES
       ======================================== */}
-            <section className="sticky top-0 z-15 py-4 bg-gray-50">
-                <Card variant="elevated" padding="lg">
-                    <div className="space-y-4">
-                        {/* Header */}
-                        <div className="flex items-center justify-between pb-3 border-b border-gray-200">
-                            <h2 className="text-lg font-semibold text-gray-900">
-                                Drawer Live Preview
-                            </h2>
-                            <button
-                                onClick={() =>
-                                    setShowCodeOverlay(!showCodeOverlay)
-                                }
-                                className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:border-gray-400 transition-colors"
-                                title="View code"
-                            >
-                                <Code2 className="w-3.5 h-3.5" />
-                                Code
-                            </button>
-                        </div>
+            <section>
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                    Drawer
+                </h2>
+                <div className="space-y-6">
+                    {/* Interactive Example */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Interactive Drawer Preview
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Configure the drawer and see a side-by-side
+                                preview. The drawer is shown with main content
+                                to demonstrate the layout.
+                            </p>
 
-                        {/* Preview Content */}
-                        <div className="relative">
-                            <div className="p-4 bg-linear-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
-                                <div
-                                    className="bg-white rounded-lg border border-gray-200 overflow-hidden flex"
-                                    style={{ height: "350px" }}
-                                >
-                                    {/* Drawer Panel */}
-                                    <div
-                                        className={`w-64 bg-white border-gray-200 flex flex-col shrink-0 ${
-                                            position === "right"
-                                                ? "order-2 border-l"
-                                                : "order-1 border-r"
-                                        }`}
-                                    >
-                                        {/* Header */}
-                                        <div className="p-4 border-b border-gray-200">
-                                            <div className="flex items-center justify-between gap-2">
-                                                <div>
-                                                    {showTitle && (
-                                                        <h2 className="text-lg font-semibold text-gray-900">
-                                                            Application Menu
-                                                        </h2>
-                                                    )}
-                                                    {showSubtitle && (
-                                                        <p className="text-sm text-gray-500">
-                                                            Navigation
-                                                        </p>
-                                                    )}
-                                                </div>
-                                                {showHomeUrl && (
-                                                    <div className="flex items-center gap-2">
-                                                        <button
-                                                            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-                                                            title="Home button"
-                                                        >
-                                                            <svg
-                                                                className="w-5 h-5 text-gray-700"
-                                                                fill="none"
-                                                                stroke="currentColor"
-                                                                viewBox="0 0 24 24"
-                                                            >
-                                                                <path
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                    strokeWidth={
-                                                                        2
-                                                                    }
-                                                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                                                                />
-                                                            </svg>
-                                                        </button>
-                                                        <button className="p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                                                            <svg
-                                                                className="w-6 h-6 text-gray-700"
-                                                                fill="none"
-                                                                stroke="currentColor"
-                                                                viewBox="0 0 24 24"
-                                                            >
-                                                                <path
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                    strokeWidth={
-                                                                        2
-                                                                    }
-                                                                    d="M4 6h16M4 12h16M4 18h16"
-                                                                />
-                                                            </svg>
-                                                        </button>
+                            {/* Two-column layout: component + code */}
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                {/* Left: Display FIRST, then Controls */}
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        {/* 1. Component Display - FIRST */}
+                                        <div className="p-4 bg-linear-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
+                                            <div
+                                                className="bg-white rounded-lg border border-gray-200 overflow-hidden flex"
+                                                style={{ height: "400px" }}
+                                            >
+                                                {/* Drawer Panel */}
+                                                <div
+                                                    className={`w-64 bg-white border-gray-200 flex flex-col shrink-0 ${
+                                                        position === "right"
+                                                            ? "order-2 border-l"
+                                                            : "order-1 border-r"
+                                                    }`}
+                                                >
+                                                    {/* Header */}
+                                                    <div className="px-6 py-5 border-b border-gray-200 bg-linear-to-b from-gray-50 to-white">
+                                                        <div className="flex items-center justify-between gap-2">
+                                                            <div>
+                                                                {showTitle && (
+                                                                    <h2 className="text-lg font-semibold text-gray-900">
+                                                                        Application
+                                                                        Menu
+                                                                    </h2>
+                                                                )}
+                                                                {showSubtitle && (
+                                                                    <p className="text-sm text-gray-600">
+                                                                        Navigation
+                                                                    </p>
+                                                                )}
+                                                            </div>
+                                                            {showHomeUrl && (
+                                                                <button
+                                                                    className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                                                                    title="Home"
+                                                                >
+                                                                    <Home className="w-5 h-5 text-gray-700" />
+                                                                </button>
+                                                            )}
+                                                        </div>
                                                     </div>
-                                                )}
+
+                                                    {/* Navigation */}
+                                                    <div className="flex-1 overflow-y-auto px-3 py-4">
+                                                        {navSections.map(
+                                                            (section, idx) => (
+                                                                <div
+                                                                    key={idx}
+                                                                    style={{
+                                                                        paddingTop:
+                                                                            idx >
+                                                                            0
+                                                                                ? "1rem"
+                                                                                : "0",
+                                                                    }}
+                                                                >
+                                                                    {section.title && (
+                                                                        <h3
+                                                                            className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                                                                            style={{
+                                                                                marginBottom:
+                                                                                    "0.5rem",
+                                                                            }}
+                                                                        >
+                                                                            {
+                                                                                section.title
+                                                                            }
+                                                                        </h3>
+                                                                    )}
+                                                                    <ul
+                                                                        style={{
+                                                                            display:
+                                                                                "flex",
+                                                                            flexDirection:
+                                                                                "column",
+                                                                            gap: "0.25rem",
+                                                                        }}
+                                                                    >
+                                                                        {section.items.map(
+                                                                            (
+                                                                                item
+                                                                            ) => (
+                                                                                <li
+                                                                                    key={
+                                                                                        item.id
+                                                                                    }
+                                                                                >
+                                                                                    <button
+                                                                                        className={`w-full flex items-center gap-3 rounded-lg font-medium transition-all duration-200 ${
+                                                                                            item.id ===
+                                                                                            "dashboard"
+                                                                                                ? "bg-blue-50 text-blue-700 shadow-sm"
+                                                                                                : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                                                                        }`}
+                                                                                        style={{
+                                                                                            paddingLeft:
+                                                                                                "1rem",
+                                                                                            paddingRight:
+                                                                                                "1rem",
+                                                                                            paddingTop:
+                                                                                                "0.625rem",
+                                                                                            paddingBottom:
+                                                                                                "0.625rem",
+                                                                                            fontSize:
+                                                                                                "0.875rem",
+                                                                                            borderRadius:
+                                                                                                "0.5rem",
+                                                                                        }}
+                                                                                    >
+                                                                                        {item.icon && (
+                                                                                            <span className="shrink-0 opacity-75">
+                                                                                                {
+                                                                                                    item.icon
+                                                                                                }
+                                                                                            </span>
+                                                                                        )}
+                                                                                        <span>
+                                                                                            {
+                                                                                                item.label
+                                                                                            }
+                                                                                        </span>
+                                                                                    </button>
+                                                                                </li>
+                                                                            )
+                                                                        )}
+                                                                    </ul>
+                                                                </div>
+                                                            )
+                                                        )}
+                                                    </div>
+                                                </div>
+
+                                                {/* Main Content Area */}
+                                                <div
+                                                    className={`flex-1 p-6 bg-gray-50 overflow-auto ${
+                                                        position === "right"
+                                                            ? "order-1"
+                                                            : "order-2"
+                                                    }`}
+                                                >
+                                                    <h1 className="text-xl font-bold text-gray-900 mb-3">
+                                                        Dashboard Preview
+                                                    </h1>
+                                                    <p className="text-gray-600 text-sm mb-4">
+                                                        The drawer is on the{" "}
+                                                        <span className="font-semibold text-blue-600">
+                                                            {position}
+                                                        </span>{" "}
+                                                        side.
+                                                    </p>
+                                                    <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
+                                                        <h3 className="font-semibold text-gray-900 mb-1 text-sm">
+                                                            Interactive Preview
+                                                        </h3>
+                                                        <p className="text-xs text-gray-600">
+                                                            This shows the
+                                                            Drawer component
+                                                            with content side by
+                                                            side.
+                                                        </p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
-                                        {/* Navigation */}
-                                        <div className="flex-1 overflow-y-auto">
-                                            {navSections.map((section, idx) => (
-                                                <div
-                                                    key={idx}
-                                                    style={{
-                                                        paddingTop:
-                                                            idx > 0
-                                                                ? theme
-                                                                      .components
-                                                                      .drawer
-                                                                      .sectionPadding[
-                                                                      density
-                                                                  ].y
-                                                                : "0",
-                                                    }}
-                                                >
-                                                    {section.title && (
-                                                        <h3
-                                                            className="px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider"
-                                                            style={{
-                                                                marginBottom:
-                                                                    theme
-                                                                        .components
-                                                                        .drawer
-                                                                        .titleMarginBottom[
-                                                                        density
-                                                                    ],
-                                                            }}
-                                                        >
-                                                            {section.title}
-                                                        </h3>
-                                                    )}
-                                                    <nav
-                                                        style={{
-                                                            display: "flex",
-                                                            flexDirection:
-                                                                "column",
-                                                            gap: theme
-                                                                .components
-                                                                .drawer
-                                                                .itemSpacing[
-                                                                density
-                                                            ],
-                                                        }}
-                                                    >
-                                                        {section.items.map(
-                                                            (item) => (
-                                                                <button
-                                                                    key={
-                                                                        item.id
-                                                                    }
-                                                                    onClick={() => {
-                                                                        // Demo click handler
-                                                                    }}
-                                                                    className={`w-full flex items-center gap-3 rounded-lg font-medium transition-colors ${
-                                                                        item.id ===
-                                                                        "dashboard"
-                                                                            ? "bg-blue-50 text-blue-700"
-                                                                            : "text-gray-700 hover:bg-gray-50"
-                                                                    }`}
-                                                                    style={{
-                                                                        paddingLeft:
-                                                                            theme
-                                                                                .components
-                                                                                .drawer
-                                                                                .itemPadding[
-                                                                                density
-                                                                            ].x,
-                                                                        paddingRight:
-                                                                            theme
-                                                                                .components
-                                                                                .drawer
-                                                                                .itemPadding[
-                                                                                density
-                                                                            ].x,
-                                                                        paddingTop:
-                                                                            theme
-                                                                                .components
-                                                                                .drawer
-                                                                                .itemPadding[
-                                                                                density
-                                                                            ].y,
-                                                                        paddingBottom:
-                                                                            theme
-                                                                                .components
-                                                                                .drawer
-                                                                                .itemPadding[
-                                                                                density
-                                                                            ].y,
-                                                                        fontSize:
-                                                                            theme
-                                                                                .components
-                                                                                .drawer
-                                                                                .fontSize,
-                                                                        borderRadius:
-                                                                            theme
-                                                                                .components
-                                                                                .drawer
-                                                                                .borderRadius,
-                                                                    }}
-                                                                >
-                                                                    {item.icon}
-                                                                    {item.label}
-                                                                </button>
-                                                            )
-                                                        )}
-                                                    </nav>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
+                                        {/* 2. Controls - SECOND */}
+                                        <div className="space-y-4">
+                                            <RadioGroup
+                                                label="Position"
+                                                name="position"
+                                                value={position}
+                                                onChange={(value) =>
+                                                    setPosition(
+                                                        value as
+                                                            | "left"
+                                                            | "right"
+                                                    )
+                                                }
+                                                orientation="horizontal"
+                                                options={[
+                                                    {
+                                                        value: "left",
+                                                        label: "Left",
+                                                    },
+                                                    {
+                                                        value: "right",
+                                                        label: "Right",
+                                                    },
+                                                ]}
+                                            />
 
-                                    {/* Main Content Area */}
-                                    <div
-                                        className={`flex-1 p-6 bg-gray-50 overflow-auto ${
-                                            position === "right"
-                                                ? "order-1"
-                                                : "order-2"
-                                        }`}
-                                    >
-                                        <h1 className="text-xl font-bold text-gray-900 mb-3">
-                                            Dashboard Preview
-                                        </h1>
-                                        <p className="text-gray-600 text-sm mb-4">
-                                            The drawer is on the{" "}
-                                            <span className="font-semibold text-blue-600">
-                                                {position}
-                                            </span>{" "}
-                                            side. Use controls below to toggle
-                                            options.
-                                        </p>
-                                        <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-                                            <h3 className="font-semibold text-gray-900 mb-1 text-sm">
-                                                Interactive Preview
-                                            </h3>
-                                            <p className="text-xs text-gray-600">
-                                                This shows the Drawer component
-                                                with your content side by side.
-                                            </p>
+                                            <div className="flex flex-col gap-3 pt-2 border-t border-gray-200">
+                                                <Checkbox
+                                                    label="Show title"
+                                                    checked={showTitle}
+                                                    onChange={setShowTitle}
+                                                />
+                                                <Checkbox
+                                                    label="Show subtitle"
+                                                    checked={showSubtitle}
+                                                    onChange={setShowSubtitle}
+                                                />
+                                                <Checkbox
+                                                    label="Show home button (mobile)"
+                                                    checked={showHomeUrl}
+                                                    onChange={setShowHomeUrl}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Code Overlay */}
-                            {showCodeOverlay && (
-                                <>
-                                    {/* Backdrop */}
-                                    <div
-                                        className="fixed inset-0 bg-black/20 z-40"
-                                        onClick={() =>
-                                            setShowCodeOverlay(false)
-                                        }
+                                {/* 3. Code Snippet - THIRD (Right side) */}
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={generateCode()}
                                     />
-                                    {/* Overlay Card */}
-                                    <div className="absolute top-12 right-0 z-50 w-full max-w-2xl">
-                                        <Card variant="elevated" padding="none">
-                                            <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-                                                <h4 className="text-sm font-semibold text-gray-900">
-                                                    Component Code
-                                                </h4>
-                                                <button
-                                                    onClick={() =>
-                                                        setShowCodeOverlay(
-                                                            false
-                                                        )
-                                                    }
-                                                    className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded transition-colors"
-                                                    title="Close"
-                                                >
-                                                    <span className="text-2xl leading-none">
-                                                        ×
-                                                    </span>
-                                                </button>
-                                            </div>
-                                            <div className="p-4 max-h-[400px] overflow-y-auto">
-                                                <CodeSnippet
-                                                    code={generateCode()}
-                                                />
-                                            </div>
-                                        </Card>
-                                    </div>
-                                </>
-                            )}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </Card>
+                    </Card>
+                </div>
             </section>
 
-            {/* ========================================
-          SECTION 2: INTERACTIVE CONTROLS
-      ======================================== */}
-            <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <Settings2 className="w-5 h-5" />
-                    Interactive Controls
-                </h2>
-                <Card variant="elevated" padding="lg">
-                    <div className="space-y-6">
-                        {/* Position Selection */}
-                        <RadioGroup
-                            label="Position"
-                            name="position"
-                            value={position}
-                            onChange={setPosition}
-                            orientation="horizontal"
-                            options={[
-                                { value: "left", label: "Left" },
-                                { value: "right", label: "Right" },
-                            ]}
-                        />
-
-                        {/* Density Selection */}
-                        <RadioGroup
-                            label="Density"
-                            name="density"
-                            value={density}
-                            onChange={handleDensityChange}
-                            orientation="horizontal"
-                            options={[
-                                { value: "comfortable", label: "Comfortable" },
-                                { value: "standard", label: "Standard" },
-                                { value: "compact", label: "Compact" },
-                            ]}
-                        />
-
-                        {/* Additional Options */}
-                        <div className="flex flex-col gap-3 pt-2 border-t border-gray-200">
-                            <Checkbox
-                                label="Show title"
-                                checked={showTitle}
-                                onChange={setShowTitle}
-                            />
-                            <Checkbox
-                                label="Show subtitle"
-                                checked={showSubtitle}
-                                onChange={setShowSubtitle}
-                            />
-                            <Checkbox
-                                label="Show home button (mobile)"
-                                checked={showHomeUrl}
-                                onChange={setShowHomeUrl}
-                            />
-                        </div>
-                    </div>
-                </Card>
-            </section>
+            <Divider className="my-12" />
 
             {/* ========================================
-          SECTION 3: API DOCUMENTATION
+          SECTION 2: API REFERENCE
       ======================================== */}
             <section>
                 <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
@@ -548,6 +453,21 @@ export default function DrawerPage() {
                                 </tr>
                                 <tr>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                        homeUrl
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                        string
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                        undefined
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                        Optional URL for the home button (mobile
+                                        only)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
                                         autoHideOnScroll
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-600 font-mono">
@@ -565,76 +485,6 @@ export default function DrawerPage() {
                         </table>
                     </div>
                 </Card>
-            </section>
-
-            {/* ========================================
-          SECTION 4: USAGE EXAMPLES
-      ======================================== */}
-            <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                    Usage Examples
-                </h2>
-                <div className="space-y-4">
-                    <Card variant="elevated" padding="lg">
-                        <h3 className="text-sm font-semibold text-gray-900 mb-3">
-                            Basic Usage
-                        </h3>
-                        <CodeSnippet
-                            code={`const sections: DrawerNavSection[] = [
-  {
-    title: "Main",
-    items: [
-      { id: "home", label: "Home" },
-      { id: "about", label: "About" },
-    ],
-  },
-];
-
-<Drawer
-  title="My App"
-  sections={sections}
-  activeItem="home"
-  onItemClick={(id) => console.log(id)}
-/>`}
-                        />
-                    </Card>
-
-                    <Card variant="elevated" padding="lg">
-                        <h3 className="text-sm font-semibold text-gray-900 mb-3">
-                            With Icons and Position
-                        </h3>
-                        <CodeSnippet
-                            code={`import { Home, Settings } from "lucide-react";
-
-const sections: DrawerNavSection[] = [
-  {
-    title: "Navigation",
-    items: [
-      { 
-        id: "home", 
-        label: "Home",
-        icon: <Home className="w-5 h-5" />
-      },
-      { 
-        id: "settings", 
-        label: "Settings",
-        icon: <Settings className="w-5 h-5" />
-      },
-    ],
-  },
-];
-
-<Drawer
-  title="My App"
-  subtitle="v1.0.0"
-  sections={sections}
-  position="right"
-  activeItem="home"
-  onItemClick={handleNavigation}
-/>`}
-                        />
-                    </Card>
-                </div>
             </section>
         </SectionLayout>
     );

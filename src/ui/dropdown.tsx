@@ -190,7 +190,7 @@ export function Dropdown({
                 {/* Dropdown Menu */}
                 {isOpen && !disabled && (
                     <div
-                        className="absolute z-50 w-full mt-1 bg-white border border-gray-400 rounded-lg shadow-lg max-h-60 overflow-auto"
+                        className="absolute [z-index:var(--z-index-dropdown)] w-full mt-1 bg-white border border-gray-400 rounded-lg shadow-lg max-h-60 overflow-auto"
                         role="listbox"
                     >
                         {children ? (

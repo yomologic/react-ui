@@ -2,21 +2,22 @@
 
 ## Design Philosophy
 
-The theme system is designed with **two separate use cases**:
+The theme system uses **CSS variables** for maximum simplicity and flexibility:
 
-### 1. Production Use (Build-time CSS)
+### 1. Production Use (Static CSS)
 
-- Components ship with **static CSS** - no runtime theming overhead
-- Themes are applied at **build time** via Tailwind
-- Fast, predictable, no JavaScript required for styling
-- No flash of unstyled content
+- Components use CSS variables defined in `styles.css`
+- No JavaScript required for styling
+- Fast, predictable, zero runtime overhead
+- Users can override variables by importing their own CSS file
 
-### 2. Development/Showcase (Runtime Theming)
+### 2. Theme Builder (Showcase Only)
 
-- **Showcase site only** uses `ThemeProvider` for live preview
-- **Theme Builder** allows interactive customization
-- Changes apply instantly for testing
-- Export themes as static CSS or Tailwind config
+- **Showcase site** has a minimal `ThemeProvider` for live preview
+- **Theme Builder** allows interactive CSS variable editing
+- Changes apply instantly via `document.documentElement.style.setProperty()`
+- Export themes as pure CSS files (no JSON, no build step)
+- **Not exported from library** - only for internal showcase use
 
 ---
 
@@ -26,28 +27,25 @@ The theme system is designed with **two separate use cases**:
 react-ui/
 ├── src/
 │   ├── styles/
-│   │   ├── themes/
-│   │   │   ├── default.json          # Base theme definition
-│   │   │   ├── dark.json             # Dark theme
-│   │   │   └── custom-*.json         # User-generated themes
-│   │   ├── base.css                  # Core component styles (semantic colors)
-│   │   └── themes.css                # Build-time theme generation
+│   │   └── styles.css                # All CSS variables defined here
 │   │
-│   ├── shared/contexts/
-│   │   └── ThemeContext.tsx          # Runtime theme switching (showcase only)
-│   │
-│   └── scripts/
-│       ├── generate-theme-css.ts     # Build script: JSON → CSS
-│       └── generate-tailwind-config.ts # Build script: JSON → Tailwind config
+│   └── ui/                           # Components use CSS variables
+│       ├── button.tsx
+│       ├── card.tsx
+│       └── ...
 │
 └── site/                             # Showcase site
-    ├── src/app/
-    │   ├── globals.css               # @utility definitions for Tailwind v4
-    │   └── layout.tsx                # Wraps with ThemeProvider (showcase only)
-    │
-    └── (showcase)/
-        └── theme-builder/            # Interactive theme editor
-            └── page.tsx
+    ├── src/
+    │   ├── contexts/
+    │   │   └── ThemeContext.tsx      # Minimal helper for Theme Builder
+    │   │
+    │   └── app/
+    │       ├── globals.css           # Imports library styles
+    │       ├── layout.tsx            # Wraps with ThemeProvider
+    │       │
+    │       └── (showcase)/
+    │           └── theme-builder/    # Interactive CSS variable editor
+    │               └── page.tsx
 ```
 
 ---
@@ -59,251 +57,185 @@ react-ui/
 ```tsx
 // No ThemeProvider needed!
 import { Button, Dialog, Alert } from "@yomologic/react-ui";
-import "@yomologic/react-ui/styles.css"; // Pre-built CSS with default theme
+import "@yomologic/react-ui/styles.css"; // Includes default CSS variables
 
 function App() {
-  return <Button variant="info">Click me</Button>;
+    return <Button variant="info">Click me</Button>;
 }
 ```
 
 **Customizing Theme:**
 
-Option A: Use a pre-built theme
+Create a CSS file that overrides CSS variables:
 
-```tsx
-import "@yomologic/react-ui/themes/dark.css"; // Pre-built dark theme
+```css
+/* my-theme.css */
+:root {
+    --color-primary: #ff0000;
+    --color-secondary: #00ff00;
+    --spacing-md: 1rem;
+    /* Override any CSS variable */
+}
 ```
 
-Option B: Generate custom theme at build time
+Then import after the library styles:
 
-```bash
-# Generate CSS from your theme JSON
-npx @yomologic/react-ui generate-theme ./my-theme.json
-
-# Then import it
-import './my-theme.css';
+```tsx
+import "@yomologic/react-ui/styles.css";
+import "./my-theme.css"; // Your overrides
 ```
 
 ### For Showcase Site (Development)
 
 ```tsx
-// Showcase uses ThemeProvider for live preview
-import { ThemeProvider } from "@yomologic/react-ui";
+// Showcase uses minimal ThemeProvider for live preview only
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
 export default function ShowcaseLayout({ children }) {
-  return <ThemeProvider>{children}</ThemeProvider>;
+    return <ThemeProvider>{children}</ThemeProvider>;
 }
 ```
 
 ---
 
-## Implementation Plan
+## Implementation Details
 
-### Phase 1: Component CSS (Semantic Colors)
+### Component Styling
 
-**File: `src/styles/base.css`**
+Components use CSS variables directly:
 
-```css
-/* Semantic color utilities using CSS variables */
-/* These reference variables defined in theme CSS */
-
-.bg-info-muted {
-  background-color: var(--color-info-muted);
-}
-
-.text-info-muted-foreground {
-  color: var(--color-info-muted-foreground);
-}
-
-/* ... all semantic color utilities */
+```tsx
+// button.tsx
+<button
+    className={cn(
+        "bg-[var(--color-primary)]",
+        "text-[var(--color-primary-foreground)]",
+        "px-[var(--spacing-md)]",
+        "rounded-[var(--border-radius-md)]"
+    )}
+>
+    {children}
+</button>
 ```
 
-### Phase 2: Build-time Theme Generation
+### Showcase Site Theme Builder
 
-**File: `src/scripts/generate-theme-css.ts`**
+**File: `site/src/contexts/ThemeContext.tsx`**
 
 ```typescript
-import fs from "fs";
-import path from "path";
-import type { Theme } from "../types/theme";
+"use client";
+import React, { createContext, useContext } from "react";
 
-/**
- * Generates static CSS file from theme JSON
- * Usage: node generate-theme-css.ts ./themes/default.json
- */
-export function generateThemeCSS(themeJson: Theme): string {
-  const { colors } = themeJson;
-
-  return `
-:root {
-  /* Info colors */
-  --color-info: ${colors.info.default};
-  --color-info-foreground: ${colors.info.foreground};
-  --color-info-muted: ${colors.info.muted};
-  --color-info-muted-foreground: ${colors.info["muted-foreground"]};
-  --color-info-border: ${colors.info.border};
-  
-  /* Success colors */
-  --color-success: ${colors.success.default};
-  --color-success-foreground: ${colors.success.foreground};
-  --color-success-muted: ${colors.success.muted};
-  --color-success-muted-foreground: ${colors.success["muted-foreground"]};
-  --color-success-border: ${colors.success.border};
-  
-  /* Warning colors */
-  --color-warning: ${colors.warning.default};
-  --color-warning-foreground: ${colors.warning.foreground};
-  --color-warning-muted: ${colors.warning.muted};
-  --color-warning-muted-foreground: ${colors.warning["muted-foreground"]};
-  --color-warning-border: ${colors.warning.border};
-  
-  /* Error colors */
-  --color-error: ${colors.error.default};
-  --color-error-foreground: ${colors.error.foreground};
-  --color-error-muted: ${colors.error.muted};
-  --color-error-muted-foreground: ${colors.error["muted-foreground"]};
-  --color-error-border: ${colors.error.border};
-  
-  /* Add all other theme properties... */
-}
-`;
+interface ThemeContextType {
+  setCSSVariable: (name: string, value: string) => void;
+  getCSSVariable: (name: string) => string;
+  exportThemeCSS: () => string;
 }
 
-// CLI usage
-const themeFile = process.argv[2];
-if (themeFile) {
-  const theme = JSON.parse(fs.readFileSync(themeFile, "utf-8"));
-  const css = generateThemeCSS(theme);
-  fs.writeFileSync(
-    path.join(
-      __dirname,
-      "../dist/themes",
-      path.basename(themeFile, ".json") + ".css"
-    ),
-    css
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const setCSSVariable = (name: string, value: string) => {
+    document.documentElement.style.setProperty(name, value);
+  };
+
+  const getCSSVariable = (name: string) => {
+    return getComputedStyle(document.documentElement).getPropertyValue(name);
+  };
+
+  const exportThemeCSS = () => {
+    const root = document.documentElement;
+    const computedStyle = getComputedStyle(root);
+    const allProps = Array.from(computedStyle)
+      .filter((prop) => prop.startsWith("--"))
+      .sort();
+
+    // Group by prefix for organization
+    const grouped: Record<string, string[]> = {};
+    allProps.forEach((prop) => {
+      const prefix = prop.split("-")[1] || "other";
+      if (!grouped[prefix]) grouped[prefix] = [];
+      grouped[prefix].push(
+        `  ${prop}: ${computedStyle.getPropertyValue(prop).trim()};`
+      );
+    });
+
+    // Generate CSS
+    const sections = Object.entries(grouped).map(
+      ([prefix, props]) =>
+        `  /* ${prefix} */\n${props.join("\n")}`
+    );
+
+    return `:root {\n${sections.join("\n\n")}\n}\n`;
+  };
+
+  return (
+    <ThemeContext.Provider
+      value={{ setCSSVariable, getCSSVariable, exportThemeCSS }}
+    >
+      {children}
+    </ThemeContext.Provider>
   );
 }
+
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (!context) throw new Error("useTheme must be used within ThemeProvider");
+  return context;
+};
 ```
 
-### Phase 3: Showcase Site (Runtime Theming)
+### Theme Builder UI (Future)
 
-**File: `site/src/app/globals.css` (Tailwind v4)**
+```tsx
+// site/src/app/(showcase)/theme-builder/page.tsx
+function ThemeBuilderPage() {
+    const { setCSSVariable, getCSSVariable, exportThemeCSS } = useTheme();
 
-```css
-@import "tailwindcss";
-@import "@yomologic/react-ui/styles/base.css";
+    const handleColorChange = (variable: string, color: string) => {
+        setCSSVariable(variable, color);
+    };
 
-/* Define Tailwind utilities that reference CSS variables */
-@utility bg-info-muted {
-  background-color: var(--color-info-muted);
-}
+    const handleExport = () => {
+        const css = exportThemeCSS();
+        // Download CSS file
+        const blob = new Blob([css], { type: "text/css" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "my-theme.css";
+        a.click();
+    };
 
-@utility text-info-muted-foreground {
-  color: var(--color-info-muted-foreground);
-}
-
-/* ... all semantic utilities */
-
-/* Default theme values (fallback) */
-:root {
-  --color-info: #3b82f6;
-  --color-info-foreground: #ffffff;
-  --color-info-muted: #eff6ff;
-  --color-info-muted-foreground: #1d4ed8;
-  --color-info-border: #3b82f6;
-  /* ... */
+    return (
+        <div>
+            <h1>Theme Builder</h1>
+            {/* Color pickers for each CSS variable */}
+            <input
+                type="color"
+                value={getCSSVariable("--color-primary")}
+                onChange={(e) =>
+                    handleColorChange("--color-primary", e.target.value)
+                }
+            />
+            {/* Preview components live */}
+            <Button>Preview</Button>
+            <button onClick={handleExport}>Export Theme CSS</button>
+        </div>
+    );
 }
 ```
-
-**ThemeContext only updates CSS variables**
-
-- Tailwind utilities already reference the variables
-- No flash because utilities are pre-generated
-- Variables update reactively
-
-### Phase 4: Theme Builder
-
-**Export Options:**
-
-1. **JSON** - For sharing/importing
-2. **CSS File** - For direct use in production
-3. **Tailwind Config** - For Tailwind v3 users
-4. **npm Package** - Full theme package
 
 ---
 
 ## Benefits
 
-✅ **Performance**: Zero runtime overhead for production apps
-✅ **No Flash**: CSS is static, no hydration issues
-✅ **DX**: Interactive theme builder for development
-✅ **Flexibility**: Use pre-built themes or generate custom ones
-✅ **Type Safety**: TypeScript throughout
-✅ **Portable**: Themes are JSON files
-✅ **Scalable**: Add new themes easily
-
----
-
-## Migration Path
-
-### Current State (Runtime Only)
-
-- ThemeProvider updates CSS variables at runtime
-- Works but has flash of unstyled content
-- Runtime overhead
-
-### Target State (Hybrid)
-
-- Production: Build-time CSS (static)
-- Showcase: Runtime CSS (dynamic)
-- Best of both worlds
-
-### Steps
-
-1. ✅ Create build script to generate CSS from JSON
-2. ✅ Update components to use semantic CSS classes
-3. ✅ Keep ThemeProvider for showcase only
-4. ✅ Export pre-built theme CSS files
-5. ✅ Document both usage patterns
-6. ✅ Add Theme Builder export functionality
-
----
-
-## Example: Theme Builder Export
-
-```typescript
-// Theme Builder UI
-function ThemeBuilderExportButton() {
-  const { theme } = useTheme();
-
-  const exportOptions = [
-    {
-      label: "Export as JSON",
-      action: () => downloadJSON(theme),
-    },
-    {
-      label: "Export as CSS",
-      action: () => {
-        const css = generateThemeCSS(theme);
-        downloadFile("my-theme.css", css);
-      },
-    },
-    {
-      label: "Export as Tailwind Config",
-      action: () => {
-        const config = generateTailwindConfig(theme);
-        downloadFile("tailwind.config.js", config);
-      },
-    },
-    {
-      label: "Generate npm Package",
-      action: () => generateNpmPackage(theme),
-    },
-  ];
-
-  return <Dropdown label="Export Theme" options={exportOptions} />;
-}
-```
+✅ **Performance**: Zero runtime overhead for production apps  
+✅ **Simplicity**: CSS variables as single source of truth  
+✅ **Flexibility**: Users override variables with their own CSS  
+✅ **DX**: Interactive Theme Builder for visual editing  
+✅ **Portable**: Export themes as pure CSS files  
+✅ **Zero Dependencies**: No JSON parsing or theme provider in production
 
 ---
 
@@ -315,65 +247,47 @@ function ThemeBuilderExportButton() {
 import "@yomologic/react-ui/styles.css";
 import { Button } from "@yomologic/react-ui";
 
-// Uses default theme, no setup needed
+// Uses default CSS variables
 <Button variant="info">Click</Button>;
 ```
 
-### Pattern 2: Pre-built Theme
+### Pattern 2: Custom Theme (CSS Override)
 
-```tsx
-import "@yomologic/react-ui/themes/dark.css";
-import { Button } from "@yomologic/react-ui";
-
-// Uses pre-built dark theme
-<Button variant="info">Click</Button>;
-```
-
-### Pattern 3: Custom Theme (Build-time)
-
-```bash
-# 1. Create theme JSON
-{
-  "name": "My Theme",
-  "colors": {
-    "info": {
-      "default": "#ff0000",
-      ...
-    }
-  }
+```css
+/* my-theme.css */
+:root {
+    --color-primary: #ff0000;
+    --color-secondary: #00ff00;
+    --spacing-md: 1rem;
+    --border-radius-md: 0.5rem;
+    /* Override any CSS variable */
 }
-
-# 2. Generate CSS
-npx @yomologic/react-ui generate-theme ./my-theme.json
-
-# 3. Import
-import './my-theme.css';
 ```
 
-### Pattern 4: Theme Builder (Interactive)
+```tsx
+import "@yomologic/react-ui/styles.css";
+import "./my-theme.css"; // Your overrides
+
+<Button>Styled with custom theme</Button>;
+```
+
+### Pattern 3: Theme Builder (Interactive - Showcase Only)
 
 ```tsx
-// Only in showcase/development
-import { ThemeProvider } from "@yomologic/react-ui";
-
-<ThemeProvider>
-  <App />
-</ThemeProvider>;
-
-// Navigate to /theme-builder
-// Customize visually
-// Export as CSS or JSON
+// Navigate to showcase /theme-builder
+// 1. Adjust colors, spacing, borders visually
+// 2. See live preview of all components
+// 3. Export as CSS file
+// 4. Import in your project
 ```
 
 ---
 
 ## Future Enhancements
 
+- [ ] Theme Builder UI with color pickers, spacing editors
 - [ ] Theme marketplace (share/discover themes)
-- [ ] VS Code extension for theme editing
-- [ ] Figma plugin integration
+- [ ] Dark mode toggle preset
 - [ ] Accessibility checker (contrast ratios)
-- [ ] Theme interpolation (smooth transitions)
-- [ ] CSS variable fallbacks for IE11
-- [ ] Automatic dark mode generation
-- [ ] Theme analytics (most popular themes)
+- [ ] Export to Tailwind config format
+- [ ] Figma plugin integration

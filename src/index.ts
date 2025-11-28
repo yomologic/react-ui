@@ -57,9 +57,5 @@ export type {
 // Shared Components
 export { EmptyState } from "./shared/empty-state";
 
-// Theme System
-export { ThemeProvider, useTheme } from "./shared/contexts/ThemeContext";
-export type { Theme, DensityLevel } from "./types/theme";
-
-// Re-export utility function
+// Utility functions
 export { cn } from "./lib/utils";

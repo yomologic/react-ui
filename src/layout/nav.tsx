@@ -20,7 +20,7 @@ export interface NavItem {
 
 export interface NavProps extends React.HTMLAttributes<HTMLElement> {
     items: NavItem[];
-    variant?: "primary" | "secondary" | "outline" | "ghost";
+    variant?: "primary" | "secondary" | "ghost";
     orientation?: "horizontal" | "vertical";
     size?: "xs" | "sm" | "md" | "lg" | "xl";
     mobileBreakpoint?: "sm" | "md" | "lg";
@@ -56,6 +56,8 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
             null
         );
         const dropdownRef = useRef<HTMLDivElement>(null);
+        const mobileMenuRef = useRef<HTMLDivElement>(null);
+        const [navElement, setNavElement] = useState<HTMLElement | null>(null);
 
         // Close dropdown when clicking outside
         useEffect(() => {
@@ -66,13 +68,25 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                 ) {
                     setOpenDropdownId(null);
                 }
+
+                // Close mobile menu when clicking outside (only for top direction dropdown style)
+                if (
+                    mobileMenuDirection === "top" &&
+                    isMobileMenuOpen &&
+                    mobileMenuRef.current &&
+                    navElement &&
+                    !mobileMenuRef.current.contains(event.target as Node) &&
+                    !navElement.contains(event.target as Node)
+                ) {
+                    setIsMobileMenuOpen(false);
+                }
             }
 
             document.addEventListener("mousedown", handleClickOutside);
             return () => {
                 document.removeEventListener("mousedown", handleClickOutside);
             };
-        }, []);
+        }, [isMobileMenuOpen, mobileMenuDirection]);
 
         // Close mobile menu on escape
         useEffect(() => {
@@ -96,24 +110,24 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
 
         // Base styles using CSS variables
         const baseStyles = cn(
-            "bg-[var(--color-background)] border-b border-[var(--color-border)]",
+            "bg-[var(--color-background)]",
             sticky && "sticky top-0 [z-index:var(--z-index-nav)]"
         );
 
         // Container styles
         const containerStyles = cn(
-            "[min-height:var(--nav-height)]",
+            "min-h-14 md:min-h-16",
             "flex items-center justify-between",
-            "px-[var(--spacing-lg)]"
+            "px-4 md:px-6"
         );
 
-        // Size-based padding styles using CSS variables
+        // Size-based padding styles - Tailwind UI inspired
         const itemPaddingStyles = {
-            xs: "[padding-left:var(--nav-item-padding-xs-x)] [padding-right:var(--nav-item-padding-xs-x)] [padding-top:var(--nav-item-padding-xs-y)] [padding-bottom:var(--nav-item-padding-xs-y)]",
-            sm: "[padding-left:var(--nav-item-padding-sm-x)] [padding-right:var(--nav-item-padding-sm-x)] [padding-top:var(--nav-item-padding-sm-y)] [padding-bottom:var(--nav-item-padding-sm-y)]",
-            md: "[padding-left:var(--nav-item-padding-md-x)] [padding-right:var(--nav-item-padding-md-x)] [padding-top:var(--nav-item-padding-md-y)] [padding-bottom:var(--nav-item-padding-md-y)]",
-            lg: "[padding-left:var(--nav-item-padding-lg-x)] [padding-right:var(--nav-item-padding-lg-x)] [padding-top:var(--nav-item-padding-lg-y)] [padding-bottom:var(--nav-item-padding-lg-y)]",
-            xl: "[padding-left:var(--nav-item-padding-xl-x)] [padding-right:var(--nav-item-padding-xl-x)] [padding-top:var(--nav-item-padding-xl-y)] [padding-bottom:var(--nav-item-padding-xl-y)]",
+            xs: "px-2 py-1",
+            sm: "px-2.5 py-1.5",
+            md: "px-3 py-2",
+            lg: "px-4 py-2.5",
+            xl: "px-5 py-3",
         };
 
         const fontSizeStyles = {
@@ -127,21 +141,17 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
         // Variant styles for items
         const variantItemStyles = {
             primary:
-                "rounded-[var(--nav-border-radius)] hover:bg-blue-50 transition-colors",
+                "rounded-md hover:bg-[var(--color-primary)]/10 hover:text-[var(--color-primary)] transition-colors duration-150",
             secondary:
-                "rounded-[var(--nav-border-radius)] hover:bg-[var(--color-muted)] transition-colors",
-            outline: cn(
-                "rounded-[var(--nav-border-radius)] border border-[var(--color-border)] hover:bg-[var(--color-muted)] transition-colors"
-            ),
-            ghost: "rounded-[var(--nav-border-radius)] hover:bg-[var(--color-muted)]/50 transition-colors",
+                "rounded-md hover:bg-[var(--color-muted)] transition-colors duration-150",
+            ghost: "rounded-md hover:bg-gray-100 transition-colors duration-150",
         };
 
         const activeItemStyles = {
-            primary: "bg-blue-100 text-blue-700",
-            secondary:
-                "bg-[var(--color-muted)] [font-weight:var(--font-semibold)]",
-            outline: "border-blue-600 bg-blue-50 text-blue-700",
-            ghost: "bg-[var(--color-muted)]",
+            primary:
+                "bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary)] hover:text-white",
+            secondary: "bg-gray-100 text-gray-900 font-semibold",
+            ghost: "bg-gray-100 text-gray-900 font-semibold",
         };
 
         // Breakpoint classes
@@ -221,7 +231,7 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                     )}
                     <span>{item.label}</span>
                     {item.badge && (
-                        <span className="ml-auto px-2 py-0.5 [font-size:var(--text-xs)] font-semibold bg-red-500 text-white rounded-[var(--radius-full)]">
+                        <span className="ml-auto inline-flex items-center rounded-full bg-[var(--color-primary)] px-2 py-0.5 text-xs font-medium text-white">
                             {item.badge}
                         </span>
                     )}
@@ -252,7 +262,7 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                         {isDropdownOpen && (
                             <div
                                 className={cn(
-                                    "absolute left-0 mt-[var(--nav-gap)] min-w-[200px] bg-[var(--color-background)] border border-[var(--color-border)] rounded-[var(--nav-border-radius)] shadow-lg z-50",
+                                    "absolute left-0 mt-[var(--nav-gap)] min-w-[200px] bg-[var(--color-background)] border border-[var(--color-border)] rounded-[var(--nav-border-radius)] shadow-xl [z-index:var(--z-index-dropdown)] animate-in fade-in-0 zoom-in-95 duration-200",
                                     orientation === "vertical" &&
                                         "left-full top-0 ml-2 mt-0"
                                 )}
@@ -266,11 +276,11 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                                             }
                                             disabled={child.disabled}
                                             className={cn(
-                                                "w-full flex items-center gap-2 px-4 py-2 [font-size:var(--text-sm)] text-[var(--color-foreground)] hover:bg-[var(--color-muted)] transition-colors",
+                                                "w-full flex items-center gap-2 px-4 py-2 [font-size:var(--text-sm)] text-[var(--color-foreground)] hover:bg-[var(--color-primary)]/10 hover:text-[var(--color-primary)] transition-all duration-200 rounded-sm mx-1",
                                                 child.disabled &&
                                                     "opacity-50 cursor-not-allowed",
                                                 activeId === child.id &&
-                                                    "bg-[var(--color-muted)] [font-weight:var(--font-semibold)]"
+                                                    "bg-[var(--color-primary)]/10 text-[var(--color-primary)] [font-weight:var(--font-semibold)]"
                                             )}
                                         >
                                             {child.icon && (
@@ -280,7 +290,7 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                                             )}
                                             <span>{child.label}</span>
                                             {child.badge && (
-                                                <span className="ml-auto px-2 py-0.5 [font-size:var(--text-xs)] font-semibold bg-red-500 text-white rounded-[var(--radius-full)]">
+                                                <span className="ml-auto px-2 py-0.5 [font-size:var(--text-xs)] font-semibold bg-[var(--color-primary)] text-white rounded-[var(--radius-full)]">
                                                     {child.badge}
                                                 </span>
                                             )}
@@ -336,80 +346,31 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
             </div>
         );
 
-        // Mobile navigation
-        const mobileNav = (
-            <>
-                {/* Hamburger Button */}
-                <button
-                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                    className={cn(
-                        "p-2 text-[var(--color-foreground)] hover:bg-[var(--color-muted)] rounded-[var(--nav-border-radius)] transition-colors",
-                        breakpointClasses[mobileBreakpoint]
-                    )}
-                    aria-label="Toggle menu"
-                >
-                    {isMobileMenuOpen ? (
-                        <X className="w-6 h-6" />
-                    ) : (
-                        <Menu className="w-6 h-6" />
-                    )}
-                </button>
-
-                {/* Mobile Menu Overlay */}
-                {isMobileMenuOpen && (
-                    <div
-                        className={cn(
-                            "fixed inset-0 bg-black/50 [z-index:var(--z-index-nav-mobile-overlay)]",
-                            breakpointClasses[mobileBreakpoint]
-                        )}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                    />
-                )}
-
-                {/* Mobile Menu Panel */}
-                <div
-                    className={cn(
-                        "fixed bg-[var(--color-background)] shadow-lg [z-index:var(--z-index-nav-mobile-menu)] overflow-y-auto transition-transform duration-300 ease-in-out",
-                        breakpointClasses[mobileBreakpoint],
-                        // Always hide when closed
-                        !isMobileMenuOpen && "invisible",
-                        // Direction-specific positioning and animation
-                        mobileMenuDirection === "top" && [
-                            "top-0 left-0 right-0 border-b border-[var(--color-border)] max-h-screen",
-                            isMobileMenuOpen
-                                ? "translate-y-0"
-                                : "-translate-y-full",
-                        ],
-                        mobileMenuDirection === "left" && [
-                            "top-0 left-0 bottom-0 w-64 border-r border-[var(--color-border)]",
-                            isMobileMenuOpen
-                                ? "translate-x-0"
-                                : "-translate-x-full",
-                        ],
-                        mobileMenuDirection === "right" && [
-                            "top-0 right-0 bottom-0 w-64 border-l border-[var(--color-border)]",
-                            isMobileMenuOpen
-                                ? "translate-x-0"
-                                : "translate-x-full",
-                        ]
-                    )}
-                >
-                    <div
-                        className={cn(
-                            "flex flex-col",
-                            mobileMenuDirection === "top"
-                                ? "py-2"
-                                : "space-y-1 px-2 pt-2"
-                        )}
-                    >
-                        {items.map((item) => renderNavItem(item, true))}
-                    </div>
-                </div>
-            </>
+        // Combine external and internal refs
+        const setRefs = React.useCallback(
+            (node: HTMLElement | null) => {
+                setNavElement(node);
+                if (typeof ref === "function") {
+                    ref(node);
+                } else if (ref) {
+                    (
+                        ref as React.MutableRefObject<HTMLElement | null>
+                    ).current = node;
+                }
+            },
+            [ref]
         );
 
         return (
-            <nav ref={ref} className={cn(baseStyles, className)} {...props}>
+            <nav
+                ref={setRefs}
+                className={cn(
+                    baseStyles,
+                    "relative border border-(--color-border)",
+                    className
+                )}
+                {...props}
+            >
                 <div className={containerStyles}>
                     {/* Logo */}
                     {logo && <div className="shrink-0">{logo}</div>}
@@ -425,8 +386,81 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                     )}
 
                     {/* Mobile Menu Button */}
-                    {mobileNav}
+                    <button
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        className={cn(
+                            "p-2 text-[var(--color-foreground)] hover:bg-[var(--color-muted)] rounded-[var(--nav-border-radius)] transition-colors",
+                            breakpointClasses[mobileBreakpoint]
+                        )}
+                        aria-label="Toggle menu"
+                    >
+                        {isMobileMenuOpen ? (
+                            <X className="w-6 h-6" />
+                        ) : (
+                            <Menu className="w-6 h-6" />
+                        )}
+                    </button>
                 </div>
+
+                {/* Mobile Menu Content - expands inside container */}
+                {mobileMenuDirection === "top" && (
+                    <div
+                        ref={mobileMenuRef}
+                        className={cn(
+                            "overflow-hidden transition-all duration-200 ease-in-out border-t",
+                            breakpointClasses[mobileBreakpoint],
+                            isMobileMenuOpen
+                                ? "max-h-96 opacity-100 border-[var(--color-border)]"
+                                : "max-h-0 opacity-0 border-transparent"
+                        )}
+                    >
+                        <div className="space-y-1 px-2 py-2">
+                            {items.map((item) => renderNavItem(item, true))}
+                        </div>
+                    </div>
+                )}
+
+                {/* Side Drawer Menus - outside container */}
+                {mobileMenuDirection !== "top" && (
+                    <>
+                        {/* Overlay */}
+                        {isMobileMenuOpen && (
+                            <div
+                                className={cn(
+                                    "fixed inset-0 bg-black/50 [z-index:var(--z-index-nav-mobile-overlay)]",
+                                    breakpointClasses[mobileBreakpoint]
+                                )}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                            />
+                        )}
+
+                        {/* Drawer Panel */}
+                        <div
+                            ref={mobileMenuRef}
+                            className={cn(
+                                "fixed top-0 bottom-0 w-64 bg-[var(--color-background)] [z-index:var(--z-index-nav-mobile-menu)] overflow-y-auto transition-transform duration-200 ease-in-out shadow-lg",
+                                breakpointClasses[mobileBreakpoint],
+                                mobileMenuDirection === "left" && [
+                                    "left-0 border-r border-[var(--color-border)]",
+                                    isMobileMenuOpen
+                                        ? "translate-x-0"
+                                        : "-translate-x-full",
+                                ],
+                                mobileMenuDirection === "right" && [
+                                    "right-0 border-l border-[var(--color-border)]",
+                                    isMobileMenuOpen
+                                        ? "translate-x-0"
+                                        : "translate-x-full",
+                                ],
+                                !isMobileMenuOpen && "invisible"
+                            )}
+                        >
+                            <div className="flex flex-col space-y-1 px-2 pt-2">
+                                {items.map((item) => renderNavItem(item, true))}
+                            </div>
+                        </div>
+                    </>
+                )}
             </nav>
         );
     }

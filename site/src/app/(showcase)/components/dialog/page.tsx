@@ -3,7 +3,6 @@
 import {
     Card,
     RadioGroup,
-    Checkbox,
     CodeSnippet,
     Dialog,
     DialogHeader,
@@ -12,329 +11,419 @@ import {
     DialogContent,
     DialogFooter,
     Button,
+    SectionLayout,
+    Divider,
 } from "@yomologic/react-ui";
-import { SectionLayout } from "@yomologic/react-ui";
-import { Settings2, Code2, BookOpen } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import { useState } from "react";
 
 export default function DialogPage() {
-    const [size, setSize] = useState<string>("md");
-    const [variant, setVariant] = useState<string>("default");
-    const [showCloseButton, setShowCloseButton] = useState(true);
-    const [closeOnBackdropClick, setCloseOnBackdropClick] = useState(true);
-    const [closeOnEscape, setCloseOnEscape] = useState(true);
-    const [showHeader, setShowHeader] = useState(true);
-    const [showTitle, setShowTitle] = useState(true);
-    const [showDescription, setShowDescription] = useState(true);
-    const [showFooter, setShowFooter] = useState(true);
-    const [showCodeOverlay, setShowCodeOverlay] = useState(false);
+    // Example 1: Dialog Sizes
+    const [isOpen1, setIsOpen1] = useState(false);
+    const [size1, setSize1] = useState<string>("md");
 
-    // Demo dialogs
-    const [isOpen, setIsOpen] = useState(false);
+    // Example 2: Dialog Variants
+    const [isOpen2, setIsOpen2] = useState(false);
+    const [variant2, setVariant2] = useState<string>("default");
 
-    // Generate code snippet
-    const generateCode = () => {
-        const props: string[] = [];
-
-        props.push("open={isOpen}");
-        props.push("onClose={() => setIsOpen(false)}");
-        if (size !== "md") props.push(`size="${size}"`);
-        if (variant !== "default") props.push(`variant="${variant}"`);
-        if (!showCloseButton) props.push("showCloseButton={false}");
-        if (!closeOnBackdropClick) props.push("closeOnBackdropClick={false}");
-        if (!closeOnEscape) props.push("closeOnEscape={false}");
-
-        const propsString = props.join("\n  ");
-        const parts: string[] = [];
-
-        if (showHeader) {
-            const headerParts: string[] = [];
-            if (showTitle)
-                headerParts.push("    <DialogTitle>Dialog Title</DialogTitle>");
-            if (showDescription)
-                headerParts.push(
-                    "    <DialogDescription>Dialog description</DialogDescription>"
-                );
-            if (headerParts.length > 0) {
-                parts.push(
-                    `  <DialogHeader>\n${headerParts.join("\n")}\n  </DialogHeader>`
-                );
-            }
-        }
-
-        parts.push(
-            `  <DialogContent>\n    <p>Dialog content goes here</p>\n  </DialogContent>`
-        );
-
-        if (showFooter) {
-            const cancelVariant =
-                variant !== "default" ? ` variant="${variant}"` : "";
-            parts.push(
-                `  <DialogFooter>\n    <Button${cancelVariant} onClick={() => setIsOpen(false)}>\n      Cancel\n    </Button>\n    <Button variant="secondary">Confirm</Button>\n  </DialogFooter>`
-            );
-        }
-
-        return `<Dialog\n  ${propsString}\n>\n${parts.join("\n")}\n</Dialog>`;
-    };
+    // Example 3: Confirmation Dialog
+    const [isOpen3, setIsOpen3] = useState(false);
 
     return (
-        <SectionLayout hasStickyPreview>
+        <SectionLayout>
             {/* ========================================
-          SECTION 1: STICKY LIVE PREVIEW
-      ======================================== */}
-            <section className="sticky top-0 z-15 py-4 bg-gray-50">
-                <Card variant="elevated" padding="lg">
-                    <div className="space-y-4">
-                        {/* Header */}
-                        <div className="flex items-center justify-between pb-3 border-b border-gray-200">
-                            <h2 className="text-lg font-semibold text-gray-900">
-                                Dialog Live Preview
-                            </h2>
-                            <button
-                                onClick={() =>
-                                    setShowCodeOverlay(!showCodeOverlay)
-                                }
-                                className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 hover:border-gray-400 transition-colors"
-                                title="View code"
-                            >
-                                <Code2 className="w-3.5 h-3.5" />
-                                Code
-                            </button>
-                        </div>
-
-                        {/* Preview Content */}
-                        <div className="relative">
-                            <div className="p-6 bg-linear-to-br from-gray-50 to-gray-100 rounded-lg border border-gray-200">
-                                <div className="flex justify-center">
-                                    <Button
-                                        variant="primary"
-                                        onClick={() => setIsOpen(true)}
-                                    >
-                                        Open Dialog
-                                    </Button>
-                                </div>
-
-                                <Dialog
-                                    open={isOpen}
-                                    onClose={() => setIsOpen(false)}
-                                    size={
-                                        size as
-                                            | "sm"
-                                            | "md"
-                                            | "lg"
-                                            | "xl"
-                                            | "full"
-                                    }
-                                    variant={
-                                        variant as
-                                            | "default"
-                                            | "info"
-                                            | "success"
-                                            | "warning"
-                                            | "error"
-                                    }
-                                    showCloseButton={showCloseButton}
-                                    closeOnBackdropClick={closeOnBackdropClick}
-                                    closeOnEscape={closeOnEscape}
-                                >
-                                    {showHeader && (
-                                        <DialogHeader>
-                                            {showTitle && (
-                                                <DialogTitle>
-                                                    Dialog Title
-                                                </DialogTitle>
-                                            )}
-                                            {showDescription && (
-                                                <DialogDescription>
-                                                    This is a description that
-                                                    provides additional context
-                                                    about the dialog.
-                                                </DialogDescription>
-                                            )}
-                                        </DialogHeader>
-                                    )}
-                                    <DialogContent>
-                                        <p className="text-sm text-gray-700">
-                                            This is the main content area of the
-                                            dialog. You can place any content
-                                            here including forms, text, images,
-                                            or other components.
-                                        </p>
-                                    </DialogContent>
-                                    {showFooter && (
-                                        <DialogFooter>
+                SECTION 1: COMPONENT EXAMPLES
+            ======================================== */}
+            <section>
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                    Dialog
+                </h2>
+                <div className="space-y-6">
+                    {/* Example 1: Dialog Sizes */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Dialog Sizes
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Dialogs come in five sizes to accommodate
+                                different content lengths.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
                                             <Button
+                                                variant="primary"
+                                                onClick={() => setIsOpen1(true)}
+                                            >
+                                                Open Dialog
+                                            </Button>
+
+                                            <Dialog
+                                                open={isOpen1}
+                                                onClose={() =>
+                                                    setIsOpen1(false)
+                                                }
+                                                size={
+                                                    size1 as
+                                                        | "sm"
+                                                        | "md"
+                                                        | "lg"
+                                                        | "xl"
+                                                        | "full"
+                                                }
+                                            >
+                                                <DialogHeader>
+                                                    <DialogTitle>
+                                                        Dialog Title
+                                                    </DialogTitle>
+                                                    <DialogDescription>
+                                                        This dialog demonstrates
+                                                        different size options.
+                                                    </DialogDescription>
+                                                </DialogHeader>
+                                                <DialogContent>
+                                                    <p className="text-sm text-gray-700">
+                                                        Dialog content goes
+                                                        here. The width adjusts
+                                                        based on the selected
+                                                        size.
+                                                    </p>
+                                                </DialogContent>
+                                                <DialogFooter>
+                                                    <Button
+                                                        variant="ghost"
+                                                        onClick={() =>
+                                                            setIsOpen1(false)
+                                                        }
+                                                    >
+                                                        Cancel
+                                                    </Button>
+                                                    <Button
+                                                        variant="secondary"
+                                                        onClick={() =>
+                                                            setIsOpen1(false)
+                                                        }
+                                                    >
+                                                        Confirm
+                                                    </Button>
+                                                </DialogFooter>
+                                            </Dialog>
+                                        </div>
+                                        <RadioGroup
+                                            label="Size"
+                                            name="size-example1"
+                                            value={size1}
+                                            onChange={setSize1}
+                                            orientation="horizontal"
+                                            options={[
+                                                { value: "sm", label: "Small" },
+                                                {
+                                                    value: "md",
+                                                    label: "Medium",
+                                                },
+                                                { value: "lg", label: "Large" },
+                                                { value: "xl", label: "XL" },
+                                                {
+                                                    value: "full",
+                                                    label: "Full",
+                                                },
+                                            ]}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        code={
+                                            size1 === "md"
+                                                ? `<Dialog 
+  open={isOpen} 
+  onClose={() => setIsOpen(false)}
+>
+  <DialogHeader>
+    <DialogTitle>Dialog Title</DialogTitle>
+    <DialogDescription>
+      Description text
+    </DialogDescription>
+  </DialogHeader>
+  <DialogContent>
+    <p>Content...</p>
+  </DialogContent>
+  <DialogFooter>
+    <Button onClick={() => setIsOpen(false)}>
+      Cancel
+    </Button>
+  </DialogFooter>
+</Dialog>`
+                                                : `<Dialog 
+  open={isOpen} 
+  onClose={() => setIsOpen(false)}
+  size="${size1}"
+>
+  <DialogHeader>
+    <DialogTitle>Dialog Title</DialogTitle>
+    <DialogDescription>
+      Description text
+    </DialogDescription>
+  </DialogHeader>
+  <DialogContent>
+    <p>Content...</p>
+  </DialogContent>
+  <DialogFooter>
+    <Button onClick={() => setIsOpen(false)}>
+      Cancel
+    </Button>
+  </DialogFooter>
+</Dialog>`
+                                        }
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+
+                    {/* Example 2: Dialog Variants */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Dialog Variants
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Use semantic variants to communicate the purpose
+                                of the dialog.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                            <Button
+                                                variant="primary"
+                                                onClick={() => setIsOpen2(true)}
+                                            >
+                                                Open Dialog
+                                            </Button>
+
+                                            <Dialog
+                                                open={isOpen2}
+                                                onClose={() =>
+                                                    setIsOpen2(false)
+                                                }
                                                 variant={
-                                                    variant as
+                                                    variant2 as
+                                                        | "default"
                                                         | "info"
                                                         | "success"
                                                         | "warning"
                                                         | "error"
-                                                        | undefined
                                                 }
-                                                onClick={() => setIsOpen(false)}
                                             >
-                                                Cancel
-                                            </Button>
-                                            <Button
-                                                variant="secondary"
-                                                onClick={() => setIsOpen(false)}
-                                            >
-                                                Confirm
-                                            </Button>
-                                        </DialogFooter>
-                                    )}
-                                </Dialog>
-                            </div>
-
-                            {/* Code Overlay */}
-                            {showCodeOverlay && (
-                                <>
-                                    {/* Backdrop */}
-                                    <div
-                                        className="fixed inset-0 bg-black/20 z-40"
-                                        onClick={() =>
-                                            setShowCodeOverlay(false)
+                                                <DialogHeader>
+                                                    <DialogTitle>
+                                                        {variant2 === "default"
+                                                            ? "Dialog Title"
+                                                            : variant2 ===
+                                                                "info"
+                                                              ? "Information"
+                                                              : variant2 ===
+                                                                  "success"
+                                                                ? "Success"
+                                                                : variant2 ===
+                                                                    "warning"
+                                                                  ? "Warning"
+                                                                  : "Error"}
+                                                    </DialogTitle>
+                                                    <DialogDescription>
+                                                        This dialog uses the{" "}
+                                                        {variant2} variant.
+                                                    </DialogDescription>
+                                                </DialogHeader>
+                                                <DialogContent>
+                                                    <p className="text-sm text-gray-700">
+                                                        Different variants apply
+                                                        semantic colors to help
+                                                        communicate the dialog's
+                                                        purpose.
+                                                    </p>
+                                                </DialogContent>
+                                                <DialogFooter>
+                                                    <Button
+                                                        variant="ghost"
+                                                        onClick={() =>
+                                                            setIsOpen2(false)
+                                                        }
+                                                    >
+                                                        Close
+                                                    </Button>
+                                                </DialogFooter>
+                                            </Dialog>
+                                        </div>
+                                        <RadioGroup
+                                            label="Variant"
+                                            name="variant-example2"
+                                            value={variant2}
+                                            onChange={setVariant2}
+                                            orientation="horizontal"
+                                            options={[
+                                                {
+                                                    value: "default",
+                                                    label: "Default",
+                                                },
+                                                {
+                                                    value: "info",
+                                                    label: "Info",
+                                                },
+                                                {
+                                                    value: "success",
+                                                    label: "Success",
+                                                },
+                                                {
+                                                    value: "warning",
+                                                    label: "Warning",
+                                                },
+                                                {
+                                                    value: "error",
+                                                    label: "Error",
+                                                },
+                                            ]}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        code={
+                                            variant2 === "default"
+                                                ? `<Dialog 
+  open={isOpen} 
+  onClose={() => setIsOpen(false)}
+>
+  <DialogHeader>
+    <DialogTitle>Dialog Title</DialogTitle>
+  </DialogHeader>
+  <DialogContent>
+    <p>Content...</p>
+  </DialogContent>
+</Dialog>`
+                                                : `<Dialog 
+  open={isOpen} 
+  onClose={() => setIsOpen(false)}
+  variant="${variant2}"
+>
+  <DialogHeader>
+    <DialogTitle>${variant2 === "info" ? "Information" : variant2 === "success" ? "Success" : variant2 === "warning" ? "Warning" : "Error"}</DialogTitle>
+  </DialogHeader>
+  <DialogContent>
+    <p>Content...</p>
+  </DialogContent>
+</Dialog>`
                                         }
                                     />
-                                    {/* Overlay Card */}
-                                    <div className="absolute top-12 right-0 z-50 w-full max-w-md">
-                                        <Card variant="elevated" padding="none">
-                                            <div className="p-4 border-b border-gray-200 flex items-center justify-between">
-                                                <h4 className="text-sm font-semibold text-gray-900">
-                                                    Component Code
-                                                </h4>
-                                                <button
-                                                    onClick={() =>
-                                                        setShowCodeOverlay(
-                                                            false
-                                                        )
-                                                    }
-                                                    className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded transition-colors"
-                                                    title="Close"
-                                                >
-                                                    <span className="text-2xl leading-none">
-                                                        ×
-                                                    </span>
-                                                </button>
-                                            </div>
-                                            <div className="p-4">
-                                                <CodeSnippet
-                                                    code={generateCode()}
-                                                />
-                                            </div>
-                                        </Card>
-                                    </div>
-                                </>
-                            )}
-                        </div>
-                    </div>
-                </Card>
-            </section>
-
-            {/* ========================================
-          SECTION 2: INTERACTIVE CONTROLS
-      ======================================== */}
-            <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                    <Settings2 className="w-5 h-5" />
-                    Interactive Controls
-                </h2>
-                <Card variant="elevated" padding="lg">
-                    <div className="space-y-6">
-                        {/* Size Selection */}
-                        <RadioGroup
-                            label="Size"
-                            name="size"
-                            value={size}
-                            onChange={setSize}
-                            orientation="horizontal"
-                            options={[
-                                { value: "sm", label: "Small" },
-                                { value: "md", label: "Medium" },
-                                { value: "lg", label: "Large" },
-                                { value: "xl", label: "Extra Large" },
-                                { value: "full", label: "Full Width" },
-                            ]}
-                        />
-
-                        {/* Variant Selection */}
-                        <RadioGroup
-                            label="Variant"
-                            name="variant"
-                            value={variant}
-                            onChange={setVariant}
-                            orientation="horizontal"
-                            options={[
-                                { value: "default", label: "Default" },
-                                { value: "info", label: "Info" },
-                                { value: "success", label: "Success" },
-                                { value: "warning", label: "Warning" },
-                                { value: "error", label: "Error" },
-                            ]}
-                        />
-
-                        {/* Behavior Options */}
-                        <div className="space-y-3 pt-2 border-t border-gray-200">
-                            <h3 className="text-sm font-semibold text-gray-700">
-                                Behavior
-                            </h3>
-                            <Checkbox
-                                label="Show close button"
-                                checked={showCloseButton}
-                                onChange={setShowCloseButton}
-                            />
-                            <Checkbox
-                                label="Close on backdrop click"
-                                checked={closeOnBackdropClick}
-                                onChange={setCloseOnBackdropClick}
-                            />
-                            <Checkbox
-                                label="Close on Escape key"
-                                checked={closeOnEscape}
-                                onChange={setCloseOnEscape}
-                            />
-                        </div>
-
-                        {/* Dialog Sections */}
-                        <div className="space-y-3 pt-2 border-t border-gray-200">
-                            <h3 className="text-sm font-semibold text-gray-700">
-                                Dialog Sections
-                            </h3>
-                            <div className="space-y-2">
-                                <Checkbox
-                                    label="Show Header"
-                                    checked={showHeader}
-                                    onChange={setShowHeader}
-                                />
-                                {showHeader && (
-                                    <div className="ml-6 space-y-2">
-                                        <Checkbox
-                                            label="Show Title"
-                                            checked={showTitle}
-                                            onChange={setShowTitle}
-                                        />
-                                        <Checkbox
-                                            label="Show Description"
-                                            checked={showDescription}
-                                            onChange={setShowDescription}
-                                        />
-                                    </div>
-                                )}
-                                <Checkbox
-                                    label="Show Footer"
-                                    checked={showFooter}
-                                    onChange={setShowFooter}
-                                />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </Card>
+                    </Card>
+
+                    {/* Example 3: Confirmation Dialog */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Confirmation Dialog
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                A common pattern for confirming destructive or
+                                important actions.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                        <Button
+                                            variant="error"
+                                            onClick={() => setIsOpen3(true)}
+                                        >
+                                            Delete Item
+                                        </Button>
+
+                                        <Dialog
+                                            open={isOpen3}
+                                            onClose={() => setIsOpen3(false)}
+                                            closeOnBackdropClick={false}
+                                            closeOnEscape={false}
+                                            showCloseButton={false}
+                                        >
+                                            <DialogHeader>
+                                                <DialogTitle>
+                                                    Confirm Deletion
+                                                </DialogTitle>
+                                                <DialogDescription>
+                                                    This action cannot be
+                                                    undone. Are you sure you
+                                                    want to proceed?
+                                                </DialogDescription>
+                                            </DialogHeader>
+                                            <DialogContent>
+                                                <p className="text-sm text-gray-700">
+                                                    The item will be permanently
+                                                    deleted from the system.
+                                                </p>
+                                            </DialogContent>
+                                            <DialogFooter>
+                                                <Button
+                                                    variant="ghost"
+                                                    onClick={() =>
+                                                        setIsOpen3(false)
+                                                    }
+                                                >
+                                                    Cancel
+                                                </Button>
+                                                <Button
+                                                    variant="error"
+                                                    onClick={() =>
+                                                        setIsOpen3(false)
+                                                    }
+                                                >
+                                                    Delete
+                                                </Button>
+                                            </DialogFooter>
+                                        </Dialog>
+                                    </div>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        code={`<Dialog 
+  open={isOpen} 
+  onClose={() => setIsOpen(false)}
+  closeOnBackdropClick={false}
+  closeOnEscape={false}
+  showCloseButton={false}
+>
+  <DialogHeader>
+    <DialogTitle>Confirm Deletion</DialogTitle>
+    <DialogDescription>
+      This action cannot be undone.
+    </DialogDescription>
+  </DialogHeader>
+  <DialogContent>
+    <p>The item will be permanently deleted.</p>
+  </DialogContent>
+  <DialogFooter>
+    <Button onClick={() => setIsOpen(false)}>
+      Cancel
+    </Button>
+    <Button variant="error">
+      Delete
+    </Button>
+  </DialogFooter>
+</Dialog>`}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+                </div>
             </section>
 
-            {/* ========================================
-          SECTION 3: API REFERENCE
-      ======================================== */}
+            <Divider className="my-12" />
+
             <section>
                 <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
                     <BookOpen className="w-5 h-5" />
@@ -571,122 +660,6 @@ export default function DialogPage() {
                             </table>
                         </div>
                     </Card>
-                </div>
-            </section>
-
-            {/* ========================================
-          SECTION 4: USAGE EXAMPLES
-      ======================================== */}
-            <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                    Usage Examples
-                </h2>
-                <div className="space-y-6">
-                    {/* Example 1: Basic Confirmation Dialog */}
-                    <div>
-                        <h3 className="text-md font-semibold text-gray-800 mb-3">
-                            Basic Confirmation Dialog
-                        </h3>
-                        <div className="grid grid-cols-1 gap-6">
-                            <CodeSnippet
-                                code={`const [isOpen, setIsOpen] = useState(false);
-
-<Dialog open={isOpen} onClose={() => setIsOpen(false)}>
-  <DialogHeader>
-    <DialogTitle>Confirm Action</DialogTitle>
-    <DialogDescription>
-      Are you sure you want to proceed? This action cannot be undone.
-    </DialogDescription>
-  </DialogHeader>
-  <DialogContent>
-    <p>Additional details about the action...</p>
-  </DialogContent>
-  <DialogFooter>
-    <Button variant="ghost" onClick={() => setIsOpen(false)}>
-      Cancel
-    </Button>
-    <Button variant="secondary" onClick={handleConfirm}>
-      Confirm
-    </Button>
-  </DialogFooter>
-</Dialog>`}
-                            />
-                        </div>
-                    </div>
-
-                    {/* Example 2: Form Dialog */}
-                    <div>
-                        <h3 className="text-md font-semibold text-gray-800 mb-3">
-                            Form Dialog
-                        </h3>
-                        <div className="grid grid-cols-1 gap-6">
-                            <CodeSnippet
-                                code={`<Dialog 
-  open={isOpen} 
-  onClose={() => setIsOpen(false)}
-  size="lg"
->
-  <DialogHeader>
-    <DialogTitle>Create New Item</DialogTitle>
-    <DialogDescription>
-      Fill out the form below to create a new item.
-    </DialogDescription>
-  </DialogHeader>
-  <DialogContent>
-    <form className="space-y-4">
-      <Input label="Name" placeholder="Enter name" />
-      <Input label="Email" type="email" placeholder="Enter email" />
-      <textarea 
-        className="w-full p-2 border rounded" 
-        placeholder="Description"
-      />
-    </form>
-  </DialogContent>
-  <DialogFooter>
-    <Button variant="ghost" onClick={() => setIsOpen(false)}>
-      Cancel
-    </Button>
-    <Button variant="secondary" onClick={handleSubmit}>
-      Create
-    </Button>
-  </DialogFooter>
-</Dialog>`}
-                            />
-                        </div>
-                    </div>
-
-                    {/* Example 3: Alert Dialog (No Dismiss) */}
-                    <div>
-                        <h3 className="text-md font-semibold text-gray-800 mb-3">
-                            Alert Dialog (No Dismiss)
-                        </h3>
-                        <div className="grid grid-cols-1 gap-6">
-                            <CodeSnippet
-                                code={`<Dialog 
-  open={isOpen} 
-  onClose={() => setIsOpen(false)}
-  closeOnBackdropClick={false}
-  closeOnEscape={false}
-  showCloseButton={false}
->
-  <DialogHeader>
-    <DialogTitle>Important Notice</DialogTitle>
-  </DialogHeader>
-  <DialogContent>
-    <p>This is a critical action that requires acknowledgment.</p>
-  </DialogContent>
-  <DialogFooter>
-    <Button 
-      variant="secondary" 
-      onClick={() => setIsOpen(false)}
-    >
-      I Understand
-    </Button>
-  </DialogFooter>
-</Dialog>`}
-                            />
-                        </div>
-                    </div>
                 </div>
             </section>
         </SectionLayout>

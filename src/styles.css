@@ -52,17 +52,24 @@
   --font-bold: 700;
 
   /* Component: Button */
+  --button-padding-xs-x: 0.5rem;
+  --button-padding-xs-y: 0.375rem;
   --button-padding-sm-x: 0.75rem;
   --button-padding-sm-y: 0.5rem;
   --button-padding-md-x: 1rem;
   --button-padding-md-y: 0.625rem;
   --button-padding-lg-x: 1.5rem;
   --button-padding-lg-y: 0.75rem;
-  --button-text-sm: 0.875rem;
-  --button-text-md: 1rem;
-  --button-text-lg: 1.125rem;
+  --button-padding-xl-x: 2rem;
+  --button-padding-xl-y: 1rem;
+  --button-font-size-xs: 0.75rem;
+  --button-font-size-sm: 0.875rem;
+  --button-font-size-md: 1rem;
+  --button-font-size-lg: 1.125rem;
+  --button-font-size-xl: 1.25rem;
   --button-radius: 0.5rem;
   --button-font-weight: 500;
+  --button-border-width: 1px;
 
   /* Component: Card */
   --card-padding-none: 0;
@@ -89,25 +96,44 @@
   --container-max-width-xl: 1280px;
   --container-max-width-2xl: 1536px;
 
-  /* Z-Index Scale - Will be overridden by theme */
-  --z-index-dropdown: 1000;
-  --z-index-popover: 1100;
-  --z-index-tooltip: 1500;
-  --z-index-overlay: 1200;
+  /* Z-Index Scale - Organized by layer
+   * Base: 0-9 (normal content, code blocks, relative elements)
+   * Sticky/Fixed: 10-99 (sticky headers, fixed footers)
+   * Overlays: 100-999 (dropdowns, popovers, drawers)
+   * Modals: 1000-1999 (dialogs, modals, tooltips)
+   * Notifications: 2000+ (toasts, alerts, snackbars)
+   */
+  
+  /* Base Layer (0-9) */
+  --z-index-base: 0;
+  --z-index-code-button: 1;
+  
+  /* Sticky/Fixed Layer (10-99) */
+  --z-index-sticky: 10;
   --z-index-nav: 50;
   --z-index-nav-mobile-overlay: 60;
   --z-index-nav-mobile-menu: 70;
-  --z-index-drawer-header: 100;
-  --z-index-drawer-button: 101;
-  --z-index-drawer-overlay: 90;
-  --z-index-drawer-panel: 95;
-  --z-index-modal-backdrop: 1300;
-  --z-index-modal: 1400;
-  --z-index-snackbar: 1600;
-  --z-index-toast: 1700;
+  
+  /* Overlay Layer (100-999) */
+  --z-index-drawer-overlay: 100;
+  --z-index-drawer-panel: 110;
+  --z-index-drawer-header: 120;
+  --z-index-drawer-button: 121;
+  --z-index-dropdown: 200;
+  --z-index-popover: 300;
+  --z-index-overlay: 400;
+  
+  /* Modal Layer (1000-1999) */
+  --z-index-modal-backdrop: 1000;
+  --z-index-modal: 1100;
+  --z-index-tooltip: 1200;
+  
+  /* Notification Layer (2000+) */
+  --z-index-snackbar: 2000;
+  --z-index-toast: 2100;
 
   /* Component: Nav */
-  --nav-height: 4rem;
+  --nav-height: 3.5rem;
   --nav-gap: 0.5rem;
   --nav-border-radius: 0.5rem;
   
@@ -129,4 +155,98 @@
   --nav-font-size-md: 1rem;
   --nav-font-size-lg: 1.125rem;
   --nav-font-size-xl: 1.25rem;
+
+  /* Component: Checkbox */
+  --checkbox-size-xs: 1rem;
+  --checkbox-size-sm: 1.25rem;
+  --checkbox-size-md: 1.5rem;
+  --checkbox-size-lg: 1.75rem;
+  --checkbox-size-xl: 2rem;
+  --checkbox-label-font-size-xs: 0.75rem;
+  --checkbox-label-font-size-sm: 0.875rem;
+  --checkbox-label-font-size-md: 1rem;
+  --checkbox-label-font-size-lg: 1.125rem;
+  --checkbox-label-font-size-xl: 1.25rem;
+  --checkbox-label-spacing-xs: 0.5rem;
+  --checkbox-label-spacing-sm: 0.625rem;
+  --checkbox-label-spacing-md: 0.75rem;
+  --checkbox-label-spacing-lg: 0.875rem;
+  --checkbox-label-spacing-xl: 1rem;
+
+  /* Component: Radio */
+  --radio-size-xs: 1rem;
+  --radio-size-sm: 1.25rem;
+  --radio-size-md: 1.5rem;
+  --radio-size-lg: 1.75rem;
+  --radio-size-xl: 2rem;
+  --radio-label-font-size-xs: 0.75rem;
+  --radio-label-font-size-sm: 0.875rem;
+  --radio-label-font-size-md: 1rem;
+  --radio-label-font-size-lg: 1.125rem;
+  --radio-label-font-size-xl: 1.25rem;
+  --radio-label-spacing-xs: 0.5rem;
+  --radio-label-spacing-sm: 0.625rem;
+  --radio-label-spacing-md: 0.75rem;
+  --radio-label-spacing-lg: 0.875rem;
+  --radio-label-spacing-xl: 1rem;
+
+  /* Component: Drawer */
+  --drawer-section-padding-y: 1rem;
+  --drawer-title-margin-bottom: 0.5rem;
+  --drawer-item-spacing: 0.25rem;
+  --drawer-item-padding-x: 1rem;
+  --drawer-item-padding-y: 0.625rem;
+  --drawer-font-size: 0.875rem;
+  --drawer-border-radius: 0.5rem;
+
+  /* Component: Dropdown */
+  --dropdown-radius: 0.5rem;
+  
+  /* Dropdown Trigger Padding */
+  --dropdown-padding-xs-x: 0.5rem;
+  --dropdown-padding-xs-y: 0.375rem;
+  --dropdown-padding-sm-x: 0.75rem;
+  --dropdown-padding-sm-y: 0.5rem;
+  --dropdown-padding-md-x: 0.75rem;
+  --dropdown-padding-md-y: 0.625rem;
+  --dropdown-padding-lg-x: 1rem;
+  --dropdown-padding-lg-y: 0.75rem;
+  --dropdown-padding-xl-x: 1.25rem;
+  --dropdown-padding-xl-y: 0.875rem;
+  
+  /* Dropdown Font Sizes */
+  --dropdown-font-size-xs: 0.75rem;
+  --dropdown-font-size-sm: 0.875rem;
+  --dropdown-font-size-md: 1rem;
+  --dropdown-font-size-lg: 1.125rem;
+  --dropdown-font-size-xl: 1.25rem;
+  
+  /* Dropdown Icon Sizes */
+  --dropdown-icon-size-xs: 0.875rem;
+  --dropdown-icon-size-sm: 1rem;
+  --dropdown-icon-size-md: 1.25rem;
+  --dropdown-icon-size-lg: 1.5rem;
+  --dropdown-icon-size-xl: 1.75rem;
+  
+  /* Dropdown Option Padding */
+  --dropdown-option-padding-xs-x: 0.5rem;
+  --dropdown-option-padding-xs-y: 0.375rem;
+  --dropdown-option-padding-sm-x: 0.75rem;
+  --dropdown-option-padding-sm-y: 0.5rem;
+  --dropdown-option-padding-md-x: 0.75rem;
+  --dropdown-option-padding-md-y: 0.625rem;
+  --dropdown-option-padding-lg-x: 1rem;
+  --dropdown-option-padding-lg-y: 0.75rem;
+  --dropdown-option-padding-xl-x: 1.25rem;
+  --dropdown-option-padding-xl-y: 0.875rem;
+  
+  /* Dropdown Option Font Sizes */
+  --dropdown-option-font-size-xs: 0.75rem;
+  --dropdown-option-font-size-sm: 0.875rem;
+  --dropdown-option-font-size-md: 1rem;
+  --dropdown-option-font-size-lg: 1.125rem;
+  --dropdown-option-font-size-xl: 1.25rem;
+
+  /* Component: Rating */
+  --star-size: 1.5rem;
 }

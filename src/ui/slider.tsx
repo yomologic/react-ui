@@ -417,7 +417,7 @@ export const Slider: React.FC<SliderProps> = ({
                     />
                     {showLabelAlways && (
                         <div
-                            className={`absolute ${isVertical ? "left-6" : "-top-10"} ${isVertical ? "top-1/2 -translate-y-1/2" : "left-1/2 -translate-x-1/2"} px-2 py-1 text-xs font-semibold text-white ${color === "primary" ? "bg-blue-500" : "bg-purple-500"} rounded shadow-lg whitespace-nowrap z-50`}
+                            className={`absolute ${isVertical ? "left-6" : "-top-10"} ${isVertical ? "top-1/2 -translate-y-1/2" : "left-1/2 -translate-x-1/2"} px-2 py-1 text-xs font-semibold text-white ${color === "primary" ? "bg-blue-500" : "bg-purple-500"} rounded shadow-lg whitespace-nowrap [z-index:var(--z-index-tooltip)]`}
                         >
                             {valueLabelFormat(val)}
                             <div
@@ -427,7 +427,7 @@ export const Slider: React.FC<SliderProps> = ({
                     )}
                     {showLabelOnActiveOrHover && (
                         <div
-                            className={`absolute ${isVertical ? "left-6" : "-top-10"} ${isVertical ? "top-1/2 -translate-y-1/2" : "left-1/2 -translate-x-1/2"} px-2 py-1 text-xs font-semibold text-white ${color === "primary" ? "bg-blue-500" : "bg-purple-500"} rounded shadow-lg whitespace-nowrap opacity-0 scale-90 ${isActive ? "opacity-100 scale-100" : "group-hover/thumb:opacity-100 group-hover/thumb:scale-100"} transition-all duration-300 ease-out pointer-events-none z-50`}
+                            className={`absolute ${isVertical ? "left-6" : "-top-10"} ${isVertical ? "top-1/2 -translate-y-1/2" : "left-1/2 -translate-x-1/2"} px-2 py-1 text-xs font-semibold text-white ${color === "primary" ? "bg-blue-500" : "bg-purple-500"} rounded shadow-lg whitespace-nowrap opacity-0 scale-90 ${isActive ? "opacity-100 scale-100" : "group-hover/thumb:opacity-100 group-hover/thumb:scale-100"} transition-all duration-300 ease-out pointer-events-none [z-index:var(--z-index-tooltip)]`}
                         >
                             {valueLabelFormat(val)}
                             <div
@@ -526,7 +526,7 @@ export const Slider: React.FC<SliderProps> = ({
                     return (
                         <div
                             key={mark.value}
-                            className={`group/mark absolute ${isVertical ? "left-1/2 -translate-x-1/2" : "top-1/2 -translate-y-1/2"} z-20`}
+                            className={`group/mark absolute ${isVertical ? "left-1/2 -translate-x-1/2" : "top-1/2 -translate-y-1/2"} [z-index:var(--z-index-base)]`}
                             style={markStyle}
                         >
                             <div
@@ -535,7 +535,7 @@ export const Slider: React.FC<SliderProps> = ({
                             {/* Always visible mark label at the bottom */}
                             {mark.label && (
                                 <div
-                                    className={`absolute ${isVertical ? "left-4 top-1/2 -translate-y-1/2" : "top-3 left-1/2 -translate-x-1/2"} text-xs font-medium ${labelColor} transition-colors duration-200 whitespace-nowrap pointer-events-none z-30`}
+                                    className={`absolute ${isVertical ? "left-4 top-1/2 -translate-y-1/2" : "top-3 left-1/2 -translate-x-1/2"} text-xs font-medium ${labelColor} transition-colors duration-200 whitespace-nowrap pointer-events-none [z-index:var(--z-index-base)]`}
                                 >
                                     {mark.label}
                                 </div>
@@ -543,7 +543,7 @@ export const Slider: React.FC<SliderProps> = ({
                             {/* Hover tooltip showing value (only if no permanent label) */}
                             {showMarkLabelsOnHover && !mark.label && (
                                 <div
-                                    className={`absolute ${isVertical ? "left-6 top-1/2 -translate-y-1/2" : "-top-8 left-1/2 -translate-x-1/2"} px-2 py-1 text-xs font-semibold text-white ${color === "primary" ? "bg-blue-500" : "bg-purple-500"} rounded shadow-lg whitespace-nowrap opacity-0 scale-90 group-hover/mark:opacity-100 group-hover/mark:scale-100 transition-all duration-300 ease-out pointer-events-none z-30`}
+                                    className={`absolute ${isVertical ? "left-6 top-1/2 -translate-y-1/2" : "-top-8 left-1/2 -translate-x-1/2"} px-2 py-1 text-xs font-semibold text-white ${color === "primary" ? "bg-blue-500" : "bg-purple-500"} rounded shadow-lg whitespace-nowrap opacity-0 scale-90 group-hover/mark:opacity-100 group-hover/mark:scale-100 transition-all duration-300 ease-out pointer-events-none [z-index:var(--z-index-tooltip)]`}
                                 >
                                     {valueLabelFormat(mark.value)}
                                     {/* Arrow triangle */}
