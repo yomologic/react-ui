@@ -1,7 +1,7 @@
 "use client";
 
 import {
-    Dropdown,
+    Select,
     Card,
     RadioGroup,
     Checkbox,
@@ -12,12 +12,12 @@ import {
 import { BookOpen } from "lucide-react";
 import { useState } from "react";
 
-export default function DropdownPage() {
-    // Example 1: Dropdown Sizes
+export default function SelectPage() {
+    // Example 1: Select Sizes
     const [size1, setSize1] = useState<"xs" | "sm" | "md" | "lg" | "xl">("md");
     const [selected1, setSelected1] = useState<string | number>("");
 
-    // Example 2: Dropdown States
+    // Example 2: Select States
     const [state2, setState2] = useState<"normal" | "error" | "disabled">(
         "normal"
     );
@@ -42,24 +42,24 @@ export default function DropdownPage() {
             ======================================== */}
             <section>
                 <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                    Dropdown
+                    Select
                 </h2>
                 <div className="space-y-6">
-                    {/* Example 1: Dropdown Sizes */}
+                    {/* Example 1: Select Sizes */}
                     <Card variant="bordered" padding="lg">
                         <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                            Dropdown Sizes
+                            Select Sizes
                         </h3>
                         <div className="space-y-4">
                             <p className="text-sm text-gray-600">
-                                Dropdowns come in five sizes from extra small to
-                                extra large.
+                                Select dropdowns come in five sizes from extra
+                                small to extra large.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1 min-w-0">
                                     <div className="space-y-4">
                                         <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
-                                            <Dropdown
+                                            <Select
                                                 label="Select Fruit"
                                                 placeholder="Choose a fruit"
                                                 options={fruitOptions}
@@ -97,14 +97,14 @@ export default function DropdownPage() {
                                     <CodeSnippet
                                         code={
                                             size1 === "md"
-                                                ? `<Dropdown
+                                                ? `<Select
   label="Select Fruit"
   placeholder="Choose a fruit"
   options={fruitOptions}
   value={selected}
   onChange={setSelected}
 />`
-                                                : `<Dropdown
+                                                : `<Select
   label="Select Fruit"
   placeholder="Choose a fruit"
   options={fruitOptions}
@@ -119,21 +119,21 @@ export default function DropdownPage() {
                         </div>
                     </Card>
 
-                    {/* Example 2: Dropdown States */}
+                    {/* Example 2: Select States */}
                     <Card variant="bordered" padding="lg">
                         <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                            Dropdown States
+                            Select States
                         </h3>
                         <div className="space-y-4">
                             <p className="text-sm text-gray-600">
-                                Dropdowns support normal, error, and disabled
-                                states.
+                                Select dropdowns support normal, error, and
+                                disabled states.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1 min-w-0">
                                     <div className="space-y-4">
                                         <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
-                                            <Dropdown
+                                            <Select
                                                 label="Select Fruit"
                                                 placeholder="Choose a fruit"
                                                 options={fruitOptions}
@@ -181,7 +181,7 @@ export default function DropdownPage() {
                                     <CodeSnippet
                                         code={
                                             state2 === "normal"
-                                                ? `<Dropdown
+                                                ? `<Select
   label="Select Fruit"
   placeholder="Choose a fruit"
   options={fruitOptions}
@@ -189,7 +189,7 @@ export default function DropdownPage() {
   onChange={setSelected}
 />`
                                                 : state2 === "error"
-                                                  ? `<Dropdown
+                                                  ? `<Select
   label="Select Fruit"
   placeholder="Choose a fruit"
   options={fruitOptions}
@@ -197,7 +197,7 @@ export default function DropdownPage() {
   onChange={setSelected}
   error="Please select a fruit"
 />`
-                                                  : `<Dropdown
+                                                  : `<Select
   label="Select Fruit"
   placeholder="Choose a fruit"
   options={fruitOptions}
@@ -226,7 +226,7 @@ export default function DropdownPage() {
                                 <div className="flex-1 min-w-0">
                                     <div className="space-y-4">
                                         <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
-                                            <Dropdown
+                                            <Select
                                                 label="Select Fruit"
                                                 placeholder="Choose a fruit"
                                                 options={fruitOptions}
@@ -250,7 +250,7 @@ export default function DropdownPage() {
                                     <CodeSnippet
                                         code={
                                             showHelper3
-                                                ? `<Dropdown
+                                                ? `<Select
   label="Select Fruit"
   placeholder="Choose a fruit"
   options={fruitOptions}
@@ -258,7 +258,7 @@ export default function DropdownPage() {
   onChange={setSelected}
   helperText="Choose your favorite fruit"
 />`
-                                                : `<Dropdown
+                                                : `<Select
   label="Select Fruit"
   placeholder="Choose a fruit"
   options={fruitOptions}
@@ -309,7 +309,7 @@ export default function DropdownPage() {
                                         options
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                        DropdownOption[]
+                                        SelectOption[]
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
                                         []
@@ -358,7 +358,7 @@ export default function DropdownPage() {
                                         undefined
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-700">
-                                        Label text displayed above dropdown
+                                        Label text displayed above select
                                     </td>
                                 </tr>
                                 <tr>
@@ -387,7 +387,7 @@ export default function DropdownPage() {
                                         undefined
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-700">
-                                        Custom content to render in dropdown
+                                        Custom content to render in select
                                         (overrides options)
                                     </td>
                                 </tr>
@@ -402,7 +402,7 @@ export default function DropdownPage() {
                                         false
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-700">
-                                        Disables the dropdown
+                                        Disables the select
                                     </td>
                                 </tr>
                                 <tr>
@@ -431,7 +431,7 @@ export default function DropdownPage() {
                                         undefined
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-700">
-                                        Helper text displayed below dropdown
+                                        Helper text displayed below select
                                     </td>
                                 </tr>
                                 <tr>

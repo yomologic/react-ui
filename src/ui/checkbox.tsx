@@ -18,7 +18,7 @@ export function Checkbox({
     disabled = false,
     className,
     id,
-    size = "md",
+    size = "sm",
 }: CheckboxProps) {
     // Auto-generate ID if not provided to ensure label clicking works
     const autoId = useId();
@@ -30,28 +30,12 @@ export function Checkbox({
         }
     };
 
-    const sizeStyles = {
-        xs: `[width:var(--checkbox-size-xs)] [height:var(--checkbox-size-xs)]`,
-        sm: `[width:var(--checkbox-size-sm)] [height:var(--checkbox-size-sm)]`,
-        md: `[width:var(--checkbox-size-md)] [height:var(--checkbox-size-md)]`,
-        lg: `[width:var(--checkbox-size-lg)] [height:var(--checkbox-size-lg)]`,
-        xl: `[width:var(--checkbox-size-xl)] [height:var(--checkbox-size-xl)]`,
-    };
-
-    const labelSizeStyles = {
-        xs: `[font-size:var(--checkbox-label-font-size-xs)]`,
-        sm: `[font-size:var(--checkbox-label-font-size-sm)]`,
-        md: `[font-size:var(--checkbox-label-font-size-md)]`,
-        lg: `[font-size:var(--checkbox-label-font-size-lg)]`,
-        xl: `[font-size:var(--checkbox-label-font-size-xl)]`,
-    };
-
     const containerGapStyles = {
-        xs: "gap-1.5",
+        xs: "gap-2",
         sm: "gap-2",
         md: "gap-2",
-        lg: "gap-2.5",
-        xl: "gap-2.5",
+        lg: "gap-2",
+        xl: "gap-2",
     };
 
     return (
@@ -62,27 +46,98 @@ export function Checkbox({
                 className
             )}
         >
-            <input
-                type="checkbox"
-                id={checkboxId}
-                checked={checked}
-                onChange={handleChange}
-                disabled={disabled}
-                className={cn(
-                    sizeStyles[size],
-                    "rounded-(--checkbox-radius) border-gray-400 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
-                    disabled && "cursor-not-allowed opacity-50"
-                )}
-            />
+            <div className="relative group/checkbox flex items-center shrink-0">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+                    <div
+                        className="rounded-full scale-0 group-hover/checkbox:scale-100 group-active/checkbox:scale-100 transition-transform duration-200 ease-out"
+                        style={{
+                            width:
+                                size === "xs"
+                                    ? "1.75rem"
+                                    : size === "sm"
+                                      ? "2rem"
+                                      : size === "lg"
+                                        ? "2.5rem"
+                                        : size === "xl"
+                                          ? "3rem"
+                                          : "2.25rem",
+                            height:
+                                size === "xs"
+                                    ? "1.75rem"
+                                    : size === "sm"
+                                      ? "2rem"
+                                      : size === "lg"
+                                        ? "2.5rem"
+                                        : size === "xl"
+                                          ? "3rem"
+                                          : "2.25rem",
+                            backgroundColor: "var(--checkbox-hover-bg)",
+                        }}
+                    />
+                </div>
+                <input
+                    type="checkbox"
+                    id={checkboxId}
+                    checked={checked}
+                    onChange={handleChange}
+                    disabled={disabled}
+                    className={cn(
+                        "rounded-(--checkbox-radius) focus:outline-none transition-all relative z-10",
+                        disabled && "cursor-not-allowed"
+                    )}
+                    style={{
+                        width:
+                            size === "xs"
+                                ? "var(--checkbox-size-xs)"
+                                : size === "sm"
+                                  ? "var(--checkbox-size-sm)"
+                                  : size === "lg"
+                                    ? "var(--checkbox-size-lg)"
+                                    : size === "xl"
+                                      ? "var(--checkbox-size-xl)"
+                                      : "var(--checkbox-size-md)",
+                        height:
+                            size === "xs"
+                                ? "var(--checkbox-size-xs)"
+                                : size === "sm"
+                                  ? "var(--checkbox-size-sm)"
+                                  : size === "lg"
+                                    ? "var(--checkbox-size-lg)"
+                                    : size === "xl"
+                                      ? "var(--checkbox-size-xl)"
+                                      : "var(--checkbox-size-md)",
+                        borderColor: "var(--checkbox-border-color)",
+                        color: "var(--checkbox-checked-color)",
+                        opacity: disabled
+                            ? "var(--checkbox-disabled-opacity)"
+                            : undefined,
+                    }}
+                />
+            </div>
             {label && (
                 <label
                     htmlFor={checkboxId}
                     className={cn(
-                        labelSizeStyles[size],
-                        "font-medium text-gray-600",
-                        disabled && "cursor-not-allowed opacity-50",
+                        "font-medium",
+                        disabled && "cursor-not-allowed",
                         !disabled && "cursor-pointer"
                     )}
+                    style={{
+                        fontSize:
+                            size === "xs"
+                                ? "var(--checkbox-label-font-size-xs)"
+                                : size === "sm"
+                                  ? "var(--checkbox-label-font-size-sm)"
+                                  : size === "lg"
+                                    ? "var(--checkbox-label-font-size-lg)"
+                                    : size === "xl"
+                                      ? "var(--checkbox-label-font-size-xl)"
+                                      : "var(--checkbox-label-font-size-md)",
+                        color: "var(--checkbox-label-color)",
+                        opacity: disabled
+                            ? "var(--checkbox-disabled-opacity)"
+                            : undefined,
+                    }}
                 >
                     {label}
                 </label>
@@ -120,7 +175,7 @@ export function CheckboxGroup({
     orientation = "vertical",
     required = false,
     disabled = false,
-    size = "md",
+    size = "sm",
 }: CheckboxGroupProps) {
     const handleChange = (optionValue: string, checked: boolean) => {
         if (onChange) {
@@ -132,28 +187,12 @@ export function CheckboxGroup({
         }
     };
 
-    const sizeStyles = {
-        xs: `[width:var(--checkbox-size-xs)] [height:var(--checkbox-size-xs)]`,
-        sm: `[width:var(--checkbox-size-sm)] [height:var(--checkbox-size-sm)]`,
-        md: `[width:var(--checkbox-size-md)] [height:var(--checkbox-size-md)]`,
-        lg: `[width:var(--checkbox-size-lg)] [height:var(--checkbox-size-lg)]`,
-        xl: `[width:var(--checkbox-size-xl)] [height:var(--checkbox-size-xl)]`,
-    };
-
-    const labelSizeStyles = {
-        xs: `[font-size:var(--checkbox-label-font-size-xs)]`,
-        sm: `[font-size:var(--checkbox-label-font-size-sm)]`,
-        md: `[font-size:var(--checkbox-label-font-size-md)]`,
-        lg: `[font-size:var(--checkbox-label-font-size-lg)]`,
-        xl: `[font-size:var(--checkbox-label-font-size-xl)]`,
-    };
-
     const containerGapStyles = {
-        xs: "gap-1.5",
+        xs: "gap-2",
         sm: "gap-2",
         md: "gap-2",
-        lg: "gap-2.5",
-        xl: "gap-2.5",
+        lg: "gap-2",
+        xl: "gap-2",
     };
 
     return (
@@ -169,9 +208,9 @@ export function CheckboxGroup({
             )}
             <div
                 className={cn(
-                    "space-y-2",
-                    orientation === "horizontal" &&
-                        "flex flex-wrap gap-4 space-y-0"
+                    orientation === "horizontal"
+                        ? "flex flex-wrap items-center gap-4"
+                        : "space-y-2"
                 )}
             >
                 {options.map((option) => {
@@ -184,32 +223,106 @@ export function CheckboxGroup({
                                 containerGapStyles[size]
                             )}
                         >
-                            <input
-                                type="checkbox"
-                                id={`${name}-${option.value}`}
-                                name={name}
-                                value={option.value}
-                                checked={value.includes(option.value)}
-                                onChange={(e) =>
-                                    handleChange(option.value, e.target.checked)
-                                }
-                                disabled={isDisabled}
-                                className={cn(
-                                    sizeStyles[size],
-                                    "rounded-(--checkbox-radius) border-gray-400 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
-                                    isDisabled &&
-                                        "cursor-not-allowed opacity-50"
-                                )}
-                            />
+                            <div className="relative group/checkbox flex items-center shrink-0">
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+                                    <div
+                                        className="rounded-full scale-0 group-hover/checkbox:scale-100 group-active/checkbox:scale-100 transition-transform duration-200 ease-out"
+                                        style={{
+                                            width:
+                                                size === "xs"
+                                                    ? "1.75rem"
+                                                    : size === "sm"
+                                                      ? "2rem"
+                                                      : size === "lg"
+                                                        ? "2.5rem"
+                                                        : size === "xl"
+                                                          ? "3rem"
+                                                          : "2.25rem",
+                                            height:
+                                                size === "xs"
+                                                    ? "1.75rem"
+                                                    : size === "sm"
+                                                      ? "2rem"
+                                                      : size === "lg"
+                                                        ? "2.5rem"
+                                                        : size === "xl"
+                                                          ? "3rem"
+                                                          : "2.25rem",
+                                            backgroundColor:
+                                                "var(--checkbox-hover-bg)",
+                                        }}
+                                    />
+                                </div>
+                                <input
+                                    type="checkbox"
+                                    id={`${name}-${option.value}`}
+                                    name={name}
+                                    value={option.value}
+                                    checked={value.includes(option.value)}
+                                    onChange={(e) =>
+                                        handleChange(
+                                            option.value,
+                                            e.target.checked
+                                        )
+                                    }
+                                    disabled={isDisabled}
+                                    className={cn(
+                                        "rounded-(--checkbox-radius) focus:outline-none transition-all relative z-10",
+                                        isDisabled && "cursor-not-allowed"
+                                    )}
+                                    style={{
+                                        width:
+                                            size === "xs"
+                                                ? "var(--checkbox-size-xs)"
+                                                : size === "sm"
+                                                  ? "var(--checkbox-size-sm)"
+                                                  : size === "lg"
+                                                    ? "var(--checkbox-size-lg)"
+                                                    : size === "xl"
+                                                      ? "var(--checkbox-size-xl)"
+                                                      : "var(--checkbox-size-md)",
+                                        height:
+                                            size === "xs"
+                                                ? "var(--checkbox-size-xs)"
+                                                : size === "sm"
+                                                  ? "var(--checkbox-size-sm)"
+                                                  : size === "lg"
+                                                    ? "var(--checkbox-size-lg)"
+                                                    : size === "xl"
+                                                      ? "var(--checkbox-size-xl)"
+                                                      : "var(--checkbox-size-md)",
+                                        borderColor:
+                                            "var(--checkbox-border-color)",
+                                        color: "var(--checkbox-checked-color)",
+                                        opacity: isDisabled
+                                            ? "var(--checkbox-disabled-opacity)"
+                                            : undefined,
+                                    }}
+                                />
+                            </div>
                             <label
                                 htmlFor={`${name}-${option.value}`}
                                 className={cn(
-                                    labelSizeStyles[size],
-                                    "font-medium text-gray-600",
-                                    isDisabled &&
-                                        "cursor-not-allowed opacity-50",
+                                    "font-medium",
+                                    isDisabled && "cursor-not-allowed",
                                     !isDisabled && "cursor-pointer"
                                 )}
+                                style={{
+                                    fontSize:
+                                        size === "xs"
+                                            ? "var(--checkbox-label-font-size-xs)"
+                                            : size === "sm"
+                                              ? "var(--checkbox-label-font-size-sm)"
+                                              : size === "lg"
+                                                ? "var(--checkbox-label-font-size-lg)"
+                                                : size === "xl"
+                                                  ? "var(--checkbox-label-font-size-xl)"
+                                                  : "var(--checkbox-label-font-size-md)",
+                                    color: "var(--checkbox-label-color)",
+                                    opacity: isDisabled
+                                        ? "var(--checkbox-disabled-opacity)"
+                                        : undefined,
+                                }}
                             >
                                 {option.label}
                             </label>

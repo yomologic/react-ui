@@ -48,6 +48,56 @@
   --color-error-muted-foreground: #b91c1c;
   --color-error-border: #ef4444;
 
+  /* Form Controls: Shared spacing between control and label */
+  --form-control-label-gap: 0.5rem; /* 8px / gap-2 */
+
+  /* Component: Checkbox */
+  --checkbox-size-xs: 1rem;
+  --checkbox-size-sm: 1.25rem;
+  --checkbox-size-md: 1.5rem;
+  --checkbox-size-lg: 1.75rem;
+  --checkbox-size-xl: 2rem;
+  --checkbox-label-font-size-xs: 0.75rem;
+  --checkbox-label-font-size-sm: 0.875rem;
+  --checkbox-label-font-size-md: 1rem;
+  --checkbox-label-font-size-lg: 1.125rem;
+  --checkbox-label-font-size-xl: 1.25rem;
+  --checkbox-label-spacing-xs: 0.5rem;
+  --checkbox-label-spacing-sm: 0.625rem;
+  --checkbox-label-spacing-md: 0.75rem;
+  --checkbox-label-spacing-lg: 0.875rem;
+  --checkbox-label-spacing-xl: 1rem;
+  --checkbox-radius: 0.25rem;
+  --checkbox-border-color: #9ca3af;
+  --checkbox-checked-color: #2563eb;
+  --checkbox-label-color: #4b5563;
+  --checkbox-hover-bg: rgba(37, 99, 235, 0.1);
+  --checkbox-hover-size: 2rem;
+  --checkbox-disabled-opacity: 0.5;
+
+  /* Component: Radio */
+  --radio-size-xs: 1rem;
+  --radio-size-sm: 1.25rem;
+  --radio-size-md: 1.5rem;
+  --radio-size-lg: 1.75rem;
+  --radio-size-xl: 2rem;
+  --radio-label-font-size-xs: 0.75rem;
+  --radio-label-font-size-sm: 0.875rem;
+  --radio-label-font-size-md: 1rem;
+  --radio-label-font-size-lg: 1.125rem;
+  --radio-label-font-size-xl: 1.25rem;
+  --radio-label-spacing-xs: 0.5rem;
+  --radio-label-spacing-sm: 0.625rem;
+  --radio-label-spacing-md: 0.75rem;
+  --radio-label-spacing-lg: 0.875rem;
+  --radio-label-spacing-xl: 1rem;
+  --radio-border-color: #9ca3af;
+  --radio-checked-color: #2563eb;
+  --radio-label-color: #4b5563;
+  --radio-hover-bg: rgba(37, 99, 235, 0.1);
+  --radio-hover-size: 2rem;
+  --radio-disabled-opacity: 0.5;
+
   /* Spacing */
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;

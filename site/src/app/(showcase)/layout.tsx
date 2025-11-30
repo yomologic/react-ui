@@ -43,8 +43,8 @@ const navSections: DrawerNavSection[] = [
                 icon: <Circle className="w-5 h-5" />,
             },
             {
-                id: "dropdown",
-                label: "Dropdown",
+                id: "select",
+                label: "Select",
                 icon: <ChevronDown className="w-5 h-5" />,
             },
             {

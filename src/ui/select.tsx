@@ -3,15 +3,15 @@
 import { ChevronDown } from "lucide-react";
 import { useState, useRef, useEffect, ReactNode } from "react";
 
-export interface DropdownOption {
+export interface SelectOption {
     value: string | number;
     label: string;
     disabled?: boolean;
 }
 
-export interface DropdownProps {
+export interface SelectProps {
     /**
-     * Label text displayed above the dropdown
+     * Label text displayed above the select
      */
     label?: string;
     /**
@@ -19,9 +19,9 @@ export interface DropdownProps {
      */
     placeholder?: string;
     /**
-     * Array of options for the dropdown
+     * Array of options for the select
      */
-    options?: DropdownOption[];
+    options?: SelectOption[];
     /**
      * Current selected value
      */
@@ -31,11 +31,11 @@ export interface DropdownProps {
      */
     onChange?: (value: string | number) => void;
     /**
-     * Custom content to render in the dropdown menu (overrides options)
+     * Custom content to render in the select menu (overrides options)
      */
     children?: ReactNode;
     /**
-     * Disable the dropdown
+     * Disable the select
      */
     disabled?: boolean;
     /**
@@ -43,7 +43,7 @@ export interface DropdownProps {
      */
     error?: string;
     /**
-     * Helper text to display below the dropdown
+     * Helper text to display below the select
      */
     helperText?: string;
     /**
@@ -51,7 +51,7 @@ export interface DropdownProps {
      */
     required?: boolean;
     /**
-     * Size of the dropdown
+     * Size of the select
      */
     size?: "xs" | "sm" | "md" | "lg" | "xl";
     /**
@@ -60,7 +60,7 @@ export interface DropdownProps {
     className?: string;
 }
 
-export function Dropdown({
+export function Select({
     label,
     placeholder = "Select an option",
     options = [],
@@ -73,7 +73,7 @@ export function Dropdown({
     required = false,
     size = "md",
     className = "",
-}: DropdownProps) {
+}: SelectProps) {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 

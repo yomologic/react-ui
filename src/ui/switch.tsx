@@ -117,8 +117,8 @@ export function Switch({
     };
 
     const gapStyles = {
-        start: "gap-3",
-        end: "gap-3",
+        start: "gap-2",
+        end: "gap-2",
         top: "gap-2",
         bottom: "gap-2",
     };

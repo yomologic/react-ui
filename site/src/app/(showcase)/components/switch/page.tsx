@@ -7,7 +7,6 @@ import {
     CodeSnippet,
     SectionLayout,
     Divider,
-    Checkbox,
 } from "@yomologic/react-ui";
 import { BookOpen } from "lucide-react";
 import { useState } from "react";
@@ -246,41 +245,28 @@ export default function SwitchPage() {
                         <p className="text-sm text-gray-600">
                             Normal and disabled states.
                         </p>
-                        <div className="flex flex-col sm:flex-row gap-6">
-                            <div className="flex-1 space-y-4">
-                                <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
-                                    <div className="space-y-4">
-                                        <Switch
-                                            label="Normal switch"
-                                            checked={normalChecked}
-                                            onChange={setNormalChecked}
-                                        />
-                                        {showDisabled && (
-                                            <>
-                                                <Switch
-                                                    label="Disabled (checked)"
-                                                    checked={disabledChecked}
-                                                    onChange={
-                                                        setDisabledChecked
-                                                    }
-                                                    disabled
-                                                />
-                                                <Switch
-                                                    label="Disabled (unchecked)"
-                                                    checked={false}
-                                                    disabled
-                                                />
-                                            </>
-                                        )}
-                                    </div>
+                        <div className="grid md:grid-cols-2 gap-6">
+                            <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                <div className="flex flex-col space-y-6">
+                                    <Switch
+                                        label="Normal switch"
+                                        checked={normalChecked}
+                                        onChange={setNormalChecked}
+                                    />
+                                    <Switch
+                                        label="Disabled (checked)"
+                                        checked={disabledChecked}
+                                        onChange={setDisabledChecked}
+                                        disabled
+                                    />
+                                    <Switch
+                                        label="Disabled (unchecked)"
+                                        checked={false}
+                                        disabled
+                                    />
                                 </div>
-                                <Checkbox
-                                    label="Show disabled states"
-                                    checked={showDisabled}
-                                    onChange={setShowDisabled}
-                                />
                             </div>
-                            <div className="flex-1">
+                            <div>
                                 <CodeSnippet
                                     language="tsx"
                                     code={`<Switch

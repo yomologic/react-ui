@@ -29,7 +29,7 @@ export function RadioGroup({
     orientation = "vertical",
     required = false,
     disabled = false,
-    size = "md",
+    size = "sm",
 }: RadioGroupProps) {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (onChange) {
@@ -37,28 +37,12 @@ export function RadioGroup({
         }
     };
 
-    const sizeStyles = {
-        xs: `[width:var(--radio-size-xs)] [height:var(--radio-size-xs)]`,
-        sm: `[width:var(--radio-size-sm)] [height:var(--radio-size-sm)]`,
-        md: `[width:var(--radio-size-md)] [height:var(--radio-size-md)]`,
-        lg: `[width:var(--radio-size-lg)] [height:var(--radio-size-lg)]`,
-        xl: `[width:var(--radio-size-xl)] [height:var(--radio-size-xl)]`,
-    };
-
-    const labelSizeStyles = {
-        xs: `[font-size:var(--radio-label-font-size-xs)]`,
-        sm: `[font-size:var(--radio-label-font-size-sm)]`,
-        md: `[font-size:var(--radio-label-font-size-md)]`,
-        lg: `[font-size:var(--radio-label-font-size-lg)]`,
-        xl: `[font-size:var(--radio-label-font-size-xl)]`,
-    };
-
     const containerGapStyles = {
-        xs: "gap-1.5",
+        xs: "gap-2",
         sm: "gap-2",
         md: "gap-2",
-        lg: "gap-2.5",
-        xl: "gap-2.5",
+        lg: "gap-2",
+        xl: "gap-2",
     };
 
     return (
@@ -88,30 +72,101 @@ export function RadioGroup({
                                 containerGapStyles[size]
                             )}
                         >
-                            <input
-                                type="radio"
-                                id={`${name}-${option.value}`}
-                                name={name}
-                                value={option.value}
-                                checked={value === option.value}
-                                onChange={handleChange}
-                                disabled={isDisabled}
-                                className={cn(
-                                    sizeStyles[size],
-                                    "border-gray-400 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
-                                    isDisabled &&
-                                        "cursor-not-allowed opacity-50"
-                                )}
-                            />
+                            <div className="relative group/radio flex items-center shrink-0">
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+                                    <div
+                                        className="rounded-full scale-0 group-hover/radio:scale-100 group-active/radio:scale-100 transition-transform duration-200 ease-out"
+                                        style={{
+                                            width:
+                                                size === "xs"
+                                                    ? "1.75rem"
+                                                    : size === "sm"
+                                                      ? "2rem"
+                                                      : size === "lg"
+                                                        ? "2.5rem"
+                                                        : size === "xl"
+                                                          ? "3rem"
+                                                          : "2.25rem",
+                                            height:
+                                                size === "xs"
+                                                    ? "1.75rem"
+                                                    : size === "sm"
+                                                      ? "2rem"
+                                                      : size === "lg"
+                                                        ? "2.5rem"
+                                                        : size === "xl"
+                                                          ? "3rem"
+                                                          : "2.25rem",
+                                            backgroundColor:
+                                                "var(--radio-hover-bg)",
+                                        }}
+                                    />
+                                </div>
+                                <input
+                                    type="radio"
+                                    id={`${name}-${option.value}`}
+                                    name={name}
+                                    value={option.value}
+                                    checked={value === option.value}
+                                    onChange={handleChange}
+                                    disabled={isDisabled}
+                                    className={cn(
+                                        "focus:outline-none transition-all relative z-10",
+                                        isDisabled && "cursor-not-allowed"
+                                    )}
+                                    style={{
+                                        width:
+                                            size === "xs"
+                                                ? "var(--radio-size-xs)"
+                                                : size === "sm"
+                                                  ? "var(--radio-size-sm)"
+                                                  : size === "lg"
+                                                    ? "var(--radio-size-lg)"
+                                                    : size === "xl"
+                                                      ? "var(--radio-size-xl)"
+                                                      : "var(--radio-size-md)",
+                                        height:
+                                            size === "xs"
+                                                ? "var(--radio-size-xs)"
+                                                : size === "sm"
+                                                  ? "var(--radio-size-sm)"
+                                                  : size === "lg"
+                                                    ? "var(--radio-size-lg)"
+                                                    : size === "xl"
+                                                      ? "var(--radio-size-xl)"
+                                                      : "var(--radio-size-md)",
+                                        borderColor:
+                                            "var(--radio-border-color)",
+                                        color: "var(--radio-checked-color)",
+                                        opacity: isDisabled
+                                            ? "var(--radio-disabled-opacity)"
+                                            : undefined,
+                                    }}
+                                />
+                            </div>
                             <label
                                 htmlFor={`${name}-${option.value}`}
                                 className={cn(
-                                    labelSizeStyles[size],
-                                    "font-medium text-gray-600",
-                                    isDisabled &&
-                                        "cursor-not-allowed opacity-50",
+                                    "font-medium",
+                                    isDisabled && "cursor-not-allowed",
                                     !isDisabled && "cursor-pointer"
                                 )}
+                                style={{
+                                    fontSize:
+                                        size === "xs"
+                                            ? "var(--radio-label-font-size-xs)"
+                                            : size === "sm"
+                                              ? "var(--radio-label-font-size-sm)"
+                                              : size === "lg"
+                                                ? "var(--radio-label-font-size-lg)"
+                                                : size === "xl"
+                                                  ? "var(--radio-label-font-size-xl)"
+                                                  : "var(--radio-label-font-size-md)",
+                                    color: "var(--radio-label-color)",
+                                    opacity: isDisabled
+                                        ? "var(--radio-disabled-opacity)"
+                                        : undefined,
+                                }}
                             >
                                 {option.label}
                             </label>

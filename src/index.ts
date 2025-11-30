@@ -15,7 +15,8 @@ export {
 export { Badge } from "./ui/badge";
 export { Checkbox, CheckboxGroup } from "./ui/checkbox";
 export { RadioGroup } from "./ui/radio";
-export { Dropdown } from "./ui/dropdown";
+export { Select } from "./ui/select";
+export type { SelectOption, SelectProps } from "./ui/select";
 export { Spinner } from "./ui/spinner";
 export { CodeSnippet } from "./ui/code-snippet";
 export { Rating } from "./ui/rating";

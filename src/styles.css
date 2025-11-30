@@ -172,6 +172,13 @@
   --checkbox-label-spacing-md: 0.75rem;
   --checkbox-label-spacing-lg: 0.875rem;
   --checkbox-label-spacing-xl: 1rem;
+  --checkbox-radius: 0.25rem;
+  --checkbox-border-color: #9ca3af;
+  --checkbox-checked-color: #2563eb;
+  --checkbox-label-color: #4b5563;
+  --checkbox-hover-bg: rgba(37, 99, 235, 0.1);
+  --checkbox-hover-size: 2rem;
+  --checkbox-disabled-opacity: 0.5;
 
   /* Component: Radio */
   --radio-size-xs: 1rem;
@@ -189,6 +196,15 @@
   --radio-label-spacing-md: 0.75rem;
   --radio-label-spacing-lg: 0.875rem;
   --radio-label-spacing-xl: 1rem;
+  --radio-border-color: #9ca3af;
+  --radio-checked-color: #2563eb;
+  --radio-label-color: #4b5563;
+  --radio-hover-bg: rgba(37, 99, 235, 0.1);
+  --radio-hover-size: 2rem;
+  --radio-disabled-opacity: 0.5;
+
+  /* Form Controls: Shared spacing between control and label */
+  --form-control-label-gap: 0.5rem; /* 8px / gap-2 */
 
   /* Component: Drawer */
   --drawer-section-padding-y: 1rem;
