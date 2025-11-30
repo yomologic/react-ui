@@ -114,6 +114,30 @@
   --z-index-snackbar: 2000;
   --z-index-toast: 2100;
 
+  /* Component: Nav */
+  --nav-height: 3.5rem;
+  --nav-gap: 0.5rem;
+  --nav-border-radius: 0.5rem;
+  
+  /* Nav Item Padding */
+  --nav-item-padding-xs-x: 0.5rem;
+  --nav-item-padding-xs-y: 0.25rem;
+  --nav-item-padding-sm-x: 0.75rem;
+  --nav-item-padding-sm-y: 0.5rem;
+  --nav-item-padding-md-x: 1rem;
+  --nav-item-padding-md-y: 0.625rem;
+  --nav-item-padding-lg-x: 1.5rem;
+  --nav-item-padding-lg-y: 0.75rem;
+  --nav-item-padding-xl-x: 2rem;
+  --nav-item-padding-xl-y: 1rem;
+  
+  /* Nav Font Sizes */
+  --nav-font-size-xs: 0.75rem;
+  --nav-font-size-sm: 0.875rem;
+  --nav-font-size-md: 1rem;
+  --nav-font-size-lg: 1.125rem;
+  --nav-font-size-xl: 1.25rem;
+
   /* Component: Button */
   --button-padding-sm-x: 0.75rem;
   --button-padding-sm-y: 0.5rem;

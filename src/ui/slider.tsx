@@ -407,7 +407,7 @@ export const Slider: React.FC<SliderProps> = ({
             return (
                 <div
                     key={index}
-                    className={`absolute ${isVertical ? "left-1/2 -translate-x-1/2" : "top-1/2 -translate-y-1/2"} cursor-pointer ${disabled ? "cursor-not-allowed opacity-50" : ""} group/thumb`}
+                    className={`absolute ${isVertical ? "left-1/2 -translate-x-1/2" : "top-1/2 -translate-y-1/2"} cursor-pointer ${disabled ? "cursor-not-allowed opacity-50" : ""} group/thumb z-20`}
                     style={thumbStyle}
                     onMouseDown={handleMouseDown(index)}
                     onTouchStart={handleMouseDown(index)}
@@ -508,14 +508,6 @@ export const Slider: React.FC<SliderProps> = ({
                         }
                     }
 
-                    // Check if mark is at thumb position (with tolerance for floating point)
-                    const isAtThumbPosition =
-                        isRange && Array.isArray(currentValue)
-                            ? Math.abs(mark.value - currentValue[0]) < 0.01 ||
-                              Math.abs(mark.value - currentValue[1]) < 0.01
-                            : Math.abs(mark.value - (currentValue as number)) <
-                              0.01;
-
                     const markColor = isInSelectedRange
                         ? "bg-white shadow-sm group-hover/mark:bg-white group-hover/mark:shadow-md"
                         : "bg-gray-600 group-hover/mark:bg-gray-800";
@@ -526,11 +518,11 @@ export const Slider: React.FC<SliderProps> = ({
                     return (
                         <div
                             key={mark.value}
-                            className={`group/mark absolute ${isVertical ? "left-1/2 -translate-x-1/2" : "top-1/2 -translate-y-1/2"} [z-index:var(--z-index-base)]`}
+                            className={`group/mark absolute ${isVertical ? "left-1/2 -translate-x-1/2" : "top-1/2 -translate-y-1/2"} z-30`}
                             style={markStyle}
                         >
                             <div
-                                className={`absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 ${markColor} rounded-full transition-all duration-200 ${isAtThumbPosition ? "" : "cursor-pointer group-hover/mark:w-2 group-hover/mark:h-2"} ${!disabled ? "" : "cursor-not-allowed"}`}
+                                className={`absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 ${markColor} rounded-full transition-all duration-200 cursor-pointer group-hover/mark:w-2 group-hover/mark:h-2 ${!disabled ? "" : "cursor-not-allowed"}`}
                             />
                             {/* Always visible mark label at the bottom */}
                             {mark.label && (

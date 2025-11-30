@@ -64,7 +64,10 @@ export function RadioGroup({
     return (
         <div className={className}>
             {label && (
-                <label className="block text-sm font-semibold text-gray-600 mb-1">
+                <label
+                    className="block text-sm font-semibold mb-1"
+                    style={{ color: "var(--color-muted-foreground)" }}
+                >
                     {label}
                     {required && <span className="text-red-500 ml-1">*</span>}
                 </label>

@@ -22,6 +22,8 @@ export { Rating } from "./ui/rating";
 export { Divider } from "./ui/divider";
 export { Slider } from "./ui/slider";
 export type { SliderProps, SliderMark } from "./ui/slider";
+export { Switch } from "./ui/switch";
+export type { SwitchProps } from "./ui/switch";
 export {
     Dialog,
     DialogHeader,

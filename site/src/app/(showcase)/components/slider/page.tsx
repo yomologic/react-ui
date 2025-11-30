@@ -6,8 +6,60 @@ import {
     Slider,
     SectionLayout,
     Divider,
+    Checkbox,
 } from "@yomologic/react-ui";
 import { BookOpen } from "lucide-react";
+import { useState } from "react";
+
+function DiscreteSliderExample() {
+    const [showLabels, setShowLabels] = useState(false);
+
+    const marks = showLabels
+        ? [
+              { value: 1, label: "1" },
+              { value: 2, label: "2" },
+              { value: 3, label: "3" },
+              { value: 4, label: "4" },
+              { value: 5, label: "5" },
+          ]
+        : true;
+
+    return (
+        <Card variant="bordered" padding="lg">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                Discrete Slider with Marks
+            </h3>
+            <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                    <p className="text-sm text-gray-600">
+                        Slider with step increments and visible marks.
+                    </p>
+                    <div className="p-6 pb-8 bg-gray-50 rounded-lg border border-gray-200">
+                        <Slider
+                            defaultValue={3}
+                            step={1}
+                            marks={marks}
+                            min={1}
+                            max={5}
+                            valueLabelDisplay="auto"
+                        />
+                    </div>
+                    <Checkbox
+                        id="slider-show-labels"
+                        label="Show labels"
+                        checked={showLabels}
+                        onChange={(checked) => setShowLabels(checked)}
+                    />
+                </div>
+                <div>
+                    <CodeSnippet
+                        code={`const [showLabels, setShowLabels] = useState(false);\n\nconst marks = showLabels\n  ? [\n      { value: 1, label: "1" },\n      { value: 2, label: "2" },\n      { value: 3, label: "3" },\n      { value: 4, label: "4" },\n      { value: 5, label: "5" },\n    ]\n  : true;\n\n<Checkbox\n  label="Show labels"\n  checked={showLabels}\n  onChange={(checked) => setShowLabels(checked)}\n/>\n\n<Slider\n  defaultValue={3}\n  step={1}\n  marks={marks}\n  min={1}\n  max={5}\n  valueLabelDisplay="auto"\n/>`}
+                    />
+                </div>
+            </div>
+        </Card>
+    );
+}
 
 export default function SliderPage() {
     return (
@@ -87,34 +139,7 @@ export default function SliderPage() {
                     </Card>
 
                     {/* Example 3: Discrete Slider with Marks */}
-                    <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                            Discrete Slider with Marks
-                        </h3>
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <div className="space-y-4">
-                                <p className="text-sm text-gray-600">
-                                    Slider with step increments and visible
-                                    marks.
-                                </p>
-                                <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
-                                    <Slider
-                                        defaultValue={20}
-                                        step={10}
-                                        marks
-                                        min={0}
-                                        max={100}
-                                        valueLabelDisplay="auto"
-                                    />
-                                </div>
-                            </div>
-                            <div>
-                                <CodeSnippet
-                                    code={`<Slider\n  defaultValue={20}\n  step={10}\n  marks\n  min={0}\n  max={100}\n  valueLabelDisplay="auto"\n/>`}
-                                />
-                            </div>
-                        </div>
-                    </Card>
+                    <DiscreteSliderExample />
 
                     {/* Example 4: Value Label Display */}
                     <Card variant="bordered" padding="lg">

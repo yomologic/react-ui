@@ -8,14 +8,7 @@ import {
     SectionLayout,
     Divider,
 } from "@yomologic/react-ui";
-import {
-    BookOpen,
-    Home,
-    Users,
-    Settings,
-    Bell,
-    User,
-} from "lucide-react";
+import { BookOpen, Home, Users, User } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -41,12 +34,6 @@ export default function NavPage() {
             href: "#users",
             badge: "5",
         },
-        {
-            id: "settings",
-            label: "Settings",
-            icon: <Settings className="w-4 h-4" />,
-            href: "#settings",
-        },
     ];
 
     const logoElement = (
@@ -60,10 +47,7 @@ export default function NavPage() {
     );
 
     const actionElements = (
-        <div className="flex items-center gap-3">
-            <Bell className="w-5 h-5 text-gray-600 cursor-pointer hover:text-gray-900" />
-            <User className="w-5 h-5 text-gray-600 cursor-pointer hover:text-gray-900" />
-        </div>
+        <User className="w-5 h-5 text-gray-600 cursor-pointer hover:text-gray-900" />
     );
 
     return (
@@ -80,6 +64,9 @@ export default function NavPage() {
 
                 {/* Example 1: Nav Variants */}
                 <Card variant="bordered">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                        Nav Variants
+                    </h3>
                     <div className="flex flex-col sm:flex-row gap-6">
                         {/* Left: Display + Controls */}
                         <div className="flex-1 min-w-0 space-y-4">
@@ -131,12 +118,6 @@ export default function NavPage() {
       href: "#users",
       badge: "5",
     },
-    {
-      id: "settings",
-      label: "Settings",
-      icon: <Settings className="w-4 h-4" />,
-      href: "#settings",
-    },
   ]}
   variant="${variant1}"
   activeId="home"
@@ -148,6 +129,9 @@ export default function NavPage() {
 
                 {/* Example 2: Nav Orientation */}
                 <Card variant="bordered">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                        Nav Orientation
+                    </h3>
                     <div className="flex flex-col sm:flex-row gap-6">
                         {/* Left: Display + Controls */}
                         <div className="flex-1 min-w-0 space-y-4">
@@ -197,6 +181,9 @@ export default function NavPage() {
 
                 {/* Example 3: With Logo and Actions */}
                 <Card variant="bordered">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                        With Logo and Actions
+                    </h3>
                     <div className="flex flex-col sm:flex-row gap-6">
                         {/* Left: Display */}
                         <div className="flex-1 min-w-0">
@@ -228,10 +215,7 @@ export default function NavPage() {
     />
   }
   actions={
-    <div className="flex items-center gap-3">
-      <Bell className="w-5 h-5" />
-      <User className="w-5 h-5" />
-    </div>
+    <User className="w-5 h-5" />
   }
   activeId="home"
 />`}

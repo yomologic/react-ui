@@ -17,6 +17,7 @@ import {
     MessageSquare,
     Minus,
     Sliders,
+    ToggleLeft,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -45,6 +46,11 @@ const navSections: DrawerNavSection[] = [
                 id: "dropdown",
                 label: "Dropdown",
                 icon: <ChevronDown className="w-5 h-5" />,
+            },
+            {
+                id: "switch",
+                label: "Switch",
+                icon: <ToggleLeft className="w-5 h-5" />,
             },
         ],
     },
