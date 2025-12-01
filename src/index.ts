@@ -17,6 +17,21 @@ export { Checkbox, CheckboxGroup } from "./ui/checkbox";
 export { RadioGroup } from "./ui/radio";
 export { Select } from "./ui/select";
 export type { SelectOption, SelectProps } from "./ui/select";
+export {
+    FormControl,
+    FormControlLabel,
+    FormHelperText,
+    useFormControl,
+    useFormControlContext,
+    useFormField,
+} from "./ui/form-control";
+export type {
+    FormControlProps,
+    FormControlState,
+    FormControlContextValue,
+    FormFieldProps,
+    ValidationRule,
+} from "./ui/form-control";
 export { Spinner } from "./ui/spinner";
 export { CodeSnippet } from "./ui/code-snippet";
 export { Rating } from "./ui/rating";

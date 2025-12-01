@@ -18,6 +18,7 @@ import {
     Minus,
     Sliders,
     ToggleLeft,
+    FileInput,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -51,6 +52,11 @@ const navSections: DrawerNavSection[] = [
                 id: "switch",
                 label: "Switch",
                 icon: <ToggleLeft className="w-5 h-5" />,
+            },
+            {
+                id: "form-control",
+                label: "Form Control",
+                icon: <FileInput className="w-5 h-5" />,
             },
         ],
     },
@@ -177,7 +183,7 @@ export default function ShowcaseLayout({
                 </div>
             </Header>
 
-            <main className="w-full pt-16 lg:pt-16">
+            <main className="w-full pt-16 lg:pt-16 overflow-x-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:pr-72 py-8">
                     {children}
                 </div>

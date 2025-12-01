@@ -36,7 +36,7 @@ export function CodeSnippet({
     };
 
     return (
-        <div className="relative group w-full min-w-0">
+        <div className="relative group w-full">
             {/* Copy Button */}
             <div className="absolute right-3 top-3 [z-index:var(--z-index-code-button)]">
                 <button
