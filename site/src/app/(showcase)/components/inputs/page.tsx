@@ -376,7 +376,181 @@ export default function InputsPage() {
             <Divider className="my-12" />
 
             {/* ========================================
-                SECTION 2: API REFERENCE
+                SECTION 2: VALIDATION EXAMPLES
+            ======================================== */}
+            <section>
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                    Validation
+                </h2>
+                <div className="space-y-6">
+                    {/* Example 1: Built-in validation */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Built-in Validation
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Input supports HTML5 validation attributes like
+                                required, minLength, maxLength, pattern, etc.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1">
+                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
+                                        <Input
+                                            id="validation-username-builtin"
+                                            label="Username"
+                                            required
+                                            minLength={3}
+                                            maxLength={15}
+                                            helperText="This field is required"
+                                            placeholder="Enter username"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex-1">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<Input
+  label="Username"
+  required
+  minLength={3}
+  maxLength={15}
+  helperText="This field is required"
+  placeholder="Enter username"
+/>`}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+
+                    {/* Example 2: Custom validation */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Custom Validation
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Use the validate prop to provide custom
+                                validation logic with regex patterns or custom
+                                rules.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1">
+                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
+                                        <Input
+                                            id="validation-username-custom"
+                                            label="Username"
+                                            required
+                                            validate={(value) => {
+                                                if (value.includes(" ")) {
+                                                    return "Username cannot contain spaces";
+                                                }
+                                                if (
+                                                    value.length < 3 ||
+                                                    value.length > 15
+                                                ) {
+                                                    return "Username must be 3-15 characters";
+                                                }
+                                                return undefined;
+                                            }}
+                                            helperText="No spaces, 3-15 characters"
+                                            placeholder="john_doe"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex-1">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<Input
+  label="Username"
+  required
+  validate={(value) => {
+    if (value.includes(" ")) {
+      return "Cannot contain spaces";
+    }
+    if (value.length < 3 || value.length > 15) {
+      return "Must be 3-15 characters";
+    }
+    return undefined;
+  }}
+  helperText="No spaces, 3-15 characters"
+/>`}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+
+                    {/* Example 3: Async validation */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Async Validation
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                The validate function can be async, useful for
+                                checking username availability or other
+                                server-side validations.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1">
+                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
+                                        <Input
+                                            id="validation-username-async"
+                                            label="Username"
+                                            required
+                                            validate={async (value) => {
+                                                // Simulate API call
+                                                await new Promise((resolve) =>
+                                                    setTimeout(resolve, 500)
+                                                );
+                                                if (
+                                                    [
+                                                        "admin",
+                                                        "test",
+                                                        "user",
+                                                    ].includes(
+                                                        value.toLowerCase()
+                                                    )
+                                                ) {
+                                                    return "Username is already taken";
+                                                }
+                                                return undefined;
+                                            }}
+                                            helperText="Try: admin, test, or user"
+                                            placeholder="johndoe"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex-1">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<Input
+  label="Username"
+  required
+  validate={async (value) => {
+    // Check with API
+    const response = await checkUsername(value);
+    if (response.taken) {
+      return "Username is already taken";
+    }
+    return undefined;
+  }}
+  helperText="Check availability"
+/>`}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+                </div>
+            </section>
+
+            <Divider className="my-12" />
+
+            {/* ========================================
+                SECTION 3: API REFERENCE
             ======================================== */}
             <section>
                 <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">

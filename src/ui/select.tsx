@@ -58,6 +58,16 @@ export interface SelectProps {
      * Additional CSS classes
      */
     className?: string;
+    /**
+     * Custom validation function that returns error message or undefined if valid
+     */
+    validate?: (
+        value: string | number
+    ) => string | undefined | Promise<string | undefined>;
+    /**
+     * Callback when validation error changes
+     */
+    onValidationError?: (error: string | undefined) => void;
 }
 
 export function Select({
@@ -149,7 +159,7 @@ export function Select({
                     style={{ color: "var(--color-muted-foreground)" }}
                 >
                     {label}
-                    {required && <span className="text-red-500 ml-1">*</span>}
+                    {required && <span className="ml-1">*</span>}
                 </label>
             )}
 
@@ -243,13 +253,15 @@ export function Select({
             </div>
 
             {/* Helper Text or Error */}
-            {(helperText || error) && (
-                <p
-                    className={`mt-1 text-xs ${error ? "text-red-600" : "text-gray-500"}`}
-                >
-                    {error || helperText}
-                </p>
-            )}
+            <div className="h-5 mt-1.5">
+                {(helperText || error) && (
+                    <p
+                        className={`text-xs ${error ? "text-red-600" : "text-gray-500"}`}
+                    >
+                        {error || helperText}
+                    </p>
+                )}
+            </div>
         </div>
     );
 }

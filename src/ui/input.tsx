@@ -1,15 +1,35 @@
-import React, { useId, useEffect, useRef } from "react";
+import React, { useId, useEffect, useRef, useState } from "react";
 import { cn } from "../lib/utils";
+import { useForm, ValidationFunction } from "./form";
 import { useFormControl } from "./form-control";
 
 export interface InputProps
-    extends React.InputHTMLAttributes<HTMLInputElement> {
+    extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "pattern"> {
+    /** Field name - required when used inside Form */
+    name?: string;
     label?: string;
     error?: string;
     helperText?: string;
     leftIcon?: React.ReactNode;
     rightIcon?: React.ReactNode;
     fullWidth?: boolean;
+    /** Custom validation function that returns error message or undefined if valid */
+    validate?: ValidationFunction;
+    /** Callback when validation error changes */
+    onValidationError?: (error: string | undefined) => void;
+    /** Regex pattern for validation (string or RegExp) */
+    pattern?: RegExp | string;
+    /** Custom error messages for built-in validations */
+    errorMessages?: {
+        required?: string;
+        minLength?: string;
+        maxLength?: string;
+        min?: string;
+        max?: string;
+        pattern?: string;
+        email?: string;
+        url?: string;
+    };
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -17,6 +37,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {
             className,
             type = "text",
+            name,
             label,
             error,
             helperText,
@@ -27,36 +48,285 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             onChange,
             onBlur,
             value: externalValue,
+            validate,
+            onValidationError,
+            pattern,
+            errorMessages,
             ...props
         },
         ref
     ) => {
         const autoId = useId();
-        const formControl = useFormControl();
+        const form = useForm(); // New Form context
+        const formControl = useFormControl(); // Old FormControl context (backwards compat)
         const internalRef = useRef<HTMLInputElement>(null);
+        const [validationError, setValidationError] = useState<
+            string | undefined
+        >();
 
-        // Use formControl context if available, otherwise use props
-        const inputId = id || formControl?.fieldId || `input-${autoId}`;
-        const inputError = formControl?.error || error;
-        const inputValue = formControl?.value ?? externalValue;
+        // Generate stable ID only once
+        const stableId = useRef<string>();
+        if (!stableId.current) {
+            stableId.current = id || formControl?.fieldId || `input-${autoId}`;
+        }
+
+        // Priority: Form context > FormControl context > props
+        const inputId = stableId.current;
         const isDisabled = props.disabled || formControl?.isDisabled;
         const isRequired = props.required || formControl?.isRequired;
 
-        // Register with FormControl on mount
-        useEffect(() => {
-            const inputElement = internalRef.current;
-            if (inputElement && formControl) {
-                formControl.registerControl(inputElement);
-                return () => formControl.unregisterControl(inputElement);
+        // For error: check Form context first, then FormControl, then prop, then internal validation
+        let inputError: string | undefined;
+        let inputValue: React.InputHTMLAttributes<HTMLInputElement>["value"];
+
+        if (form && name) {
+            // Using new Form context
+            inputError = form.shouldShowError(name)
+                ? form.getFieldError(name)
+                : undefined;
+            // Use empty string as default to keep input controlled, but form will only have value when user types
+            inputValue =
+                form.values[name] !== undefined
+                    ? form.values[name]
+                    : (externalValue ?? "");
+        } else if (formControl) {
+            // Using old FormControl context (backwards compat)
+            inputError = formControl.error || error || validationError;
+            inputValue = formControl.value ?? externalValue;
+        } else {
+            // Standalone usage
+            inputError = error || validationError;
+            inputValue = externalValue;
+        }
+
+        // Built-in validation
+        const runBuiltInValidation = (value: string): string | undefined => {
+            // Required validation
+            if (isRequired && !value) {
+                return errorMessages?.required || "This field is required";
             }
-        }, [formControl]);
+
+            // Type-specific validation
+            if (value) {
+                // Email validation
+                if (type === "email" && !value.includes("@")) {
+                    return (
+                        errorMessages?.email ||
+                        "Please enter a valid email address"
+                    );
+                }
+
+                // URL validation
+                if (type === "url") {
+                    try {
+                        new URL(value);
+                    } catch {
+                        return errorMessages?.url || "Please enter a valid URL";
+                    }
+                }
+
+                // Number validation
+                if (type === "number") {
+                    const numValue = parseFloat(value);
+                    if (
+                        props.min !== undefined &&
+                        numValue < Number(props.min)
+                    ) {
+                        return (
+                            errorMessages?.min ||
+                            `Minimum value is ${props.min}`
+                        );
+                    }
+                    if (
+                        props.max !== undefined &&
+                        numValue > Number(props.max)
+                    ) {
+                        return (
+                            errorMessages?.max ||
+                            `Maximum value is ${props.max}`
+                        );
+                    }
+                }
+
+                // MinLength validation
+                if (
+                    props.minLength !== undefined &&
+                    value.length < props.minLength
+                ) {
+                    return (
+                        errorMessages?.minLength ||
+                        `Minimum length is ${props.minLength} characters`
+                    );
+                }
+
+                // MaxLength validation
+                if (
+                    props.maxLength !== undefined &&
+                    value.length > props.maxLength
+                ) {
+                    return (
+                        errorMessages?.maxLength ||
+                        `Maximum length is ${props.maxLength} characters`
+                    );
+                }
+
+                // Pattern validation
+                if (pattern) {
+                    const regex =
+                        typeof pattern === "string"
+                            ? new RegExp(pattern)
+                            : pattern;
+                    if (!regex.test(value)) {
+                        return errorMessages?.pattern || "Invalid format";
+                    }
+                }
+            }
+
+            return undefined;
+        };
+
+        // Run validation (built-in + custom)
+        const runValidation = async (value: string) => {
+            // Run built-in validation first
+            const builtInError = runBuiltInValidation(value);
+            if (builtInError) {
+                setValidationError(builtInError);
+                onValidationError?.(builtInError);
+                return;
+            }
+
+            // Run custom validation if provided
+            if (validate) {
+                const customError = await validate(value);
+                setValidationError(customError);
+                onValidationError?.(customError);
+                return;
+            }
+
+            // No errors
+            setValidationError(undefined);
+            onValidationError?.(undefined);
+        };
+
+        // Register with Form or FormControl on mount
+        useEffect(() => {
+            if (form && name) {
+                // Register with new Form
+                const validator: ValidationFunction = async (value: string) => {
+                    // Built-in validation
+                    if (isRequired && !value) {
+                        return (
+                            errorMessages?.required || "This field is required"
+                        );
+                    }
+
+                    if (value) {
+                        // Type-specific validation
+                        if (type === "email" && !value.includes("@")) {
+                            return (
+                                errorMessages?.email ||
+                                "Please enter a valid email address"
+                            );
+                        }
+
+                        if (type === "url") {
+                            try {
+                                new URL(value);
+                            } catch {
+                                return (
+                                    errorMessages?.url ||
+                                    "Please enter a valid URL"
+                                );
+                            }
+                        }
+
+                        if (type === "number") {
+                            const numValue = parseFloat(value);
+                            if (
+                                props.min !== undefined &&
+                                numValue < Number(props.min)
+                            ) {
+                                return (
+                                    errorMessages?.min ||
+                                    `Minimum value is ${props.min}`
+                                );
+                            }
+                            if (
+                                props.max !== undefined &&
+                                numValue > Number(props.max)
+                            ) {
+                                return (
+                                    errorMessages?.max ||
+                                    `Maximum value is ${props.max}`
+                                );
+                            }
+                        }
+
+                        if (
+                            props.minLength !== undefined &&
+                            value.length < props.minLength
+                        ) {
+                            return (
+                                errorMessages?.minLength ||
+                                `Minimum length is ${props.minLength} characters`
+                            );
+                        }
+
+                        if (
+                            props.maxLength !== undefined &&
+                            value.length > props.maxLength
+                        ) {
+                            return (
+                                errorMessages?.maxLength ||
+                                `Maximum length is ${props.maxLength} characters`
+                            );
+                        }
+
+                        if (pattern) {
+                            const regex =
+                                typeof pattern === "string"
+                                    ? new RegExp(pattern)
+                                    : pattern;
+                            if (!regex.test(value)) {
+                                return (
+                                    errorMessages?.pattern || "Invalid format"
+                                );
+                            }
+                        }
+                    }
+
+                    // Custom validation
+                    if (validate) {
+                        return await validate(value);
+                    }
+
+                    return undefined;
+                };
+
+                form.registerField(name, validator);
+                return () => form.unregisterField(name);
+            } else if (formControl) {
+                // Register with old FormControl (backwards compat)
+                const inputElement = internalRef.current;
+                if (inputElement) {
+                    formControl.registerControl(inputElement);
+                    return () => formControl.unregisterControl(inputElement);
+                }
+            }
+        }, [form, formControl, name]);
 
         const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             const newValue = e.target.value;
 
-            // Update FormControl if available
-            if (formControl) {
+            if (form && name) {
+                // Update Form context
+                form.setFieldValue(name, newValue);
+            } else if (formControl) {
+                // Update FormControl (backwards compat)
                 formControl.setValue(newValue);
+            } else {
+                // Standalone - run validation
+                runValidation(newValue);
             }
 
             // Call external onChange
@@ -64,9 +334,17 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         };
 
         const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-            // Mark as touched in FormControl
-            if (formControl) {
+            if (form && name) {
+                // Mark as touched in Form
+                form.setFieldTouched(name, true);
+            } else if (formControl) {
+                // Mark as touched in FormControl (backwards compat)
                 formControl.setTouched(true);
+            } else {
+                // Standalone - run validation
+                if (e.target.value) {
+                    runValidation(e.target.value);
+                }
             }
 
             // Call external onBlur
@@ -74,21 +352,23 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         };
 
         // If used within FormControl, don't render label/error (FormControl handles it)
+        // If used within Form, render everything (Form doesn't wrap controls)
         const shouldRenderLabel = label && !formControl;
-        const shouldRenderError =
-            (inputError && !formControl) || (inputError && !formControl?.error);
+        const shouldRenderError = inputError && !formControl;
 
         return (
-            <div className={cn("flex flex-col", fullWidth && "w-full")}>
+            <div
+                className={cn("flex flex-col", fullWidth && "w-full")}
+                suppressHydrationWarning
+            >
                 {shouldRenderLabel && (
                     <label
                         htmlFor={inputId}
                         className="block text-sm font-semibold text-gray-600 mb-1"
+                        suppressHydrationWarning
                     >
                         {label}
-                        {isRequired && (
-                            <span className="text-red-500 ml-1">*</span>
-                        )}
+                        {isRequired && <span className="ml-1">*</span>}
                     </label>
                 )}
 
@@ -116,6 +396,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                         onBlur={handleBlur}
                         disabled={isDisabled}
                         required={isRequired}
+                        pattern={
+                            pattern instanceof RegExp ? pattern.source : pattern
+                        }
                         aria-invalid={!!inputError}
                         aria-describedby={
                             inputError
@@ -124,6 +407,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                                   ? `${inputId}-helper`
                                   : undefined
                         }
+                        suppressHydrationWarning
                         className={cn(
                             "w-full px-3 py-2 border rounded-md transition-colors",
                             "text-gray-700 placeholder-gray-400",
@@ -146,24 +430,28 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     )}
                 </div>
 
-                {shouldRenderError && (
-                    <p
-                        className="mt-1 text-sm text-red-600"
-                        id={`${inputId}-error`}
-                        role="alert"
-                    >
-                        {inputError}
-                    </p>
-                )}
+                <div className="h-5 mt-1.5" suppressHydrationWarning>
+                    {shouldRenderError && inputError && (
+                        <p
+                            className="text-xs text-red-600"
+                            id={`${inputId}-error`}
+                            role="alert"
+                            suppressHydrationWarning
+                        >
+                            {inputError}
+                        </p>
+                    )}
 
-                {helperText && !inputError && !formControl && (
-                    <p
-                        className="mt-1 text-sm text-gray-500"
-                        id={`${inputId}-helper`}
-                    >
-                        {helperText}
-                    </p>
-                )}
+                    {helperText && !inputError && !formControl && (
+                        <p
+                            className="text-xs text-gray-500"
+                            id={`${inputId}-helper`}
+                            suppressHydrationWarning
+                        >
+                            {helperText}
+                        </p>
+                    )}
+                </div>
             </div>
         );
     }

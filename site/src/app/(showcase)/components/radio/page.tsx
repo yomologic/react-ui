@@ -1,6 +1,12 @@
 "use client";
 
-import { Card, RadioGroup, CodeSnippet, Divider } from "@yomologic/react-ui";
+import {
+    Card,
+    RadioGroup,
+    CodeSnippet,
+    Divider,
+    Button,
+} from "@yomologic/react-ui";
 import { SectionLayout } from "@yomologic/react-ui";
 import { BookOpen } from "lucide-react";
 import { useState } from "react";
@@ -20,6 +26,19 @@ export default function RadioPage() {
 
     // Example 4: Required Field
     const [requiredDemo, setRequiredDemo] = useState("");
+
+    // Validation example
+    const [selectedPlan, setSelectedPlan] = useState("");
+    const [planError, setPlanError] = useState("");
+
+    const handleSubmit = () => {
+        if (!selectedPlan) {
+            setPlanError("Please select a plan to continue");
+        } else {
+            setPlanError("");
+            alert(`Plan selected: ${selectedPlan}`);
+        }
+    };
 
     return (
         <SectionLayout>
@@ -307,6 +326,105 @@ export default function RadioPage() {
     { value: "maybe", label: "Maybe" }
   ]}
 />`}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+                </div>
+            </section>
+
+            <Divider className="my-12" />
+
+            {/* ========================================
+                VALIDATION EXAMPLES
+            ======================================== */}
+            <section>
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                    Validation
+                </h2>
+                <div className="space-y-6">
+                    {/* Example 1: Required RadioGroup */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Required RadioGroup
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                RadioGroup validation is triggered on form
+                                submit. Click Continue without selecting to see
+                                the error.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1">
+                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
+                                        <RadioGroup
+                                            label="Select a plan"
+                                            name="validation-plan"
+                                            value={selectedPlan}
+                                            onChange={setSelectedPlan}
+                                            required
+                                            options={[
+                                                {
+                                                    value: "free",
+                                                    label: "Free Plan",
+                                                },
+                                                {
+                                                    value: "pro",
+                                                    label: "Pro Plan",
+                                                },
+                                                {
+                                                    value: "enterprise",
+                                                    label: "Enterprise Plan",
+                                                },
+                                            ]}
+                                            error={planError}
+                                            helperText={
+                                                !planError
+                                                    ? "Choose the plan that fits your needs"
+                                                    : ""
+                                            }
+                                        />
+                                        <Button
+                                            variant="primary"
+                                            onClick={handleSubmit}
+                                        >
+                                            Continue
+                                        </Button>
+                                    </div>
+                                </div>
+                                <div className="flex-1">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`const [selectedPlan, setSelectedPlan] = useState("");
+const [planError, setPlanError] = useState("");
+
+const handleSubmit = () => {
+  if (!selectedPlan) {
+    setPlanError("Please select a plan");
+  } else {
+    setPlanError("");
+    // Process selection
+  }
+};
+
+<RadioGroup
+  label="Select a plan"
+  name="plan"
+  value={selectedPlan}
+  onChange={setSelectedPlan}
+  required
+  options={[
+    { value: "free", label: "Free Plan" },
+    { value: "pro", label: "Pro Plan" },
+    { value: "enterprise", label: "Enterprise" },
+  ]}
+  error={planError}
+  helperText="Choose your plan"
+/>
+<Button onClick={handleSubmit}>
+  Continue
+</Button>`}
                                     />
                                 </div>
                             </div>

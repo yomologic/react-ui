@@ -6,6 +6,7 @@ import {
     useState,
     useCallback,
     useId,
+    useRef,
     ReactNode,
     cloneElement,
     isValidElement,
@@ -89,7 +90,7 @@ export interface FormControlProps {
     onChange?: (value: any) => void;
     /** Callback when field is blurred */
     onBlur?: () => void;
-    /** Whether the field is required */
+    /** Whether the field is required (shows asterisk in label) */
     required?: boolean;
     /** Whether the field is disabled */
     disabled?: boolean;
@@ -240,7 +241,12 @@ export function FormControl({
     asChild = false,
 }: FormControlProps) {
     const autoId = useId();
-    const fieldId = name ? `field-${name}-${autoId}` : `field-${autoId}`;
+    // Use name as stable ID if provided, otherwise fallback to useId
+    const stableFieldId = useRef<string>();
+    if (!stableFieldId.current) {
+        stableFieldId.current = name ? `field-${name}` : `field-${autoId}`;
+    }
+    const fieldId = stableFieldId.current;
 
     // State management
     const isControlled = controlledValue !== undefined;
@@ -485,9 +491,7 @@ export function FormControl({
                         style={{ color: "var(--color-muted-foreground)" }}
                     >
                         {label}
-                        {required && (
-                            <span className="text-red-500 ml-1">*</span>
-                        )}
+                        {required && <span className="ml-1">*</span>}
                     </label>
                 )}
 
@@ -495,19 +499,21 @@ export function FormControl({
                 {renderChildren()}
 
                 {/* Helper text or error message */}
-                {(helperText || currentError) && (
-                    <p
-                        className={cn(
-                            "mt-1 text-xs",
-                            currentError ? "text-red-600" : "text-gray-500"
-                        )}
-                        id={`${fieldId}-message`}
-                        role={currentError ? "alert" : undefined}
-                        aria-live={currentError ? "polite" : undefined}
-                    >
-                        {currentError || helperText}
-                    </p>
-                )}
+                <div className="h-5 mt-1.5">
+                    {(helperText || currentError) && (
+                        <p
+                            className={cn(
+                                "text-xs",
+                                currentError ? "text-red-600" : "text-gray-500"
+                            )}
+                            id={`${fieldId}-message`}
+                            role={currentError ? "alert" : undefined}
+                            aria-live={currentError ? "polite" : undefined}
+                        >
+                            {currentError || helperText}
+                        </p>
+                    )}
+                </div>
             </div>
         </FormControlContext.Provider>
     );
@@ -601,16 +607,18 @@ export function FormHelperText({
     const isError = error || (formControl?.error && !formControl.isValid);
 
     return (
-        <p
-            className={cn(
-                "mt-1 text-xs",
-                isError ? "text-red-600" : "text-gray-500",
-                className
-            )}
-            role={isError ? "alert" : undefined}
-            aria-live={isError ? "polite" : undefined}
-        >
-            {children}
-        </p>
+        <div className="h-5 mt-1.5">
+            <p
+                className={cn(
+                    "text-xs",
+                    isError ? "text-red-600" : "text-gray-500",
+                    className
+                )}
+                role={isError ? "alert" : undefined}
+                aria-live={isError ? "polite" : undefined}
+            >
+                {children}
+            </p>
+        </div>
     );
 }

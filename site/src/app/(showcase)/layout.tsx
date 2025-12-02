@@ -18,7 +18,7 @@ import {
     Minus,
     Sliders,
     ToggleLeft,
-    FileInput,
+    Form,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -54,9 +54,9 @@ const navSections: DrawerNavSection[] = [
                 icon: <ToggleLeft className="w-5 h-5" />,
             },
             {
-                id: "form-control",
-                label: "Form Control",
-                icon: <FileInput className="w-5 h-5" />,
+                id: "form",
+                label: "Form",
+                icon: <Form className="w-5 h-5" />,
             },
         ],
     },

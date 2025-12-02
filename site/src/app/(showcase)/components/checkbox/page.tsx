@@ -33,6 +33,9 @@ export default function CheckboxPage() {
     const [agreeToTerms, setAgreeToTerms] = useState(false);
     const [subscribeNewsletter, setSubscribeNewsletter] = useState(true);
 
+    // State for Validation example
+    const [acceptTerms, setAcceptTerms] = useState(false);
+
     return (
         <SectionLayout>
             {/* ========================================
@@ -337,7 +340,56 @@ export default function CheckboxPage() {
             <Divider className="my-12" />
 
             {/* ========================================
-                SECTION 2: API REFERENCE
+                SECTION 2: VALIDATION EXAMPLES
+            ======================================== */}
+            <section>
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                    Validation
+                </h2>
+                <div className="space-y-6">
+                    {/* Example 1: Required Checkbox */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Required Checkbox
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Use the required prop with custom error messages
+                                for checkboxes that must be checked.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1">
+                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
+                                        <Checkbox
+                                            id="validation-terms-checkbox"
+                                            label="I accept the terms and conditions"
+                                            checked={acceptTerms}
+                                            onChange={setAcceptTerms}
+                                            required
+                                            errorMessage="You must accept the terms to continue"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex-1">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<Checkbox
+  label="I accept the terms and conditions"
+  required
+  errorMessage="You must accept the terms to continue"
+/>`}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+                </div>
+            </section>
+
+            <Divider className="my-12" />
+
+            {/* ========================================
+                SECTION 3: API REFERENCE
             ======================================== */}
             <section>
                 <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">

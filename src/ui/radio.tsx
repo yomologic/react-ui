@@ -1,4 +1,6 @@
+import { useState, useEffect } from "react";
 import { cn } from "../lib/utils";
+import { useForm, ValidationFunction } from "./form";
 
 interface RadioOption {
     value: string;
@@ -17,23 +19,88 @@ interface RadioGroupProps {
     required?: boolean;
     disabled?: boolean;
     size?: "xs" | "sm" | "md" | "lg" | "xl";
+    error?: string;
+    helperText?: string;
+    errorMessage?: string;
+    validate?: ValidationFunction;
 }
 
 export function RadioGroup({
     label,
     name,
     options,
-    value,
+    value: externalValue,
     onChange,
     className,
     orientation = "vertical",
     required = false,
     disabled = false,
     size = "sm",
+    error,
+    helperText,
+    errorMessage,
+    validate,
 }: RadioGroupProps) {
+    const form = useForm();
+    const [validationError, setValidationError] = useState<
+        string | undefined
+    >();
+    const [touched, setTouched] = useState(false);
+
+    // Determine value source
+    let value: string | undefined;
+    let displayError: string | undefined;
+
+    if (form && name) {
+        // Using Form context
+        value = form.values[name] ?? externalValue;
+        displayError = form.shouldShowError(name)
+            ? form.getFieldError(name)
+            : undefined;
+    } else {
+        // Standalone usage
+        value = externalValue;
+        displayError = error || validationError;
+    }
+
+    // Register with Form
+    useEffect(() => {
+        if (form && name) {
+            const validator: ValidationFunction = async (val: string) => {
+                if (required && !val) {
+                    return errorMessage || "Please select an option";
+                }
+                if (validate) {
+                    return await validate(val);
+                }
+                return undefined;
+            };
+
+            form.registerField(name, validator);
+            return () => form.unregisterField(name);
+        }
+    }, [form, name]);
+
+    // Validate on value change if touched (standalone mode only)
+    useEffect(() => {
+        if (!form && touched && required && !value) {
+            setValidationError(errorMessage || "Please select an option");
+        } else if (!form) {
+            setValidationError(undefined);
+        }
+    }, [value, touched, required, errorMessage, form]);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (onChange) {
-            onChange(e.target.value);
+        const newValue = e.target.value;
+
+        if (form && name) {
+            // Update Form context
+            form.setFieldValue(name, newValue);
+            form.setFieldTouched(name, true);
+        } else {
+            // Standalone mode
+            setTouched(true);
+            onChange?.(newValue);
         }
     };
 
@@ -53,7 +120,7 @@ export function RadioGroup({
                     style={{ color: "var(--color-muted-foreground)" }}
                 >
                     {label}
-                    {required && <span className="text-red-500 ml-1">*</span>}
+                    {required && <span className="ml-1">*</span>}
                 </label>
             )}
             <div
@@ -173,6 +240,16 @@ export function RadioGroup({
                         </div>
                     );
                 })}
+            </div>
+            <div className="h-5 mt-1.5">
+                {(displayError || helperText) && (
+                    <p
+                        className={`text-xs ${displayError ? "text-red-600" : "text-gray-500"}`}
+                        role={displayError ? "alert" : undefined}
+                    >
+                        {displayError || helperText}
+                    </p>
+                )}
             </div>
         </div>
     );

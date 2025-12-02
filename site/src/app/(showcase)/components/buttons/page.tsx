@@ -49,7 +49,6 @@ export default function ButtonsPage() {
                                                     | "secondary"
                                                     | "outline"
                                                     | "ghost"
-                                                    | "default"
                                             }
                                         >
                                             Click Me
@@ -78,10 +77,6 @@ export default function ButtonsPage() {
                                                 {
                                                     value: "ghost",
                                                     label: "Ghost",
-                                                },
-                                                {
-                                                    value: "default",
-                                                    label: "Default",
                                                 },
                                             ]}
                                         />
@@ -432,9 +427,9 @@ export default function ButtonsPage() {
                                         &quot;primary&quot; |
                                         &quot;secondary&quot; |
                                         &quot;outline&quot; | &quot;ghost&quot;
-                                        | &quot;default&quot; | &quot;info&quot;
-                                        | &quot;success&quot; |
-                                        &quot;warning&quot; | &quot;error&quot;
+                                        | &quot;info&quot; | &quot;success&quot;
+                                        | &quot;warning&quot; |
+                                        &quot;error&quot;
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
                                         &quot;primary&quot;

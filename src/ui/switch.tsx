@@ -194,7 +194,7 @@ export function Switch({
                 }
             >
                 {label}
-                {required && <span className="text-red-500 ml-1">*</span>}
+                {required && <span className="ml-1">*</span>}
             </span>
             {name && (
                 <input
