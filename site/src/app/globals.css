@@ -24,11 +24,11 @@
   --color-border: #9ca3af;
 
   /* Semantic Colors - Shared across all components */
-  --color-info: #3b82f6;
+  --color-info: var(--color-primary);
   --color-info-foreground: #ffffff;
   --color-info-muted: #eff6ff;
-  --color-info-muted-foreground: #1d4ed8;
-  --color-info-border: #3b82f6;
+  --color-info-muted-foreground: var(--color-primary-active);
+  --color-info-border: var(--color-primary);
   
   --color-success: #22c55e;
   --color-success-foreground: #ffffff;
@@ -57,20 +57,20 @@
   --checkbox-size-md: 1.5rem;
   --checkbox-size-lg: 1.75rem;
   --checkbox-size-xl: 2rem;
-  --checkbox-label-font-size-xs: 0.75rem;
-  --checkbox-label-font-size-sm: 0.875rem;
-  --checkbox-label-font-size-md: 1rem;
-  --checkbox-label-font-size-lg: 1.125rem;
-  --checkbox-label-font-size-xl: 1.25rem;
+  --checkbox-label-font-size-xs: var(--text-xs);
+  --checkbox-label-font-size-sm: var(--text-sm);
+  --checkbox-label-font-size-md: var(--text-base);
+  --checkbox-label-font-size-lg: var(--text-lg);
+  --checkbox-label-font-size-xl: var(--text-xl);
   --checkbox-label-spacing-xs: 0.5rem;
   --checkbox-label-spacing-sm: 0.625rem;
   --checkbox-label-spacing-md: 0.75rem;
   --checkbox-label-spacing-lg: 0.875rem;
   --checkbox-label-spacing-xl: 1rem;
   --checkbox-radius: 0.25rem;
-  --checkbox-border-color: #9ca3af;
-  --checkbox-checked-color: #2563eb;
-  --checkbox-label-color: #4b5563;
+  --checkbox-border-color: var(--color-border);
+  --checkbox-checked-color: var(--color-primary);
+  --checkbox-label-color: var(--color-secondary-hover);
   --checkbox-hover-bg: rgba(37, 99, 235, 0.1);
   --checkbox-hover-size: 2rem;
   --checkbox-disabled-opacity: 0.5;
@@ -81,19 +81,19 @@
   --radio-size-md: 1.5rem;
   --radio-size-lg: 1.75rem;
   --radio-size-xl: 2rem;
-  --radio-label-font-size-xs: 0.75rem;
-  --radio-label-font-size-sm: 0.875rem;
-  --radio-label-font-size-md: 1rem;
-  --radio-label-font-size-lg: 1.125rem;
-  --radio-label-font-size-xl: 1.25rem;
+  --radio-label-font-size-xs: var(--text-xs);
+  --radio-label-font-size-sm: var(--text-sm);
+  --radio-label-font-size-md: var(--text-base);
+  --radio-label-font-size-lg: var(--text-lg);
+  --radio-label-font-size-xl: var(--text-xl);
   --radio-label-spacing-xs: 0.5rem;
   --radio-label-spacing-sm: 0.625rem;
   --radio-label-spacing-md: 0.75rem;
   --radio-label-spacing-lg: 0.875rem;
   --radio-label-spacing-xl: 1rem;
-  --radio-border-color: #9ca3af;
-  --radio-checked-color: #2563eb;
-  --radio-label-color: #4b5563;
+  --radio-border-color: var(--color-border);
+  --radio-checked-color: var(--color-primary);
+  --radio-label-color: var(--color-secondary-hover);
   --radio-hover-bg: rgba(37, 99, 235, 0.1);
   --radio-hover-size: 2rem;
   --radio-disabled-opacity: 0.5;
@@ -167,7 +167,7 @@
   /* Component: Nav */
   --nav-height: 3.5rem;
   --nav-gap: 0.5rem;
-  --nav-border-radius: 0.5rem;
+  --nav-border-radius: var(--radius-md);
   
   /* Nav Item Padding */
   --nav-item-padding-xs-x: 0.5rem;
@@ -182,20 +182,31 @@
   --nav-item-padding-xl-y: 1rem;
   
   /* Nav Font Sizes */
-  --nav-font-size-xs: 0.75rem;
-  --nav-font-size-sm: 0.875rem;
-  --nav-font-size-md: 1rem;
-  --nav-font-size-lg: 1.125rem;
-  --nav-font-size-xl: 1.25rem;
+  --nav-font-size-xs: var(--text-xs);
+  --nav-font-size-sm: var(--text-sm);
+  --nav-font-size-md: var(--text-base);
+  --nav-font-size-lg: var(--text-lg);
+  --nav-font-size-xl: var(--text-xl);
 
   /* Component: Button */
+  --button-primary-text: #ffffff;
+  --button-secondary-text: #ffffff;
+  --button-padding-xs-x: 0.5rem;
+  --button-padding-xs-y: 0.375rem;
   --button-padding-sm-x: 0.75rem;
   --button-padding-sm-y: 0.5rem;
   --button-padding-md-x: 1rem;
   --button-padding-md-y: 0.625rem;
   --button-padding-lg-x: 1.5rem;
   --button-padding-lg-y: 0.75rem;
-  --button-text-sm: 0.875rem;
+  --button-padding-xl-x: 2rem;
+  --button-padding-xl-y: 1rem;
+  --button-font-size-xs: var(--text-xs);
+  --button-font-size-sm: var(--text-sm);
+  --button-font-size-md: var(--text-base);
+  --button-font-size-lg: var(--text-lg);
+  --button-font-size-xl: var(--text-xl);
+  --button-text-sm: var(--text-sm);
   --button-text-md: 1rem;
   --button-text-lg: 1.125rem;
   --button-radius: 0.5rem;
@@ -207,7 +218,7 @@
   --card-padding-sm: 1rem;
   --card-padding-md: 1.5rem;
   --card-padding-lg: 2rem;
-  --card-radius: 0.75rem;
+  --card-radius: var(--radius-lg);
   --card-border-width: 1px;
   --card-shadow-flat: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --card-shadow-elevated: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
@@ -243,7 +254,7 @@
   --dialog-padding-content-y: 1rem;
   --dialog-padding-footer-x: 1.5rem;
   --dialog-padding-footer-y: 1rem;
-  --dialog-border-radius: 0.75rem;
+  --dialog-border-radius: var(--radius-lg);
   --dialog-border-width: 1px;
   --dialog-backdrop-blur: 4px;
 
@@ -253,11 +264,11 @@
   --drawer-item-spacing: 0.25rem;
   --drawer-item-padding-x: 1rem;
   --drawer-item-padding-y: 0.625rem;
-  --drawer-font-size: 0.875rem;
-  --drawer-border-radius: 0.5rem;
+  --drawer-font-size: var(--text-sm);
+  --drawer-border-radius: var(--radius-md);
 
   /* Dropdown component variables */
-  --dropdown-radius: 0.5rem;
+  --dropdown-radius: var(--radius-md);
   
   /* Dropdown Trigger Padding */
   --dropdown-padding-xs-x: 0.5rem;
@@ -272,11 +283,11 @@
   --dropdown-padding-xl-y: 0.875rem;
   
   /* Dropdown Font Sizes */
-  --dropdown-font-size-xs: 0.75rem;
-  --dropdown-font-size-sm: 0.875rem;
-  --dropdown-font-size-md: 1rem;
-  --dropdown-font-size-lg: 1.125rem;
-  --dropdown-font-size-xl: 1.25rem;
+  --dropdown-font-size-xs: var(--text-xs);
+  --dropdown-font-size-sm: var(--text-sm);
+  --dropdown-font-size-md: var(--text-base);
+  --dropdown-font-size-lg: var(--text-lg);
+  --dropdown-font-size-xl: var(--text-xl);
   
   /* Dropdown Icon Sizes */
   --dropdown-icon-size-xs: 0.875rem;
@@ -298,20 +309,20 @@
   --dropdown-option-padding-xl-y: 0.875rem;
   
   /* Dropdown Option Font Sizes */
-  --dropdown-option-font-size-xs: 0.75rem;
-  --dropdown-option-font-size-sm: 0.875rem;
-  --dropdown-option-font-size-md: 1rem;
-  --dropdown-option-font-size-lg: 1.125rem;
-  --dropdown-option-font-size-xl: 1.25rem;
+  --dropdown-option-font-size-xs: var(--text-xs);
+  --dropdown-option-font-size-sm: var(--text-sm);
+  --dropdown-option-font-size-md: var(--text-base);
+  --dropdown-option-font-size-lg: var(--text-lg);
+  --dropdown-option-font-size-xl: var(--text-xl);
 }
 
 @theme {
   /* Define semantic colors - Tailwind will generate bg-*, text-*, border-* utilities */
-  --color-info: #3b82f6;
+  --color-info: var(--color-primary);
   --color-info-foreground: #ffffff;
   --color-info-muted: #eff6ff;
-  --color-info-muted-foreground: #1d4ed8;
-  --color-info-border: #3b82f6;
+  --color-info-muted-foreground: var(--color-primary-active);
+  --color-info-border: var(--color-primary);
   
   --color-success: #22c55e;
   --color-success-foreground: #ffffff;
