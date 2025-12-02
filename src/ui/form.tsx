@@ -26,6 +26,7 @@ export interface FormContextValue extends FormState {
     unregisterField: (name: string) => void;
     setFieldValue: (name: string, value: any) => void;
     setFieldTouched: (name: string, touched: boolean) => void;
+    validateField: (name: string) => Promise<void>;
     getFieldError: (name: string) => string | undefined;
     shouldShowError: (name: string) => boolean;
 }
@@ -96,10 +97,17 @@ export function Form({ children, onSubmit, className }: FormProps) {
     );
 
     const setFieldValue = useCallback((name: string, value: any) => {
-        setState((prev) => ({
-            ...prev,
-            values: { ...prev.values, [name]: value },
-        }));
+        setState((prev) => {
+            // Clear error for this field when value changes
+            const newErrors = { ...prev.errors };
+            delete newErrors[name];
+
+            return {
+                ...prev,
+                values: { ...prev.values, [name]: value },
+                errors: newErrors,
+            };
+        });
     }, []);
 
     const setFieldTouched = useCallback((name: string, touched: boolean) => {
@@ -127,7 +135,7 @@ export function Form({ children, onSubmit, className }: FormProps) {
         [state.isSubmitted, state.touched, state.errors]
     );
 
-    const validateField = async (
+    const validateFieldInternal = async (
         name: string,
         value: any
     ): Promise<string | undefined> => {
@@ -142,6 +150,31 @@ export function Form({ children, onSubmit, className }: FormProps) {
         }
     };
 
+    const validateField = useCallback(
+        async (name: string) => {
+            const value = state.values[name];
+            const error = await validateFieldInternal(name, value);
+
+            setState((prev) => ({
+                ...prev,
+                errors: {
+                    ...prev.errors,
+                    ...(error ? { [name]: error } : {}),
+                },
+            }));
+
+            // Clear error if no error found
+            if (!error) {
+                setState((prev) => {
+                    const newErrors = { ...prev.errors };
+                    delete newErrors[name];
+                    return { ...prev, errors: newErrors };
+                });
+            }
+        },
+        [state.values, validators]
+    );
+
     const validateAllFields = async (): Promise<boolean> => {
         const errors: Record<string, string> = {};
         const validationPromises: Promise<void>[] = [];
@@ -149,7 +182,7 @@ export function Form({ children, onSubmit, className }: FormProps) {
         validators.forEach((_validator, name) => {
             const value = state.values[name];
             validationPromises.push(
-                validateField(name, value).then((error) => {
+                validateFieldInternal(name, value).then((error) => {
                     if (error) {
                         errors[name] = error;
                     }
@@ -198,6 +231,7 @@ export function Form({ children, onSubmit, className }: FormProps) {
         unregisterField,
         setFieldValue,
         setFieldTouched,
+        validateField,
         getFieldError,
         shouldShowError,
     };

@@ -337,6 +337,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             if (form && name) {
                 // Mark as touched in Form
                 form.setFieldTouched(name, true);
+                // Validate on blur
+                form.validateField(name);
             } else if (formControl) {
                 // Mark as touched in FormControl (backwards compat)
                 formControl.setTouched(true);

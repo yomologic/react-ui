@@ -119,6 +119,8 @@ export function Checkbox({
             // Update Form context
             form.setFieldValue(name, isChecked);
             form.setFieldTouched(name, true);
+            // Validate on change for checkbox (immediate feedback)
+            form.validateField(name);
         } else {
             // Standalone mode
             runValidation(isChecked);

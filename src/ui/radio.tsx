@@ -97,6 +97,8 @@ export function RadioGroup({
             // Update Form context
             form.setFieldValue(name, newValue);
             form.setFieldTouched(name, true);
+            // Validate on change for radio (immediate feedback)
+            form.validateField(name);
         } else {
             // Standalone mode
             setTouched(true);
