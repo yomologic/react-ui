@@ -29,32 +29,44 @@ function DiscreteSliderExample() {
             <h3 className="text-lg font-semibold text-gray-900 mb-3">
                 Discrete Slider with Marks
             </h3>
-            <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                    <p className="text-sm text-gray-600">
-                        Slider with step increments and visible marks.
-                    </p>
-                    <div className="p-6 pb-8 bg-gray-50 rounded-lg border border-gray-200">
-                        <Slider
-                            defaultValue={3}
-                            step={1}
-                            marks={marks}
-                            min={1}
-                            max={5}
-                            valueLabelDisplay="auto"
+            <div className="space-y-4">
+                <p className="text-sm text-gray-600">
+                    Slider with step increments and visible marks.
+                </p>
+
+                {/* Two-column layout */}
+                <div className="flex flex-col sm:flex-row gap-6">
+                    {/* Left: Display and Controls */}
+                    <div className="flex-1 min-w-0">
+                        <div className="space-y-4">
+                            {/* Component Display */}
+                            <div className="p-6 pb-8 bg-gray-50 rounded-lg border border-gray-200">
+                                <Slider
+                                    defaultValue={3}
+                                    step={1}
+                                    marks={marks}
+                                    min={1}
+                                    max={5}
+                                    valueLabelDisplay="auto"
+                                />
+                            </div>
+
+                            {/* Controls */}
+                            <Checkbox
+                                id="slider-show-labels"
+                                label="Show labels"
+                                checked={showLabels}
+                                onChange={(checked) => setShowLabels(checked)}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Right: Code Snippet */}
+                    <div className="flex-1 min-w-0">
+                        <CodeSnippet
+                            code={`const [showLabels, setShowLabels] = useState(false);\n\nconst marks = showLabels\n  ? [\n      { value: 1, label: "1" },\n      { value: 2, label: "2" },\n      { value: 3, label: "3" },\n      { value: 4, label: "4" },\n      { value: 5, label: "5" },\n    ]\n  : true;\n\n<Checkbox\n  label="Show labels"\n  checked={showLabels}\n  onChange={(checked) => setShowLabels(checked)}\n/>\n\n<Slider\n  defaultValue={3}\n  step={1}\n  marks={marks}\n  min={1}\n  max={5}\n  valueLabelDisplay="auto"\n/>`}
                         />
                     </div>
-                    <Checkbox
-                        id="slider-show-labels"
-                        label="Show labels"
-                        checked={showLabels}
-                        onChange={(checked) => setShowLabels(checked)}
-                    />
-                </div>
-                <div>
-                    <CodeSnippet
-                        code={`const [showLabels, setShowLabels] = useState(false);\n\nconst marks = showLabels\n  ? [\n      { value: 1, label: "1" },\n      { value: 2, label: "2" },\n      { value: 3, label: "3" },\n      { value: 4, label: "4" },\n      { value: 5, label: "5" },\n    ]\n  : true;\n\n<Checkbox\n  label="Show labels"\n  checked={showLabels}\n  onChange={(checked) => setShowLabels(checked)}\n/>\n\n<Slider\n  defaultValue={3}\n  step={1}\n  marks={marks}\n  min={1}\n  max={5}\n  valueLabelDisplay="auto"\n/>`}
-                    />
                 </div>
             </div>
         </Card>
@@ -337,33 +349,39 @@ export default function SliderPage() {
                         <h3 className="text-lg font-semibold text-gray-900 mb-3">
                             Custom Mark Labels
                         </h3>
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <div className="space-y-4">
-                                <p className="text-sm text-gray-600">
-                                    Slider with custom labels displayed below
-                                    marks. Labels are always visible with
-                                    consistent styling. Automatically snaps to
-                                    mark positions.
-                                </p>
-                                <div className="p-6 pb-12 bg-gray-50 rounded-lg border border-gray-200">
-                                    <Slider
-                                        defaultValue={67}
-                                        marks={[
-                                            { value: 0, label: "Apple" },
-                                            { value: 33, label: "Banana" },
-                                            { value: 67, label: "Orange" },
-                                            { value: 100, label: "Grape" },
-                                        ]}
-                                        min={0}
-                                        max={100}
-                                        valueLabelDisplay="auto"
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Slider with custom labels displayed below marks.
+                                Labels are always visible with consistent
+                                styling. Automatically snaps to mark positions.
+                            </p>
+
+                            {/* Two-column layout */}
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                {/* Left: Display */}
+                                <div className="flex-1 min-w-0">
+                                    <div className="p-6 pb-12 bg-gray-50 rounded-lg border border-gray-200">
+                                        <Slider
+                                            defaultValue={67}
+                                            marks={[
+                                                { value: 0, label: "Apple" },
+                                                { value: 33, label: "Banana" },
+                                                { value: 67, label: "Orange" },
+                                                { value: 100, label: "Grape" },
+                                            ]}
+                                            min={0}
+                                            max={100}
+                                            valueLabelDisplay="auto"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Right: Code Snippet */}
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        code={`<Slider\n  defaultValue={67}\n  marks={[\n    { value: 0, label: "Apple" },\n    { value: 33, label: "Banana" },\n    { value: 67, label: "Orange" },\n    { value: 100, label: "Grape" },\n  ]}\n  min={0}\n  max={100}\n  valueLabelDisplay="auto"\n/>`}
                                     />
                                 </div>
-                            </div>
-                            <div>
-                                <CodeSnippet
-                                    code={`<Slider\n  defaultValue={67}\n  marks={[\n    { value: 0, label: "Apple" },\n    { value: 33, label: "Banana" },\n    { value: 67, label: "Orange" },\n    { value: 100, label: "Grape" },\n  ]}\n  min={0}\n  max={100}\n  valueLabelDisplay="auto"\n/>`}
-                                />
                             </div>
                         </div>
                     </Card>

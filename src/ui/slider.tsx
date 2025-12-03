@@ -256,6 +256,10 @@ export const Slider: React.FC<SliderProps> = ({
         if (!isDragging) return;
 
         const handleGlobalMove = (e: MouseEvent | TouchEvent) => {
+            // Prevent default behavior (especially scrolling on vertical sliders)
+            if (isVertical && "touches" in e) {
+                e.preventDefault();
+            }
             const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
             const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
             handleMove(clientX, clientY);
@@ -268,7 +272,9 @@ export const Slider: React.FC<SliderProps> = ({
 
         document.addEventListener("mousemove", handleGlobalMove);
         document.addEventListener("mouseup", handleGlobalUp);
-        document.addEventListener("touchmove", handleGlobalMove);
+        document.addEventListener("touchmove", handleGlobalMove, {
+            passive: false,
+        });
         document.addEventListener("touchend", handleGlobalUp);
 
         return () => {
@@ -277,7 +283,7 @@ export const Slider: React.FC<SliderProps> = ({
             document.removeEventListener("touchmove", handleGlobalMove);
             document.removeEventListener("touchend", handleGlobalUp);
         };
-    }, [isDragging, activeThumb]);
+    }, [isDragging, activeThumb, isVertical]);
 
     // Generate marks
     const getMarks = (): SliderMark[] => {
