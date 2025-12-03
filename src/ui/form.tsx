@@ -26,7 +26,7 @@ export interface FormContextValue extends FormState {
     unregisterField: (name: string) => void;
     setFieldValue: (name: string, value: any) => void;
     setFieldTouched: (name: string, touched: boolean) => void;
-    validateField: (name: string) => Promise<void>;
+    validateField: (name: string, value?: any) => Promise<void>;
     getFieldError: (name: string) => string | undefined;
     shouldShowError: (name: string) => boolean;
 }
@@ -39,6 +39,7 @@ interface FormProps {
     children: ReactNode;
     onSubmit: (values: Record<string, any>) => void | Promise<void>;
     className?: string;
+    spacing?: "none" | "dense" | "normal";
 }
 
 // ============================================================================
@@ -64,7 +65,17 @@ export function useForm() {
 // FORM COMPONENT
 // ============================================================================
 
-export function Form({ children, onSubmit, className }: FormProps) {
+export function Form({
+    children,
+    onSubmit,
+    className,
+    spacing = "normal",
+}: FormProps) {
+    const spacingValues = {
+        none: "0",
+        dense: "0.5rem",
+        normal: "1rem",
+    };
     const [state, setState] = useState<FormState>({
         values: {},
         errors: {},
@@ -151,26 +162,21 @@ export function Form({ children, onSubmit, className }: FormProps) {
     };
 
     const validateField = useCallback(
-        async (name: string) => {
-            const value = state.values[name];
+        async (name: string, providedValue?: any) => {
+            // Use provided value if explicitly passed (including undefined), otherwise get from state
+            const value =
+                arguments.length > 1 ? providedValue : state.values[name];
             const error = await validateFieldInternal(name, value);
 
-            setState((prev) => ({
-                ...prev,
-                errors: {
-                    ...prev.errors,
-                    ...(error ? { [name]: error } : {}),
-                },
-            }));
-
-            // Clear error if no error found
-            if (!error) {
-                setState((prev) => {
-                    const newErrors = { ...prev.errors };
+            setState((prev) => {
+                const newErrors = { ...prev.errors };
+                if (error) {
+                    newErrors[name] = error;
+                } else {
                     delete newErrors[name];
-                    return { ...prev, errors: newErrors };
-                });
-            }
+                }
+                return { ...prev, errors: newErrors };
+            });
         },
         [state.values, validators]
     );
@@ -238,7 +244,14 @@ export function Form({ children, onSubmit, className }: FormProps) {
 
     return (
         <FormContext.Provider value={contextValue}>
-            <form onSubmit={handleSubmit} className={className} noValidate>
+            <form
+                onSubmit={handleSubmit}
+                className={className}
+                noValidate
+                style={{
+                    ["--form-control-spacing" as any]: spacingValues[spacing],
+                }}
+            >
                 {children}
             </form>
         </FormContext.Provider>

@@ -337,8 +337,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             if (form && name) {
                 // Mark as touched in Form
                 form.setFieldTouched(name, true);
-                // Validate on blur
-                form.validateField(name);
+                // Validate on blur with current input value
+                form.validateField(name, e.target.value);
             } else if (formControl) {
                 // Mark as touched in FormControl (backwards compat)
                 formControl.setTouched(true);
@@ -361,6 +361,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         return (
             <div
                 className={cn("flex flex-col", fullWidth && "w-full")}
+                style={{ marginBottom: "var(--form-control-spacing)" }}
                 suppressHydrationWarning
             >
                 {shouldRenderLabel && (

@@ -97,8 +97,8 @@ export function RadioGroup({
             // Update Form context
             form.setFieldValue(name, newValue);
             form.setFieldTouched(name, true);
-            // Validate on change for radio (immediate feedback)
-            form.validateField(name);
+            // Validate on change for radio (immediate feedback with new value)
+            form.validateField(name, newValue);
         } else {
             // Standalone mode
             setTouched(true);
@@ -115,7 +115,10 @@ export function RadioGroup({
     };
 
     return (
-        <div className={className}>
+        <div
+            className={className}
+            style={{ marginBottom: "var(--form-control-spacing)" }}
+        >
             {label && (
                 <label
                     className="block text-sm font-semibold mb-1"
@@ -180,7 +183,7 @@ export function RadioGroup({
                                     onChange={handleChange}
                                     disabled={isDisabled}
                                     className={cn(
-                                        "focus:outline-none transition-all relative z-10",
+                                        "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all relative z-10 rounded-full",
                                         isDisabled && "cursor-not-allowed"
                                     )}
                                     style={{

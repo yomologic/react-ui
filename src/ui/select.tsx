@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 import { useState, useRef, useEffect, ReactNode } from "react";
 import { useForm, ValidationFunction } from "./form";
 
@@ -121,10 +121,11 @@ export function Select({
     // Register with Form
     useEffect(() => {
         if (form && name) {
-            const validator: ValidationFunction = async (
-                val: string | number
-            ) => {
-                if (required && !val) {
+            const validator: ValidationFunction = async (val: any) => {
+                if (
+                    required &&
+                    (val === undefined || val === null || val === "")
+                ) {
                     return errorMessage || "Please select an option";
                 }
                 if (validate) {
@@ -190,11 +191,26 @@ export function Select({
             // Update Form context
             form.setFieldValue(name, optionValue);
             form.setFieldTouched(name, true);
-            // Validate on change for select (immediate feedback)
-            form.validateField(name);
+            // Validate on change for select (immediate feedback with new value)
+            form.validateField(name, optionValue);
         } else {
             // Standalone mode
             onChange?.(optionValue);
+        }
+        setIsOpen(false);
+    };
+
+    const handleClear = async (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (form && name) {
+            // Update Form context
+            form.setFieldValue(name, undefined);
+            form.setFieldTouched(name, true);
+            // Validate with empty value (await to ensure it runs after state update)
+            await form.validateField(name, undefined);
+        } else {
+            // Standalone mode
+            onChange?.(undefined as any);
         }
         setIsOpen(false);
     };
@@ -211,7 +227,10 @@ export function Select({
     };
 
     return (
-        <div className={`w-full ${className}`}>
+        <div
+            className={`w-full ${className}`}
+            style={{ marginBottom: "var(--form-control-spacing)" }}
+        >
             {/* Label */}
             {label && (
                 <label
@@ -251,13 +270,28 @@ export function Select({
           `}
                 >
                     <span className="truncate">{getSelectedLabel()}</span>
-                    <ChevronDown
-                        className={`${
-                            iconSizeStyles[size]
-                        } text-gray-400 transition-transform duration-200 shrink-0 ml-2 ${
-                            isOpen ? "transform rotate-180" : ""
-                        }`}
-                    />
+                    <div className="flex items-center gap-1 ml-2">
+                        {value && (
+                            <div
+                                onClick={handleClear}
+                                className="p-0.5 hover:bg-gray-200 rounded transition-colors cursor-pointer"
+                                role="button"
+                                aria-label="Clear selection"
+                                tabIndex={-1}
+                            >
+                                <X
+                                    className={`${iconSizeStyles[size]} text-gray-500`}
+                                />
+                            </div>
+                        )}
+                        <ChevronDown
+                            className={`${
+                                iconSizeStyles[size]
+                            } text-gray-400 transition-transform duration-200 shrink-0 ${
+                                isOpen ? "transform rotate-180" : ""
+                            }`}
+                        />
+                    </div>
                 </button>
 
                 {/* Dropdown Menu */}
@@ -274,6 +308,26 @@ export function Select({
                         ) : (
                             // Standard options
                             <ul>
+                                {/* Placeholder option - allows users to clear selection */}
+                                <li key="__placeholder__">
+                                    <button
+                                        type="button"
+                                        onClick={handleClear}
+                                        className={`
+                        w-full ${optionSizeStyles[size]} text-left
+                        transition-colors duration-150
+                        ${
+                            !value || value === ""
+                                ? "bg-blue-50 text-blue-700 font-medium"
+                                : "text-gray-500 hover:bg-gray-100"
+                        }
+                      `}
+                                        role="option"
+                                        aria-selected={!value || value === ""}
+                                    >
+                                        {placeholder}
+                                    </button>
+                                </li>
                                 {options.map((option) => (
                                     <li key={option.value}>
                                         <button

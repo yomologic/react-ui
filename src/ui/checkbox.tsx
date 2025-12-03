@@ -119,8 +119,8 @@ export function Checkbox({
             // Update Form context
             form.setFieldValue(name, isChecked);
             form.setFieldTouched(name, true);
-            // Validate on change for checkbox (immediate feedback)
-            form.validateField(name);
+            // Validate on change for checkbox (immediate feedback with new value)
+            form.validateField(name, isChecked);
         } else {
             // Standalone mode
             runValidation(isChecked);
@@ -137,7 +137,10 @@ export function Checkbox({
     };
 
     return (
-        <div className={cn("flex flex-col", className)}>
+        <div
+            className={cn("flex flex-col", className)}
+            style={{ marginBottom: "var(--form-control-spacing)" }}
+        >
             <div className={cn("flex items-center", containerGapStyles[size])}>
                 <div className="relative group/checkbox flex items-center shrink-0">
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
@@ -176,7 +179,7 @@ export function Checkbox({
                         disabled={disabled}
                         suppressHydrationWarning
                         className={cn(
-                            "rounded-(--checkbox-radius) focus:outline-none transition-all relative z-10",
+                            "rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all relative z-10",
                             disabled && "cursor-not-allowed"
                         )}
                         style={{
@@ -304,7 +307,10 @@ export function CheckboxGroup({
     };
 
     return (
-        <div className={className}>
+        <div
+            className={className}
+            style={{ marginBottom: "var(--form-control-spacing)" }}
+        >
             {label && (
                 <label
                     className="block text-sm font-semibold mb-1"
@@ -375,7 +381,7 @@ export function CheckboxGroup({
                                     }
                                     disabled={isDisabled}
                                     className={cn(
-                                        "rounded-(--checkbox-radius) focus:outline-none transition-all relative z-10",
+                                        "rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all relative z-10",
                                         isDisabled && "cursor-not-allowed"
                                     )}
                                     style={{

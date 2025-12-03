@@ -50,6 +50,9 @@
 
   /* Form Controls: Shared spacing between control and label */
   --form-control-label-gap: 0.5rem; /* 8px / gap-2 */
+  /* Form control spacing - can be overridden by Form component's spacing prop */
+  /* none: 0, dense: 0.5rem (8px), normal: 1rem (16px) */
+  --form-control-spacing: 1rem; /* Default: 16px - vertical spacing between form controls */
 
   /* Component: Checkbox */
   --checkbox-size-xs: 1rem;

@@ -9,6 +9,8 @@ import {
     SectionLayout,
     RadioGroup,
     Checkbox,
+    CheckboxGroup,
+    Select,
     Divider,
 } from "@yomologic/react-ui";
 import { BookOpen } from "lucide-react";
@@ -24,6 +26,9 @@ export default function FormPage() {
     );
     const [submittedData2, setSubmittedData2] = useState<FormValues | null>(
         null
+    );
+    const [spacing, setSpacing] = useState<"none" | "dense" | "normal">(
+        "dense"
     );
 
     const validateUsername = (value: string) => {
@@ -173,9 +178,10 @@ export default function FormPage() {
                         </h3>
                         <div className="space-y-4">
                             <p className="text-sm text-gray-600">
-                                Form works with Input, RadioGroup, Checkbox, and
-                                other form controls. Each control must have a
-                                unique <code>name</code> prop.
+                                Form works with Input, RadioGroup, Checkbox,
+                                Select, Switch, and other form controls. Each
+                                control must have a unique <code>name</code>{" "}
+                                prop.
                             </p>
 
                             {/* Two-column layout */}
@@ -189,7 +195,7 @@ export default function FormPage() {
                                                 onSubmit={(values) =>
                                                     setSubmittedData2(values)
                                                 }
-                                                className="space-y-4"
+                                                spacing="dense"
                                             >
                                                 <Input
                                                     name="fullName"
@@ -213,6 +219,46 @@ export default function FormPage() {
                                                         {
                                                             value: "enterprise",
                                                             label: "Enterprise",
+                                                        },
+                                                    ]}
+                                                />
+
+                                                <Select
+                                                    name="country"
+                                                    label="Country"
+                                                    required
+                                                    placeholder="Select your country"
+                                                    options={[
+                                                        {
+                                                            value: "us",
+                                                            label: "United States",
+                                                        },
+                                                        {
+                                                            value: "ca",
+                                                            label: "Canada",
+                                                        },
+                                                        {
+                                                            value: "uk",
+                                                            label: "United Kingdom",
+                                                        },
+                                                    ]}
+                                                />
+
+                                                <CheckboxGroup
+                                                    name="preferences"
+                                                    label="Preferences"
+                                                    options={[
+                                                        {
+                                                            value: "newsletter",
+                                                            label: "Subscribe to newsletter",
+                                                        },
+                                                        {
+                                                            value: "updates",
+                                                            label: "Receive product updates",
+                                                        },
+                                                        {
+                                                            value: "marketing",
+                                                            label: "Marketing communications",
                                                         },
                                                     ]}
                                                 />
@@ -269,6 +315,23 @@ export default function FormPage() {
     ]}
   />
 
+  <Select
+    name="country"
+    label="Country"
+    required
+    placeholder="Select your country"
+    options={[
+      { value: "us", label: "United States" },
+      { value: "ca", label: "Canada" },
+      { value: "uk", label: "United Kingdom" },
+    ]}
+  />
+
+  <Switch
+    name="notifications"
+    label="Enable notifications"
+  />
+
   <Checkbox
     name="terms"
     label="I agree to the terms and conditions"
@@ -276,6 +339,99 @@ export default function FormPage() {
   />
 
   <Button type="submit">Submit</Button>
+</Form>`}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+
+                    {/* Example 3: Form Spacing Options */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            Form Spacing
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-sm text-gray-600">
+                                Control vertical spacing between form controls
+                                with the <code>spacing</code> prop.
+                            </p>
+
+                            {/* Two-column layout */}
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                {/* Left: Display and Controls */}
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        {/* Component Display */}
+                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                            <Form
+                                                onSubmit={(values) =>
+                                                    console.log(values)
+                                                }
+                                                spacing={spacing}
+                                            >
+                                                <Input
+                                                    name="name"
+                                                    label="Name"
+                                                    placeholder="Enter your name"
+                                                />
+                                                <Input
+                                                    name="email"
+                                                    label="Email"
+                                                    type="email"
+                                                    placeholder="Enter your email"
+                                                />
+                                                <Input
+                                                    name="phone"
+                                                    label="Phone"
+                                                    placeholder="Enter your phone"
+                                                />
+                                            </Form>
+                                        </div>
+
+                                        {/* Controls */}
+                                        <RadioGroup
+                                            name="spacingDemo"
+                                            label="Select Spacing"
+                                            options={[
+                                                {
+                                                    value: "none",
+                                                    label: "None (0px)",
+                                                },
+                                                {
+                                                    value: "dense",
+                                                    label: "Dense (8px)",
+                                                },
+                                                {
+                                                    value: "normal",
+                                                    label: "Normal (16px)",
+                                                },
+                                            ]}
+                                            value={spacing}
+                                            onChange={(value) =>
+                                                setSpacing(
+                                                    value as
+                                                        | "none"
+                                                        | "dense"
+                                                        | "normal"
+                                                )
+                                            }
+                                            orientation="horizontal"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Right: Code Snippet */}
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<Form 
+  onSubmit={(values) => console.log(values)}
+  spacing="${spacing}"
+>
+  <Input name="name" label="Name" />
+  <Input name="email" label="Email" />
+  <Input name="phone" label="Phone" />
 </Form>`}
                                     />
                                 </div>
@@ -329,6 +485,22 @@ export default function FormPage() {
                                     <td className="px-6 py-4 text-sm text-gray-700">
                                         Callback function called when form is
                                         submitted with valid values
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                        spacing
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                        "none" | "dense" | "normal"
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                        "normal"
+                                    </td>
+                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                        Controls vertical spacing between form
+                                        controls. none=0px, dense=8px,
+                                        normal=16px
                                     </td>
                                 </tr>
                                 <tr>

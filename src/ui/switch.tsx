@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "../lib/utils";
+import { useForm, ValidationFunction } from "./form";
 
 export interface SwitchProps {
     /**
@@ -44,6 +45,14 @@ export interface SwitchProps {
      * Required field indicator
      */
     required?: boolean;
+    /**
+     * Custom validation function
+     */
+    validate?: ValidationFunction;
+    /**
+     * Custom error message for required validation
+     */
+    errorMessage?: string;
 }
 
 export function Switch({
@@ -57,19 +66,58 @@ export function Switch({
     className = "",
     name,
     required = false,
+    validate,
+    errorMessage,
 }: SwitchProps) {
+    const form = useForm();
     const [internalChecked, setInternalChecked] = useState(false);
-    const isControlled = controlledChecked !== undefined;
-    const checked = isControlled ? controlledChecked : internalChecked;
+
+    // Determine checked state from Form context or props
+    let checked: boolean;
+    if (form && name) {
+        checked = form.values[name] ?? controlledChecked ?? false;
+    } else {
+        const isControlled = controlledChecked !== undefined;
+        checked = isControlled ? controlledChecked : internalChecked;
+    }
+
+    // Register with Form
+    useEffect(() => {
+        if (form && name) {
+            const validator: ValidationFunction = async (val: boolean) => {
+                if (required && !val) {
+                    return errorMessage || "This field is required";
+                }
+                if (validate) {
+                    return await validate(val);
+                }
+                return undefined;
+            };
+
+            form.registerField(name, validator);
+            return () => form.unregisterField(name);
+        }
+    }, [form, name, required, validate, errorMessage]);
 
     const handleChange = () => {
         if (disabled) return;
 
         const newChecked = !checked;
-        if (!isControlled) {
-            setInternalChecked(newChecked);
+
+        if (form && name) {
+            // Update Form context
+            form.setFieldValue(name, newChecked);
+            form.setFieldTouched(name, true);
+            // Validate on change for switch (immediate feedback with new value)
+            form.validateField(name, newChecked);
+        } else {
+            // Standalone mode
+            const isControlled = controlledChecked !== undefined;
+            if (!isControlled) {
+                setInternalChecked(newChecked);
+            }
+            onChange?.(newChecked);
         }
-        onChange?.(newChecked);
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -153,32 +201,27 @@ export function Switch({
         </button>
     );
 
-    if (!label) {
-        return (
-            <>
-                {switchElement}
-                {name && (
-                    <input
-                        type="checkbox"
-                        name={name}
-                        checked={checked}
-                        onChange={() => {}}
-                        className="sr-only"
-                        required={required}
-                    />
-                )}
-            </>
-        );
-    }
-
-    return (
+    const content = !label ? (
+        <>
+            {switchElement}
+            {name && (
+                <input
+                    type="checkbox"
+                    name={name}
+                    checked={checked}
+                    onChange={() => {}}
+                    className="sr-only"
+                    required={required}
+                />
+            )}
+        </>
+    ) : (
         <label
             className={cn(
-                "inline-flex items-center cursor-pointer",
+                "flex items-center cursor-pointer",
                 containerStyles[labelPlacement],
                 gapStyles[labelPlacement],
-                disabled && "cursor-not-allowed opacity-50",
-                className
+                disabled && "cursor-not-allowed opacity-50"
             )}
         >
             {switchElement}
@@ -207,5 +250,16 @@ export function Switch({
                 />
             )}
         </label>
+    );
+
+    return (
+        <div
+            className={className}
+            style={{
+                marginBottom: "var(--form-control-spacing)",
+            }}
+        >
+            {content}
+        </div>
     );
 }
