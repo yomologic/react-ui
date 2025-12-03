@@ -207,9 +207,9 @@ export function RadioGroup({
                                                     : size === "xl"
                                                       ? "var(--radio-size-xl)"
                                                       : "var(--radio-size-md)",
-                                        borderColor:
-                                            "var(--radio-border-color)",
-                                        color: "var(--radio-checked-color)",
+                                        borderColor: "var(--color-border)",
+                                        backgroundColor: "var(--color-muted)",
+                                        accentColor: "var(--color-primary)",
                                         opacity: isDisabled
                                             ? "var(--radio-disabled-opacity)"
                                             : undefined,
@@ -234,7 +234,7 @@ export function RadioGroup({
                                                 : size === "xl"
                                                   ? "var(--radio-label-font-size-xl)"
                                                   : "var(--radio-label-font-size-md)",
-                                    color: "var(--radio-label-color)",
+                                    color: "var(--color-muted-foreground)",
                                     opacity: isDisabled
                                         ? "var(--radio-disabled-opacity)"
                                         : undefined,

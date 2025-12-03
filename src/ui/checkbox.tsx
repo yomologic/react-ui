@@ -203,8 +203,9 @@ export function Checkbox({
                                         : size === "xl"
                                           ? "var(--checkbox-size-xl)"
                                           : "var(--checkbox-size-md)",
-                            borderColor: "var(--checkbox-border-color)",
-                            color: "var(--checkbox-checked-color)",
+                            borderColor: "var(--color-border)",
+                            backgroundColor: "var(--color-muted)",
+                            accentColor: "var(--color-primary)",
                             opacity: disabled
                                 ? "var(--checkbox-disabled-opacity)"
                                 : undefined,
@@ -231,7 +232,7 @@ export function Checkbox({
                                         : size === "xl"
                                           ? "var(--checkbox-label-font-size-xl)"
                                           : "var(--checkbox-label-font-size-md)",
-                            color: "var(--checkbox-label-color)",
+                            color: "var(--color-muted-foreground)",
                             opacity: disabled
                                 ? "var(--checkbox-disabled-opacity)"
                                 : undefined,
@@ -438,9 +439,9 @@ export function CheckboxGroup({
                                                     : size === "xl"
                                                       ? "var(--checkbox-size-xl)"
                                                       : "var(--checkbox-size-md)",
-                                        borderColor:
-                                            "var(--checkbox-border-color)",
-                                        color: "var(--checkbox-checked-color)",
+                                        borderColor: "var(--color-border)",
+                                        backgroundColor: "var(--color-muted)",
+                                        accentColor: "var(--color-primary)",
                                         opacity: isDisabled
                                             ? "var(--checkbox-disabled-opacity)"
                                             : undefined,
@@ -465,7 +466,7 @@ export function CheckboxGroup({
                                                 : size === "xl"
                                                   ? "var(--checkbox-label-font-size-xl)"
                                                   : "var(--checkbox-label-font-size-md)",
-                                    color: "var(--checkbox-label-color)",
+                                    color: "var(--color-muted-foreground)",
                                     opacity: isDisabled
                                         ? "var(--checkbox-disabled-opacity)"
                                         : undefined,

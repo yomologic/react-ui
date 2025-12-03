@@ -215,10 +215,6 @@
   --checkbox-label-spacing-lg: 0.875rem;
   --checkbox-label-spacing-xl: 1rem;
   --checkbox-radius: 0.25rem;
-  --checkbox-border-color: var(--color-border);
-  --checkbox-checked-color: var(--color-primary);
-  --checkbox-label-color: var(--color-secondary-hover);
-  --checkbox-hover-bg: rgba(37, 99, 235, 0.1);
   --checkbox-hover-size: 2rem;
   --checkbox-disabled-opacity: 0.5;
 
@@ -238,10 +234,6 @@
   --radio-label-spacing-md: 0.75rem;
   --radio-label-spacing-lg: 0.875rem;
   --radio-label-spacing-xl: 1rem;
-  --radio-border-color: var(--color-border);
-  --radio-checked-color: var(--color-primary);
-  --radio-label-color: var(--color-secondary-hover);
-  --radio-hover-bg: rgba(37, 99, 235, 0.1);
   --radio-hover-size: 2rem;
   --radio-disabled-opacity: 0.5;
 
@@ -549,86 +541,109 @@
 /* Dark Theme - Yomologic Professional Dark Mode */
 .dark {
   /* Base Colors */
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  --background: #0f1419;
+  --foreground: #e3e8ed;
   
-  /* Primary Colors - Keep blue accent for dark mode */
-  --color-primary: #60a5fa;
-  --color-primary-hover: #3b82f6;
-  --color-primary-active: #2563eb;
+  /* Primary Colors - Yomologic Teal */
+  --color-primary: #19bfb7;
+  --color-primary-hover: #16a39d;
+  --color-primary-active: #138883;
   
   /* Secondary Colors */
-  --color-secondary: #9ca3af;
-  --color-secondary-hover: #d1d5db;
+  --color-secondary: #8b9ba8;
+  --color-secondary-hover: #a3b4c2;
   
   /* Background & Foreground */
-  --color-background: #111827;
-  --color-foreground: #f3f4f6;
-  --color-muted: #1f2937;
-  --color-muted-foreground: #9ca3af;
-  --color-placeholder: #6b7280;
-  --color-border: #374151;
+  --color-background: #0f1419;
+  --color-foreground: #e3e8ed;
+  --color-muted: #1a2028;
+  --color-muted-foreground: #8b9ba8;
+  --color-placeholder: #5a6b7a;
+  --color-border: #2d3843;
   
-  /* Semantic Colors - Adjusted for dark mode */
-  --color-info: #60a5fa;
-  --color-info-foreground: #111827;
-  --color-info-muted: #1e3a5f;
-  --color-info-muted-foreground: #93c5fd;
-  --color-info-border: #60a5fa;
+  /* Semantic Colors - Soft and muted */
+  --color-info: #4d9de0;
+  --color-info-foreground: #0f1419;
+  --color-info-muted: #1a3a52;
+  --color-info-muted-foreground: #7bb5e8;
+  --color-info-border: #4d9de0;
   
-  --color-success: #34d399;
-  --color-success-foreground: #111827;
-  --color-success-muted: #064e3b;
-  --color-success-muted-foreground: #6ee7b7;
-  --color-success-border: #34d399;
+  --color-success: #4ec9b0;
+  --color-success-foreground: #0f1419;
+  --color-success-muted: #1a3d35;
+  --color-success-muted-foreground: #7dd8c1;
+  --color-success-border: #4ec9b0;
   
-  --color-warning: #fbbf24;
-  --color-warning-foreground: #111827;
-  --color-warning-muted: #78350f;
-  --color-warning-muted-foreground: #fcd34d;
-  --color-warning-border: #fbbf24;
+  --color-warning: #d4a574;
+  --color-warning-foreground: #0f1419;
+  --color-warning-muted: #3d2f1f;
+  --color-warning-muted-foreground: #e0ba92;
+  --color-warning-border: #d4a574;
   
-  --color-error: #f87171;
-  --color-error-foreground: #111827;
-  --color-error-muted: #7f1d1d;
-  --color-error-muted-foreground: #fca5a5;
-  --color-error-border: #f87171;
+  --color-error: #e07088;
+  --color-error-foreground: #0f1419;
+  --color-error-muted: #3d1f27;
+  --color-error-muted-foreground: #ed98ab;
+  --color-error-border: #e07088;
   
-  /* Component: Checkbox - Dark mode adjustments */
-  --checkbox-border-color: #4b5563;
-  --checkbox-checked-color: #60a5fa;
-  --checkbox-label-color: #d1d5db;
-  --checkbox-hover-bg: rgba(96, 165, 250, 0.15);
+  /* Component: Button - Yomologic dark theme */
+  --button-primary-text: #0f1419;
+  --button-secondary-text: #e3e8ed;
   
-  /* Component: Radio - Dark mode adjustments */
-  --radio-border-color: #4b5563;
-  --radio-checked-color: #60a5fa;
-  --radio-label-color: #d1d5db;
-  --radio-hover-bg: rgba(96, 165, 250, 0.15);
-  
-  /* Component: Button - Dark mode adjustments */
-  --button-primary-text: #111827;
-  --button-secondary-text: #f3f4f6;
-  
-  /* Card Icon Colors - Dark mode variants */
-  --card-icon-blue-bg: #1e3a5f;
-  --card-icon-blue-bg-hover: #1e40af;
-  --card-icon-blue-text: #93c5fd;
-  --card-icon-purple-bg: #581c87;
-  --card-icon-purple-bg-hover: #6b21a8;
-  --card-icon-purple-text: #e9d5ff;
-  --card-icon-green-bg: #064e3b;
-  --card-icon-green-bg-hover: #065f46;
-  --card-icon-green-text: #6ee7b7;
-  --card-icon-orange-bg: #7c2d12;
-  --card-icon-orange-bg-hover: #9a3412;
-  --card-icon-orange-text: #fdba74;
-  --card-icon-pink-bg: #831843;
-  --card-icon-pink-bg-hover: #9f1239;
-  --card-icon-pink-text: #fbcfe8;
-  --card-icon-indigo-bg: #312e81;
-  --card-icon-indigo-bg-hover: #3730a3;
-  --card-icon-indigo-text: #c7d2fe;
+  /* Card Icon Colors - Soft dark variants */
+  --card-icon-blue-bg: #1a3452;
+  --card-icon-blue-bg-hover: #234a6f;
+  --card-icon-blue-text: #7bb5e8;
+  --card-icon-purple-bg: #3a2854;
+  --card-icon-purple-bg-hover: #4d3570;
+  --card-icon-purple-text: #c9a5e8;
+  --card-icon-green-bg: #1a3d35;
+  --card-icon-green-bg-hover: #235447;
+  --card-icon-green-text: #7dd8c1;
+  --card-icon-orange-bg: #3d2f1f;
+  --card-icon-orange-bg-hover: #543f2a;
+  --card-icon-orange-text: #e0ba92;
+  --card-icon-pink-bg: #3d1f2e;
+  --card-icon-pink-bg-hover: #542a3e;
+  --card-icon-pink-text: #ed98ba;
+  --card-icon-indigo-bg: #2a2854;
+  --card-icon-indigo-bg-hover: #383570;
+  --card-icon-indigo-text: #a8a5e8;
+}
+
+/* Form controls - custom styling */
+input[type="checkbox"],
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Unchecked state */
+input[type="checkbox"]:not(:checked),
+input[type="radio"]:not(:checked) {
+  background-color: var(--color-muted);
+  border: 2px solid var(--color-border);
+}
+
+input[type="checkbox"] {
+  border-radius: 0.25rem;
+}
+
+input[type="radio"] {
+  border-radius: 50%;
+}
+
+/* Checked state - restore accentColor behavior */
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  appearance: auto;
+  -webkit-appearance: auto;
+  -moz-appearance: auto;
+  accent-color: var(--color-primary);
 }
 
 /* Theme-aware showcase utility classes */
