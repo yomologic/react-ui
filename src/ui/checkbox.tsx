@@ -244,7 +244,7 @@ export function Checkbox({
             </div>
             <div className="h-5 mt-1.5">
                 {displayError && (
-                    <p className="text-xs text-red-600" role="alert">
+                    <p className="text-caption text-red-600" role="alert">
                         {displayError}
                     </p>
                 )}
@@ -346,7 +346,7 @@ export function CheckboxGroup({
         >
             {label && (
                 <label
-                    className="block text-sm font-semibold mb-1"
+                    className="block text-small font-semibold mb-1"
                     style={{ color: "var(--color-muted-foreground)" }}
                 >
                     {label}
@@ -480,7 +480,7 @@ export function CheckboxGroup({
             <div className="h-5 mt-1.5">
                 {(error || helperText) && (
                     <p
-                        className={`text-xs ${error ? "text-red-600" : "text-gray-500"}`}
+                        className={`text-caption ${error ? "text-red-600" : "text-(--color-muted-foreground)"}`}
                         role={error ? "alert" : undefined}
                     >
                         {error || helperText}

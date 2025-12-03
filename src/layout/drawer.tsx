@@ -25,6 +25,7 @@ export interface DrawerProps {
     position?: "left" | "right";
     homeUrl?: string;
     autoHideOnScroll?: boolean;
+    headerActions?: React.ReactNode;
 }
 
 export function Drawer({
@@ -38,6 +39,7 @@ export function Drawer({
     position = "right",
     homeUrl,
     autoHideOnScroll = true,
+    headerActions,
 }: DrawerProps) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [isHeaderVisible, setIsHeaderVisible] = useState(true);
@@ -87,7 +89,11 @@ export function Drawer({
         <>
             {/* Mobile Header with auto-hide on scroll */}
             <div
-                className={`lg:hidden fixed top-0 left-0 right-0 bg-white border-b border-gray-200 px-4 py-3 [z-index:var(--z-index-drawer-header)] transition-transform duration-500 ease-in-out ${isHeaderVisible ? "translate-y-0" : "-translate-y-full"}`}
+                className={`lg:hidden fixed top-0 left-0 right-0 px-4 py-3 z-(--z-index-drawer-header) transition-transform duration-500 ease-in-out ${isHeaderVisible ? "translate-y-0" : "-translate-y-full"}`}
+                style={{
+                    background: "var(--color-background)",
+                    borderBottom: "1px solid var(--color-border)",
+                }}
             >
                 <div
                     className={`flex items-center ${
@@ -100,11 +106,20 @@ export function Drawer({
                         {homeUrl && (
                             <a
                                 href={homeUrl}
-                                className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                                className="p-2 rounded-lg transition-colors"
+                                style={{ color: "var(--color-foreground)" }}
+                                onMouseOver={(e) =>
+                                    (e.currentTarget.style.background =
+                                        "var(--color-muted)")
+                                }
+                                onMouseOut={(e) =>
+                                    (e.currentTarget.style.background =
+                                        "transparent")
+                                }
                                 aria-label="Go to home"
                             >
                                 <svg
-                                    className="w-5 h-5 text-gray-700"
+                                    className="w-5 h-5"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -120,22 +135,47 @@ export function Drawer({
                         )}
                         <button
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            className="p-2 rounded-lg hover:bg-gray-100 transition-colors relative [z-index:var(--z-index-drawer-button)]"
+                            className="p-2 rounded-lg transition-colors relative z-(--z-index-drawer-button)"
+                            style={{ color: "var(--color-foreground)" }}
+                            onMouseOver={(e) =>
+                                (e.currentTarget.style.background =
+                                    "var(--color-muted)")
+                            }
+                            onMouseOut={(e) =>
+                                (e.currentTarget.style.background =
+                                    "transparent")
+                            }
                             aria-label="Toggle menu"
                         >
                             {mobileMenuOpen ? (
-                                <X className="w-6 h-6 text-gray-700" />
+                                <X className="w-6 h-6" />
                             ) : (
-                                <Menu className="w-6 h-6 text-gray-700" />
+                                <Menu className="w-6 h-6" />
                             )}
                         </button>
                     </div>
+                    {headerActions && (
+                        <div className="flex items-center">{headerActions}</div>
+                    )}
                     <div>
-                        <h1 className="text-lg font-bold text-gray-900">
+                        <h1
+                            className="font-bold"
+                            style={{
+                                color: "var(--color-foreground)",
+                                fontSize: "var(--typography-h5)",
+                            }}
+                        >
                             {title}
                         </h1>
                         {subtitle && (
-                            <p className="text-xs text-gray-500">{subtitle}</p>
+                            <p
+                                style={{
+                                    color: "var(--color-muted-foreground)",
+                                    fontSize: "var(--typography-caption)",
+                                }}
+                            >
+                                {subtitle}
+                            </p>
                         )}
                     </div>
                 </div>
@@ -153,9 +193,9 @@ export function Drawer({
             {/* Sidebar Navigation */}
             <aside
                 className={`
-          fixed top-0 bottom-0 w-64 bg-white
+          fixed top-0 bottom-0 w-64
           transition-transform duration-500 ease-in-out overflow-y-auto
-          ${isLeft ? "left-0 border-r" : "right-0 border-l"} border-gray-200
+          ${isLeft ? "left-0" : "right-0"}
           lg:translate-x-0 lg:top-0
           ${
               mobileMenuOpen
@@ -163,42 +203,92 @@ export function Drawer({
                   : `${isLeft ? "-translate-x-full" : "translate-x-full"} top-0`
           }
         `}
-                style={
-                    mobileMenuOpen &&
+                style={{
+                    background: "var(--color-background)",
+                    borderLeft: isLeft
+                        ? "none"
+                        : "1px solid var(--color-border)",
+                    borderRight: isLeft
+                        ? "1px solid var(--color-border)"
+                        : "none",
+                    ...(mobileMenuOpen &&
                     typeof window !== "undefined" &&
                     window.innerWidth < 1024
                         ? { zIndex: 9999 }
-                        : undefined
-                }
+                        : {}),
+                }}
             >
                 {/* Desktop Header */}
-                <div className="hidden lg:block px-6 py-5 border-b border-gray-200 bg-linear-to-b from-gray-50 to-white">
-                    <h1 className="text-lg font-bold text-gray-900">{title}</h1>
+                <div
+                    className="hidden lg:block px-6 py-5"
+                    style={{
+                        borderBottom: "1px solid var(--color-border)",
+                        background: "var(--color-muted)",
+                    }}
+                >
+                    <h1
+                        className="font-bold"
+                        style={{
+                            color: "var(--color-foreground)",
+                            fontSize: "var(--typography-h5)",
+                        }}
+                    >
+                        {title}
+                    </h1>
                     {subtitle && (
-                        <p className="text-sm text-gray-600 mt-0.5">
+                        <p
+                            className="mt-0.5"
+                            style={{
+                                color: "var(--color-muted-foreground)",
+                                fontSize: "var(--typography-caption)",
+                            }}
+                        >
                             {subtitle}
                         </p>
                     )}
                 </div>
 
                 {/* Mobile Header with Close Button Inside Drawer */}
-                <div className="lg:hidden p-4 border-b border-gray-200 flex items-center justify-between">
+                <div
+                    className="lg:hidden p-4 flex items-center justify-between"
+                    style={{ borderBottom: "1px solid var(--color-border)" }}
+                >
                     <div>
-                        <h1 className="text-lg font-bold text-gray-900">
+                        <h1
+                            className="font-bold"
+                            style={{
+                                color: "var(--color-foreground)",
+                                fontSize: "var(--typography-h5)",
+                            }}
+                        >
                             {title}
                         </h1>
                         {subtitle && (
-                            <p className="text-xs text-gray-500 mt-1">
+                            <p
+                                className="mt-1"
+                                style={{
+                                    color: "var(--color-muted-foreground)",
+                                    fontSize: "var(--typography-caption)",
+                                }}
+                            >
                                 {subtitle}
                             </p>
                         )}
                     </div>
                     <button
                         onClick={() => setMobileMenuOpen(false)}
-                        className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                        className="p-2 rounded-lg transition-colors"
+                        style={{ color: "var(--color-foreground)" }}
+                        onMouseOver={(e) =>
+                            (e.currentTarget.style.background =
+                                "var(--color-muted)")
+                        }
+                        onMouseOut={(e) =>
+                            (e.currentTarget.style.background = "transparent")
+                        }
                         aria-label="Close menu"
                     >
-                        <X className="w-5 h-5 text-gray-700" />
+                        <X className="w-5 h-5" />
                     </button>
                 </div>
 
@@ -216,10 +306,13 @@ export function Drawer({
                         >
                             {section.title && (
                                 <h3
-                                    className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                                    className="font-semibold uppercase tracking-wide"
                                     style={{
                                         marginBottom:
                                             "var(--drawer-title-margin-bottom)",
+                                        color: "var(--color-muted-foreground)",
+                                        fontSize: "var(--typography-caption)",
+                                        padding: "0 0.75rem",
                                     }}
                                 >
                                     {section.title}
@@ -238,14 +331,23 @@ export function Drawer({
                                             onClick={() =>
                                                 handleItemClick(item.id)
                                             }
-                                            className={`
-                        w-full flex items-center gap-3 rounded-lg font-medium transition-all duration-200
-                        ${
-                            activeItem === item.id
-                                ? "bg-blue-50 text-blue-700 shadow-sm"
-                                : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                        }
-                      `}
+                                            className="w-full flex items-center gap-3 rounded-lg font-medium transition-all duration-200"
+                                            onMouseOver={(e) => {
+                                                if (activeItem !== item.id) {
+                                                    e.currentTarget.style.background =
+                                                        "var(--color-muted)";
+                                                    e.currentTarget.style.color =
+                                                        "var(--color-foreground)";
+                                                }
+                                            }}
+                                            onMouseOut={(e) => {
+                                                if (activeItem !== item.id) {
+                                                    e.currentTarget.style.background =
+                                                        "transparent";
+                                                    e.currentTarget.style.color =
+                                                        "var(--color-muted-foreground)";
+                                                }
+                                            }}
                                             style={{
                                                 paddingLeft:
                                                     "var(--drawer-item-padding-x)",
@@ -259,6 +361,18 @@ export function Drawer({
                                                     "var(--drawer-font-size)",
                                                 borderRadius:
                                                     "var(--drawer-border-radius)",
+                                                background:
+                                                    activeItem === item.id
+                                                        ? "var(--color-primary)"
+                                                        : "transparent",
+                                                color:
+                                                    activeItem === item.id
+                                                        ? "var(--color-background)"
+                                                        : "var(--color-muted-foreground)",
+                                                boxShadow:
+                                                    activeItem === item.id
+                                                        ? "0 1px 3px rgba(0,0,0,0.1)"
+                                                        : "none",
                                             }}
                                         >
                                             {item.icon && (
@@ -277,7 +391,10 @@ export function Drawer({
 
                 {/* Footer */}
                 {footer && (
-                    <div className="p-4 border-t border-gray-200 mt-auto">
+                    <div
+                        className="p-4 mt-auto"
+                        style={{ borderTop: "1px solid var(--color-border)" }}
+                    >
                         {footer}
                     </div>
                 )}

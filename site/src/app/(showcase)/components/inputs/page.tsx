@@ -97,17 +97,15 @@ export default function InputsPage() {
                 SECTION 1: USAGE EXAMPLES
             ======================================== */}
             <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                    Input
-                </h2>
+                <h2 className="text-h2 font-semibold theme-text mb-4">Input</h2>
                 <div className="space-y-6">
                     {/* Example 1: Input Types */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Input Types
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Inputs support various HTML5 input types
                                 including text, email, password, search, number,
                                 tel, and url.
@@ -116,7 +114,7 @@ export default function InputsPage() {
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1 min-w-0">
                                     <div className="space-y-4">
-                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                        <div className="p-6 theme-surface rounded-lg border theme-border">
                                             <Input
                                                 type={selectedType}
                                                 label={getLabel()}
@@ -170,11 +168,11 @@ export default function InputsPage() {
 
                     {/* Example 2: Icons */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Input Icons
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Add icons to the left or right side of the input
                                 to provide visual context.
                             </p>
@@ -182,7 +180,7 @@ export default function InputsPage() {
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1 min-w-0">
                                     <div className="space-y-4">
-                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                        <div className="p-6 theme-surface rounded-lg border theme-border">
                                             <Input
                                                 type={selectedType}
                                                 label={getLabel()}
@@ -242,11 +240,11 @@ export default function InputsPage() {
 
                     {/* Example 3: Input States */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Input States
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Display validation errors, disable the input, or
                                 make it read-only.
                             </p>
@@ -254,7 +252,7 @@ export default function InputsPage() {
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1 min-w-0">
                                     <div className="space-y-4">
-                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                        <div className="p-6 theme-surface rounded-lg border theme-border">
                                             <Input
                                                 label="Email Address"
                                                 placeholder="you@example.com"
@@ -315,11 +313,11 @@ export default function InputsPage() {
 
                     {/* Example 4: Label & Helper Text */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Label & Helper Text
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Add labels above the input and helper text below
                                 for additional context.
                             </p>
@@ -327,7 +325,7 @@ export default function InputsPage() {
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1 min-w-0">
                                     <div className="space-y-4">
-                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                        <div className="p-6 theme-surface rounded-lg border theme-border">
                                             <Input
                                                 label={
                                                     showLabel
@@ -379,23 +377,23 @@ export default function InputsPage() {
                 SECTION 2: VALIDATION EXAMPLES
             ======================================== */}
             <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                <h2 className="text-h2 font-semibold theme-text mb-4">
                     Validation
                 </h2>
                 <div className="space-y-6">
                     {/* Example 1: Built-in validation */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Built-in Validation
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Input supports HTML5 validation attributes like
                                 required, minLength, maxLength, pattern, etc.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1">
-                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border space-y-4">
                                         <Input
                                             id="validation-username-builtin"
                                             label="Username"
@@ -426,18 +424,18 @@ export default function InputsPage() {
 
                     {/* Example 2: Custom validation */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Custom Validation
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Use the validate prop to provide custom
                                 validation logic with regex patterns or custom
                                 rules.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1">
-                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border space-y-4">
                                         <Input
                                             id="validation-username-custom"
                                             label="Username"
@@ -484,18 +482,18 @@ export default function InputsPage() {
 
                     {/* Example 3: Async validation */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Async Validation
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 The validate function can be async, useful for
                                 checking username availability or other
                                 server-side validations.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1">
-                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border space-y-4">
                                         <Input
                                             id="validation-username-async"
                                             label="Username"
@@ -553,173 +551,223 @@ export default function InputsPage() {
                 SECTION 3: API REFERENCE
             ======================================== */}
             <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <h2 className="text-h2 font-semibold theme-text mb-4 flex items-center gap-2">
                     <BookOpen className="w-5 h-5" />
                     API Reference
                 </h2>
                 <Card variant="elevated" padding="none">
                     <div className="overflow-x-auto">
                         <table className="w-full">
-                            <thead className="bg-gray-50 border-b border-gray-200">
+                            <thead className="theme-surface border-b theme-border">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Prop
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Type
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Default
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Description
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
+                            <tbody className="theme-bg divide-y theme-border">
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td
+                                        className="px-6 py-4 whitespace-nowrap text-sm font-mono"
+                                        style={{
+                                            color: "var(--color-primary)",
+                                        }}
+                                    >
                                         type
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         &quot;text&quot; | &quot;email&quot; |
                                         &quot;password&quot; |
                                         &quot;number&quot; | &quot;tel&quot; |
                                         &quot;url&quot; | &quot;search&quot;
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         &quot;text&quot;
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         HTML input type attribute
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td
+                                        className="px-6 py-4 whitespace-nowrap text-sm font-mono"
+                                        style={{
+                                            color: "var(--color-primary)",
+                                        }}
+                                    >
                                         label
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         string
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Label text displayed above the input
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td
+                                        className="px-6 py-4 whitespace-nowrap text-sm font-mono"
+                                        style={{
+                                            color: "var(--color-primary)",
+                                        }}
+                                    >
                                         placeholder
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         string
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Placeholder text shown when input is
                                         empty
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td
+                                        className="px-6 py-4 whitespace-nowrap text-sm font-mono"
+                                        style={{
+                                            color: "var(--color-primary)",
+                                        }}
+                                    >
                                         leftIcon
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         ReactNode
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Icon or element displayed on the left
                                         side
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td
+                                        className="px-6 py-4 whitespace-nowrap text-sm font-mono"
+                                        style={{
+                                            color: "var(--color-primary)",
+                                        }}
+                                    >
                                         rightIcon
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         ReactNode
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Icon or element displayed on the right
                                         side
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td
+                                        className="px-6 py-4 whitespace-nowrap text-sm font-mono"
+                                        style={{
+                                            color: "var(--color-primary)",
+                                        }}
+                                    >
                                         helperText
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         string
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Helper text displayed below the input
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td
+                                        className="px-6 py-4 whitespace-nowrap text-sm font-mono"
+                                        style={{
+                                            color: "var(--color-primary)",
+                                        }}
+                                    >
                                         error
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         string
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Error message with red styling
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td
+                                        className="px-6 py-4 whitespace-nowrap text-sm font-mono"
+                                        style={{
+                                            color: "var(--color-primary)",
+                                        }}
+                                    >
                                         disabled
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         boolean
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         false
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Disables the input
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td
+                                        className="px-6 py-4 whitespace-nowrap text-sm font-mono"
+                                        style={{
+                                            color: "var(--color-primary)",
+                                        }}
+                                    >
                                         readOnly
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         boolean
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         false
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Makes the input read-only
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td
+                                        className="px-6 py-4 whitespace-nowrap text-sm font-mono"
+                                        style={{
+                                            color: "var(--color-primary)",
+                                        }}
+                                    >
                                         required
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         boolean
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         false
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Marks the input as required
                                     </td>
                                 </tr>

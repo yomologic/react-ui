@@ -35,24 +35,24 @@ export default function DialogPage() {
                 SECTION 1: COMPONENT EXAMPLES
             ======================================== */}
             <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                <h2 className="text-h2 font-semibold theme-text mb-4">
                     Dialog
                 </h2>
                 <div className="space-y-6">
                     {/* Example 1: Dialog Sizes */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Dialog Sizes
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Dialogs come in five sizes to accommodate
                                 different content lengths.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1 min-w-0">
                                     <div className="space-y-4">
-                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                        <div className="p-6 theme-surface rounded-lg border theme-border">
                                             <Button
                                                 variant="primary"
                                                 onClick={() => setIsOpen1(true)}
@@ -84,7 +84,7 @@ export default function DialogPage() {
                                                     </DialogDescription>
                                                 </DialogHeader>
                                                 <DialogContent>
-                                                    <p className="text-sm text-gray-700">
+                                                    <p className="text-small theme-text-muted">
                                                         Dialog content goes
                                                         here. The width adjusts
                                                         based on the selected
@@ -185,18 +185,18 @@ export default function DialogPage() {
 
                     {/* Example 2: Dialog Variants */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Dialog Variants
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Use semantic variants to communicate the purpose
                                 of the dialog.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1 min-w-0">
                                     <div className="space-y-4">
-                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                        <div className="p-6 theme-surface rounded-lg border theme-border">
                                             <Button
                                                 variant="primary"
                                                 onClick={() => setIsOpen2(true)}
@@ -239,7 +239,7 @@ export default function DialogPage() {
                                                     </DialogDescription>
                                                 </DialogHeader>
                                                 <DialogContent>
-                                                    <p className="text-sm text-gray-700">
+                                                    <p className="text-small theme-text-muted">
                                                         Different variants apply
                                                         semantic colors to help
                                                         communicate the dialog's
@@ -325,17 +325,17 @@ export default function DialogPage() {
 
                     {/* Example 3: Confirmation Dialog */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Confirmation Dialog
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 A common pattern for confirming destructive or
                                 important actions.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1 min-w-0">
-                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border">
                                         <Button
                                             variant="error"
                                             onClick={() => setIsOpen3(true)}
@@ -361,7 +361,7 @@ export default function DialogPage() {
                                                 </DialogDescription>
                                             </DialogHeader>
                                             <DialogContent>
-                                                <p className="text-sm text-gray-700">
+                                                <p className="text-small theme-text-muted">
                                                     The item will be permanently
                                                     deleted from the system.
                                                 </p>
@@ -425,148 +425,148 @@ export default function DialogPage() {
             <Divider className="my-12" />
 
             <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <h2 className="text-h2 font-semibold theme-text mb-4 flex items-center gap-2">
                     <BookOpen className="w-5 h-5" />
                     API Reference
                 </h2>
                 <Card variant="elevated" padding="none">
                     <div className="overflow-x-auto">
                         <table className="w-full">
-                            <thead className="bg-gray-50 border-b border-gray-200">
+                            <thead className="theme-surface border-b theme-border">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Prop
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Type
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Default
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Description
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
+                            <tbody className="theme-bg divide-y divide-gray-200">
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         open
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         boolean
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         required
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Controls whether the dialog is visible
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         onClose
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         () =&gt; void
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         required
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Callback fired when the dialog should
                                         close
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         size
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         &quot;sm&quot; | &quot;md&quot; |
                                         &quot;lg&quot; | &quot;xl&quot; |
                                         &quot;full&quot;
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         &quot;md&quot;
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Maximum width of the dialog
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         variant
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         &quot;default&quot; | &quot;info&quot; |
                                         &quot;success&quot; |
                                         &quot;warning&quot; | &quot;error&quot;
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         &quot;default&quot;
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Visual style variant with semantic
                                         colors
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         showCloseButton
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         boolean
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         true
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Show the close (X) button in the
                                         top-right corner
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         closeOnBackdropClick
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         boolean
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         true
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Close the dialog when clicking outside
                                         of it
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         closeOnEscape
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         boolean
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         true
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Close the dialog when pressing the
                                         Escape key
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         children
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         ReactNode
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         required
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Dialog content (Header, Content, Footer
                                         components)
                                     </td>
@@ -577,81 +577,81 @@ export default function DialogPage() {
                 </Card>
 
                 <div className="mt-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                    <h3 className="text-h3 font-semibold theme-text mb-3">
                         Dialog Subcomponents
                     </h3>
                     <Card variant="elevated" padding="none">
                         <div className="overflow-x-auto">
                             <table className="w-full">
-                                <thead className="bg-gray-50 border-b border-gray-200">
+                                <thead className="theme-surface border-b theme-border">
                                     <tr>
-                                        <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                        <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                             Component
                                         </th>
-                                        <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                        <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                             Description
                                         </th>
-                                        <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                        <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                             Default Styles
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
+                                <tbody className="theme-bg divide-y divide-gray-200">
                                     <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                             DialogHeader
                                         </td>
-                                        <td className="px-6 py-4 text-sm text-gray-700">
+                                        <td className="px-6 py-4 text-sm theme-text-muted">
                                             Container for dialog title and
                                             description
                                         </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                        <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                             px-6 py-4 border-b
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                             DialogTitle
                                         </td>
-                                        <td className="px-6 py-4 text-sm text-gray-700">
+                                        <td className="px-6 py-4 text-sm theme-text-muted">
                                             Semantic h2 heading for the dialog
                                             title
                                         </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                            text-xl font-semibold
+                                        <td className="px-6 py-4 text-sm theme-text-muted font-mono">
+                                            text-h2 font-semibold
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                             DialogDescription
                                         </td>
-                                        <td className="px-6 py-4 text-sm text-gray-700">
+                                        <td className="px-6 py-4 text-sm theme-text-muted">
                                             Muted text for dialog descriptions
                                             or subtitles
                                         </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600 font-mono">
-                                            text-sm text-gray-600
+                                        <td className="px-6 py-4 text-sm theme-text-muted font-mono">
+                                            text-sm theme-text-muted
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                             DialogContent
                                         </td>
-                                        <td className="px-6 py-4 text-sm text-gray-700">
+                                        <td className="px-6 py-4 text-sm theme-text-muted">
                                             Main content area of the dialog
                                         </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                        <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                             px-6 py-4
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                             DialogFooter
                                         </td>
-                                        <td className="px-6 py-4 text-sm text-gray-700">
+                                        <td className="px-6 py-4 text-sm theme-text-muted">
                                             Footer area for action buttons
                                         </td>
-                                        <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                        <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                             flex justify-end gap-3 px-6 py-4
                                             border-t
                                         </td>

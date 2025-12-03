@@ -46,18 +46,18 @@ export default function RadioPage() {
                 RADIO COMPONENT SHOWCASE
             ======================================== */}
             <section>
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Radio</h2>
+                <h2 className="text-2xl font-bold theme-text mb-6">Radio</h2>
 
                 <div className="space-y-6">
                     {/* ========================================
                         EXAMPLE 1: ORIENTATION
                     ======================================== */}
                     <Card variant="elevated" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                        <h3 className="text-h3 font-semibold theme-text mb-4">
                             Radio Group Orientation
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Display radio buttons vertically (stacked) or
                                 horizontally (in a row).
                             </p>
@@ -65,7 +65,7 @@ export default function RadioPage() {
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1 min-w-0">
                                     <div className="space-y-4">
-                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                        <div className="p-6 theme-surface rounded-lg border theme-border">
                                             <RadioGroup
                                                 label="Choose an option"
                                                 name="orientation-demo"
@@ -137,11 +137,11 @@ export default function RadioPage() {
                         EXAMPLE 2: SIZES
                     ======================================== */}
                     <Card variant="elevated" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                        <h3 className="text-h3 font-semibold theme-text mb-4">
                             Radio Button Sizes
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Radio buttons come in five sizes: xs, sm, md,
                                 lg, and xl.
                             </p>
@@ -149,7 +149,7 @@ export default function RadioPage() {
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1 min-w-0">
                                     <div className="space-y-4">
-                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                        <div className="p-6 theme-surface rounded-lg border theme-border">
                                             <RadioGroup
                                                 label="Select size"
                                                 name="size-demo"
@@ -221,18 +221,18 @@ export default function RadioPage() {
                         EXAMPLE 3: DISABLED OPTIONS
                     ======================================== */}
                     <Card variant="elevated" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                        <h3 className="text-h3 font-semibold theme-text mb-4">
                             Disabled Radio Options
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Individual radio options can be disabled to
                                 prevent selection.
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1 min-w-0">
-                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border">
                                         <RadioGroup
                                             label="Select option"
                                             name="disabled-demo"
@@ -281,18 +281,18 @@ export default function RadioPage() {
                         EXAMPLE 4: REQUIRED FIELD
                     ======================================== */}
                     <Card variant="elevated" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                        <h3 className="text-h3 font-semibold theme-text mb-4">
                             Required Radio Field
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Mark a radio group as required to indicate it
                                 must be filled.
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1 min-w-0">
-                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border">
                                         <RadioGroup
                                             label="Required field"
                                             name="required-demo"
@@ -340,24 +340,24 @@ export default function RadioPage() {
                 VALIDATION EXAMPLES
             ======================================== */}
             <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                <h2 className="text-h2 font-semibold theme-text mb-4">
                     Validation
                 </h2>
                 <div className="space-y-6">
                     {/* Example 1: Required RadioGroup */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Required RadioGroup
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 RadioGroup validation is triggered on form
                                 submit. Click Continue without selecting to see
                                 the error.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1">
-                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border space-y-4">
                                         <RadioGroup
                                             label="Select a plan"
                                             name="validation-plan"
@@ -439,7 +439,7 @@ const handleSubmit = () => {
                 API REFERENCE
             ======================================== */}
             <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <h2 className="text-h2 font-semibold theme-text mb-4 flex items-center gap-2">
                     <BookOpen className="w-5 h-5" />
                     API Reference
                 </h2>
@@ -447,136 +447,136 @@ const handleSubmit = () => {
                 <Card variant="elevated" padding="none">
                     <div className="overflow-x-auto">
                         <table className="w-full">
-                            <thead className="bg-gray-50 border-b border-gray-200">
+                            <thead className="theme-surface border-b theme-border">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Prop
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Type
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Default
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Description
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
+                            <tbody className="theme-bg divide-y divide-gray-200">
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         label
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         string
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Label text displayed above the radio
                                         group
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         name
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         string
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         required
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Name attribute for the radio group
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         options
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         RadioOption[]
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         required
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Array of options with value, label, and
                                         optional disabled
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         value
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         string
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Currently selected value
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         onChange
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         (value: string) =&gt; void
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Callback fired when selection changes
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         orientation
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         &quot;vertical&quot; |
                                         &quot;horizontal&quot;
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         &quot;vertical&quot;
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Layout orientation of the radio buttons
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         required
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         boolean
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         false
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Marks the field as required (shows
                                         asterisk in label)
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         disabled
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         boolean
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         false
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Disables the entire radio group
                                         (overrides individual option disabled
                                         states)

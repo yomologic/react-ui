@@ -20,11 +20,11 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
         },
         ref
     ) => {
-        const baseStyles = "bg-white rounded-lg";
+        const baseStyles = "bg-(--color-background) rounded-lg";
 
         const variants = {
-            default: "border border-gray-200",
-            bordered: "border-2 border-gray-300",
+            default: "border border-(--color-border)",
+            bordered: "border-2 border-(--color-border)",
             elevated: "shadow-md",
         };
 
@@ -77,7 +77,10 @@ const CardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
     <h3
         ref={ref}
-        className={cn("text-lg font-semibold text-gray-800", className)}
+        className={cn(
+            "text-h4 font-semibold text-(--color-foreground)",
+            className
+        )}
         {...props}
     />
 ));
@@ -89,7 +92,7 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
     <p
         ref={ref}
-        className={cn("text-sm text-gray-600", className)}
+        className={cn("text-small text-(--color-muted-foreground)", className)}
         {...props}
     />
 ));
@@ -236,8 +239,7 @@ const CardActions = React.forwardRef<HTMLDivElement, CardActionsProps>(
 );
 CardActions.displayName = "CardActions";
 
-export interface CardActionAreaProps
-    extends React.HTMLAttributes<HTMLDivElement> {
+export interface CardActionAreaProps extends React.HTMLAttributes<HTMLDivElement> {
     disabled?: boolean;
 }
 
@@ -249,7 +251,7 @@ const CardActionArea = React.forwardRef<HTMLDivElement, CardActionAreaProps>(
             tabIndex={disabled ? -1 : 0}
             className={cn(
                 "cursor-pointer transition-colors",
-                "hover:bg-gray-50 active:bg-gray-100",
+                "hover:bg-(--color-muted) active:bg-(--color-muted)",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500",
                 disabled &&
                     "cursor-not-allowed opacity-50 hover:bg-transparent",

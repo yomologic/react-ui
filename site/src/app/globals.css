@@ -6,9 +6,153 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  
+  /* Showcase-specific colors that map to theme */
+  --showcase-bg: #ffffff;
+  --showcase-surface: #f9fafb;
+  --showcase-surface-elevated: #f3f4f6;
+  --showcase-text-primary: #111827;
+  --showcase-text-secondary: #6b7280;
+  --showcase-border: #e5e7eb;
+
+  /* Showcase-specific utility classes */
+  .showcase-bg {
+    background: var(--showcase-bg);
+  }
+  
+  .showcase-surface {
+    background: var(--showcase-surface);
+  }
+  
+  .showcase-surface-elevated {
+    background: var(--showcase-surface-elevated);
+  }
+  
+  .showcase-text-primary {
+    color: var(--showcase-text-primary);
+  }
+  
+  .showcase-text-secondary {
+    color: var(--showcase-text-secondary);
+  }
+  
+  .showcase-border {
+    border-color: var(--showcase-border);
+  }
+
+  /* Theme-aware utility classes */
+  .theme-bg {
+    background: var(--color-background);
+  }
+
+  .theme-surface {
+    background: var(--color-muted);
+  }
+
+  .theme-text {
+    color: var(--color-foreground);
+  }
+
+  .theme-text-muted {
+    color: var(--color-muted-foreground);
+  }
+
+  .theme-border {
+    border-color: var(--color-border);
+  }
+
+  /* Typography utility classes */
+  .text-h1 {
+    font-size: var(--typography-h1);
+  }
+
+  .text-h2 {
+    font-size: var(--typography-h2);
+  }
+
+  .text-h3 {
+    font-size: var(--typography-h3);
+  }
+
+  .text-h4 {
+    font-size: var(--typography-h4);
+  }
+
+  .text-h5 {
+    font-size: var(--typography-h5);
+  }
+
+  .text-h6 {
+    font-size: var(--typography-h6);
+  }
+
+  .text-body {
+    font-size: var(--typography-body);
+  }
+
+  .text-small {
+    font-size: var(--typography-small);
+  }
+
+  .text-caption {
+    font-size: var(--typography-caption);
+  }
+
+  @media (min-width: 1024px) {
+    .text-h1 {
+      font-size: var(--typography-h1-desktop);
+    }
+
+    .text-h2 {
+      font-size: var(--typography-h2-desktop);
+    }
+
+    .text-h3 {
+      font-size: var(--typography-h3-desktop);
+    }
+
+    .text-h4 {
+      font-size: var(--typography-h4-desktop);
+    }
+
+    .text-h5 {
+      font-size: var(--typography-h5-desktop);
+    }
+
+    .text-h6 {
+      font-size: var(--typography-h6-desktop);
+    }
+
+    .text-body {
+      font-size: var(--typography-body-desktop);
+    }
+
+    .text-small {
+      font-size: var(--typography-small-desktop);
+    }
+  }
 
   /* Theme System CSS Variables */
   /* These will be dynamically updated by ThemeProvider */
+  
+  /* Typography - Default values (will be overridden by theme) */
+  --typography-h1: 1.875rem;
+  --typography-h1-desktop: 2.25rem;
+  --typography-h2: 1.5rem;
+  --typography-h2-desktop: 1.875rem;
+  --typography-h3: 1.25rem;
+  --typography-h3-desktop: 1.5rem;
+  --typography-h4: 1.125rem;
+  --typography-h4-desktop: 1.25rem;
+  --typography-h5: 1rem;
+  --typography-h5-desktop: 1.125rem;
+  --typography-h6: 0.875rem;
+  --typography-h6-desktop: 1rem;
+  --typography-body: 0.875rem;
+  --typography-body-desktop: 1rem;
+  --typography-small: 0.75rem;
+  --typography-small-desktop: 0.875rem;
+  --typography-caption: 0.6875rem;
   
   /* Colors */
   --color-primary: #3b82f6;
@@ -60,11 +204,11 @@
   --checkbox-size-md: 1.5rem;
   --checkbox-size-lg: 1.75rem;
   --checkbox-size-xl: 2rem;
-  --checkbox-label-font-size-xs: var(--text-xs);
-  --checkbox-label-font-size-sm: var(--text-sm);
-  --checkbox-label-font-size-md: var(--text-base);
-  --checkbox-label-font-size-lg: var(--text-lg);
-  --checkbox-label-font-size-xl: var(--text-xl);
+  --checkbox-label-font-size-xs: var(--typography-caption);
+  --checkbox-label-font-size-sm: var(--typography-small);
+  --checkbox-label-font-size-md: var(--typography-body);
+  --checkbox-label-font-size-lg: var(--typography-h6);
+  --checkbox-label-font-size-xl: var(--typography-h5);
   --checkbox-label-spacing-xs: 0.5rem;
   --checkbox-label-spacing-sm: 0.625rem;
   --checkbox-label-spacing-md: 0.75rem;
@@ -84,11 +228,11 @@
   --radio-size-md: 1.5rem;
   --radio-size-lg: 1.75rem;
   --radio-size-xl: 2rem;
-  --radio-label-font-size-xs: var(--text-xs);
-  --radio-label-font-size-sm: var(--text-sm);
-  --radio-label-font-size-md: var(--text-base);
-  --radio-label-font-size-lg: var(--text-lg);
-  --radio-label-font-size-xl: var(--text-xl);
+  --radio-label-font-size-xs: var(--typography-caption);
+  --radio-label-font-size-sm: var(--typography-small);
+  --radio-label-font-size-md: var(--typography-body);
+  --radio-label-font-size-lg: var(--typography-h6);
+  --radio-label-font-size-xl: var(--typography-h5);
   --radio-label-spacing-xs: 0.5rem;
   --radio-label-spacing-sm: 0.625rem;
   --radio-label-spacing-md: 0.75rem;
@@ -185,11 +329,11 @@
   --nav-item-padding-xl-y: 1rem;
   
   /* Nav Font Sizes */
-  --nav-font-size-xs: var(--text-xs);
-  --nav-font-size-sm: var(--text-sm);
-  --nav-font-size-md: var(--text-base);
-  --nav-font-size-lg: var(--text-lg);
-  --nav-font-size-xl: var(--text-xl);
+  --nav-font-size-xs: var(--typography-caption);
+  --nav-font-size-sm: var(--typography-small);
+  --nav-font-size-md: var(--typography-body);
+  --nav-font-size-lg: var(--typography-h6);
+  --nav-font-size-xl: var(--typography-h5);
 
   /* Component: Button */
   --button-primary-text: #ffffff;
@@ -204,12 +348,12 @@
   --button-padding-lg-y: 0.75rem;
   --button-padding-xl-x: 2rem;
   --button-padding-xl-y: 1rem;
-  --button-font-size-xs: var(--text-xs);
-  --button-font-size-sm: var(--text-sm);
-  --button-font-size-md: var(--text-base);
-  --button-font-size-lg: var(--text-lg);
-  --button-font-size-xl: var(--text-xl);
-  --button-text-sm: var(--text-sm);
+  --button-font-size-xs: var(--typography-caption);
+  --button-font-size-sm: var(--typography-small);
+  --button-font-size-md: var(--typography-body);
+  --button-font-size-lg: var(--typography-h6);
+  --button-font-size-xl: var(--typography-h5);
+  --button-text-sm: var(--typography-small);
   --button-text-md: 1rem;
   --button-text-lg: 1.125rem;
   --button-radius: 0.5rem;
@@ -267,7 +411,7 @@
   --drawer-item-spacing: 0.25rem;
   --drawer-item-padding-x: 1rem;
   --drawer-item-padding-y: 0.625rem;
-  --drawer-font-size: var(--text-sm);
+  --drawer-font-size: var(--typography-small);
   --drawer-border-radius: var(--radius-md);
 
   /* Dropdown component variables */
@@ -286,11 +430,11 @@
   --dropdown-padding-xl-y: 0.875rem;
   
   /* Dropdown Font Sizes */
-  --dropdown-font-size-xs: var(--text-xs);
-  --dropdown-font-size-sm: var(--text-sm);
-  --dropdown-font-size-md: var(--text-base);
-  --dropdown-font-size-lg: var(--text-lg);
-  --dropdown-font-size-xl: var(--text-xl);
+  --dropdown-font-size-xs: var(--typography-caption);
+  --dropdown-font-size-sm: var(--typography-small);
+  --dropdown-font-size-md: var(--typography-body);
+  --dropdown-font-size-lg: var(--typography-h6);
+  --dropdown-font-size-xl: var(--typography-h5);
   
   /* Dropdown Icon Sizes */
   --dropdown-icon-size-xs: 0.875rem;
@@ -312,11 +456,11 @@
   --dropdown-option-padding-xl-y: 0.875rem;
   
   /* Dropdown Option Font Sizes */
-  --dropdown-option-font-size-xs: var(--text-xs);
-  --dropdown-option-font-size-sm: var(--text-sm);
-  --dropdown-option-font-size-md: var(--text-base);
-  --dropdown-option-font-size-lg: var(--text-lg);
-  --dropdown-option-font-size-xl: var(--text-xl);
+  --dropdown-option-font-size-xs: var(--typography-caption);
+  --dropdown-option-font-size-sm: var(--typography-small);
+  --dropdown-option-font-size-md: var(--typography-body);
+  --dropdown-option-font-size-lg: var(--typography-h6);
+  --dropdown-option-font-size-xl: var(--typography-h5);
 }
 
 @theme {
@@ -402,20 +546,139 @@
   border-color: var(--color-error);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Dark Theme - Yomologic Professional Dark Mode */
+.dark {
+  /* Base Colors */
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  
+  /* Primary Colors - Keep blue accent for dark mode */
+  --color-primary: #60a5fa;
+  --color-primary-hover: #3b82f6;
+  --color-primary-active: #2563eb;
+  
+  /* Secondary Colors */
+  --color-secondary: #9ca3af;
+  --color-secondary-hover: #d1d5db;
+  
+  /* Background & Foreground */
+  --color-background: #111827;
+  --color-foreground: #f3f4f6;
+  --color-muted: #1f2937;
+  --color-muted-foreground: #9ca3af;
+  --color-placeholder: #6b7280;
+  --color-border: #374151;
+  
+  /* Semantic Colors - Adjusted for dark mode */
+  --color-info: #60a5fa;
+  --color-info-foreground: #111827;
+  --color-info-muted: #1e3a5f;
+  --color-info-muted-foreground: #93c5fd;
+  --color-info-border: #60a5fa;
+  
+  --color-success: #34d399;
+  --color-success-foreground: #111827;
+  --color-success-muted: #064e3b;
+  --color-success-muted-foreground: #6ee7b7;
+  --color-success-border: #34d399;
+  
+  --color-warning: #fbbf24;
+  --color-warning-foreground: #111827;
+  --color-warning-muted: #78350f;
+  --color-warning-muted-foreground: #fcd34d;
+  --color-warning-border: #fbbf24;
+  
+  --color-error: #f87171;
+  --color-error-foreground: #111827;
+  --color-error-muted: #7f1d1d;
+  --color-error-muted-foreground: #fca5a5;
+  --color-error-border: #f87171;
+  
+  /* Component: Checkbox - Dark mode adjustments */
+  --checkbox-border-color: #4b5563;
+  --checkbox-checked-color: #60a5fa;
+  --checkbox-label-color: #d1d5db;
+  --checkbox-hover-bg: rgba(96, 165, 250, 0.15);
+  
+  /* Component: Radio - Dark mode adjustments */
+  --radio-border-color: #4b5563;
+  --radio-checked-color: #60a5fa;
+  --radio-label-color: #d1d5db;
+  --radio-hover-bg: rgba(96, 165, 250, 0.15);
+  
+  /* Component: Button - Dark mode adjustments */
+  --button-primary-text: #111827;
+  --button-secondary-text: #f3f4f6;
+  
+  /* Card Icon Colors - Dark mode variants */
+  --card-icon-blue-bg: #1e3a5f;
+  --card-icon-blue-bg-hover: #1e40af;
+  --card-icon-blue-text: #93c5fd;
+  --card-icon-purple-bg: #581c87;
+  --card-icon-purple-bg-hover: #6b21a8;
+  --card-icon-purple-text: #e9d5ff;
+  --card-icon-green-bg: #064e3b;
+  --card-icon-green-bg-hover: #065f46;
+  --card-icon-green-text: #6ee7b7;
+  --card-icon-orange-bg: #7c2d12;
+  --card-icon-orange-bg-hover: #9a3412;
+  --card-icon-orange-text: #fdba74;
+  --card-icon-pink-bg: #831843;
+  --card-icon-pink-bg-hover: #9f1239;
+  --card-icon-pink-text: #fbcfe8;
+  --card-icon-indigo-bg: #312e81;
+  --card-icon-indigo-bg-hover: #3730a3;
+  --card-icon-indigo-text: #c7d2fe;
+}
+
+/* Theme-aware showcase utility classes */
+.showcase-bg {
+  background-color: var(--showcase-bg);
+}
+
+.showcase-surface {
+  background-color: var(--showcase-surface);
+}
+
+.showcase-surface-elevated {
+  background-color: var(--showcase-surface-elevated);
+}
+
+.showcase-text-primary {
+  color: var(--showcase-text-primary);
+}
+
+.showcase-text-secondary {
+  color: var(--showcase-text-secondary);
+}
+
+.showcase-border {
+  border-color: var(--showcase-border);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-background);
+  color: var(--color-foreground);
   font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
 }
 
 html {
   overflow-x: hidden;
+}
+
+/* Code Snippet Typography - Override SyntaxHighlighter inline styles */
+.code-snippet-small pre,
+.code-snippet-small code {
+  font-size: inherit !important;
+}
+
+.code-snippet-body pre,
+.code-snippet-body code {
+  font-size: inherit !important;
+}
+
+.code-snippet-h6 pre,
+.code-snippet-h6 code {
+  font-size: inherit !important;
 }

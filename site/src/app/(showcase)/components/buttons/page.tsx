@@ -26,22 +26,22 @@ export default function ButtonsPage() {
                 SECTION 1: USAGE EXAMPLES
             ======================================== */}
             <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                <h2 className="text-h2 font-semibold theme-text mb-4">
                     Button
                 </h2>
                 <div className="space-y-6">
                     {/* Example 1: Button Variants */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Button Variants
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Different visual styles for various use cases.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1">
-                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border flex items-center justify-center">
                                         <Button
                                             variant={
                                                 selectedVariant as
@@ -93,17 +93,17 @@ export default function ButtonsPage() {
 
                     {/* Example 2: Semantic Variants */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Semantic Color Variants
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Semantic colors for different actions and
                                 states.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1">
-                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border flex items-center justify-center">
                                         <Button
                                             variant={
                                                 selectedSemanticVariant as
@@ -157,16 +157,16 @@ export default function ButtonsPage() {
 
                     {/* Example 3: Button Sizes */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Button Sizes
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Five sizes from extra small to extra large.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1">
-                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border flex items-center justify-center">
                                         <Button
                                             size={
                                                 selectedSize as
@@ -208,17 +208,17 @@ export default function ButtonsPage() {
 
                     {/* Example 4: With Icons */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Buttons with Icons
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Add icons on the left or right side of the
                                 button text.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1">
-                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border flex items-center justify-center">
                                         <Button
                                             leftIcon={
                                                 iconPosition === "left" ||
@@ -275,16 +275,16 @@ export default function ButtonsPage() {
 
                     {/* Example 5: Loading State */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Loading State
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Show loading spinner and disable interaction.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1">
-                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border flex items-center justify-center">
                                         <Button isLoading={showLoading}>
                                             {showLoading
                                                 ? "Loading..."
@@ -301,9 +301,9 @@ export default function ButtonsPage() {
                                                         e.target.checked
                                                     )
                                                 }
-                                                className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
+                                                className="w-4 h-4 text-[var(--color-primary)] rounded focus:ring-2 focus:ring-blue-500"
                                             />
-                                            <span className="text-sm text-gray-700">
+                                            <span className="text-small theme-text-muted">
                                                 Show Loading State
                                             </span>
                                         </label>
@@ -320,16 +320,16 @@ export default function ButtonsPage() {
 
                     {/* Example 6: Disabled State */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Disabled State
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Disabled buttons cannot be interacted with.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1">
-                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border flex items-center justify-center">
                                         <Button disabled={showDisabled}>
                                             Disabled Button
                                         </Button>
@@ -344,9 +344,9 @@ export default function ButtonsPage() {
                                                         e.target.checked
                                                     )
                                                 }
-                                                className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
+                                                className="w-4 h-4 text-[var(--color-primary)] rounded focus:ring-2 focus:ring-blue-500"
                                             />
-                                            <span className="text-sm text-gray-700">
+                                            <span className="text-small theme-text-muted">
                                                 Disabled
                                             </span>
                                         </label>
@@ -363,16 +363,16 @@ export default function ButtonsPage() {
 
                     {/* Example 7: Full Width */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Full Width Button
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Use className to make buttons full width.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1">
-                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border">
                                         <Button className="w-full">
                                             Full Width Button
                                         </Button>
@@ -395,35 +395,35 @@ export default function ButtonsPage() {
                 SECTION 2: API REFERENCE
             ======================================== */}
             <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <h2 className="text-h2 font-semibold theme-text mb-4 flex items-center gap-2">
                     <BookOpen className="w-5 h-5" />
                     API Reference
                 </h2>
                 <Card variant="elevated" padding="none">
                     <div className="overflow-x-auto">
                         <table className="w-full">
-                            <thead className="bg-gray-50 border-b border-gray-200">
+                            <thead className="theme-surface border-b theme-border">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Prop
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Type
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Default
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Description
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
+                            <tbody className="theme-bg divide-y divide-gray-200">
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         variant
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         &quot;primary&quot; |
                                         &quot;secondary&quot; |
                                         &quot;outline&quot; | &quot;ghost&quot;
@@ -431,129 +431,129 @@ export default function ButtonsPage() {
                                         | &quot;warning&quot; |
                                         &quot;error&quot;
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         &quot;primary&quot;
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Visual style of the button
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         size
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         &quot;xs&quot; | &quot;sm&quot; |
                                         &quot;md&quot; | &quot;lg&quot; |
                                         &quot;xl&quot;
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         &quot;md&quot;
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Size of the button (padding and font
                                         size)
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         disabled
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         boolean
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         false
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Disables the button and prevents
                                         interactions
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         isLoading
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         boolean
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         false
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Shows loading spinner and disables the
                                         button
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         leftIcon
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         ReactNode
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Icon or element to display on the left
                                         side
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         rightIcon
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         ReactNode
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Icon or element to display on the right
                                         side
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         onClick
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         () =&gt; void
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Click event handler
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         className
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         string
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Additional CSS classes to apply
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         children
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         ReactNode
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         required
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Button content (text or elements)
                                     </td>
                                 </tr>

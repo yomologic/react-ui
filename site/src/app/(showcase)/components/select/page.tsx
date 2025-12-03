@@ -41,24 +41,24 @@ export default function SelectPage() {
                 SECTION 1: COMPONENT EXAMPLES
             ======================================== */}
             <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                <h2 className="text-h2 font-semibold theme-text mb-4">
                     Select
                 </h2>
                 <div className="space-y-6">
                     {/* Example 1: Select Sizes */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Select Sizes
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Select dropdowns come in five sizes from extra
                                 small to extra large.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1 min-w-0">
                                     <div className="space-y-4">
-                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                        <div className="p-6 theme-surface rounded-lg border theme-border">
                                             <Select
                                                 label="Select Fruit"
                                                 placeholder="Choose a fruit"
@@ -121,18 +121,18 @@ export default function SelectPage() {
 
                     {/* Example 2: Select States */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Select States
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Select dropdowns support normal, error, and
                                 disabled states.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1 min-w-0">
                                     <div className="space-y-4">
-                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                        <div className="p-6 theme-surface rounded-lg border theme-border">
                                             <Select
                                                 label="Select Fruit"
                                                 placeholder="Choose a fruit"
@@ -214,18 +214,18 @@ export default function SelectPage() {
 
                     {/* Example 3: With Helper Text */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             With Helper Text
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Add helper text to provide additional context or
                                 instructions.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1 min-w-0">
                                     <div className="space-y-4">
-                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                        <div className="p-6 theme-surface rounded-lg border theme-border">
                                             <Select
                                                 label="Select Fruit"
                                                 placeholder="Choose a fruit"
@@ -280,171 +280,171 @@ export default function SelectPage() {
                 SECTION 2: API REFERENCE
             ======================================== */}
             <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <h2 className="text-h2 font-semibold theme-text mb-4 flex items-center gap-2">
                     <BookOpen className="w-5 h-5" />
                     API Reference
                 </h2>
                 <Card variant="elevated" padding="none">
                     <div className="overflow-x-auto">
                         <table className="w-full">
-                            <thead className="bg-gray-50 border-b border-gray-200">
+                            <thead className="theme-surface border-b theme-border">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Prop
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Type
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Default
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Description
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
+                            <tbody className="theme-bg divide-y theme-border">
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         options
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         SelectOption[]
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         []
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Array of options:{" "}
                                         {`{ value, label, disabled? }`}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         value
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         string | number
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Currently selected value
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         onChange
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         (value) =&gt; void
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Callback when selection changes
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         label
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         string
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Label text displayed above select
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         placeholder
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         string
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         &quot;Select an option&quot;
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Placeholder text when nothing is
                                         selected
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         children
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         ReactNode
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Custom content to render in select
                                         (overrides options)
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         disabled
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         boolean
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         false
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Disables the select
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         error
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         string
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Error message displayed below (shows red
                                         styling)
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         helperText
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         string
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Helper text displayed below select
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         required
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         boolean
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         false
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Marks the field as required (shows
                                         asterisk)
                                     </td>

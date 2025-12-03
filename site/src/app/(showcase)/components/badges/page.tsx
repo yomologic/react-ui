@@ -22,23 +22,21 @@ export default function BadgesPage() {
                 SECTION 1: USAGE EXAMPLES
             ======================================== */}
             <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                    Badge
-                </h2>
+                <h2 className="text-h2 font-semibold theme-text mb-4">Badge</h2>
                 <div className="space-y-6">
                     {/* Example 1: Badge Variants */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Badge Variants
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Badges support different semantic color
                                 variants.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1">
-                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border flex items-center justify-center">
                                         <Badge
                                             variant={
                                                 selectedVariant as
@@ -95,17 +93,17 @@ export default function BadgesPage() {
 
                     {/* Example 2: Badge Sizes */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Badge Sizes
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Badges come in multiple sizes from extra small
                                 to extra large.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1">
-                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border flex items-center justify-center">
                                         <Badge
                                             size={
                                                 selectedSize as
@@ -148,17 +146,17 @@ export default function BadgesPage() {
 
                     {/* Example 3: Badge with Icons */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Badge with Icons
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Add icons to the left or right side of badge
                                 text.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1">
-                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border flex items-center justify-center">
                                         <Badge
                                             variant="info"
                                             leftIcon={
@@ -216,22 +214,22 @@ export default function BadgesPage() {
 
                     {/* Example 4: Notification Counter Badge */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Notification Counter
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Position badges as notification counters in the
                                 top-right corner of elements.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1">
-                                    <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center gap-8">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border flex items-center justify-center gap-8">
                                         {/* Inbox Example */}
                                         <div className="relative inline-block">
-                                            <button className="p-3 bg-white rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors">
+                                            <button className="p-3 theme-bg rounded-lg border theme-border hover:theme-surface transition-colors">
                                                 <svg
-                                                    className="w-6 h-6 text-gray-700"
+                                                    className="w-6 h-6 theme-text-muted"
                                                     fill="none"
                                                     stroke="currentColor"
                                                     viewBox="0 0 24 24"
@@ -255,9 +253,9 @@ export default function BadgesPage() {
 
                                         {/* Notifications Example */}
                                         <div className="relative inline-block">
-                                            <button className="p-3 bg-white rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors">
+                                            <button className="p-3 theme-bg rounded-lg border theme-border hover:theme-surface transition-colors">
                                                 <svg
-                                                    className="w-6 h-6 text-gray-700"
+                                                    className="w-6 h-6 theme-text-muted"
                                                     fill="none"
                                                     stroke="currentColor"
                                                     viewBox="0 0 24 24"
@@ -281,9 +279,9 @@ export default function BadgesPage() {
 
                                         {/* Cart Example */}
                                         <div className="relative inline-block">
-                                            <button className="p-3 bg-white rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors">
+                                            <button className="p-3 theme-bg rounded-lg border theme-border hover:theme-surface transition-colors">
                                                 <svg
-                                                    className="w-6 h-6 text-gray-700"
+                                                    className="w-6 h-6 theme-text-muted"
                                                     fill="none"
                                                     stroke="currentColor"
                                                     viewBox="0 0 24 24"
@@ -309,7 +307,7 @@ export default function BadgesPage() {
                                 <div className="flex-1 min-w-0">
                                     <CodeSnippet
                                         code={`<div className="relative inline-block">
-  <button className="p-3 bg-white rounded-lg border">
+  <button className="p-3 theme-bg rounded-lg border">
     <MailIcon className="w-6 h-6" />
   </button>
   <Badge
@@ -334,116 +332,116 @@ export default function BadgesPage() {
                 SECTION 2: API REFERENCE
             ======================================== */}
             <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <h2 className="text-h2 font-semibold theme-text mb-4 flex items-center gap-2">
                     <BookOpen className="w-5 h-5" />
                     API Reference
                 </h2>
                 <Card variant="elevated" padding="none">
                     <div className="overflow-x-auto">
                         <table className="w-full">
-                            <thead className="bg-gray-50 border-b border-gray-200">
+                            <thead className="theme-surface border-b theme-border">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Prop
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Type
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Default
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Description
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
+                            <tbody className="theme-bg divide-y divide-gray-200">
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         variant
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         &quot;default&quot; |
                                         &quot;success&quot; |
                                         &quot;warning&quot; | &quot;error&quot;
                                         | &quot;info&quot;
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         &quot;default&quot;
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Color scheme of the badge
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         size
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         &quot;xs&quot; | &quot;sm&quot; |
                                         &quot;md&quot; | &quot;lg&quot; |
                                         &quot;xl&quot;
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         &quot;md&quot;
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Size of the badge
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         leftIcon
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         ReactNode
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Icon to display on the left side
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         rightIcon
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         ReactNode
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Icon to display on the right side
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         children
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         ReactNode
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         required
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Label text or content
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         className
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         string
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         undefined
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Additional CSS classes to apply
                                     </td>
                                 </tr>

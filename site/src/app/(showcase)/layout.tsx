@@ -23,6 +23,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navSections: DrawerNavSection[] = [
     {
@@ -158,13 +159,20 @@ export default function ShowcaseLayout({
     };
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div
+            className="min-h-screen"
+            style={{ background: "var(--color-muted)" }}
+        >
             {/* Header with auto-hide on scroll - desktop only, mobile uses Drawer header */}
             <Header
                 autoHideOnScroll={true}
-                className="hidden lg:block left-0 right-64 bg-white border-b border-gray-200 z-10"
+                className="hidden lg:block left-0 right-64 z-10"
+                style={{
+                    background: "var(--color-background)",
+                    borderBottom: "1px solid var(--color-border)",
+                }}
             >
-                <div className="px-4 sm:px-6 lg:px-8 h-16 flex items-center">
+                <div className="px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                     <Link
                         href="/"
                         className="flex items-center gap-3 hover:opacity-80 transition-opacity group"
@@ -176,14 +184,21 @@ export default function ShowcaseLayout({
                             height={40}
                             className="group-hover:scale-105 transition-transform"
                         />
-                        <span className="font-semibold text-gray-900 text-lg">
+                        <span
+                            className="font-semibold text-h3"
+                            style={{ color: "var(--color-foreground)" }}
+                        >
                             React UI
                         </span>
                     </Link>
+                    <ThemeToggle />
                 </div>
             </Header>
 
-            <main className="w-full pt-16 lg:pt-16 overflow-x-hidden">
+            <main
+                className="w-full pt-16 lg:pt-16 overflow-x-hidden"
+                style={{ color: "var(--color-foreground)" }}
+            >
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:pr-72 py-8">
                     {children}
                 </div>
@@ -197,6 +212,7 @@ export default function ShowcaseLayout({
                 position="right"
                 homeUrl="/"
                 autoHideOnScroll={true}
+                headerActions={<ThemeToggle />}
             />
         </div>
     );

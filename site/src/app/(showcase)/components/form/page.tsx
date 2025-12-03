@@ -47,17 +47,15 @@ export default function FormPage() {
                 SECTION 1: COMPONENT EXAMPLES
             ======================================== */}
             <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                    Form
-                </h2>
+                <h2 className="text-h2 font-semibold theme-text mb-4">Form</h2>
                 <div className="space-y-6">
                     {/* Example 1: Basic Form with Validation */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Basic Form with Validation
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Form coordinates validation across multiple
                                 inputs. Errors appear only after submit or when
                                 a field is touched.
@@ -69,7 +67,7 @@ export default function FormPage() {
                                 <div className="flex-1 min-w-0">
                                     <div className="space-y-4">
                                         {/* Component Display */}
-                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                        <div className="p-6 theme-surface rounded-lg border theme-border">
                                             <Form
                                                 onSubmit={(values) =>
                                                     setSubmittedData1(values)
@@ -111,7 +109,7 @@ export default function FormPage() {
                                                         Form submitted
                                                         successfully!
                                                     </p>
-                                                    <pre className="text-sm text-green-800">
+                                                    <pre className="text-small text-green-800">
                                                         {JSON.stringify(
                                                             submittedData1,
                                                             null,
@@ -173,11 +171,11 @@ export default function FormPage() {
 
                     {/* Example 2: All Control Types */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             All Form Control Types
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Form works with Input, RadioGroup, Checkbox,
                                 Select, Switch, and other form controls. Each
                                 control must have a unique <code>name</code>{" "}
@@ -190,7 +188,7 @@ export default function FormPage() {
                                 <div className="flex-1 min-w-0">
                                     <div className="space-y-4">
                                         {/* Component Display */}
-                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                        <div className="p-6 theme-surface rounded-lg border theme-border">
                                             <Form
                                                 onSubmit={(values) =>
                                                     setSubmittedData2(values)
@@ -281,7 +279,7 @@ export default function FormPage() {
                                                         Form submitted
                                                         successfully!
                                                     </p>
-                                                    <pre className="text-sm text-green-800">
+                                                    <pre className="text-small text-green-800">
                                                         {JSON.stringify(
                                                             submittedData2,
                                                             null,
@@ -349,11 +347,11 @@ export default function FormPage() {
 
                     {/* Example 3: Form Spacing Options */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Form Spacing
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 Control vertical spacing between form controls
                                 with the <code>spacing</code> prop.
                             </p>
@@ -364,11 +362,11 @@ export default function FormPage() {
                                 <div className="flex-1 min-w-0">
                                     <div className="space-y-4">
                                         {/* Component Display */}
-                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200">
+                                        <div className="p-6 theme-surface rounded-lg border theme-border">
                                             <Form
-                                                onSubmit={(values) =>
-                                                    console.log(values)
-                                                }
+                                                onSubmit={(_values) => {
+                                                    // Handle form submission
+                                                }}
                                                 spacing={spacing}
                                             >
                                                 <Input
@@ -448,73 +446,73 @@ export default function FormPage() {
                 SECTION 2: API REFERENCE
             ======================================== */}
             <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <h2 className="text-h2 font-semibold theme-text mb-4 flex items-center gap-2">
                     <BookOpen className="w-5 h-5" />
                     API Reference
                 </h2>
                 <Card variant="elevated" padding="none">
                     <div className="overflow-x-auto">
                         <table className="w-full">
-                            <thead className="bg-gray-50 border-b border-gray-200">
+                            <thead className="theme-surface border-b theme-border">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Prop
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Type
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Default
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Description
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
+                            <tbody className="theme-bg divide-y divide-gray-200">
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         onSubmit
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         (values: Record&lt;string, any&gt;)
                                         =&gt; void
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         -
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Callback function called when form is
                                         submitted with valid values
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         spacing
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         "none" | "dense" | "normal"
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         "normal"
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Controls vertical spacing between form
                                         controls. none=0px, dense=8px,
                                         normal=16px
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         className
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         string
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         -
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Additional CSS classes for the form
                                         element
                                     </td>
@@ -526,11 +524,11 @@ export default function FormPage() {
 
                 <div className="mt-6 space-y-4">
                     <Card variant="bordered" padding="md">
-                        <p className="text-sm text-gray-700">
+                        <p className="text-small theme-text-muted">
                             <strong>Note:</strong> All child form controls
                             (Input, RadioGroup, Checkbox, etc.) must have a
                             unique{" "}
-                            <code className="px-1.5 py-0.5 bg-gray-100 text-gray-800 rounded text-xs">
+                            <code className="px-1.5 py-0.5 theme-surface theme-text rounded text-xs">
                                 name
                             </code>{" "}
                             prop to be tracked by the Form component.
@@ -538,10 +536,10 @@ export default function FormPage() {
                     </Card>
 
                     <Card variant="bordered" padding="md">
-                        <p className="text-sm font-semibold text-gray-900 mb-2">
+                        <p className="text-small font-semibold theme-text mb-2">
                             Key Features:
                         </p>
-                        <ul className="text-sm text-gray-700 space-y-1 list-disc list-inside">
+                        <ul className="text-small theme-text-muted space-y-1 list-disc list-inside">
                             <li>
                                 <strong>Coordinated validation:</strong>{" "}
                                 Validates all fields on submit
@@ -556,7 +554,7 @@ export default function FormPage() {
                             </li>
                             <li>
                                 <strong>Custom validation:</strong> Use the{" "}
-                                <code className="px-1.5 py-0.5 bg-gray-100 text-gray-800 rounded text-xs">
+                                <code className="px-1.5 py-0.5 theme-surface theme-text rounded text-xs">
                                     validate
                                 </code>{" "}
                                 prop for custom rules

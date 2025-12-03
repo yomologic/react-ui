@@ -304,13 +304,15 @@ export const Slider: React.FC<SliderProps> = ({
     // Color styles
     const colorStyles = {
         primary: {
-            track: "bg-blue-500",
-            thumb: "bg-blue-500",
-            thumbHover: "hover:bg-blue-600",
-            thumbRing: "ring-blue-500/30",
-            thumbRingHover: "group-hover/thumb:ring-blue-500/30",
-            labelSelected: "text-gray-700",
-            labelUnselected: "text-gray-700",
+            track: "bg-(--color-primary)",
+            thumb: "bg-(--color-primary)",
+            thumbHover: "hover:bg-(--color-primary-hover)",
+            thumbRing:
+                "ring-[color-mix(in_srgb,var(--color-primary)_30%,transparent)]",
+            thumbRingHover:
+                "group-hover/thumb:ring-[color-mix(in_srgb,var(--color-primary)_30%,transparent)]",
+            labelSelected: "text-(--color-muted-foreground)",
+            labelUnselected: "text-(--color-muted-foreground)",
         },
         secondary: {
             track: "bg-purple-500",
@@ -318,8 +320,8 @@ export const Slider: React.FC<SliderProps> = ({
             thumbHover: "hover:bg-purple-600",
             thumbRing: "ring-purple-500/30",
             thumbRingHover: "group-hover/thumb:ring-purple-500/30",
-            labelSelected: "text-gray-700",
-            labelUnselected: "text-gray-700",
+            labelSelected: "text-(--color-muted-foreground)",
+            labelUnselected: "text-(--color-muted-foreground)",
         },
     };
 
@@ -423,21 +425,21 @@ export const Slider: React.FC<SliderProps> = ({
                     />
                     {showLabelAlways && (
                         <div
-                            className={`absolute ${isVertical ? "left-6" : "-top-10"} ${isVertical ? "top-1/2 -translate-y-1/2" : "left-1/2 -translate-x-1/2"} px-2 py-1 text-xs font-semibold text-white ${color === "primary" ? "bg-blue-500" : "bg-purple-500"} rounded shadow-lg whitespace-nowrap [z-index:var(--z-index-tooltip)]`}
+                            className={`absolute ${isVertical ? "left-6" : "-top-10"} ${isVertical ? "top-1/2 -translate-y-1/2" : "left-1/2 -translate-x-1/2"} px-2 py-1 text-caption font-semibold text-white ${color === "primary" ? "bg-(--color-primary)" : "bg-purple-500"} rounded shadow-lg whitespace-nowrap z-(--z-index-tooltip)`}
                         >
                             {valueLabelFormat(val)}
                             <div
-                                className={`absolute ${isVertical ? "left-0 top-1/2 -translate-y-1/2 -translate-x-full" : "left-1/2 -translate-x-1/2 top-full"} w-0 h-0 ${isVertical ? "border-t-4 border-t-transparent border-b-4 border-b-transparent" : "border-l-4 border-l-transparent border-r-4 border-r-transparent"} ${isVertical ? (color === "primary" ? "border-r-4 border-r-blue-500" : "border-r-4 border-r-purple-500") : color === "primary" ? "border-t-4 border-t-blue-500" : "border-t-4 border-t-purple-500"}`}
+                                className={`absolute ${isVertical ? "left-0 top-1/2 -translate-y-1/2 -translate-x-full" : "left-1/2 -translate-x-1/2 top-full"} w-0 h-0 ${isVertical ? "border-t-4 border-t-transparent border-b-4 border-b-transparent" : "border-l-4 border-l-transparent border-r-4 border-r-transparent"} ${isVertical ? (color === "primary" ? "border-r-4 border-r-[var(--color-primary)]" : "border-r-4 border-r-purple-500") : color === "primary" ? "border-t-4 border-t-[var(--color-primary)]" : "border-t-4 border-t-purple-500"}`}
                             />
                         </div>
                     )}
                     {showLabelOnActiveOrHover && (
                         <div
-                            className={`absolute ${isVertical ? "left-6" : "-top-10"} ${isVertical ? "top-1/2 -translate-y-1/2" : "left-1/2 -translate-x-1/2"} px-2 py-1 text-xs font-semibold text-white ${color === "primary" ? "bg-blue-500" : "bg-purple-500"} rounded shadow-lg whitespace-nowrap opacity-0 scale-90 ${isActive ? "opacity-100 scale-100" : "group-hover/thumb:opacity-100 group-hover/thumb:scale-100"} transition-all duration-300 ease-out pointer-events-none [z-index:var(--z-index-tooltip)]`}
+                            className={`absolute ${isVertical ? "left-6" : "-top-10"} ${isVertical ? "top-1/2 -translate-y-1/2" : "left-1/2 -translate-x-1/2"} px-2 py-1 text-caption font-semibold text-white ${color === "primary" ? "bg-(--color-primary)" : "bg-purple-500"} rounded shadow-lg whitespace-nowrap opacity-0 scale-90 ${isActive ? "opacity-100 scale-100" : "group-hover/thumb:opacity-100 group-hover/thumb:scale-100"} transition-all duration-300 ease-out pointer-events-none z-(--z-index-tooltip)`}
                         >
                             {valueLabelFormat(val)}
                             <div
-                                className={`absolute ${isVertical ? "left-0 top-1/2 -translate-y-1/2 -translate-x-full" : "left-1/2 -translate-x-1/2 top-full"} w-0 h-0 ${isVertical ? "border-t-4 border-t-transparent border-b-4 border-b-transparent" : "border-l-4 border-l-transparent border-r-4 border-r-transparent"} ${isVertical ? (color === "primary" ? "border-r-4 border-r-blue-500" : "border-r-4 border-r-purple-500") : color === "primary" ? "border-t-4 border-t-blue-500" : "border-t-4 border-t-purple-500"}`}
+                                className={`absolute ${isVertical ? "left-0 top-1/2 -translate-y-1/2 -translate-x-full" : "left-1/2 -translate-x-1/2 top-full"} w-0 h-0 ${isVertical ? "border-t-4 border-t-transparent border-b-4 border-b-transparent" : "border-l-4 border-l-transparent border-r-4 border-r-transparent"} ${isVertical ? (color === "primary" ? "border-r-4 border-r-[var(--color-primary)]" : "border-r-4 border-r-purple-500") : color === "primary" ? "border-t-4 border-t-[var(--color-primary)]" : "border-t-4 border-t-purple-500"}`}
                             />
                         </div>
                     )}
@@ -482,7 +484,7 @@ export const Slider: React.FC<SliderProps> = ({
             >
                 {/* Rail */}
                 <div
-                    className={`absolute ${isVertical ? "inset-x-0 h-full" : "inset-y-0 w-full"} bg-gray-300 rounded-full ${disabled ? "opacity-50" : ""} z-0`}
+                    className={`absolute ${isVertical ? "inset-x-0 h-full" : "inset-y-0 w-full"} bg-[#d1d5db] rounded-full ${disabled ? "opacity-50" : ""} z-0`}
                 />
 
                 {/* Track */}
@@ -515,8 +517,8 @@ export const Slider: React.FC<SliderProps> = ({
                     }
 
                     const markColor = isInSelectedRange
-                        ? "bg-white shadow-sm group-hover/mark:bg-white group-hover/mark:shadow-md"
-                        : "bg-gray-600 group-hover/mark:bg-gray-800";
+                        ? "bg-(--color-background) shadow-sm group-hover/mark:bg-(--color-background) group-hover/mark:shadow-md"
+                        : "bg-[#4b5563] group-hover/mark:bg-[#1f2937]";
                     const labelColor = isInSelectedRange
                         ? currentColorStyles.labelSelected
                         : currentColorStyles.labelUnselected;
@@ -533,7 +535,7 @@ export const Slider: React.FC<SliderProps> = ({
                             {/* Always visible mark label at the bottom */}
                             {mark.label && (
                                 <div
-                                    className={`absolute ${isVertical ? "left-4 top-1/2 -translate-y-1/2" : "top-3 left-1/2 -translate-x-1/2"} text-xs font-medium ${labelColor} transition-colors duration-200 whitespace-nowrap pointer-events-none [z-index:var(--z-index-base)]`}
+                                    className={`absolute ${isVertical ? "left-4 top-1/2 -translate-y-1/2" : "top-3 left-1/2 -translate-x-1/2"} text-caption font-medium ${labelColor} transition-colors duration-200 whitespace-nowrap pointer-events-none z-(--z-index-base)`}
                                 >
                                     {mark.label}
                                 </div>
@@ -541,12 +543,12 @@ export const Slider: React.FC<SliderProps> = ({
                             {/* Hover tooltip showing value (only if no permanent label) */}
                             {showMarkLabelsOnHover && !mark.label && (
                                 <div
-                                    className={`absolute ${isVertical ? "left-6 top-1/2 -translate-y-1/2" : "-top-8 left-1/2 -translate-x-1/2"} px-2 py-1 text-xs font-semibold text-white ${color === "primary" ? "bg-blue-500" : "bg-purple-500"} rounded shadow-lg whitespace-nowrap opacity-0 scale-90 group-hover/mark:opacity-100 group-hover/mark:scale-100 transition-all duration-300 ease-out pointer-events-none [z-index:var(--z-index-tooltip)]`}
+                                    className={`absolute ${isVertical ? "left-6 top-1/2 -translate-y-1/2" : "-top-8 left-1/2 -translate-x-1/2"} px-2 py-1 text-caption font-semibold text-white ${color === "primary" ? "bg-(--color-primary)" : "bg-purple-500"} rounded shadow-lg whitespace-nowrap opacity-0 scale-90 group-hover/mark:opacity-100 group-hover/mark:scale-100 transition-all duration-300 ease-out pointer-events-none z-(--z-index-tooltip)`}
                                 >
                                     {valueLabelFormat(mark.value)}
                                     {/* Arrow triangle */}
                                     <div
-                                        className={`absolute ${isVertical ? "right-full top-1/2 -translate-y-1/2 border-y-4 border-y-transparent border-r-4" : "top-full left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4"} ${color === "primary" ? (isVertical ? "border-r-blue-500" : "border-t-blue-500") : isVertical ? "border-r-purple-500" : "border-t-purple-500"}`}
+                                        className={`absolute ${isVertical ? "right-full top-1/2 -translate-y-1/2 border-y-4 border-y-transparent border-r-4" : "top-full left-1/2 -translate-x-1/2 border-x-4 border-x-transparent border-t-4"} ${color === "primary" ? (isVertical ? "border-r-[var(--color-primary)]" : "border-t-[var(--color-primary)]") : isVertical ? "border-r-purple-500" : "border-t-purple-500"}`}
                                     />
                                 </div>
                             )}

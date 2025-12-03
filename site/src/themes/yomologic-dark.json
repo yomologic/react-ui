@@ -1,0 +1,104 @@
+{
+    "name": "Yomologic Dark",
+    "id": "yomologic-dark",
+    "colors": {
+        "primary": "#60a5fa",
+        "primary-hover": "#3b82f6",
+        "primary-active": "#2563eb",
+        "secondary": "#9ca3af",
+        "secondary-hover": "#d1d5db",
+        "background": "#111827",
+        "foreground": "#f3f4f6",
+        "muted": "#1f2937",
+        "muted-foreground": "#9ca3af",
+        "placeholder": "#6b7280",
+        "border": "#374151"
+    },
+    "showcase": {
+        "bg": "#111827",
+        "surface": "#1f2937",
+        "surface-elevated": "#374151",
+        "text-primary": "#f9fafb",
+        "text-secondary": "#9ca3af",
+        "border": "#374151"
+    },
+    "typography": {
+        "h1": "1.875rem",
+        "h1-desktop": "2.25rem",
+        "h2": "1.5rem",
+        "h2-desktop": "1.875rem",
+        "h3": "1.25rem",
+        "h3-desktop": "1.5rem",
+        "h4": "1.125rem",
+        "h4-desktop": "1.25rem",
+        "h5": "1rem",
+        "h5-desktop": "1.125rem",
+        "h6": "0.875rem",
+        "h6-desktop": "1rem",
+        "body": "0.875rem",
+        "body-desktop": "1rem",
+        "small": "0.75rem",
+        "small-desktop": "0.875rem",
+        "caption": "0.6875rem"
+    },
+    "semanticColors": {
+        "info": "#60a5fa",
+        "info-foreground": "#111827",
+        "info-muted": "#1e3a5f",
+        "info-muted-foreground": "#93c5fd",
+        "info-border": "#60a5fa",
+        "success": "#34d399",
+        "success-foreground": "#111827",
+        "success-muted": "#064e3b",
+        "success-muted-foreground": "#6ee7b7",
+        "success-border": "#34d399",
+        "warning": "#fbbf24",
+        "warning-foreground": "#111827",
+        "warning-muted": "#78350f",
+        "warning-muted-foreground": "#fcd34d",
+        "warning-border": "#fbbf24",
+        "error": "#f87171",
+        "error-foreground": "#111827",
+        "error-muted": "#7f1d1d",
+        "error-muted-foreground": "#fca5a5",
+        "error-border": "#f87171"
+    },
+    "components": {
+        "checkbox": {
+            "border-color": "#4b5563",
+            "checked-color": "#60a5fa",
+            "label-color": "#d1d5db",
+            "hover-bg": "rgba(96, 165, 250, 0.15)"
+        },
+        "radio": {
+            "border-color": "#4b5563",
+            "checked-color": "#60a5fa",
+            "label-color": "#d1d5db",
+            "hover-bg": "rgba(96, 165, 250, 0.15)"
+        },
+        "button": {
+            "primary-text": "#111827",
+            "secondary-text": "#f3f4f6"
+        },
+        "card-icons": {
+            "blue-bg": "#1e3a5f",
+            "blue-bg-hover": "#1e40af",
+            "blue-text": "#93c5fd",
+            "purple-bg": "#581c87",
+            "purple-bg-hover": "#6b21a8",
+            "purple-text": "#e9d5ff",
+            "green-bg": "#064e3b",
+            "green-bg-hover": "#065f46",
+            "green-text": "#6ee7b7",
+            "orange-bg": "#7c2d12",
+            "orange-bg-hover": "#9a3412",
+            "orange-text": "#fdba74",
+            "pink-bg": "#831843",
+            "pink-bg-hover": "#9f1239",
+            "pink-text": "#fbcfe8",
+            "indigo-bg": "#312e81",
+            "indigo-bg-hover": "#3730a3",
+            "indigo-text": "#c7d2fe"
+        }
+    }
+}

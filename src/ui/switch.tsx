@@ -149,7 +149,7 @@ export function Switch({
 
     // Color styles when checked
     const colorStyles = {
-        primary: "bg-[var(--color-primary)]",
+        primary: "bg-(--color-primary)",
         success: "bg-[var(--color-success)]",
         info: "bg-[var(--color-info)]",
         warning: "bg-[var(--color-warning)]",
@@ -183,7 +183,7 @@ export function Switch({
             className={cn(
                 "relative inline-flex shrink-0 rounded-full transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2",
                 sizeStyles[size].track,
-                checked ? colorStyles[color] : "bg-gray-300 dark:bg-gray-600",
+                checked ? colorStyles[color] : "bg-[#d1d5db] dark:bg-[#4b5563]",
                 disabled
                     ? "opacity-50 cursor-not-allowed"
                     : "cursor-pointer hover:opacity-90",
@@ -192,7 +192,7 @@ export function Switch({
         >
             <span
                 className={cn(
-                    "inline-block rounded-full bg-white shadow-lg transform transition-transform duration-200 ease-in-out",
+                    "inline-block rounded-full bg-(--color-background) shadow-lg transform transition-transform duration-200 ease-in-out",
                     sizeStyles[size].thumb,
                     sizeStyles[size].translate,
                     "my-auto"
@@ -227,8 +227,8 @@ export function Switch({
             {switchElement}
             <span
                 className={cn(
-                    "text-sm font-semibold select-none",
-                    disabled && "text-gray-400"
+                    "text-small font-semibold select-none",
+                    disabled && "text-(--color-placeholder)"
                 )}
                 style={
                     !disabled

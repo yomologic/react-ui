@@ -110,7 +110,7 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
 
         // Base styles using CSS variables
         const baseStyles = cn(
-            "bg-[var(--color-background)]",
+            "bg-(--color-background)",
             sticky && "sticky top-0 [z-index:var(--z-index-nav)]"
         );
 
@@ -141,17 +141,18 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
         // Variant styles for items
         const variantItemStyles = {
             primary:
-                "rounded-md hover:bg-[var(--color-primary)]/10 hover:text-[var(--color-primary)] transition-colors duration-150",
+                "rounded-md hover:bg-(--color-primary)/10 hover:text-(--color-primary) transition-colors duration-150",
             secondary:
-                "rounded-md hover:bg-[var(--color-muted)] transition-colors duration-150",
-            ghost: "rounded-md hover:bg-gray-100 transition-colors duration-150",
+                "rounded-md hover:bg-(--color-muted) transition-colors duration-150",
+            ghost: "rounded-md hover:bg-(--color-muted) transition-colors duration-150",
         };
 
         const activeItemStyles = {
             primary:
-                "bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary)] hover:text-white",
-            secondary: "bg-gray-100 text-gray-900 font-semibold",
-            ghost: "bg-gray-100 text-gray-900 font-semibold",
+                "bg-(--color-primary) text-white hover:bg-(--color-primary) hover:text-white",
+            secondary:
+                "bg-(--color-muted) text-(--color-foreground) font-semibold",
+            ghost: "bg-(--color-muted) text-(--color-foreground) font-semibold",
         };
 
         // Breakpoint classes
@@ -198,9 +199,9 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                         className={cn(
                             orientation === "horizontal" &&
                                 !isMobile &&
-                                "h-6 border-l border-[var(--color-border)] mx-2",
+                                "h-6 border-l border-(--color-border) mx-2",
                             (orientation === "vertical" || isMobile) &&
-                                "w-full h-0 border-t border-[var(--color-border)] my-2"
+                                "w-full h-0 border-t border-(--color-border) my-2"
                         )}
                     />
                 );
@@ -215,7 +216,7 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
             const hasChildren = item.children && item.children.length > 0;
 
             const itemBaseStyles = cn(
-                "flex items-center [gap:var(--nav-gap)] font-medium text-[var(--color-foreground)] cursor-pointer select-none",
+                "flex items-center [gap:var(--nav-gap)] font-medium text-(--color-foreground) cursor-pointer select-none",
                 itemPaddingStyles[size],
                 fontSizeStyles[size],
                 variantItemStyles[variant],
@@ -231,7 +232,7 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                     )}
                     <span>{item.label}</span>
                     {item.badge && (
-                        <span className="ml-auto inline-flex items-center rounded-full bg-[var(--color-primary)] px-2 py-0.5 text-xs font-medium text-white">
+                        <span className="ml-auto inline-flex items-center rounded-full bg-(--color-primary) px-2 py-0.5 text-caption font-medium text-white">
                             {item.badge}
                         </span>
                     )}
@@ -262,7 +263,7 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                         {isDropdownOpen && (
                             <div
                                 className={cn(
-                                    "absolute left-0 mt-[var(--nav-gap)] min-w-[200px] bg-[var(--color-background)] border border-[var(--color-border)] rounded-[var(--nav-border-radius)] shadow-xl [z-index:var(--z-index-dropdown)] animate-in fade-in-0 zoom-in-95 duration-200",
+                                    "absolute left-0 mt-[var(--nav-gap)] min-w-[200px] bg-(--color-background) border border-(--color-border) rounded-[var(--nav-border-radius)] shadow-xl [z-index:var(--z-index-dropdown)] animate-in fade-in-0 zoom-in-95 duration-200",
                                     orientation === "vertical" &&
                                         "left-full top-0 ml-2 mt-0"
                                 )}
@@ -276,11 +277,11 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                                             }
                                             disabled={child.disabled}
                                             className={cn(
-                                                "w-full flex items-center gap-2 px-4 py-2 [font-size:var(--text-sm)] text-[var(--color-foreground)] hover:bg-[var(--color-primary)]/10 hover:text-[var(--color-primary)] transition-all duration-200 rounded-sm mx-1",
+                                                "w-full flex items-center gap-2 px-4 py-2 [font-size:var(--text-sm)] text-(--color-foreground) hover:bg-(--color-primary)/10 hover:text-(--color-primary) transition-all duration-200 rounded-sm mx-1",
                                                 child.disabled &&
                                                     "opacity-50 cursor-not-allowed",
                                                 activeId === child.id &&
-                                                    "bg-[var(--color-primary)]/10 text-[var(--color-primary)] [font-weight:var(--font-semibold)]"
+                                                    "bg-(--color-primary)/10 text-(--color-primary) [font-weight:var(--font-semibold)]"
                                             )}
                                         >
                                             {child.icon && (
@@ -290,7 +291,7 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                                             )}
                                             <span>{child.label}</span>
                                             {child.badge && (
-                                                <span className="ml-auto px-2 py-0.5 [font-size:var(--text-xs)] font-semibold bg-[var(--color-primary)] text-white rounded-[var(--radius-full)]">
+                                                <span className="ml-auto px-2 py-0.5 [font-size:var(--text-xs)] font-semibold bg-(--color-primary) text-white rounded-[var(--radius-full)]">
                                                     {child.badge}
                                                 </span>
                                             )}
@@ -389,7 +390,7 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         className={cn(
-                            "p-2 text-[var(--color-foreground)] hover:bg-[var(--color-muted)] rounded-[var(--nav-border-radius)] transition-colors",
+                            "p-2 text-(--color-foreground) hover:bg-(--color-muted) rounded-[var(--nav-border-radius)] transition-colors",
                             breakpointClasses[mobileBreakpoint]
                         )}
                         aria-label="Toggle menu"
@@ -410,7 +411,7 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                             "overflow-hidden transition-all duration-200 ease-in-out border-t",
                             breakpointClasses[mobileBreakpoint],
                             isMobileMenuOpen
-                                ? "max-h-96 opacity-100 border-[var(--color-border)]"
+                                ? "max-h-96 opacity-100 border-(--color-border)"
                                 : "max-h-0 opacity-0 border-transparent"
                         )}
                     >
@@ -438,16 +439,16 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                         <div
                             ref={mobileMenuRef}
                             className={cn(
-                                "fixed top-0 bottom-0 w-64 bg-[var(--color-background)] [z-index:var(--z-index-nav-mobile-menu)] overflow-y-auto transition-transform duration-200 ease-in-out shadow-lg",
+                                "fixed top-0 bottom-0 w-64 bg-(--color-background) [z-index:var(--z-index-nav-mobile-menu)] overflow-y-auto transition-transform duration-200 ease-in-out shadow-lg",
                                 breakpointClasses[mobileBreakpoint],
                                 mobileMenuDirection === "left" && [
-                                    "left-0 border-r border-[var(--color-border)]",
+                                    "left-0 border-r border-(--color-border)",
                                     isMobileMenuOpen
                                         ? "translate-x-0"
                                         : "-translate-x-full",
                                 ],
                                 mobileMenuDirection === "right" && [
-                                    "right-0 border-l border-[var(--color-border)]",
+                                    "right-0 border-l border-(--color-border)",
                                     isMobileMenuOpen
                                         ? "translate-x-0"
                                         : "translate-x-full",

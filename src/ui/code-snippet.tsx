@@ -7,20 +7,20 @@ import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 interface CodeSnippetProps {
     code: string;
     language?: string;
-    fontSize?: "xs" | "sm" | "base";
+    fontSize?: "small" | "body" | "h6";
     wrap?: boolean;
 }
 
 export function CodeSnippet({
     code,
     language = "tsx",
-    fontSize = "sm",
+    fontSize = "small",
     wrap = false,
 }: CodeSnippetProps) {
-    const fontSizeMap = {
-        xs: "0.75rem",
-        sm: "0.875rem",
-        base: "1rem",
+    const fontSizeClassMap = {
+        small: "text-small",
+        body: "text-body",
+        h6: "text-h6",
     };
     const [copied, setCopied] = useState(false);
     const [showTooltip, setShowTooltip] = useState(false);
@@ -43,7 +43,7 @@ export function CodeSnippet({
                     onClick={handleCopy}
                     onMouseEnter={() => setShowTooltip(true)}
                     onMouseLeave={() => setShowTooltip(false)}
-                    className="relative p-2 rounded-md bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-gray-200 transition-all duration-200 border border-gray-700 hover:border-gray-600 shadow-lg"
+                    className="relative p-2 rounded-md bg-[#1f2937] hover:bg-[#374151] text-(--color-placeholder) hover:text-[#e5e7eb] transition-all duration-200 border border-[#374151] hover:border-[#4b5563] shadow-lg"
                     aria-label="Copy code"
                 >
                     {copied ? (
@@ -81,14 +81,14 @@ export function CodeSnippet({
 
                 {/* Tooltip */}
                 {showTooltip && !copied && (
-                    <div className="absolute right-0 top-full mt-2 px-2 py-1 bg-gray-800 text-white text-xs rounded shadow-lg whitespace-nowrap border border-gray-700">
+                    <div className="absolute right-0 top-full mt-2 px-2 py-1 bg-[#1f2937] text-white text-caption rounded shadow-lg whitespace-nowrap border border-[#374151]">
                         Copy code
-                        <div className="absolute -top-1 right-3 w-2 h-2 bg-gray-800 border-l border-t border-gray-700 transform rotate-45"></div>
+                        <div className="absolute -top-1 right-3 w-2 h-2 bg-[#1f2937] border-l border-t border-[#374151] transform rotate-45"></div>
                     </div>
                 )}
 
                 {copied && (
-                    <div className="absolute right-0 top-full mt-2 px-2 py-1 bg-green-600 text-white text-xs rounded shadow-lg whitespace-nowrap">
+                    <div className="absolute right-0 top-full mt-2 px-2 py-1 bg-green-600 text-white text-caption rounded shadow-lg whitespace-nowrap">
                         Copied!
                         <div className="absolute -top-1 right-3 w-2 h-2 bg-green-600 transform rotate-45"></div>
                     </div>
@@ -96,7 +96,9 @@ export function CodeSnippet({
             </div>
 
             {/* Code Block with Syntax Highlighting */}
-            <div className="rounded-lg overflow-x-auto border border-gray-800">
+            <div
+                className={`rounded-lg overflow-x-auto border border-[#1f2937] ${fontSizeClassMap[fontSize]} code-snippet-${fontSize}`}
+            >
                 {/* @ts-expect-error - SyntaxHighlighter has typing issues with React 19 */}
                 <SyntaxHighlighter
                     language={language}
@@ -104,7 +106,6 @@ export function CodeSnippet({
                     customStyle={{
                         margin: 0,
                         padding: "1rem 3.5rem 1rem 1rem",
-                        fontSize: fontSizeMap[fontSize],
                         lineHeight: "1.5",
                         background: "#1a1b26",
                     }}

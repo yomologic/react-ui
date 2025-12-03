@@ -64,17 +64,17 @@ print(factorial(5))`,
                 SECTION 1: COMPONENT EXAMPLES
             ======================================== */}
             <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                <h2 className="text-h2 font-semibold theme-text mb-4">
                     Code Snippet
                 </h2>
                 <div className="space-y-6">
                     {/* Example 1: Language Support */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Language Support
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-small theme-text-muted">
                                 CodeSnippet supports syntax highlighting for
                                 multiple programming languages with VS Code
                                 Dark+ theme.
@@ -82,7 +82,7 @@ print(factorial(5))`,
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1 min-w-0">
                                     <div className="space-y-4">
-                                        <div className="p-6 bg-gray-50 rounded-lg border border-gray-200 h-[350px] overflow-auto">
+                                        <div className="p-6 theme-surface rounded-lg border theme-border h-[350px] overflow-auto">
                                             <CodeSnippet
                                                 code={
                                                     sampleCode[
@@ -144,17 +144,17 @@ export default function App() {
 
                     {/* Example 2: Features */}
                     <Card variant="bordered" padding="lg">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
                             Built-in Features
                         </h3>
                         <div className="space-y-4">
-                            <p className="text-sm text-gray-600 mb-4">
+                            <p className="text-small theme-text-muted mb-4">
                                 CodeSnippet includes essential features for
                                 displaying code examples.
                             </p>
-                            <ul className="space-y-2 text-sm text-gray-700">
+                            <ul className="space-y-2 text-sm theme-text-muted">
                                 <li className="flex items-start gap-2">
-                                    <span className="text-blue-600 mt-0.5">
+                                    <span className="text-[var(--color-primary)] mt-0.5">
                                         ✓
                                     </span>
                                     <span>
@@ -163,7 +163,7 @@ export default function App() {
                                     </span>
                                 </li>
                                 <li className="flex items-start gap-2">
-                                    <span className="text-blue-600 mt-0.5">
+                                    <span className="text-[var(--color-primary)] mt-0.5">
                                         ✓
                                     </span>
                                     <span>
@@ -171,13 +171,13 @@ export default function App() {
                                     </span>
                                 </li>
                                 <li className="flex items-start gap-2">
-                                    <span className="text-blue-600 mt-0.5">
+                                    <span className="text-[var(--color-primary)] mt-0.5">
                                         ✓
                                     </span>
                                     <span>Hover tooltip on copy button</span>
                                 </li>
                                 <li className="flex items-start gap-2">
-                                    <span className="text-blue-600 mt-0.5">
+                                    <span className="text-[var(--color-primary)] mt-0.5">
                                         ✓
                                     </span>
                                     <span>Responsive and accessible</span>
@@ -194,56 +194,56 @@ export default function App() {
                 API REFERENCE
             ======================================== */}
             <section>
-                <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                <h2 className="text-h2 font-semibold theme-text mb-4 flex items-center gap-2">
                     <BookOpen className="w-5 h-5" />
                     API Reference
                 </h2>
                 <Card variant="elevated" padding="none">
                     <div className="overflow-x-auto">
                         <table className="w-full">
-                            <thead className="bg-gray-50 border-b border-gray-200">
+                            <thead className="theme-surface border-b theme-border">
                                 <tr>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Prop
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Type
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Default
                                     </th>
-                                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                                    <th className="px-6 py-3 text-left text-xs font-semibold theme-text-muted uppercase tracking-wider">
                                         Description
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
+                            <tbody className="theme-bg divide-y divide-gray-200">
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         code
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         string
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         required
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         The code string to display with syntax
                                         highlighting
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-blue-600">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
                                         language
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
                                         string
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
                                         &quot;tsx&quot;
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-700">
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
                                         Programming language for syntax
                                         highlighting (tsx, javascript, python,
                                         css, json, etc.)

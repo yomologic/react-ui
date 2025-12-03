@@ -158,7 +158,7 @@ export function useFormControl() {
  *   return (
  *     <input
  *       {...fieldProps}
- *       className={state.error ? 'border-red-500' : 'border-gray-400'}
+ *       className={state.error ? 'border-red-500' : 'border-(--color-border)'}
  *     />
  *   );
  * }
@@ -487,7 +487,7 @@ export function FormControl({
                 {label && (
                     <label
                         htmlFor={fieldId}
-                        className="block text-sm font-semibold mb-1"
+                        className="block text-small font-semibold mb-1"
                         style={{ color: "var(--color-muted-foreground)" }}
                     >
                         {label}
@@ -504,7 +504,9 @@ export function FormControl({
                         <p
                             className={cn(
                                 "text-xs",
-                                currentError ? "text-red-600" : "text-gray-500"
+                                currentError
+                                    ? "text-red-600"
+                                    : "text-(--color-muted-foreground)"
                             )}
                             id={`${fieldId}-message`}
                             role={currentError ? "alert" : undefined}
@@ -574,7 +576,7 @@ export function FormControlLabel({
             {label && (
                 <span
                     className={cn(
-                        "text-sm font-medium select-none",
+                        "text-small font-medium select-none",
                         disabled || formControl?.isDisabled
                             ? "cursor-not-allowed"
                             : "cursor-pointer"
@@ -611,7 +613,9 @@ export function FormHelperText({
             <p
                 className={cn(
                     "text-xs",
-                    isError ? "text-red-600" : "text-gray-500",
+                    isError
+                        ? "text-red-600"
+                        : "text-(--color-muted-foreground)",
                     className
                 )}
                 role={isError ? "alert" : undefined}

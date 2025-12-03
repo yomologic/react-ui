@@ -3,8 +3,10 @@ import { cn } from "../lib/utils";
 import { useForm, ValidationFunction } from "./form";
 import { useFormControl } from "./form-control";
 
-export interface InputProps
-    extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "pattern"> {
+export interface InputProps extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    "pattern"
+> {
     /** Field name - required when used inside Form */
     name?: string;
     label?: string;
@@ -367,7 +369,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 {shouldRenderLabel && (
                     <label
                         htmlFor={inputId}
-                        className="block text-sm font-semibold text-gray-600 mb-1"
+                        className="block text-small font-semibold text-(--color-muted-foreground) mb-1"
                         suppressHydrationWarning
                     >
                         {label}
@@ -375,9 +377,15 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     </label>
                 )}
 
-                <div className="relative">
+                <div
+                    className="relative *:data-lastpass-icon-root:hidden"
+                    suppressHydrationWarning
+                >
                     {leftIcon && (
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                        <div
+                            className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-(--color-placeholder)"
+                            suppressHydrationWarning
+                        >
                             {leftIcon}
                         </div>
                     )}
@@ -413,12 +421,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                         suppressHydrationWarning
                         className={cn(
                             "w-full px-3 py-2 border rounded-md transition-colors",
-                            "text-gray-700 placeholder-gray-400",
+                            "text-(--color-muted-foreground) placeholder-gray-400",
                             "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
-                            "disabled:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-500",
+                            "disabled:bg-(--color-muted) disabled:cursor-not-allowed disabled:text-(--color-muted-foreground)",
                             inputError
                                 ? "border-red-500 focus:ring-red-500"
-                                : "border-gray-400",
+                                : "border-(--color-border)",
                             leftIcon && "pl-10",
                             rightIcon && "pr-10",
                             className
@@ -427,7 +435,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     />
 
                     {rightIcon && (
-                        <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-gray-400">
+                        <div
+                            className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-(--color-placeholder)"
+                            suppressHydrationWarning
+                        >
                             {rightIcon}
                         </div>
                     )}
@@ -436,7 +447,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 <div className="h-5 mt-1.5" suppressHydrationWarning>
                     {shouldRenderError && inputError && (
                         <p
-                            className="text-xs text-red-600"
+                            className="text-caption text-red-600"
                             id={`${inputId}-error`}
                             role="alert"
                             suppressHydrationWarning
@@ -447,7 +458,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
                     {helperText && !inputError && !formControl && (
                         <p
-                            className="text-xs text-gray-500"
+                            className="text-caption text-(--color-muted-foreground)"
                             id={`${inputId}-helper`}
                             suppressHydrationWarning
                         >

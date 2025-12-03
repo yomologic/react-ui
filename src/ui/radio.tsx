@@ -121,7 +121,7 @@ export function RadioGroup({
         >
             {label && (
                 <label
-                    className="block text-sm font-semibold mb-1"
+                    className="block text-small font-semibold mb-1"
                     style={{ color: "var(--color-muted-foreground)" }}
                 >
                     {label}
@@ -249,7 +249,7 @@ export function RadioGroup({
             <div className="h-5 mt-1.5">
                 {(displayError || helperText) && (
                     <p
-                        className={`text-xs ${displayError ? "text-red-600" : "text-gray-500"}`}
+                        className={`text-caption ${displayError ? "text-red-600" : "text-(--color-muted-foreground)"}`}
                         role={displayError ? "alert" : undefined}
                     >
                         {displayError || helperText}

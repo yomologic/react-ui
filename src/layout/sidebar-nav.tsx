@@ -50,7 +50,7 @@ export function SidebarNav({
     return (
         <>
             {/* Mobile Header */}
-            <div className="lg:hidden fixed top-0 left-0 right-0 [z-index:var(--z-index-nav)] bg-white border-b border-gray-200 px-4 py-3">
+            <div className="lg:hidden fixed top-0 left-0 right-0 [z-index:var(--z-index-nav)] bg-(--color-background) border-b border-(--color-border) px-4 py-3">
                 <div
                     className={`flex items-center ${
                         isLeft
@@ -60,21 +60,23 @@ export function SidebarNav({
                 >
                     <button
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                        className="p-2 rounded-lg hover:bg-(--color-muted) transition-colors"
                         aria-label="Toggle menu"
                     >
                         {mobileMenuOpen ? (
-                            <X className="w-6 h-6 text-gray-700" />
+                            <X className="w-6 h-6 text-(--color-muted-foreground)" />
                         ) : (
-                            <Menu className="w-6 h-6 text-gray-700" />
+                            <Menu className="w-6 h-6 text-(--color-muted-foreground)" />
                         )}
                     </button>
                     <div>
-                        <h1 className="text-lg font-bold text-gray-900">
+                        <h1 className="text-h4 font-bold text-(--color-foreground)">
                             {title}
                         </h1>
                         {subtitle && (
-                            <p className="text-xs text-gray-500">{subtitle}</p>
+                            <p className="text-caption text-(--color-muted-foreground)">
+                                {subtitle}
+                            </p>
                         )}
                     </div>
                 </div>
@@ -92,9 +94,9 @@ export function SidebarNav({
             {/* Sidebar Navigation */}
             <aside
                 className={`
-          fixed top-0 h-screen w-64 bg-white [z-index:var(--z-index-drawer)]
+          fixed top-0 h-screen w-64 bg-(--color-background) [z-index:var(--z-index-drawer)]
           transition-transform duration-300 ease-in-out overflow-y-auto
-          ${isLeft ? "left-0 border-r" : "right-0 border-l"} border-gray-200
+          ${isLeft ? "left-0 border-r" : "right-0 border-l"} border-(--color-border)
           lg:translate-x-0
           ${
               mobileMenuOpen
@@ -106,10 +108,14 @@ export function SidebarNav({
         `}
             >
                 {/* Desktop Header */}
-                <div className="hidden lg:block p-6 border-b border-gray-200">
-                    <h1 className="text-xl font-bold text-gray-900">{title}</h1>
+                <div className="hidden lg:block p-6 border-b border-(--color-border)">
+                    <h1 className="text-h3 font-bold text-(--color-foreground)">
+                        {title}
+                    </h1>
                     {subtitle && (
-                        <p className="text-xs text-gray-500 mt-1">{subtitle}</p>
+                        <p className="text-caption text-(--color-muted-foreground) mt-1">
+                            {subtitle}
+                        </p>
                     )}
                 </div>
 
@@ -124,7 +130,7 @@ export function SidebarNav({
                             className={sectionIndex > 0 ? "mt-6" : ""}
                         >
                             {section.title && (
-                                <h3 className="px-4 mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                                <h3 className="px-4 mb-2 text-caption font-semibold text-(--color-muted-foreground) uppercase tracking-wider">
                                     {section.title}
                                 </h3>
                             )}
@@ -136,11 +142,11 @@ export function SidebarNav({
                                                 handleItemClick(item.id)
                                             }
                                             className={`
-                        w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors
+                        w-full flex items-center gap-3 px-4 py-3 rounded-lg text-small font-medium transition-colors
                         ${
                             activeItem === item.id
-                                ? "bg-blue-50 text-blue-700"
-                                : "text-gray-700 hover:bg-gray-50"
+                                ? "bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)] text-(--color-primary)"
+                                : "text-(--color-muted-foreground) hover:bg-(--color-muted)"
                         }
                       `}
                                         >
@@ -160,7 +166,7 @@ export function SidebarNav({
 
                 {/* Footer */}
                 {footer && (
-                    <div className="p-4 border-t border-gray-200 mt-auto">
+                    <div className="p-4 border-t border-(--color-border) mt-auto">
                         {footer}
                     </div>
                 )}

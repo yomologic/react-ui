@@ -87,8 +87,8 @@ ${props.join("\n")}
             <div className="space-y-8">
                 {/* Header */}
                 <div>
-                    <h2 className="text-3xl font-bold text-gray-900">Drawer</h2>
-                    <p className="mt-2 text-base text-gray-600">
+                    <h2 className="text-3xl font-bold theme-text">Drawer</h2>
+                    <p className="mt-2 text-base theme-text-muted">
                         A side navigation panel with sections and items, ideal
                         for application layouts.
                     </p>
@@ -96,51 +96,51 @@ ${props.join("\n")}
 
                 {/* Interactive Example */}
                 <Card variant="bordered" padding="lg">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                    <h3 className="text-h3 font-semibold theme-text mb-3">
                         Drawer Preview
                     </h3>
                     <div className="space-y-4">
-                        <p className="text-sm text-gray-600">
+                        <p className="text-small theme-text-muted">
                             Configure the drawer and see a side-by-side preview
                             with main content.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-6">
                             {/* Left: Display + Controls */}
                             <div className="flex-1 min-w-0 space-y-4">
-                                <div className="p-6 pb-16 md:pb-6 bg-gray-50 rounded-lg border border-gray-200">
+                                <div className="p-6 pb-16 md:pb-6 theme-surface rounded-lg border theme-border">
                                     <div
-                                        className="bg-white rounded-lg border border-gray-200 overflow-hidden flex"
+                                        className="theme-bg rounded-lg border theme-border overflow-hidden flex"
                                         style={{ height: "400px" }}
                                     >
                                         {/* Drawer Panel */}
                                         <div
-                                            className={`w-64 bg-white border-gray-200 flex flex-col shrink-0 ${
+                                            className={`w-64 theme-bg theme-border flex flex-col shrink-0 ${
                                                 position === "right"
                                                     ? "order-2 border-l"
                                                     : "order-1 border-r"
                                             }`}
                                         >
                                             {/* Header */}
-                                            <div className="px-6 py-5 border-b border-gray-200 bg-linear-to-b from-gray-50 to-white">
+                                            <div className="px-6 py-5 border-b theme-border bg-linear-to-b from-gray-50 to-white">
                                                 <div className="flex items-center justify-between gap-2">
                                                     <div>
                                                         {showTitle && (
-                                                            <h2 className="text-lg font-semibold text-gray-900">
+                                                            <h2 className="text-h3 font-semibold theme-text">
                                                                 Application Menu
                                                             </h2>
                                                         )}
                                                         {showSubtitle && (
-                                                            <p className="text-sm text-gray-600">
+                                                            <p className="text-small theme-text-muted">
                                                                 Navigation
                                                             </p>
                                                         )}
                                                     </div>
                                                     {showHomeUrl && (
                                                         <button
-                                                            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                                                            className="p-2 rounded-lg hover:theme-surface transition-colors"
                                                             title="Home"
                                                         >
-                                                            <Home className="w-5 h-5 text-gray-700" />
+                                                            <Home className="w-5 h-5 theme-text-muted" />
                                                         </button>
                                                     )}
                                                 </div>
@@ -161,7 +161,7 @@ ${props.join("\n")}
                                                         >
                                                             {section.title && (
                                                                 <h3
-                                                                    className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wide"
+                                                                    className="px-3 text-xs font-semibold theme-text-muted uppercase tracking-wide"
                                                                     style={{
                                                                         marginBottom:
                                                                             "0.5rem",
@@ -192,8 +192,8 @@ ${props.join("\n")}
                                                                                 className={`w-full flex items-center gap-3 rounded-lg font-medium transition-all duration-200 ${
                                                                                     item.id ===
                                                                                     "dashboard"
-                                                                                        ? "bg-blue-50 text-blue-700 shadow-sm"
-                                                                                        : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                                                                        ? "bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)] text-[var(--color-primary)] shadow-sm"
+                                                                                        : "theme-text-muted hover:theme-surface hover:theme-text"
                                                                                 }`}
                                                                                 style={{
                                                                                     paddingLeft:
@@ -235,27 +235,27 @@ ${props.join("\n")}
 
                                         {/* Main Content Area */}
                                         <div
-                                            className={`flex-1 p-6 bg-gray-50 overflow-auto ${
+                                            className={`flex-1 p-6 theme-surface overflow-auto ${
                                                 position === "right"
                                                     ? "order-1"
                                                     : "order-2"
                                             }`}
                                         >
-                                            <h1 className="text-xl font-bold text-gray-900 mb-3">
+                                            <h1 className="text-xl font-bold theme-text mb-3">
                                                 Dashboard Preview
                                             </h1>
-                                            <p className="text-gray-600 text-sm mb-4">
+                                            <p className="theme-text-muted text-sm mb-4">
                                                 The drawer is on the{" "}
-                                                <span className="font-semibold text-blue-600">
+                                                <span className="font-semibold text-[var(--color-primary)]">
                                                     {position}
                                                 </span>{" "}
                                                 side.
                                             </p>
-                                            <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-                                                <h3 className="font-semibold text-gray-900 mb-1 text-sm">
+                                            <div className="theme-bg p-4 rounded-lg border theme-border shadow-sm">
+                                                <h3 className="font-semibold theme-text mb-1 text-sm">
                                                     Interactive Preview
                                                 </h3>
-                                                <p className="text-xs text-gray-600">
+                                                <p className="text-caption theme-text-muted">
                                                     This shows the Drawer
                                                     component with content side
                                                     by side.
@@ -285,7 +285,7 @@ ${props.join("\n")}
                                     ]}
                                 />
 
-                                <div className="flex flex-col gap-3 pt-2 border-t border-gray-200">
+                                <div className="flex flex-col gap-3 pt-2 border-t theme-border">
                                     <Checkbox
                                         label="Show title"
                                         checked={showTitle}
@@ -319,143 +319,143 @@ ${props.join("\n")}
 
                 {/* API Reference */}
                 <div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                    <h2 className="text-2xl font-bold theme-text mb-4 flex items-center gap-2">
                         <BookOpen className="w-6 h-6" />
                         API Reference
                     </h2>
                     <div className="overflow-x-auto">
                         <table className="w-full border-collapse">
                             <thead>
-                                <tr className="bg-gray-50 border-b-2 border-gray-200">
-                                    <th className="text-left p-3 font-semibold text-gray-900">
+                                <tr className="theme-surface border-b-2 theme-border">
+                                    <th className="text-left p-3 font-semibold theme-text">
                                         Prop
                                     </th>
-                                    <th className="text-left p-3 font-semibold text-gray-900">
+                                    <th className="text-left p-3 font-semibold theme-text">
                                         Type
                                     </th>
-                                    <th className="text-left p-3 font-semibold text-gray-900">
+                                    <th className="text-left p-3 font-semibold theme-text">
                                         Default
                                     </th>
-                                    <th className="text-left p-3 font-semibold text-gray-900">
+                                    <th className="text-left p-3 font-semibold theme-text">
                                         Description
                                     </th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200">
                                 <tr>
-                                    <td className="p-3 font-mono text-sm text-blue-600">
+                                    <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
                                         title
                                     </td>
-                                    <td className="p-3 font-mono text-sm text-gray-700">
+                                    <td className="p-3 font-mono text-sm theme-text-muted">
                                         string
                                     </td>
-                                    <td className="p-3 font-mono text-sm text-gray-600">
+                                    <td className="p-3 font-mono text-sm theme-text-muted">
                                         required
                                     </td>
-                                    <td className="p-3 text-sm text-gray-600">
+                                    <td className="p-3 text-sm theme-text-muted">
                                         Main title displayed in the drawer
                                         header
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="p-3 font-mono text-sm text-blue-600">
+                                    <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
                                         subtitle
                                     </td>
-                                    <td className="p-3 font-mono text-sm text-gray-700">
+                                    <td className="p-3 font-mono text-sm theme-text-muted">
                                         string
                                     </td>
-                                    <td className="p-3 font-mono text-sm text-gray-600">
+                                    <td className="p-3 font-mono text-sm theme-text-muted">
                                         -
                                     </td>
-                                    <td className="p-3 text-sm text-gray-600">
+                                    <td className="p-3 text-sm theme-text-muted">
                                         Optional subtitle displayed below the
                                         title
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="p-3 font-mono text-sm text-blue-600">
+                                    <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
                                         sections
                                     </td>
-                                    <td className="p-3 font-mono text-sm text-gray-700">
+                                    <td className="p-3 font-mono text-sm theme-text-muted">
                                         DrawerNavSection[]
                                     </td>
-                                    <td className="p-3 font-mono text-sm text-gray-600">
+                                    <td className="p-3 font-mono text-sm theme-text-muted">
                                         required
                                     </td>
-                                    <td className="p-3 text-sm text-gray-600">
+                                    <td className="p-3 text-sm theme-text-muted">
                                         Array of navigation sections with items
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="p-3 font-mono text-sm text-blue-600">
+                                    <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
                                         position
                                     </td>
-                                    <td className="p-3 font-mono text-sm text-gray-700">
+                                    <td className="p-3 font-mono text-sm theme-text-muted">
                                         &quot;left&quot; | &quot;right&quot;
                                     </td>
-                                    <td className="p-3 font-mono text-sm text-gray-600">
+                                    <td className="p-3 font-mono text-sm theme-text-muted">
                                         &quot;left&quot;
                                     </td>
-                                    <td className="p-3 text-sm text-gray-600">
+                                    <td className="p-3 text-sm theme-text-muted">
                                         Position of the drawer on the screen
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="p-3 font-mono text-sm text-blue-600">
+                                    <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
                                         activeItem
                                     </td>
-                                    <td className="p-3 font-mono text-sm text-gray-700">
+                                    <td className="p-3 font-mono text-sm theme-text-muted">
                                         string
                                     </td>
-                                    <td className="p-3 font-mono text-sm text-gray-600">
+                                    <td className="p-3 font-mono text-sm theme-text-muted">
                                         -
                                     </td>
-                                    <td className="p-3 text-sm text-gray-600">
+                                    <td className="p-3 text-sm theme-text-muted">
                                         ID of the currently active navigation
                                         item
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="p-3 font-mono text-sm text-blue-600">
+                                    <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
                                         onItemClick
                                     </td>
-                                    <td className="p-3 font-mono text-sm text-gray-700">
+                                    <td className="p-3 font-mono text-sm theme-text-muted">
                                         (id: string) =&gt; void
                                     </td>
-                                    <td className="p-3 font-mono text-sm text-gray-600">
+                                    <td className="p-3 font-mono text-sm theme-text-muted">
                                         required
                                     </td>
-                                    <td className="p-3 text-sm text-gray-600">
+                                    <td className="p-3 text-sm theme-text-muted">
                                         Callback fired when a navigation item is
                                         clicked
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="p-3 font-mono text-sm text-blue-600">
+                                    <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
                                         homeUrl
                                     </td>
-                                    <td className="p-3 font-mono text-sm text-gray-700">
+                                    <td className="p-3 font-mono text-sm theme-text-muted">
                                         string
                                     </td>
-                                    <td className="p-3 font-mono text-sm text-gray-600">
+                                    <td className="p-3 font-mono text-sm theme-text-muted">
                                         -
                                     </td>
-                                    <td className="p-3 text-sm text-gray-600">
+                                    <td className="p-3 text-sm theme-text-muted">
                                         Optional URL for the home button (mobile
                                         only)
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="p-3 font-mono text-sm text-blue-600">
+                                    <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
                                         autoHideOnScroll
                                     </td>
-                                    <td className="p-3 font-mono text-sm text-gray-700">
+                                    <td className="p-3 font-mono text-sm theme-text-muted">
                                         boolean
                                     </td>
-                                    <td className="p-3 font-mono text-sm text-gray-600">
+                                    <td className="p-3 font-mono text-sm theme-text-muted">
                                         true
                                     </td>
-                                    <td className="p-3 text-sm text-gray-600">
+                                    <td className="p-3 text-sm theme-text-muted">
                                         Auto-hide mobile header when scrolling
                                         down, show on scroll up
                                     </td>

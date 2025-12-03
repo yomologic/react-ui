@@ -48,10 +48,10 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
 
         const sizes = {
             xs: "text-[0.625rem] px-1.5 py-0.5 gap-1",
-            sm: "text-xs px-2 py-0.5 gap-1",
-            md: "text-sm px-2.5 py-1 gap-1.5",
+            sm: "text-caption px-2 py-0.5 gap-1",
+            md: "text-small px-2.5 py-1 gap-1.5",
             lg: "text-base px-3 py-1.5 gap-2",
-            xl: "text-lg px-3.5 py-2 gap-2",
+            xl: "text-h4 px-3.5 py-2 gap-2",
         };
 
         const iconSizes = {

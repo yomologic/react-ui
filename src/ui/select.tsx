@@ -91,14 +91,14 @@ export function Select({
     required = false,
     size = "md",
     className = "",
-    validate,
-    onValidationError,
-    errorMessage,
+    validate: _validate,
+    onValidationError: _onValidationError,
+    errorMessage: _errorMessage,
 }: SelectProps) {
     const form = useForm();
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const [validationError, setValidationError] = useState<
+    const [_validationError, _setValidationError] = useState<
         string | undefined
     >();
 
@@ -234,7 +234,7 @@ export function Select({
             {/* Label */}
             {label && (
                 <label
-                    className="block text-sm font-semibold mb-1"
+                    className="block text-small font-semibold mb-1"
                     style={{ color: "var(--color-muted-foreground)" }}
                 >
                     {label}
@@ -253,20 +253,20 @@ export function Select({
                     className={`
             w-full ${
                 sizeStyles[size]
-            } text-left bg-white border rounded-(--dropdown-radius)
+            } text-left bg-(--color-background) border rounded-(--dropdown-radius)
             flex items-center justify-between
             transition-all duration-200
             ${
                 displayError
                     ? "border-red-500 focus:ring-2 focus:ring-red-200 focus:border-red-500"
-                    : "border-gray-400 focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
+                    : "border-(--color-border) focus:ring-2 focus:ring-[color-mix(in_srgb,var(--color-primary)_30%,transparent)] focus:border-(--color-primary)"
             }
             ${
                 disabled
-                    ? "bg-gray-100 cursor-not-allowed opacity-60"
-                    : "hover:border-gray-400"
+                    ? "bg-(--color-muted) cursor-not-allowed opacity-60"
+                    : "hover:border-(--color-border)"
             }
-            ${!value ? "text-gray-400" : "text-gray-900"}
+            ${!value ? "text-(--color-placeholder)" : "text-(--color-foreground)"}
           `}
                 >
                     <span className="truncate">{getSelectedLabel()}</span>
@@ -274,20 +274,20 @@ export function Select({
                         {value && (
                             <div
                                 onClick={handleClear}
-                                className="p-0.5 hover:bg-gray-200 rounded transition-colors cursor-pointer"
+                                className="p-0.5 hover:bg-(--color-muted) rounded transition-colors cursor-pointer"
                                 role="button"
                                 aria-label="Clear selection"
                                 tabIndex={-1}
                             >
                                 <X
-                                    className={`${iconSizeStyles[size]} text-gray-500`}
+                                    className={`${iconSizeStyles[size]} text-(--color-muted-foreground)`}
                                 />
                             </div>
                         )}
                         <ChevronDown
                             className={`${
                                 iconSizeStyles[size]
-                            } text-gray-400 transition-transform duration-200 shrink-0 ${
+                            } text-(--color-placeholder) transition-transform duration-200 shrink-0 ${
                                 isOpen ? "transform rotate-180" : ""
                             }`}
                         />
@@ -297,7 +297,7 @@ export function Select({
                 {/* Dropdown Menu */}
                 {isOpen && !disabled && (
                     <div
-                        className="absolute z-(--z-index-dropdown) w-full mt-1 bg-white border border-gray-400 rounded-lg shadow-lg max-h-60 overflow-auto"
+                        className="absolute z-(--z-index-dropdown) w-full mt-1 bg-(--color-background) border border-(--color-border) rounded-lg shadow-lg max-h-60 overflow-auto"
                         role="listbox"
                     >
                         {children ? (
@@ -318,8 +318,8 @@ export function Select({
                         transition-colors duration-150
                         ${
                             !value || value === ""
-                                ? "bg-blue-50 text-blue-700 font-medium"
-                                : "text-gray-500 hover:bg-gray-100"
+                                ? "bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)] text-(--color-primary) font-medium"
+                                : "text-(--color-muted-foreground) hover:bg-(--color-muted)"
                         }
                       `}
                                         role="option"
@@ -342,8 +342,8 @@ export function Select({
                         transition-colors duration-150
                         ${
                             option.value === value
-                                ? "bg-blue-50 text-blue-700 font-medium"
-                                : "text-gray-900 hover:bg-gray-100"
+                                ? "bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)] text-(--color-primary) font-medium"
+                                : "text-(--color-foreground) hover:bg-(--color-muted)"
                         }
                         ${
                             option.disabled
@@ -370,7 +370,7 @@ export function Select({
             <div className="h-5 mt-1.5">
                 {(helperText || displayError) && (
                     <p
-                        className={`text-xs ${displayError ? "text-red-600" : "text-gray-500"}`}
+                        className={`text-caption ${displayError ? "text-red-600" : "text-(--color-muted-foreground)"}`}
                     >
                         {displayError || helperText}
                     </p>
