@@ -2,6 +2,7 @@
 
 import { ChevronDown } from "lucide-react";
 import { useState, useRef, useEffect, ReactNode } from "react";
+import { useForm, ValidationFunction } from "./form";
 
 export interface SelectOption {
     value: string | number;
@@ -10,6 +11,10 @@ export interface SelectOption {
 }
 
 export interface SelectProps {
+    /**
+     * Field name - required when used inside Form
+     */
+    name?: string;
     /**
      * Label text displayed above the select
      */
@@ -61,20 +66,23 @@ export interface SelectProps {
     /**
      * Custom validation function that returns error message or undefined if valid
      */
-    validate?: (
-        value: string | number
-    ) => string | undefined | Promise<string | undefined>;
+    validate?: ValidationFunction;
     /**
      * Callback when validation error changes
      */
     onValidationError?: (error: string | undefined) => void;
+    /**
+     * Custom error message for required validation
+     */
+    errorMessage?: string;
 }
 
 export function Select({
+    name,
     label,
     placeholder = "Select an option",
     options = [],
-    value,
+    value: externalValue,
     onChange,
     children,
     disabled = false,
@@ -83,9 +91,52 @@ export function Select({
     required = false,
     size = "md",
     className = "",
+    validate,
+    onValidationError,
+    errorMessage,
 }: SelectProps) {
+    const form = useForm();
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const [validationError, setValidationError] = useState<
+        string | undefined
+    >();
+
+    // Determine value and error from Form context or props
+    let value: string | number | undefined;
+    let displayError: string | undefined;
+
+    if (form && name) {
+        // Using Form context
+        value = form.values[name] ?? externalValue;
+        displayError = form.shouldShowError(name)
+            ? form.getFieldError(name)
+            : undefined;
+    } else {
+        // Standalone usage
+        value = externalValue;
+        displayError = error || validationError;
+    }
+
+    // Register with Form
+    useEffect(() => {
+        if (form && name) {
+            const validator: ValidationFunction = async (
+                val: string | number
+            ) => {
+                if (required && !val) {
+                    return errorMessage || "Please select an option";
+                }
+                if (validate) {
+                    return await validate(val);
+                }
+                return undefined;
+            };
+
+            form.registerField(name, validator);
+            return () => form.unregisterField(name);
+        }
+    }, [form, name, required, validate, errorMessage]);
 
     // Get the display text for the selected value
     const getSelectedLabel = () => {
@@ -135,7 +186,16 @@ export function Select({
     }, []);
 
     const handleSelect = (optionValue: string | number) => {
-        onChange?.(optionValue);
+        if (form && name) {
+            // Update Form context
+            form.setFieldValue(name, optionValue);
+            form.setFieldTouched(name, true);
+            // Validate on change for select (immediate feedback)
+            form.validateField(name);
+        } else {
+            // Standalone mode
+            onChange?.(optionValue);
+        }
         setIsOpen(false);
     };
 
@@ -178,7 +238,7 @@ export function Select({
             flex items-center justify-between
             transition-all duration-200
             ${
-                error
+                displayError
                     ? "border-red-500 focus:ring-2 focus:ring-red-200 focus:border-red-500"
                     : "border-gray-400 focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
             }
@@ -203,7 +263,7 @@ export function Select({
                 {/* Dropdown Menu */}
                 {isOpen && !disabled && (
                     <div
-                        className="absolute [z-index:var(--z-index-dropdown)] w-full mt-1 bg-white border border-gray-400 rounded-lg shadow-lg max-h-60 overflow-auto"
+                        className="absolute z-(--z-index-dropdown) w-full mt-1 bg-white border border-gray-400 rounded-lg shadow-lg max-h-60 overflow-auto"
                         role="listbox"
                     >
                         {children ? (
@@ -254,11 +314,11 @@ export function Select({
 
             {/* Helper Text or Error */}
             <div className="h-5 mt-1.5">
-                {(helperText || error) && (
+                {(helperText || displayError) && (
                     <p
-                        className={`text-xs ${error ? "text-red-600" : "text-gray-500"}`}
+                        className={`text-xs ${displayError ? "text-red-600" : "text-gray-500"}`}
                     >
-                        {error || helperText}
+                        {displayError || helperText}
                     </p>
                 )}
             </div>
