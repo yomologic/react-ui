@@ -247,6 +247,7 @@ export default function FormPage() {
                                                 <CheckboxGroup
                                                     name="preferences"
                                                     label="Preferences"
+                                                    required
                                                     options={[
                                                         {
                                                             value: "newsletter",

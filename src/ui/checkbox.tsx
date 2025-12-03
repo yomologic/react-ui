@@ -1,4 +1,4 @@
-import { useId, useState, useRef, useEffect } from "react";
+import React, { useId, useState, useRef, useEffect } from "react";
 import { cn } from "../lib/utils";
 import { useForm, ValidationFunction } from "./form";
 
@@ -272,29 +272,62 @@ interface CheckboxGroupProps {
     size?: "xs" | "sm" | "md" | "lg" | "xl";
     error?: string;
     helperText?: string;
+    validate?: ValidationFunction;
 }
 
 export function CheckboxGroup({
     label,
     name,
     options,
-    value = [],
-    onChange,
+    value: externalValue,
+    onChange: externalOnChange,
     className,
     orientation = "vertical",
     required = false,
     disabled = false,
     size = "sm",
-    error,
+    error: externalError,
     helperText,
+    validate,
 }: CheckboxGroupProps) {
+    const form = useForm();
+
+    // Integrate with Form if available
+    React.useEffect(() => {
+        if (form && name) {
+            const validator =
+                validate ||
+                (required
+                    ? (value: string[]) => {
+                          if (!value || value.length === 0) {
+                              return `${label || name} is required`;
+                          }
+                          return undefined;
+                      }
+                    : undefined);
+
+            form.registerField(name, validator);
+            return () => form.unregisterField(name);
+        }
+    }, [form, name, validate, required, label]);
+
+    const value = form
+        ? (form.values[name] as string[]) || []
+        : externalValue || [];
+    const error = form ? form.errors[name] : externalError;
+
     const handleChange = (optionValue: string, checked: boolean) => {
-        if (onChange) {
-            if (checked) {
-                onChange([...value, optionValue]);
-            } else {
-                onChange(value.filter((v) => v !== optionValue));
-            }
+        const newValue = checked
+            ? [...value, optionValue]
+            : value.filter((v) => v !== optionValue);
+
+        if (form) {
+            form.setFieldValue(name, newValue);
+            form.validateField(name, newValue);
+        }
+
+        if (externalOnChange) {
+            externalOnChange(newValue);
         }
     };
 
