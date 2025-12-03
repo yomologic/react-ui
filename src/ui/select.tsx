@@ -91,14 +91,14 @@ export function Select({
     required = false,
     size = "md",
     className = "",
-    validate: _validate,
-    onValidationError: _onValidationError,
-    errorMessage: _errorMessage,
+    validate,
+    onValidationError,
+    errorMessage,
 }: SelectProps) {
     const form = useForm();
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const [_validationError, _setValidationError] = useState<
+    const [validationError, setValidationError] = useState<
         string | undefined
     >();
 
