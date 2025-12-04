@@ -22,7 +22,7 @@ export default function HomePage() {
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center">
                     <div className="flex items-center justify-center gap-3 mb-6">
                         <Image
-                            src="/yomologic-logo-symbol.png"
+                            src="/yomologic-logo-symbol.svg"
                             alt="Yomologic"
                             width={60}
                             height={60}
@@ -314,7 +314,7 @@ export default function HomePage() {
                         className="mb-6 inline-flex items-center gap-2 hover:opacity-80 transition-opacity"
                     >
                         <Image
-                            src="/yomologic-logo-symbol.png"
+                            src="/yomologic-logo-symbol.svg"
                             alt="Yomologic"
                             width={40}
                             height={40}

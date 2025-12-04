@@ -174,7 +174,7 @@ export default function ShowcaseLayout({
                         className="flex items-center gap-3 hover:opacity-80 transition-opacity group"
                     >
                         <Image
-                            src="/yomologic-logo-symbol.png"
+                            src="/yomologic-logo-symbol.svg"
                             alt="Yomologic"
                             width={40}
                             height={40}

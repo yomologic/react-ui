@@ -38,7 +38,7 @@ export default function NavPage() {
 
     const logoElement = (
         <Image
-            src="/yomologic-logo-symbol.png"
+            src="/yomologic-logo-symbol.svg"
             alt="Yomologic"
             width={32}
             height={32}
@@ -207,7 +207,7 @@ export default function NavPage() {
   items={navItems}
   logo={
     <Image
-      src="/yomologic-logo-symbol.png"
+      src="/yomologic-logo-symbol.svg"
       alt="Yomologic"
       width={32}
       height={32}

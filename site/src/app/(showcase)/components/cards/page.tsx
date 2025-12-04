@@ -231,7 +231,7 @@ export default function CardsPage() {
                                         >
                                             <CardMedia
                                                 component="next-image"
-                                                image="/yomologic-logo-symbol.png"
+                                                image="/yomologic-logo-symbol.svg"
                                                 alt="Yomologic logo"
                                                 aspectRatio="16/9"
                                                 className="theme-bg p-8"
