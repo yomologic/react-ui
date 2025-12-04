@@ -15,7 +15,7 @@ import Link from "next/link";
 
 export default function HomePage() {
     return (
-        <div className="min-h-screen bg-linear-to-b from-white to-gray-50">
+        <div className="min-h-screen bg-background">
             {/* Hero Section */}
             <section className="relative overflow-hidden">
                 <div className="absolute inset-0 bg-grid-pattern opacity-5" />
@@ -29,22 +29,17 @@ export default function HomePage() {
                             className="w-14 h-14 sm:w-20 sm:h-20"
                         />
                         <div className="text-left">
-                            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent leading-tight">
+                            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-tight text-primary">
                                 Yomologic
                             </h1>
                         </div>
                     </div>
-                    <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+                    <h2 className="text-3xl md:text-5xl font-bold mb-4 leading-tight text-foreground">
                         React UI Components
                     </h2>
-                    <p className="text-lg sm:text-xl text-gray-600 mb-10">
-                        Build Beautiful UIs Lightning Fast
-                    </p>
-                    <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-                        A modern React component library by Yomologic. Built
-                        with TypeScript, Tailwind CSS, and a powerful theming
-                        system. Production-ready components that work out of the
-                        box.
+                    <p className="text-xl sm:text-2xl mb-10 max-w-3xl mx-auto text-muted-foreground">
+                        Build beautiful interfaces in minutes. Production-ready
+                        components with TypeScript and full theme control.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                         <Link href="/components/buttons">
@@ -64,39 +59,43 @@ export default function HomePage() {
                             </Button>
                         </Link>
                     </div>
+                </div>
+            </section>
 
-                    {/* Stats */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 max-w-4xl mx-auto">
+            {/* Stats Section */}
+            <section className="py-12 bg-muted">
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center">
                         <div>
-                            <div className="text-3xl font-bold text-blue-600 mb-2 flex items-center justify-center gap-1">
-                                <Sparkles className="w-6 h-6" />
-                                Active
+                            <div className="text-3xl font-bold mb-2 bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent flex items-center justify-center gap-1">
+                                <Sparkles className="w-6 h-6 text-blue-600" />
+                                <span>Active</span>
                             </div>
-                            <div className="text-sm text-gray-600">
+                            <div className="text-sm text-muted-foreground">
                                 In Development
                             </div>
                         </div>
                         <div>
-                            <div className="text-3xl font-bold text-purple-600 mb-2">
+                            <div className="text-3xl font-bold mb-2 bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                                 100%
                             </div>
-                            <div className="text-sm text-gray-600">
+                            <div className="text-sm text-muted-foreground">
                                 TypeScript
                             </div>
                         </div>
                         <div>
-                            <div className="text-3xl font-bold text-green-600 mb-2">
+                            <div className="text-3xl font-bold mb-2 bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                                 Themeable
                             </div>
-                            <div className="text-sm text-gray-600">
+                            <div className="text-sm text-muted-foreground">
                                 Custom Themes
                             </div>
                         </div>
                         <div>
-                            <div className="text-3xl font-bold text-orange-600 mb-2">
+                            <div className="text-3xl font-bold mb-2 bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                                 Open Source
                             </div>
-                            <div className="text-sm text-gray-600">
+                            <div className="text-sm text-muted-foreground">
                                 MIT License
                             </div>
                         </div>
@@ -105,19 +104,8 @@ export default function HomePage() {
             </section>
 
             {/* Features Section */}
-            <section className="pb-16 bg-white">
+            <section className="pb-16 bg-background">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                            Why Choose{" "}
-                            <span className="text-blue-600">Yomologic</span>{" "}
-                            React UI?
-                        </h2>
-                        <p className="text-xl text-gray-600">
-                            Everything you need to build modern web applications
-                        </p>
-                    </div>
-
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {/* Feature 1 */}
                         <Card
@@ -129,10 +117,10 @@ export default function HomePage() {
                             <div className="w-12 h-12 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center mb-4 transition-colors group-hover:bg-blue-200">
                                 <Zap className="w-6 h-6" />
                             </div>
-                            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                            <h3 className="text-xl font-semibold text-foreground mb-2">
                                 Lightning Fast
                             </h3>
-                            <p className="text-gray-600">
+                            <p className="text-muted-foreground">
                                 Optimized for performance with tree-shaking and
                                 minimal bundle size. Only ship what you use.
                             </p>
@@ -148,10 +136,10 @@ export default function HomePage() {
                             <div className="w-12 h-12 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center mb-4 transition-colors group-hover:bg-purple-200">
                                 <Palette className="w-6 h-6" />
                             </div>
-                            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                            <h3 className="text-xl font-semibold text-foreground mb-2">
                                 Fully Themeable
                             </h3>
-                            <p className="text-gray-600">
+                            <p className="text-muted-foreground">
                                 Powerful theme system with CSS variables.
                                 Customize colors, spacing, and density to match
                                 your brand.
@@ -168,10 +156,10 @@ export default function HomePage() {
                             <div className="w-12 h-12 rounded-lg bg-green-100 text-green-600 flex items-center justify-center mb-4 transition-colors group-hover:bg-green-200">
                                 <Code2 className="w-6 h-6" />
                             </div>
-                            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                            <h3 className="text-xl font-semibold text-foreground mb-2">
                                 TypeScript First
                             </h3>
-                            <p className="text-gray-600">
+                            <p className="text-muted-foreground">
                                 Built with TypeScript for excellent IDE support
                                 and type safety. Catch errors before they
                                 happen.
@@ -188,10 +176,10 @@ export default function HomePage() {
                             <div className="w-12 h-12 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center mb-4 transition-colors group-hover:bg-orange-200">
                                 <Smartphone className="w-6 h-6" />
                             </div>
-                            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                            <h3 className="text-xl font-semibold text-foreground mb-2">
                                 Mobile Ready
                             </h3>
-                            <p className="text-gray-600">
+                            <p className="text-muted-foreground">
                                 Responsive by default with touch-friendly
                                 interactions. Works perfectly on any device
                                 size.
@@ -208,10 +196,10 @@ export default function HomePage() {
                             <div className="w-12 h-12 rounded-lg bg-pink-100 text-pink-600 flex items-center justify-center mb-4 transition-colors group-hover:bg-pink-200">
                                 <Layers className="w-6 h-6" />
                             </div>
-                            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                            <h3 className="text-xl font-semibold text-foreground mb-2">
                                 Comprehensive
                             </h3>
-                            <p className="text-gray-600">
+                            <p className="text-muted-foreground">
                                 15+ production-ready components covering forms,
                                 navigation, feedback, and more.
                             </p>
@@ -227,10 +215,10 @@ export default function HomePage() {
                             <div className="w-12 h-12 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center mb-4 transition-colors group-hover:bg-indigo-200">
                                 <Sparkles className="w-6 h-6" />
                             </div>
-                            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                            <h3 className="text-xl font-semibold text-foreground mb-2">
                                 Modern Stack
                             </h3>
-                            <p className="text-gray-600">
+                            <p className="text-muted-foreground">
                                 Built with React 18+, Tailwind CSS, and modern
                                 best practices. Future-proof architecture.
                             </p>
@@ -240,20 +228,20 @@ export default function HomePage() {
             </section>
 
             {/* Quick Start Section */}
-            <section className="py-20 bg-gray-50">
+            <section className="py-20 bg-muted">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-12">
-                        <h2 className="text-4xl font-bold text-gray-900 mb-4">
+                        <h2 className="text-4xl font-bold text-foreground mb-4">
                             Get Started in Minutes
                         </h2>
-                        <p className="text-xl text-gray-600">
+                        <p className="text-xl text-muted-foreground">
                             Install and start building right away
                         </p>
                     </div>
 
-                    <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-                        <div className="bg-gray-900 rounded-lg p-6 mb-6">
-                            <code className="text-green-400 text-sm">
+                    <div className="rounded-xl shadow-lg p-8 mb-8 bg-background border border-border">
+                        <div className="rounded-lg p-6 mb-6 bg-muted border border-border">
+                            <code className="text-sm text-primary">
                                 npm install @yomologic/react-ui
                             </code>
                         </div>
@@ -268,12 +256,12 @@ export default function HomePage() {
                                     key={index}
                                     className="flex items-start gap-3"
                                 >
-                                    <div className="shrink-0 w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mt-0.5">
-                                        <span className="text-xs font-semibold text-blue-600">
+                                    <div className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-0.5 bg-primary-subtle">
+                                        <span className="text-xs font-semibold text-primary">
                                             {index + 1}
                                         </span>
                                     </div>
-                                    <p className="text-gray-700">{step}</p>
+                                    <p className="text-foreground">{step}</p>
                                 </div>
                             ))}
                         </div>
@@ -290,35 +278,25 @@ export default function HomePage() {
             </section>
 
             {/* CTA Section */}
-            <section className="py-20 bg-linear-to-r from-blue-600 to-purple-600">
+            <section className="py-24">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h2 className="text-4xl font-bold text-white mb-6">
+                    <h2 className="text-4xl font-bold mb-6 text-foreground">
                         Ready to Build Something Amazing?
                     </h2>
-                    <p className="text-xl text-blue-100 mb-10">
+                    <p className="text-xl mb-12 text-muted-foreground">
                         Join developers building better user experiences with
                         Yomologic UI
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Link href="/components/buttons">
-                            <Button
-                                size="lg"
-                                variant="outline"
-                                className="border-2 border-white text-white hover:bg-white hover:text-blue-600 transition-all"
-                            >
-                                Start Exploring
-                            </Button>
+                            <Button size="lg">Start Exploring</Button>
                         </Link>
                         <Link
                             href="https://github.com/yomologic/react-ui"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <Button
-                                size="lg"
-                                variant="outline"
-                                className="border-2 border-white text-white hover:bg-white hover:text-blue-600 transition-all"
-                            >
+                            <Button size="lg" variant="outline">
                                 View Documentation
                             </Button>
                         </Link>
@@ -327,7 +305,7 @@ export default function HomePage() {
             </section>
 
             {/* Footer */}
-            <footer className="bg-gray-900 text-gray-400 py-12">
+            <footer className="py-12 bg-muted">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <a
                         href="https://yomologic.com"

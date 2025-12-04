@@ -133,6 +133,137 @@ Legacy aliases maintained for smooth transition:
 - ✅ Maintains visual hierarchy
 - ✅ Automatic scaling without code changes
 
+## Flash Prevention & SSR Strategy
+
+### The Problem: Theme Flash on Page Load
+
+When implementing dynamic theme switching with Next.js, users may experience a brief "flash" where the page renders with default styles before JavaScript loads and applies the saved theme. This creates a poor user experience.
+
+### The Solution: Blocking Script Pattern
+
+We prevent flash by injecting a **blocking script** in the `<head>` that sets CSS variables **before** React hydrates.
+
+#### Implementation (layout.tsx)
+
+```tsx
+<head>
+    <script
+        dangerouslySetInnerHTML={{
+            __html: `
+        (function() {
+          try {
+            var theme = localStorage.getItem('yomologic-theme') || 'dark';
+            var darkTheme = ${JSON.stringify(darkTheme)};
+            var lightTheme = ${JSON.stringify(lightTheme)};
+            var themeColors = theme === 'dark' ? darkTheme : lightTheme;
+            for (var key in themeColors) {
+              document.documentElement.style.setProperty(key, themeColors[key]);
+            }
+          } catch (e) {}
+        })();
+      `,
+        }}
+    />
+</head>
+```
+
+#### How It Works
+
+1. **Immediately Invoked** - IIFE executes before any React code
+2. **Reads localStorage** - Gets saved theme preference ('dark' or 'light')
+3. **Selects Theme Object** - Chooses between darkTheme/lightTheme JSON
+4. **Sets CSS Variables** - Loops through theme and sets each variable on `document.documentElement`
+5. **Fail Safe** - Wrapped in try/catch to prevent errors from breaking the page
+
+#### Key Benefits
+
+- ✅ **Zero Flash** - CSS variables available before first paint
+- ✅ **Synchronous** - Blocks rendering until variables are set
+- ✅ **SSR Compatible** - Works with Next.js server-side rendering
+- ✅ **Fast** - Executes in <1ms, no noticeable delay
+- ✅ **Portable** - Can be copied to any Next.js project
+
+### When to Use the Blocking Script
+
+#### ✅ Use It When:
+
+- Building a showcase/demo site with theme switching
+- Implementing user-selectable themes (light/dark mode)
+- Persisting theme preference across page reloads
+- Need runtime theme switching without rebuild
+
+#### ❌ Don't Need It When:
+
+- **Single theme applications** - Just import `base.css` and theme CSS
+- **Static themes** - No user switching required
+- **Server-only theming** - Theme determined on server
+
+### Consumer Usage Patterns
+
+#### Pattern 1: Single Theme (Most Common)
+
+```tsx
+// app/layout.tsx
+import "@yomologic/react-ui/dist/base.css"; // Dark theme defaults
+import "@yomologic/react-ui/dist/styles.css";
+
+export default function RootLayout({ children }) {
+    return <html>{children}</html>;
+}
+```
+
+**No blocking script needed** - base.css provides CSS variables with dark theme defaults.
+
+#### Pattern 2: Theme Builder (AI-Generated CSS)
+
+```tsx
+// app/layout.tsx
+import "@yomologic/react-ui/dist/base.css"; // Base variables
+import "./theme-builder-output.css"; // Overrides from theme builder
+
+export default function RootLayout({ children }) {
+    return <html>{children}</html>;
+}
+```
+
+**No blocking script needed** - CSS files loaded in order, theme builder CSS overrides base.css variables.
+
+#### Pattern 3: Dynamic Theme Switching (Advanced)
+
+```tsx
+// app/layout.tsx
+import { ThemeProvider } from "@yomologic/react-ui";
+import "@yomologic/react-ui/dist/base.css";
+
+export default function RootLayout({ children }) {
+    return (
+        <html>
+            <head>
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `/* Blocking script here */`,
+                    }}
+                />
+            </head>
+            <body>
+                <ThemeProvider>{children}</ThemeProvider>
+            </body>
+        </html>
+    );
+}
+```
+
+**Blocking script required** - Prevents flash when user has theme preference saved.
+
+### Architecture Notes
+
+1. **base.css** - Contains all CSS variables with dark theme defaults
+2. **ThemeProvider** - React context that updates CSS variables at runtime
+3. **Blocking Script** - Sets initial CSS variables from localStorage before hydration
+4. **Theme JSON** - Source of truth, converted to CSS variables
+
+This approach ensures the theme builder can generate CSS files that consumers import, while still supporting dynamic switching for advanced use cases.
+
 ## Testing the Theme System
 
 ### 1. Theme Switching
@@ -147,7 +278,7 @@ Legacy aliases maintained for smooth transition:
 1. Open showcase on mobile or desktop
 2. Click Sun/Moon icon in header (desktop) or drawer (mobile)
 3. Watch entire UI switch themes instantly
-4. Refresh page - theme persists via localStorage
+4. Refresh page - theme persists via localStorage with **zero flash**
 
 ### 2. Typography Responsiveness
 

@@ -81,5 +81,10 @@ export type {
 // Shared Components
 export { EmptyState } from "./shared/empty-state";
 
+// Theme System
+export { ThemeProvider, useTheme } from "./contexts/ThemeProvider";
+export { default as themes } from "./themes";
+export type { ThemeId } from "./themes";
+
 // Utility functions
 export { cn } from "./lib/utils";

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useId, useState, useRef, useEffect } from "react";
 import { cn } from "../lib/utils";
 import { useForm, ValidationFunction } from "./form";

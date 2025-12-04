@@ -1,19 +1,12 @@
+@import "../../../dist/base.css";
 @import "tailwindcss";
 
 @source "../../../src/**/*.{js,ts,jsx,tsx}";
 @source "../../**/*.{js,ts,jsx,tsx}";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  
-  /* Showcase-specific colors that map to theme */
-  --showcase-bg: #ffffff;
-  --showcase-surface: #f9fafb;
-  --showcase-surface-elevated: #f3f4f6;
-  --showcase-text-primary: #111827;
-  --showcase-text-secondary: #6b7280;
-  --showcase-border: #e5e7eb;
+  /* Showcase will use library's theme system */
+  /* No hard-coded overrides needed - ThemeProvider handles all theme values */
 
   /* Showcase-specific utility classes */
   .showcase-bg {
@@ -154,18 +147,8 @@
   --typography-small-desktop: 0.875rem;
   --typography-caption: 0.6875rem;
   
-  /* Colors */
-  --color-primary: #3b82f6;
-  --color-primary-hover: #2563eb;
-  --color-primary-active: #1d4ed8;
-  --color-secondary: #6b7280;
-  --color-secondary-hover: #4b5563;
-  --color-background: #ffffff;
-  --color-foreground: #111827;
-  --color-muted: #f3f4f6;
-  --color-muted-foreground: #6b7280;
-  --color-placeholder: #9ca3af;
-  --color-border: #9ca3af;
+  /* Colors - Inherited from base.css (dark theme defaults) */
+  /* Theme colors are managed by ThemeProvider */
 
   /* Semantic Colors - Shared across all components */
   --color-info: var(--color-primary);
@@ -669,6 +652,39 @@ input[type="radio"]:checked {
 
 .showcase-border {
   border-color: var(--showcase-border);
+}
+
+/* Theme-aware utilities */
+.text-foreground {
+  color: var(--color-foreground);
+}
+
+.text-muted-foreground {
+  color: var(--color-muted-foreground);
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+.bg-background {
+  background-color: var(--color-background);
+}
+
+.bg-muted {
+  background-color: var(--color-muted);
+}
+
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.bg-primary-subtle {
+  background-color: rgba(25, 191, 183, 0.1);
+}
+
+.border-border {
+  border-color: var(--color-border);
 }
 
 body {

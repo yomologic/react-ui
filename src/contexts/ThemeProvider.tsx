@@ -7,8 +7,7 @@ import {
     useState,
     useEffect,
 } from "react";
-import defaultTheme from "@/themes/default.json";
-import yomologicDark from "@/themes/yomologic-dark.json";
+import themes from "../themes";
 
 interface Theme {
     name: string;
@@ -16,6 +15,8 @@ interface Theme {
     colors: Record<string, string>;
     components: Record<string, Record<string, string>>;
     typography?: Record<string, string>;
+    showcase?: Record<string, string>;
+    semanticColors?: Record<string, string>;
 }
 
 interface ThemeContextType {
@@ -29,27 +30,38 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-// Theme registry - add new themes here
-const themes: Record<string, Theme> = {
-    default: defaultTheme as Theme,
-    "yomologic-dark": yomologicDark as Theme,
-};
+// Convert imported themes to Theme type
+const themeRegistry: Record<string, Theme> = themes as Record<string, Theme>;
 
-// Get initial theme from localStorage (runs before React hydration)
-const getInitialTheme = (): string => {
-    if (typeof window === "undefined") return "yomologic-dark";
+// Get initial theme from localStorage
+const getInitialTheme = (defaultTheme: string = "dark"): string => {
+    if (typeof window === "undefined") return defaultTheme;
     try {
         const saved = localStorage.getItem("yomologic-theme");
-        return saved && themes[saved] ? saved : "yomologic-dark";
+        return saved && themeRegistry[saved] ? saved : defaultTheme;
     } catch {
-        return "yomologic-dark";
+        return defaultTheme;
     }
 };
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
-    const [currentTheme, setCurrentTheme] = useState<string>(getInitialTheme);
+interface ThemeProviderProps {
+    children: ReactNode;
+    defaultTheme?: string;
+    customTheme?: Theme;
+    storageKey?: string;
+}
+
+export function ThemeProvider({
+    children,
+    defaultTheme = "dark",
+    customTheme,
+    storageKey = "yomologic-theme",
+}: ThemeProviderProps) {
+    const [currentTheme, setCurrentTheme] = useState<string>(() =>
+        getInitialTheme(defaultTheme)
+    );
     const [availableThemes] = useState(
-        Object.values(themes).map((t) => ({ id: t.id, name: t.name }))
+        Object.values(themeRegistry).map((t) => ({ id: t.id, name: t.name }))
     );
 
     const setCSSVariable = (name: string, value: string) => {
@@ -64,32 +76,27 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
             .trim();
     };
 
-    const applyTheme = (
-        theme: Theme & {
-            showcase?: Record<string, string>;
-            semanticColors?: Record<string, string>;
-        }
-    ) => {
+    const applyTheme = (theme: Theme) => {
         // Apply color variables
         Object.entries(theme.colors).forEach(([key, value]) => {
             setCSSVariable(`--color-${key}`, value);
         });
 
-        // Apply showcase-specific colors
+        // Apply showcase-specific colors (if present)
         if (theme.showcase) {
             Object.entries(theme.showcase).forEach(([key, value]) => {
                 setCSSVariable(`--showcase-${key}`, value);
             });
         }
 
-        // Apply semantic colors
+        // Apply semantic colors (if present)
         if (theme.semanticColors) {
             Object.entries(theme.semanticColors).forEach(([key, value]) => {
                 setCSSVariable(`--color-${key}`, value);
             });
         }
 
-        // Apply typography variables
+        // Apply typography variables (if present)
         if (theme.typography) {
             Object.entries(theme.typography).forEach(([key, value]) => {
                 setCSSVariable(`--typography-${key}`, value);
@@ -108,13 +115,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
             });
         });
 
-        // Also update body background and text color
+        // Update body background and text color
         setCSSVariable("--background", theme.colors.background);
         setCSSVariable("--foreground", theme.colors.foreground);
     };
 
     const setTheme = (themeId: string) => {
-        const theme = themes[themeId];
+        const theme = customTheme || themeRegistry[themeId];
         if (!theme) {
             console.error(`Theme not found: ${themeId}`);
             return;
@@ -125,7 +132,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
         // Save to localStorage
         if (typeof window !== "undefined") {
-            localStorage.setItem("yomologic-theme", themeId);
+            localStorage.setItem(storageKey, themeId);
         }
     };
 
@@ -173,13 +180,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         return css;
     };
 
-    // Apply theme immediately on mount (before first render)
+    // Apply theme on mount
     useEffect(() => {
-        const theme = themes[currentTheme];
+        const theme = customTheme || themeRegistry[currentTheme];
         if (theme) {
             applyTheme(theme);
         }
-    }, []);
+    }, [currentTheme, customTheme, applyTheme]);
 
     return (
         <ThemeContext.Provider
