@@ -230,7 +230,7 @@ export default function CardsPage() {
                                             className="max-w-sm"
                                         >
                                             <CardMedia
-                                                component="next-image"
+                                                component="img"
                                                 image="/yomologic-logo-symbol.svg"
                                                 alt="Yomologic logo"
                                                 aspectRatio="16/9"
