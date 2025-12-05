@@ -88,7 +88,13 @@ yarn type-check
 
 ## Contributing
 
-This is a private component library for Yomologic projects. For internal development documentation, see the implementation guides in the repository.
+Contributions are welcome! Feel free to:
+
+- Report bugs or request features via [GitHub Issues](https://github.com/yomologic/react-ui/issues)
+- Fork the repository and submit pull requests
+- Improve documentation or add examples
+
+For development documentation, see the implementation guides in the repository.
 
 ## License
 
