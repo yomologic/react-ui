@@ -1,39 +1,39 @@
 name: Publish to npm
 
 on:
-  push:
-    tags:
-      - "v*.*.*"
+    push:
+        tags:
+            - "v*.*.*"
 
 jobs:
-  publish:
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write # Required for OIDC authentication
-      contents: read
+    publish:
+        runs-on: ubuntu-latest
+        permissions:
+            id-token: write # Required for OIDC authentication
+            contents: read
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          registry-url: "https://registry.npmjs.org"
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20"
+                  registry-url: "https://registry.npmjs.org"
 
-      - name: Prepare package.json for publishing
-        run: |
-          node -e "const pkg = require('./package.json'); delete pkg.workspaces; delete pkg.private; require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
+            - name: Prepare package.json for publishing
+              run: |
+                  node -e "const pkg = require('./package.json'); delete pkg.workspaces; delete pkg.private; require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2));"
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+            - name: Install dependencies
+              run: yarn install --frozen-lockfile
 
-      - name: Build package
-        run: yarn build
+            - name: Build package
+              run: yarn build
 
-      - name: Update npm to latest
-        run: npm install -g npm@latest
+            - name: Update npm to latest
+              run: npm install -g npm@latest
 
-      - name: Publish to npm with provenance
-        run: npm publish --provenance --access public
+            - name: Publish to npm with provenance
+              run: npm publish --provenance --access public
