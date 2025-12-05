@@ -1,6 +1,6 @@
 {
     "name": "@yomologic/react-ui",
-    "version": "0.4.1",
+    "version": "0.5.0",
     "private": true,
     "workspaces": [
         "site"
@@ -27,7 +27,8 @@
         "./themes/*.css": "./dist/themes/*.css"
     },
     "files": [
-        "dist"
+        "dist/**/*.{js,mjs,d.ts,css}",
+        "!dist/**/*.map"
     ],
     "scripts": {
         "build": "tsup",
