@@ -251,7 +251,7 @@ export function RadioGroup({
             <div className="h-5 mt-1.5">
                 {(displayError || helperText) && (
                     <p
-                        className={`text-caption ${displayError ? "text-red-600" : "text-(--color-muted-foreground)"}`}
+                        className={`text-small ${displayError ? "text-error" : "text-(--color-muted-foreground)"}`}
                         role={displayError ? "alert" : undefined}
                     >
                         {displayError || helperText}

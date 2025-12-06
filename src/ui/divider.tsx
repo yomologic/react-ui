@@ -76,7 +76,7 @@ export const Divider: React.FC<DividerProps> = ({
 
     // Text styles with CSS variables
     const textStyles: React.CSSProperties = {
-        fontSize: "var(--text-sm, 0.875rem)",
+        fontSize: "var(--typography-small, 0.75rem)",
         color: "var(--color-muted-foreground, #6b7280)",
     };
 

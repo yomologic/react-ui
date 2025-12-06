@@ -21,4 +21,75 @@
   .button-outline-hover:active {
     background-color: var(--button-outline-active-bg) !important;
   }
+
+  /* Responsive Typography Classes */
+  .text-h1 {
+    font-size: var(--typography-h1);
+  }
+
+  .text-h2 {
+    font-size: var(--typography-h2);
+  }
+
+  .text-h3 {
+    font-size: var(--typography-h3);
+  }
+
+  .text-h4 {
+    font-size: var(--typography-h4);
+  }
+
+  .text-h5 {
+    font-size: var(--typography-h5);
+  }
+
+  .text-h6 {
+    font-size: var(--typography-h6);
+  }
+
+  .text-body {
+    font-size: var(--typography-body);
+  }
+
+  .text-small {
+    font-size: var(--typography-small);
+  }
+
+  .text-caption {
+    font-size: var(--typography-caption);
+  }
+
+  @media (min-width: 1024px) {
+    .text-h1 {
+      font-size: var(--typography-h1-desktop);
+    }
+
+    .text-h2 {
+      font-size: var(--typography-h2-desktop);
+    }
+
+    .text-h3 {
+      font-size: var(--typography-h3-desktop);
+    }
+
+    .text-h4 {
+      font-size: var(--typography-h4-desktop);
+    }
+
+    .text-h5 {
+      font-size: var(--typography-h5-desktop);
+    }
+
+    .text-h6 {
+      font-size: var(--typography-h6-desktop);
+    }
+
+    .text-body {
+      font-size: var(--typography-body-desktop);
+    }
+
+    .text-small {
+      font-size: var(--typography-small-desktop);
+    }
+  }
 }

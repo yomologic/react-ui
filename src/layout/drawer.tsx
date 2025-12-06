@@ -159,19 +159,18 @@ export function Drawer({
                     )}
                     <div>
                         <h1
-                            className="font-bold"
+                            className="font-bold text-h5"
                             style={{
                                 color: "var(--color-foreground)",
-                                fontSize: "var(--typography-h5)",
                             }}
                         >
                             {title}
                         </h1>
                         {subtitle && (
                             <p
+                                className="text-caption"
                                 style={{
                                     color: "var(--color-muted-foreground)",
-                                    fontSize: "var(--typography-caption)",
                                 }}
                             >
                                 {subtitle}
@@ -223,24 +222,22 @@ export function Drawer({
                     className="hidden lg:block px-6 py-5"
                     style={{
                         borderBottom: "1px solid var(--color-border)",
-                        background: "var(--color-muted)",
+                        background: "var(--color-surface-elevated)",
                     }}
                 >
                     <h1
-                        className="font-bold"
+                        className="font-bold text-h5"
                         style={{
                             color: "var(--color-foreground)",
-                            fontSize: "var(--typography-h5)",
                         }}
                     >
                         {title}
                     </h1>
                     {subtitle && (
                         <p
-                            className="mt-0.5"
+                            className="mt-0.5 text-caption"
                             style={{
                                 color: "var(--color-muted-foreground)",
-                                fontSize: "var(--typography-caption)",
                             }}
                         >
                             {subtitle}
@@ -255,20 +252,18 @@ export function Drawer({
                 >
                     <div>
                         <h1
-                            className="font-bold"
+                            className="font-bold text-h5"
                             style={{
                                 color: "var(--color-foreground)",
-                                fontSize: "var(--typography-h5)",
                             }}
                         >
                             {title}
                         </h1>
                         {subtitle && (
                             <p
-                                className="mt-1"
+                                className="mt-1 text-caption"
                                 style={{
                                     color: "var(--color-muted-foreground)",
-                                    fontSize: "var(--typography-caption)",
                                 }}
                             >
                                 {subtitle}
@@ -306,12 +301,11 @@ export function Drawer({
                         >
                             {section.title && (
                                 <h3
-                                    className="font-semibold uppercase tracking-wide"
+                                    className="font-semibold uppercase tracking-wide text-caption"
                                     style={{
                                         marginBottom:
                                             "var(--drawer-title-margin-bottom)",
                                         color: "var(--color-muted-foreground)",
-                                        fontSize: "var(--typography-caption)",
                                         padding: "0 0.75rem",
                                     }}
                                 >
@@ -331,7 +325,7 @@ export function Drawer({
                                             onClick={() =>
                                                 handleItemClick(item.id)
                                             }
-                                            className="w-full flex items-center gap-3 rounded-lg font-medium transition-all duration-200"
+                                            className="w-full flex items-center gap-3 rounded-lg font-medium transition-all duration-200 text-small"
                                             onMouseOver={(e) => {
                                                 if (activeItem !== item.id) {
                                                     e.currentTarget.style.background =
@@ -357,8 +351,6 @@ export function Drawer({
                                                     "var(--drawer-item-padding-y)",
                                                 paddingBottom:
                                                     "var(--drawer-item-padding-y)",
-                                                fontSize:
-                                                    "var(--drawer-font-size)",
                                                 borderRadius:
                                                     "var(--drawer-border-radius)",
                                                 background:

@@ -386,6 +386,64 @@ export default function ButtonsPage() {
                             </div>
                         </div>
                     </Card>
+
+                    {/* Example 8: Button as Link */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
+                            Button as Link
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-small theme-text-muted">
+                                Add an{" "}
+                                <code className="text-xs bg-[var(--color-muted)] px-1.5 py-0.5 rounded">
+                                    href
+                                </code>{" "}
+                                prop to render the button as an anchor tag with
+                                full button styling.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border flex items-center justify-center gap-3">
+                                        <Button href="#" variant="primary">
+                                            Navigate
+                                        </Button>
+                                        <Button
+                                            href="#"
+                                            variant="outline"
+                                            rightIcon={
+                                                <ArrowRight className="w-4 h-4" />
+                                            }
+                                        >
+                                            Learn More
+                                        </Button>
+                                    </div>
+                                </div>
+                                <div className="flex-1">
+                                    <CodeSnippet
+                                        code={`<Button href="/contact" variant="primary">\n  Navigate\n</Button>\n\n<Button href="/docs" variant="outline">\n  Learn More\n</Button>`}
+                                    />
+                                </div>
+                            </div>
+                            <div className="p-4 bg-[var(--color-info-muted)] border border-[var(--color-info-border)] rounded-lg">
+                                <p className="text-small text-[var(--color-info-muted-foreground)]">
+                                    <strong>Note:</strong> When using{" "}
+                                    <code className="text-xs bg-black/20 px-1.5 py-0.5 rounded">
+                                        href
+                                    </code>
+                                    , the button renders as an{" "}
+                                    <code className="text-xs bg-black/20 px-1.5 py-0.5 rounded">
+                                        &lt;a&gt;
+                                    </code>{" "}
+                                    tag instead of a{" "}
+                                    <code className="text-xs bg-black/20 px-1.5 py-0.5 rounded">
+                                        &lt;button&gt;
+                                    </code>
+                                    . All button styles and features (variants,
+                                    sizes, icons) work the same way.
+                                </p>
+                            </div>
+                        </div>
+                    </Card>
                 </div>
             </section>
 
@@ -513,6 +571,21 @@ export default function ButtonsPage() {
                                     <td className="px-6 py-4 text-sm theme-text-muted">
                                         Icon or element to display on the right
                                         side
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
+                                        href
+                                    </td>
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
+                                        string
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
+                                        undefined
+                                    </td>
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
+                                        When provided, renders button as an
+                                        anchor tag for navigation
                                     </td>
                                 </tr>
                                 <tr>

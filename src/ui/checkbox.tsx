@@ -139,10 +139,7 @@ export function Checkbox({
     };
 
     return (
-        <div
-            className={cn("flex flex-col", className)}
-            style={{ marginBottom: "var(--form-control-spacing)" }}
-        >
+        <div className={cn("flex flex-col", className)}>
             <div className={cn("flex items-center", containerGapStyles[size])}>
                 <div className="relative group/checkbox flex items-center shrink-0">
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
@@ -247,7 +244,7 @@ export function Checkbox({
             </div>
             <div className="h-5 mt-1.5">
                 {displayError && (
-                    <p className="text-caption text-red-600" role="alert">
+                    <p className="text-small text-error" role="alert">
                         {displayError}
                     </p>
                 )}
@@ -483,7 +480,7 @@ export function CheckboxGroup({
             <div className="h-5 mt-1.5">
                 {(error || helperText) && (
                     <p
-                        className={`text-caption ${error ? "text-red-600" : "text-(--color-muted-foreground)"}`}
+                        className={`text-small ${error ? "text-error" : "text-(--color-muted-foreground)"}`}
                         role={error ? "alert" : undefined}
                     >
                         {error || helperText}

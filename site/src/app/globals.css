@@ -1,4 +1,4 @@
-@import "../../../dist/base.css";
+@import "../../../dist/styles.css";
 @import "tailwindcss";
 
 @source "../../../src/**/*.{js,ts,jsx,tsx}";
@@ -436,6 +436,30 @@
   --dropdown-option-font-size-md: var(--typography-body);
   --dropdown-option-font-size-lg: var(--typography-h6);
   --dropdown-option-font-size-xl: var(--typography-h5);
+}
+
+/* Responsive Typography - Desktop Overrides */
+@media (min-width: 1024px) {
+  :root {
+    /* Update component label sizes to use desktop typography */
+    --checkbox-label-font-size-xs: var(--typography-caption);
+    --checkbox-label-font-size-sm: var(--typography-small-desktop);
+    --checkbox-label-font-size-md: var(--typography-body-desktop);
+    --checkbox-label-font-size-lg: var(--typography-h6-desktop);
+    --checkbox-label-font-size-xl: var(--typography-h5-desktop);
+    
+    --radio-label-font-size-xs: var(--typography-caption);
+    --radio-label-font-size-sm: var(--typography-small-desktop);
+    --radio-label-font-size-md: var(--typography-body-desktop);
+    --radio-label-font-size-lg: var(--typography-h6-desktop);
+    --radio-label-font-size-xl: var(--typography-h5-desktop);
+    
+    --dropdown-option-font-size-xs: var(--typography-caption);
+    --dropdown-option-font-size-sm: var(--typography-small-desktop);
+    --dropdown-option-font-size-md: var(--typography-body-desktop);
+    --dropdown-option-font-size-lg: var(--typography-h6-desktop);
+    --dropdown-option-font-size-xl: var(--typography-h5-desktop);
+  }
 }
 
 @theme {

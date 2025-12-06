@@ -504,9 +504,9 @@ export function FormControl({
                     {(helperText || currentError) && (
                         <p
                             className={cn(
-                                "text-xs",
+                                "text-small",
                                 currentError
-                                    ? "text-red-600"
+                                    ? "text-error"
                                     : "text-(--color-muted-foreground)"
                             )}
                             id={`${fieldId}-message`}
@@ -613,10 +613,8 @@ export function FormHelperText({
         <div className="h-5 mt-1.5">
             <p
                 className={cn(
-                    "text-xs",
-                    isError
-                        ? "text-red-600"
-                        : "text-(--color-muted-foreground)",
+                    "text-small",
+                    isError ? "text-error" : "text-(--color-muted-foreground)",
                     className
                 )}
                 role={isError ? "alert" : undefined}

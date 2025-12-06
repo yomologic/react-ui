@@ -121,7 +121,13 @@ ${props.join("\n")}
                                             }`}
                                         >
                                             {/* Header */}
-                                            <div className="px-6 py-5 border-b theme-border bg-linear-to-b from-gray-50 to-white">
+                                            <div
+                                                className="px-6 py-5 border-b theme-border"
+                                                style={{
+                                                    background:
+                                                        "var(--color-surface-elevated)",
+                                                }}
+                                            >
                                                 <div className="flex items-center justify-between gap-2">
                                                     <div>
                                                         {showTitle && (
@@ -197,17 +203,17 @@ ${props.join("\n")}
                                                                                 }`}
                                                                                 style={{
                                                                                     paddingLeft:
-                                                                                        "1rem",
+                                                                                        "var(--drawer-item-padding-x)",
                                                                                     paddingRight:
-                                                                                        "1rem",
+                                                                                        "var(--drawer-item-padding-x)",
                                                                                     paddingTop:
-                                                                                        "0.625rem",
+                                                                                        "var(--drawer-item-padding-y)",
                                                                                     paddingBottom:
-                                                                                        "0.625rem",
+                                                                                        "var(--drawer-item-padding-y)",
                                                                                     fontSize:
-                                                                                        "0.875rem",
+                                                                                        "var(--drawer-font-size)",
                                                                                     borderRadius:
-                                                                                        "0.5rem",
+                                                                                        "var(--drawer-border-radius)",
                                                                                 }}
                                                                             >
                                                                                 {item.icon && (

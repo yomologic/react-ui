@@ -427,7 +427,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                             "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
                             "disabled:bg-(--color-muted) disabled:cursor-not-allowed disabled:text-(--color-muted-foreground)",
                             inputError
-                                ? "border-red-500 focus:ring-red-500"
+                                ? "border-error focus:ring-error"
                                 : "border-(--color-border)",
                             leftIcon && "pl-10",
                             rightIcon && "pr-10",
@@ -449,7 +449,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 <div className="h-5 mt-1.5" suppressHydrationWarning>
                     {shouldRenderError && inputError && (
                         <p
-                            className="text-caption text-red-600"
+                            className="text-small text-error"
                             id={`${inputId}-error`}
                             role="alert"
                             suppressHydrationWarning
@@ -460,7 +460,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
                     {helperText && !inputError && !formControl && (
                         <p
-                            className="text-caption text-(--color-muted-foreground)"
+                            className="text-small text-(--color-muted-foreground)"
                             id={`${inputId}-helper`}
                             suppressHydrationWarning
                         >

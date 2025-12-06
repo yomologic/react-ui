@@ -86,6 +86,10 @@ export function ThemeProvider({
         if (theme.showcase) {
             Object.entries(theme.showcase).forEach(([key, value]) => {
                 setCSSVariable(`--showcase-${key}`, value);
+                // Also map surface colors to --color-* for component usage
+                if (key === "surface" || key === "surface-elevated") {
+                    setCSSVariable(`--color-${key}`, value);
+                }
             });
         }
 

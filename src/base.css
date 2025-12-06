@@ -11,6 +11,8 @@
   --color-warning: #d4a574;
   --color-info: #4d9de0;
   --color-background: #0f1419;
+  --color-surface: #1a2028;
+  --color-surface-elevated: #242c36;
   --color-foreground: #e3e8ed;
   --color-muted: #1a2028;
   --color-muted-foreground: #8b9ba8;
@@ -158,6 +160,15 @@
   --z-index-snackbar: 2000;
   --z-index-toast: 2100;
 
+  /* Component: Drawer */
+  --drawer-font-size: 0.875rem;
+  --drawer-item-padding-x: 1rem;
+  --drawer-item-padding-y: 0.625rem;
+  --drawer-border-radius: 0.5rem;
+  --drawer-section-padding-y: 1rem;
+  --drawer-title-margin-bottom: 0.5rem;
+  --drawer-item-spacing: 0.25rem;
+
   /* Component: Nav */
   --nav-height: 3.5rem;
   --nav-gap: 0.5rem;
@@ -188,11 +199,11 @@
   --checkbox-size-md: 1.5rem;
   --checkbox-size-lg: 1.75rem;
   --checkbox-size-xl: 2rem;
-  --checkbox-label-font-size-xs: 0.75rem;
-  --checkbox-label-font-size-sm: 0.875rem;
-  --checkbox-label-font-size-md: 1rem;
-  --checkbox-label-font-size-lg: 1.125rem;
-  --checkbox-label-font-size-xl: 1.25rem;
+  --checkbox-label-font-size-xs: var(--typography-caption, 0.6875rem);
+  --checkbox-label-font-size-sm: var(--typography-small, 0.75rem);
+  --checkbox-label-font-size-md: var(--typography-body, 0.875rem);
+  --checkbox-label-font-size-lg: var(--typography-h6, 0.875rem);
+  --checkbox-label-font-size-xl: var(--typography-h5, 1rem);
   --checkbox-label-spacing-xs: 0.5rem;
   --checkbox-label-spacing-sm: 0.625rem;
   --checkbox-label-spacing-md: 0.75rem;
@@ -212,11 +223,11 @@
   --radio-size-md: 1.5rem;
   --radio-size-lg: 1.75rem;
   --radio-size-xl: 2rem;
-  --radio-label-font-size-xs: 0.75rem;
-  --radio-label-font-size-sm: 0.875rem;
-  --radio-label-font-size-md: 1rem;
-  --radio-label-font-size-lg: 1.125rem;
-  --radio-label-font-size-xl: 1.25rem;
+  --radio-label-font-size-xs: var(--typography-caption, 0.6875rem);
+  --radio-label-font-size-sm: var(--typography-small, 0.75rem);
+  --radio-label-font-size-md: var(--typography-body, 0.875rem);
+  --radio-label-font-size-lg: var(--typography-h6, 0.875rem);
+  --radio-label-font-size-xl: var(--typography-h5, 1rem);
   --radio-label-spacing-xs: 0.5rem;
   --radio-label-spacing-sm: 0.625rem;
   --radio-label-spacing-md: 0.75rem;
@@ -292,3 +303,23 @@
   /* Component: Rating */
   --star-size: 1.5rem;
 }
+
+/* Responsive Typography - Desktop Overrides */
+@media (min-width: 1024px) {
+  :root {
+    /* Update component label sizes to use desktop typography */
+    --checkbox-label-font-size-xs: var(--typography-caption, 0.6875rem);
+    --checkbox-label-font-size-sm: var(--typography-small-desktop, 0.875rem);
+    --checkbox-label-font-size-md: var(--typography-body-desktop, 1rem);
+    --checkbox-label-font-size-lg: var(--typography-h6-desktop, 1rem);
+    --checkbox-label-font-size-xl: var(--typography-h5-desktop, 1.125rem);
+    
+    --radio-label-font-size-xs: var(--typography-caption, 0.6875rem);
+    --radio-label-font-size-sm: var(--typography-small-desktop, 0.875rem);
+    --radio-label-font-size-md: var(--typography-body-desktop, 1rem);
+    --radio-label-font-size-lg: var(--typography-h6-desktop, 1rem);
+    --radio-label-font-size-xl: var(--typography-h5-desktop, 1.125rem);
+  }
+}
+
+

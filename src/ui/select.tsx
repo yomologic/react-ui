@@ -258,7 +258,7 @@ export function Select({
             transition-all duration-200
             ${
                 displayError
-                    ? "border-red-500 focus:ring-2 focus:ring-red-200 focus:border-red-500"
+                    ? "border-error focus:ring-2 focus:ring-error focus:border-error"
                     : "border-(--color-border) focus:ring-2 focus:ring-[color-mix(in_srgb,var(--color-primary)_30%,transparent)] focus:border-(--color-primary)"
             }
             ${
@@ -370,7 +370,7 @@ export function Select({
             <div className="h-5 mt-1.5">
                 {(helperText || displayError) && (
                     <p
-                        className={`text-caption ${displayError ? "text-red-600" : "text-(--color-muted-foreground)"}`}
+                        className={`text-small ${displayError ? "text-error" : "text-(--color-muted-foreground)"}`}
                     >
                         {displayError || helperText}
                     </p>

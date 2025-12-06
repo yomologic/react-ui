@@ -144,7 +144,7 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                 "rounded-md hover:bg-(--color-primary)/10 hover:text-(--color-primary) transition-colors duration-150",
             secondary:
                 "rounded-md hover:bg-(--color-muted) transition-colors duration-150",
-            ghost: "rounded-md hover:bg-(--color-muted) transition-colors duration-150",
+            ghost: "rounded-md hover:bg-(--color-primary)/5 transition-colors duration-150",
         };
 
         const activeItemStyles = {
@@ -152,7 +152,7 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                 "bg-(--color-primary) text-white hover:bg-(--color-primary) hover:text-white",
             secondary:
                 "bg-(--color-muted) text-(--color-foreground) font-semibold",
-            ghost: "bg-(--color-muted) text-(--color-foreground) font-semibold",
+            ghost: "text-(--color-primary) font-medium",
         };
 
         // Breakpoint classes

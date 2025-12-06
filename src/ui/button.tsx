@@ -1,7 +1,7 @@
 import React from "react";
 import { cn } from "../lib/utils";
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+type ButtonBaseProps = {
     variant?:
         | "primary"
         | "secondary"
@@ -15,9 +15,32 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
     isLoading?: boolean;
     leftIcon?: React.ReactNode;
     rightIcon?: React.ReactNode;
-}
+    children?: React.ReactNode;
+    className?: string;
+};
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+type ButtonAsButton = ButtonBaseProps &
+    Omit<
+        React.ButtonHTMLAttributes<HTMLButtonElement>,
+        keyof ButtonBaseProps
+    > & {
+        href?: never;
+    };
+
+type ButtonAsLink = ButtonBaseProps &
+    Omit<
+        React.AnchorHTMLAttributes<HTMLAnchorElement>,
+        keyof ButtonBaseProps
+    > & {
+        href: string;
+    };
+
+export type ButtonProps = ButtonAsButton | ButtonAsLink;
+
+const Button = React.forwardRef<
+    HTMLButtonElement | HTMLAnchorElement,
+    ButtonProps
+>(
     (
         {
             className,
@@ -27,13 +50,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             leftIcon,
             rightIcon,
             children,
-            disabled,
             ...props
         },
         ref
     ) => {
         const baseStyles =
-            "inline-flex items-center justify-center cursor-pointer transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:brightness-100";
+            "inline-flex items-center justify-center cursor-pointer transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:brightness-100 no-underline";
 
         const variants = {
             primary:
@@ -61,52 +83,53 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         const radiusStyle = "[border-radius:var(--button-radius)]";
         const fontWeightStyle = "[font-weight:var(--button-font-weight)]";
 
-        return (
-            <button
-                ref={ref}
-                className={cn(
-                    baseStyles,
-                    variants[variant],
-                    sizes[size],
-                    radiusStyle,
-                    fontWeightStyle,
-                    className
-                )}
-                onMouseEnter={(e) => {
-                    if (variant === "ghost") {
-                        e.currentTarget.style.backgroundColor =
-                            "rgba(99, 102, 241, 0.08)";
-                    } else if (variant === "outline") {
-                        e.currentTarget.style.backgroundColor =
-                            "rgba(59, 130, 246, 0.12)";
-                    }
-                }}
-                onMouseLeave={(e) => {
-                    if (variant === "ghost" || variant === "outline") {
-                        e.currentTarget.style.backgroundColor = "";
-                    }
-                }}
-                onMouseDown={(e) => {
-                    if (variant === "ghost") {
-                        e.currentTarget.style.backgroundColor =
-                            "rgba(99, 102, 241, 0.16)";
-                    } else if (variant === "outline") {
-                        e.currentTarget.style.backgroundColor =
-                            "rgba(59, 130, 246, 0.24)";
-                    }
-                }}
-                onMouseUp={(e) => {
-                    if (variant === "ghost") {
-                        e.currentTarget.style.backgroundColor =
-                            "rgba(99, 102, 241, 0.08)";
-                    } else if (variant === "outline") {
-                        e.currentTarget.style.backgroundColor =
-                            "rgba(59, 130, 246, 0.12)";
-                    }
-                }}
-                disabled={disabled || isLoading}
-                {...props}
-            >
+        const classNames = cn(
+            baseStyles,
+            variants[variant],
+            sizes[size],
+            radiusStyle,
+            fontWeightStyle,
+            className
+        );
+
+        const handleMouseEnter = (e: React.MouseEvent<HTMLElement>) => {
+            if (variant === "ghost") {
+                e.currentTarget.style.backgroundColor =
+                    "rgba(99, 102, 241, 0.08)";
+            } else if (variant === "outline") {
+                e.currentTarget.style.backgroundColor =
+                    "rgba(59, 130, 246, 0.12)";
+            }
+        };
+
+        const handleMouseLeave = (e: React.MouseEvent<HTMLElement>) => {
+            if (variant === "ghost" || variant === "outline") {
+                e.currentTarget.style.backgroundColor = "";
+            }
+        };
+
+        const handleMouseDown = (e: React.MouseEvent<HTMLElement>) => {
+            if (variant === "ghost") {
+                e.currentTarget.style.backgroundColor =
+                    "rgba(99, 102, 241, 0.16)";
+            } else if (variant === "outline") {
+                e.currentTarget.style.backgroundColor =
+                    "rgba(59, 130, 246, 0.24)";
+            }
+        };
+
+        const handleMouseUp = (e: React.MouseEvent<HTMLElement>) => {
+            if (variant === "ghost") {
+                e.currentTarget.style.backgroundColor =
+                    "rgba(99, 102, 241, 0.08)";
+            } else if (variant === "outline") {
+                e.currentTarget.style.backgroundColor =
+                    "rgba(59, 130, 246, 0.12)";
+            }
+        };
+
+        const content = (
+            <>
                 {isLoading && (
                     <svg
                         className="animate-spin h-4 w-4"
@@ -132,6 +155,40 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                 {!isLoading && leftIcon && leftIcon}
                 {children}
                 {!isLoading && rightIcon && rightIcon}
+            </>
+        );
+
+        if ("href" in props && props.href) {
+            const { href, ...rest } = props as ButtonAsLink;
+            return (
+                <a
+                    ref={ref as React.Ref<HTMLAnchorElement>}
+                    href={href}
+                    className={classNames}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                    onMouseDown={handleMouseDown}
+                    onMouseUp={handleMouseUp}
+                    {...rest}
+                >
+                    {content}
+                </a>
+            );
+        }
+
+        const { disabled, ...rest } = props as ButtonAsButton;
+        return (
+            <button
+                ref={ref as React.Ref<HTMLButtonElement>}
+                className={classNames}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
+                disabled={disabled || isLoading}
+                {...rest}
+            >
+                {content}
             </button>
         );
     }
