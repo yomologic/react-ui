@@ -10,6 +10,7 @@ export default defineConfig({
     dts: {
         compilerOptions: {
             skipLibCheck: true,
+            skipDefaultLibCheck: true,
         },
     },
     splitting: false,
