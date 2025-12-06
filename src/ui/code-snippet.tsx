@@ -1,8 +1,7 @@
 "use client";
 
+import { Highlight, themes } from "prism-react-renderer";
 import { useState } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 interface CodeSnippetProps {
     code: string;
@@ -99,21 +98,36 @@ export function CodeSnippet({
             <div
                 className={`rounded-lg overflow-x-auto border border-[#1f2937] ${fontSizeClassMap[fontSize]} code-snippet-${fontSize}`}
             >
-                <SyntaxHighlighter
+                <Highlight
+                    theme={themes.vsDark}
+                    code={code}
                     language={language}
-                    style={vscDarkPlus}
-                    customStyle={{
-                        margin: 0,
-                        padding: "1rem 3.5rem 1rem 1rem",
-                        lineHeight: "1.5",
-                        background: "#1a1b26",
-                    }}
-                    wrapLines={wrap}
-                    wrapLongLines={wrap}
-                    showLineNumbers={false}
                 >
-                    {code}
-                </SyntaxHighlighter>
+                    {({ style, tokens, getLineProps, getTokenProps }) => (
+                        <pre
+                            style={{
+                                ...style,
+                                margin: 0,
+                                padding: "1rem 3.5rem 1rem 1rem",
+                                lineHeight: "1.5",
+                                background: "#1a1b26",
+                                whiteSpace: wrap ? "pre-wrap" : "pre",
+                                wordBreak: wrap ? "break-word" : "normal",
+                            }}
+                        >
+                            {tokens.map((line, i) => (
+                                <div key={i} {...getLineProps({ line })}>
+                                    {line.map((token, key) => (
+                                        <span
+                                            key={key}
+                                            {...getTokenProps({ token })}
+                                        />
+                                    ))}
+                                </div>
+                            ))}
+                        </pre>
+                    )}
+                </Highlight>
             </div>
         </div>
     );

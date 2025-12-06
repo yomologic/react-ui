@@ -16,7 +16,7 @@ export default defineConfig({
     splitting: false,
     sourcemap: true,
     clean: true,
-    external: ["react", "react-dom", "react-syntax-highlighter"],
+    external: ["react", "react-dom", "prism-react-renderer"],
     esbuildOptions(options) {
         options.banner = {
             js: '"use client";',
