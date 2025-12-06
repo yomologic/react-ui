@@ -38,7 +38,7 @@ export function Checkbox({
 }: CheckboxProps) {
     const form = useForm();
     const autoId = useId();
-    const stableId = useRef<string>();
+    const stableId = useRef<string | undefined>(undefined);
     if (!stableId.current) {
         stableId.current = id || `checkbox-${autoId}`;
     }

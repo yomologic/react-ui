@@ -69,7 +69,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         >();
 
         // Generate stable ID only once
-        const stableId = useRef<string>();
+        const stableId = useRef<string | undefined>(undefined);
         if (!stableId.current) {
             stableId.current = id || formControl?.fieldId || `input-${autoId}`;
         }

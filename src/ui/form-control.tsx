@@ -242,7 +242,7 @@ export function FormControl({
 }: FormControlProps) {
     const autoId = useId();
     // Use name as stable ID if provided, otherwise fallback to useId
-    const stableFieldId = useRef<string>();
+    const stableFieldId = useRef<string | undefined>(undefined);
     if (!stableFieldId.current) {
         stableFieldId.current = name ? `field-${name}` : `field-${autoId}`;
     }
@@ -449,17 +449,18 @@ export function FormControl({
         if (asChild) {
             const child = Children.only(children);
             if (isValidElement(child)) {
+                const childProps = child.props as any;
                 return cloneElement(child, {
                     ...fieldProps,
-                    ...child.props,
+                    ...childProps,
                     // Merge onChange handlers
                     onChange: (e: any) => {
                         fieldProps.onChange(e);
-                        child.props.onChange?.(e);
+                        childProps.onChange?.(e);
                     },
                     onBlur: () => {
                         fieldProps.onBlur();
-                        child.props.onBlur?.();
+                        childProps.onBlur?.();
                     },
                 } as any);
             }

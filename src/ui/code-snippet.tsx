@@ -99,7 +99,6 @@ export function CodeSnippet({
             <div
                 className={`rounded-lg overflow-x-auto border border-[#1f2937] ${fontSizeClassMap[fontSize]} code-snippet-${fontSize}`}
             >
-                {/* @ts-expect-error - SyntaxHighlighter has typing issues with React 19 */}
                 <SyntaxHighlighter
                     language={language}
                     style={vscDarkPlus}
