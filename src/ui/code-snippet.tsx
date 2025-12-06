@@ -99,21 +99,18 @@ export function CodeSnippet({
             <div
                 className={`rounded-lg overflow-x-auto border border-[#1f2937] ${fontSizeClassMap[fontSize]} code-snippet-${fontSize}`}
             >
-                {/* Cast to any to avoid React 19 type issues in DTS generation */}
                 <SyntaxHighlighter
-                    {...({
-                        language,
-                        style: vscDarkPlus,
-                        customStyle: {
-                            margin: 0,
-                            padding: "1rem 3.5rem 1rem 1rem",
-                            lineHeight: "1.5",
-                            background: "#1a1b26",
-                        },
-                        wrapLines: wrap,
-                        wrapLongLines: wrap,
-                        showLineNumbers: false,
-                    } as any)}
+                    language={language}
+                    style={vscDarkPlus}
+                    customStyle={{
+                        margin: 0,
+                        padding: "1rem 3.5rem 1rem 1rem",
+                        lineHeight: "1.5",
+                        background: "#1a1b26",
+                    }}
+                    wrapLines={wrap}
+                    wrapLongLines={wrap}
+                    showLineNumbers={false}
                 >
                     {code}
                 </SyntaxHighlighter>
