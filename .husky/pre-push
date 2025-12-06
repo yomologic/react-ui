@@ -1,7 +1,15 @@
 echo "🔍 Running type check before push..."
-cd site && yarn tsc --noEmit
+yarn run type-check
 if [ $? -ne 0 ]; then
   echo "❌ Type check failed. Push aborted."
   exit 1
 fi
 echo "✅ Type check passed!"
+
+echo "🔨 Running build to check for DTS errors..."
+yarn build
+if [ $? -ne 0 ]; then
+  echo "❌ Build failed. Push aborted."
+  exit 1
+fi
+echo "✅ Build passed!"

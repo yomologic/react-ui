@@ -7,7 +7,11 @@ import path from "path";
 export default defineConfig({
     entry: ["src/index.ts", "src/styles.css"],
     format: ["cjs", "esm"],
-    dts: true,
+    dts: {
+        compilerOptions: {
+            skipLibCheck: true,
+        },
+    },
     splitting: false,
     sourcemap: true,
     clean: true,
