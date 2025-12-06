@@ -27,8 +27,7 @@
         "./themes/*.css": "./dist/themes/*.css"
     },
     "files": [
-        "dist/**/*.{js,mjs,d.ts,css}",
-        "!dist/**/*.map"
+        "dist"
     ],
     "scripts": {
         "build": "tsup",
