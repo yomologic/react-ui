@@ -19,6 +19,7 @@ import {
     Sliders,
     ToggleLeft,
     Form,
+    TextCursorInput,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -42,7 +43,7 @@ const navSections: DrawerNavSection[] = [
             {
                 id: "inputs",
                 label: "Inputs",
-                icon: <Type className="w-5 h-5" />,
+                icon: <TextCursorInput className="w-5 h-5" />,
             },
             {
                 id: "radio",
@@ -58,6 +59,11 @@ const navSections: DrawerNavSection[] = [
                 id: "switch",
                 label: "Switch",
                 icon: <ToggleLeft className="w-5 h-5" />,
+            },
+            {
+                id: "textarea",
+                label: "Textarea",
+                icon: <Type className="w-5 h-5" />,
             },
         ],
     },

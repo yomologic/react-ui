@@ -100,5 +100,11 @@
             "indigo-bg-hover": "#c7d2fe",
             "indigo-text": "#4f46e5"
         }
+    },
+    "transitions": {
+        "drawer-duration": "500ms"
+    },
+    "overlay": {
+        "background": "rgba(0, 0, 0, 0.4)"
     }
 }

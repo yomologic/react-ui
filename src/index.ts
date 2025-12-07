@@ -1,6 +1,8 @@
 // UI Components
 export { Button } from "./ui/button";
 export { Input } from "./ui/input";
+export { Textarea } from "./ui/textarea";
+export type { TextareaProps } from "./ui/textarea";
 export {
     Card,
     CardHeader,

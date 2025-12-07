@@ -17,6 +17,8 @@ interface Theme {
     typography?: Record<string, string>;
     showcase?: Record<string, string>;
     semanticColors?: Record<string, string>;
+    transitions?: Record<string, string>;
+    overlay?: Record<string, string>;
 }
 
 interface ThemeContextType {
@@ -118,6 +120,20 @@ export function ThemeProvider({
                 setCSSVariable(varName, value);
             });
         });
+
+        // Apply transition variables (if present)
+        if (theme.transitions) {
+            Object.entries(theme.transitions).forEach(([key, value]) => {
+                setCSSVariable(`--transition-${key}`, value);
+            });
+        }
+
+        // Apply overlay variables (if present)
+        if (theme.overlay) {
+            Object.entries(theme.overlay).forEach(([key, value]) => {
+                setCSSVariable(`--overlay-${key}`, value);
+            });
+        }
 
         // Update body background and text color
         setCSSVariable("--background", theme.colors.background);

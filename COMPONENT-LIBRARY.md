@@ -5,66 +5,71 @@
 ### UI Components (`components/ui/`)
 
 1. **Button** (`button.tsx`)
-
-   - Variants: primary, secondary, outline, ghost, danger
-   - Sizes: sm, md, lg
-   - Features: Loading state, left/right icons
-   - Full TypeScript support
+    - Variants: primary, secondary, outline, ghost, danger
+    - Sizes: sm, md, lg
+    - Features: Loading state, left/right icons
+    - Full TypeScript support
 
 2. **Input** (`input.tsx`)
+    - Features: Labels, validation errors, helper text
+    - Icons: left and right icon support
+    - Full width option
+    - Required field indicator
 
-   - Features: Labels, validation errors, helper text
-   - Icons: left and right icon support
-   - Full width option
-   - Required field indicator
+3. **Textarea** (`textarea.tsx`)
+    - Features: Multi-line text input with labels, validation, helper text
+    - Resize options: none, vertical, horizontal, both
+    - Auto-resize to fit content with max height
+    - Character count display
+    - Form and FormControl integration
+    - Full width option
+    - Required field indicator
 
-3. **Card** (`card.tsx`)
+4. **Card** (`card.tsx`)
+    - Variants: default, bordered, elevated
+    - Padding: none, sm, md, lg
+    - Hoverable option
+    - Composable: CardHeader, CardTitle, CardDescription, CardContent, CardFooter
 
-   - Variants: default, bordered, elevated
-   - Padding: none, sm, md, lg
-   - Hoverable option
-   - Composable: CardHeader, CardTitle, CardDescription, CardContent, CardFooter
+5. **Badge** (`badge.tsx`)
+    - Variants: default, primary, success, warning, danger, info
+    - Sizes: sm, md, lg
+    - Dot indicator option
 
-4. **Badge** (`badge.tsx`)
-
-   - Variants: default, primary, success, warning, danger, info
-   - Sizes: sm, md, lg
-   - Dot indicator option
-
-5. **Spinner** (`spinner.tsx`)
-   - Sizes: sm, md, lg, xl
-   - Colors: primary, secondary, white
-   - Optional label
+6. **Spinner** (`spinner.tsx`)
+    - Sizes: sm, md, lg, xl
+    - Colors: primary, secondary, white
+    - Optional label
 
 ### Feedback Components (`components/feedback/`)
 
 1. **Alert** (`alert.tsx`)
-   - Variants: info, success, warning, error
-   - Dismissible with callback
-   - Custom icons
-   - Title and description support
+    - Variants: info, success, warning, error
+    - Dismissible with callback
+    - Custom icons
+    - Title and description support
 
 ### Layout Components (`components/layout/`)
 
 1. **Container** (`container.tsx`)
-   - Max widths: sm, md, lg, xl, 2xl, full
-   - Auto-centering
-   - Responsive padding
+    - Max widths: sm, md, lg, xl, 2xl, full
+    - Auto-centering
+    - Responsive padding
 
 ### Shared Components (`components/shared/`)
 
 1. **EmptyState** (`empty-state.tsx`)
-   - Custom icon support
-   - Title and description
-   - Call-to-action button
+    - Custom icon support
+    - Title and description
+    - Call-to-action button
 
 ### Data Display (`components/data-display/`)
 
 1. **TruckStopCard** (`truck-stop-card.tsx`)
-   - Displays truck stop information
-   - Shows distance, rating, type, relevance
-   - Clickable with hover effect
-   - Integrated with Badge components
+    - Displays truck stop information
+    - Shows distance, rating, type, relevance
+    - Clickable with hover effect
+    - Integrated with Badge components
 
 ## 🛠 Utilities
 
@@ -89,16 +94,16 @@
 ```tsx
 // Using atomic components
 <Container>
-  <Card>
-    <Input label="Search Query" />
-    <Button variant="primary" isLoading={loading}>
-      Search
-    </Button>
-    <Alert variant="error" dismissible />
-  </Card>
+    <Card>
+        <Input label="Search Query" />
+        <Button variant="primary" isLoading={loading}>
+            Search
+        </Button>
+        <Alert variant="error" dismissible />
+    </Card>
 
-  <TruckStopCard result={result} />
-  <EmptyState />
+    <TruckStopCard result={result} />
+    <EmptyState />
 </Container>
 ```
 
@@ -183,25 +188,25 @@ import { Alert } from "@/components/feedback";
 import { Container } from "@/components/layout";
 
 function MyComponent() {
-  return (
-    <Container maxWidth="lg">
-      <Card variant="elevated" padding="lg">
-        <Input
-          label="Email"
-          type="email"
-          placeholder="you@example.com"
-          required
-        />
-        <Button variant="primary" size="lg">
-          Submit
-        </Button>
-      </Card>
+    return (
+        <Container maxWidth="lg">
+            <Card variant="elevated" padding="lg">
+                <Input
+                    label="Email"
+                    type="email"
+                    placeholder="you@example.com"
+                    required
+                />
+                <Button variant="primary" size="lg">
+                    Submit
+                </Button>
+            </Card>
 
-      <Alert variant="success" dismissible>
-        Form submitted successfully!
-      </Alert>
-    </Container>
-  );
+            <Alert variant="success" dismissible>
+                Form submitted successfully!
+            </Alert>
+        </Container>
+    );
 }
 ```
 

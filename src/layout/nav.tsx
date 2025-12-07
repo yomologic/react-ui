@@ -428,9 +428,13 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                         {isMobileMenuOpen && (
                             <div
                                 className={cn(
-                                    "fixed inset-0 bg-black/50 [z-index:var(--z-index-nav-mobile-overlay)]",
+                                    "fixed inset-0 [z-index:var(--z-index-nav-mobile-overlay)]",
                                     breakpointClasses[mobileBreakpoint]
                                 )}
+                                style={{
+                                    backgroundColor:
+                                        "var(--overlay-background, rgba(0, 0, 0, 0.4))",
+                                }}
                                 onClick={() => setIsMobileMenuOpen(false)}
                             />
                         )}
@@ -439,7 +443,7 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                         <div
                             ref={mobileMenuRef}
                             className={cn(
-                                "fixed top-0 bottom-0 w-64 bg-(--color-background) [z-index:var(--z-index-nav-mobile-menu)] overflow-y-auto transition-transform duration-200 ease-in-out shadow-lg",
+                                "fixed top-0 bottom-0 w-64 bg-(--color-background) [z-index:var(--z-index-nav-mobile-menu)] overflow-y-auto transition-transform ease-in-out shadow-lg",
                                 breakpointClasses[mobileBreakpoint],
                                 mobileMenuDirection === "left" && [
                                     "left-0 border-r border-(--color-border)",
@@ -455,6 +459,10 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                                 ],
                                 !isMobileMenuOpen && "invisible"
                             )}
+                            style={{
+                                transitionDuration:
+                                    "var(--transition-drawer-duration, 500ms)",
+                            }}
                         >
                             <div className="flex flex-col space-y-1 px-2 pt-2">
                                 {items.map((item) => renderNavItem(item, true))}

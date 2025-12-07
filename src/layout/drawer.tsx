@@ -183,8 +183,14 @@ export function Drawer({
             {/* Mobile Menu Overlay - Overlays main content without shifting */}
             {mobileMenuOpen && (
                 <div
-                    className="fixed inset-0 bg-black/50 lg:hidden"
-                    style={{ zIndex: 9998 }}
+                    className="fixed inset-0 lg:hidden transition-opacity ease-in-out"
+                    style={{
+                        zIndex: 9998,
+                        transitionDuration:
+                            "var(--transition-drawer-duration, 500ms)",
+                        backgroundColor:
+                            "var(--overlay-background, rgba(0, 0, 0, 0.4))",
+                    }}
                     onClick={() => setMobileMenuOpen(false)}
                 />
             )}
@@ -193,7 +199,7 @@ export function Drawer({
             <aside
                 className={`
           fixed top-0 bottom-0 w-64
-          transition-transform duration-500 ease-in-out overflow-y-auto
+          transition-all ease-out overflow-y-auto
           ${isLeft ? "left-0" : "right-0"}
           lg:translate-x-0 lg:top-0
           ${
@@ -203,6 +209,8 @@ export function Drawer({
           }
         `}
                 style={{
+                    transitionDuration:
+                        "var(--transition-drawer-duration, 500ms)",
                     background: "var(--color-background)",
                     borderLeft: isLeft
                         ? "none"
