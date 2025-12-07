@@ -54,6 +54,10 @@
     border-color: var(--color-border);
   }
 
+  .theme-glass {
+    background: transparent;
+  }
+
   /* Typography utility classes */
   .text-h1 {
     font-size: var(--typography-h1);

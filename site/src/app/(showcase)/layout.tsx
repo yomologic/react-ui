@@ -1,6 +1,6 @@
 "use client";
 
-import { Drawer, DrawerNavSection, Header } from "@yomologic/react-ui";
+import { Drawer, DrawerNavSection, Nav } from "@yomologic/react-ui";
 import {
     Circle,
     Type,
@@ -169,47 +169,48 @@ export default function ShowcaseLayout({
             className="min-h-screen"
             style={{ background: "var(--color-muted)" }}
         >
-            {/* Header with auto-hide on scroll - desktop only, mobile uses Drawer header */}
-            <Header
-                autoHideOnScroll={true}
-                className="hidden lg:block left-0 right-64 z-10 backdrop-blur-md backdrop-saturate-150"
-                style={{
-                    backgroundColor: "var(--color-background)",
-                    opacity: 0.9,
-                    borderBottom: "none",
-                }}
-            >
-                <div className="px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-                    <Link
-                        href="/"
-                        className="flex items-center gap-3 hover:opacity-80 transition-opacity group"
-                    >
-                        <Image
-                            src="/yomologic-logo-symbol.svg"
-                            alt="Yomologic"
-                            width={40}
-                            height={40}
-                            className="group-hover:scale-105 transition-transform"
-                        />
-                        <span
-                            className="font-semibold text-h3"
-                            style={{ color: "var(--color-foreground)" }}
+            {/* Main content area - excludes right drawer space on desktop */}
+            <div className="lg:mr-64">
+                {/* Nav with auto-hide on scroll - desktop only */}
+                <Nav
+                    items={[]}
+                    position="fixed"
+                    autoHideOnScroll={true}
+                    className="hidden lg:block"
+                    blur={true}
+                    borderless={true}
+                    logo={
+                        <Link
+                            href="/"
+                            className="flex items-center gap-3 hover:opacity-80 transition-opacity group"
                         >
-                            React UI
-                        </span>
-                    </Link>
-                    <ThemeToggle />
-                </div>
-            </Header>
+                            <Image
+                                src="/yomologic-logo-symbol.svg"
+                                alt="Yomologic"
+                                width={40}
+                                height={40}
+                                className="group-hover:scale-105 transition-transform"
+                            />
+                            <span
+                                className="font-semibold text-h3"
+                                style={{ color: "var(--color-foreground)" }}
+                            >
+                                React UI
+                            </span>
+                        </Link>
+                    }
+                    actions={<ThemeToggle />}
+                />
 
-            <main
-                className="w-full pt-16 lg:pt-16 overflow-x-hidden"
-                style={{ color: "var(--color-foreground)" }}
-            >
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:pr-72 py-8">
-                    {children}
-                </div>
-            </main>
+                <main
+                    className="w-full pt-16 lg:pt-16 overflow-x-hidden"
+                    style={{ color: "var(--color-foreground)" }}
+                >
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                        {children}
+                    </div>
+                </main>
+            </div>
             <Drawer
                 title="React UI Components"
                 subtitle="Interactive Showcase"
@@ -220,6 +221,8 @@ export default function ShowcaseLayout({
                 homeUrl="/"
                 autoHideOnScroll={true}
                 headerActions={<ThemeToggle />}
+                borderless={true}
+                blur={true}
             />
         </div>
     );

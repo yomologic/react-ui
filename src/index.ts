@@ -71,8 +71,7 @@ export type {
     NavItem as DrawerNavItem,
     NavSection as DrawerNavSection,
 } from "./layout/drawer";
-export { Header } from "./layout/header";
-export type { HeaderProps } from "./layout/header";
+
 /** @deprecated Use Drawer component instead. SidebarNav will be removed in v1.0.0 */
 export { SidebarNav } from "./layout/sidebar-nav";
 export type {

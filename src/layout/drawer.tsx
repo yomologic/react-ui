@@ -26,6 +26,12 @@ export interface DrawerProps {
     homeUrl?: string;
     autoHideOnScroll?: boolean;
     headerActions?: React.ReactNode;
+    /** Remove bottom border from mobile header */
+    borderless?: boolean;
+    /** Make mobile header background transparent */
+    transparent?: boolean;
+    /** Add backdrop blur effect to mobile header (glassmorphism) */
+    blur?: boolean;
 }
 
 export function Drawer({
@@ -40,6 +46,9 @@ export function Drawer({
     homeUrl,
     autoHideOnScroll = true,
     headerActions,
+    borderless = false,
+    transparent = false,
+    blur = false,
 }: DrawerProps) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [isHeaderVisible, setIsHeaderVisible] = useState(true);
@@ -89,10 +98,20 @@ export function Drawer({
         <>
             {/* Mobile Header with auto-hide on scroll */}
             <div
-                className={`lg:hidden fixed top-0 left-0 right-0 px-4 py-3 z-(--z-index-drawer-header) transition-transform duration-500 ease-in-out ${isHeaderVisible ? "translate-y-0" : "-translate-y-full"}`}
+                className={`lg:hidden fixed top-0 left-0 right-0 px-4 py-3 z-(--z-index-drawer-header) transition-transform duration-500 ease-in-out ${
+                    blur ? "backdrop-blur-md backdrop-saturate-150" : ""
+                } ${borderless ? "border-b-0" : ""} ${isHeaderVisible ? "translate-y-0" : "-translate-y-full"}`}
                 style={{
-                    background: "var(--color-background)",
-                    borderBottom: "1px solid var(--color-border)",
+                    backgroundColor: blur
+                        ? "var(--color-muted)"
+                        : transparent
+                          ? "transparent"
+                          : "var(--color-background)",
+                    opacity: blur ? 0.85 : 1,
+                    borderBottom:
+                        !borderless && !blur
+                            ? "1px solid var(--color-border)"
+                            : "none",
                 }}
             >
                 <div
@@ -229,8 +248,8 @@ export function Drawer({
                 <div
                     className="hidden lg:block px-6 py-5"
                     style={{
-                        borderBottom: "1px solid var(--color-border)",
-                        background: "var(--color-surface-elevated)",
+                        borderBottom: "none",
+                        background: "var(--color-muted)",
                     }}
                 >
                     <h1

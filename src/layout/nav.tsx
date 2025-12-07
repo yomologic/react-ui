@@ -36,6 +36,10 @@ export interface NavProps extends React.HTMLAttributes<HTMLElement> {
     transparent?: boolean;
     /** Add backdrop blur effect (glassmorphism) */
     blur?: boolean;
+    /** Position of the nav (fixed, sticky, or static) */
+    position?: "fixed" | "sticky" | "static";
+    /** Auto-hide nav on scroll down, show on scroll up */
+    autoHideOnScroll?: boolean;
 }
 
 const Nav = React.forwardRef<HTMLElement, NavProps>(
@@ -56,6 +60,8 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
             borderless = false,
             transparent = false,
             blur = false,
+            position = "static",
+            autoHideOnScroll = false,
             ...props
         },
         ref
@@ -67,6 +73,36 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
         const dropdownRef = useRef<HTMLDivElement>(null);
         const mobileMenuRef = useRef<HTMLDivElement>(null);
         const [navElement, setNavElement] = useState<HTMLElement | null>(null);
+        const [isNavVisible, setIsNavVisible] = useState(true);
+        const [lastScrollY, setLastScrollY] = useState(0);
+
+        // Auto-hide nav on scroll
+        useEffect(() => {
+            if (!autoHideOnScroll || position === "static") {
+                setIsNavVisible(true);
+                return;
+            }
+
+            const handleScroll = () => {
+                const currentScrollY = window.scrollY;
+
+                // Show nav when at top
+                if (currentScrollY < 10) {
+                    setIsNavVisible(true);
+                }
+                // Hide on scroll down, show on scroll up
+                else if (currentScrollY > lastScrollY) {
+                    setIsNavVisible(false);
+                } else {
+                    setIsNavVisible(true);
+                }
+
+                setLastScrollY(currentScrollY);
+            };
+
+            window.addEventListener("scroll", handleScroll, { passive: true });
+            return () => window.removeEventListener("scroll", handleScroll);
+        }, [lastScrollY, autoHideOnScroll, position]);
 
         // Close dropdown when clicking outside
         useEffect(() => {
@@ -118,14 +154,32 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
         }, [mobileMenuDirection]);
 
         // Base styles using CSS variables
+        const positionClass =
+            position === "static"
+                ? ""
+                : position === "fixed"
+                  ? "fixed"
+                  : "sticky";
+        const transformClass =
+            autoHideOnScroll && position !== "static"
+                ? `transition-transform duration-500 ease-in-out ${isNavVisible ? "translate-y-0" : "-translate-y-full"}`
+                : "";
+
+        // Only add default positioning if not already specified in className
+        const hasCustomPositioning = className?.match(/(left-|right-|inset-)/);
+
         const baseStyles = cn(
+            // Position
+            positionClass && `${positionClass} [z-index:var(--z-index-nav)]`,
+            // Default positioning only if not custom
+            positionClass && !hasCustomPositioning && "top-0 left-0 right-0",
+            // Transform for auto-hide
+            transformClass,
             // Background
-            !transparent && "bg-(--color-background)",
+            !transparent && !blur && "bg-(--color-background)",
             transparent && "bg-transparent",
             // Blur effect (glassmorphism)
-            blur && "backdrop-blur-md bg-(--color-background)/80",
-            // Sticky positioning
-            sticky && "sticky top-0 [z-index:var(--z-index-nav)]"
+            blur && "backdrop-blur-md bg-transparent"
         );
 
         // Container styles
