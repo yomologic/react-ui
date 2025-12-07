@@ -41,6 +41,17 @@
     - Colors: primary, secondary, white
     - Optional label
 
+7. **Form** (`form.tsx`)
+    - Features:
+        - Automatic form validation coordination across all fields
+        - Built-in error handling and display
+        - Field registration and value tracking
+        - Custom validation functions per field
+        - Support for both controlled and uncontrolled inputs
+        - Values object passed to onSubmit handler
+    - Spacing: none, dense, normal
+    - Context-based: Form fields automatically register via useForm hook
+
 ### Feedback Components (`components/feedback/`)
 
 1. **Alert** (`alert.tsx`)
@@ -151,15 +162,6 @@ src/
 7. **Developer Experience**: Clean imports, autocomplete, documentation
 
 ## 🚀 Next Recommended Components
-
-### Form (`components/form/`)
-
-- form-field.tsx
-- form-label.tsx
-- form-error.tsx
-- select-control.tsx
-- checkbox.tsx
-- radio.tsx
 
 ### Navigation (`components/navigation/`)
 
