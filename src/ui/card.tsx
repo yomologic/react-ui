@@ -1,7 +1,10 @@
 import React from "react";
 import { cn } from "../lib/utils";
 
-export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface CardProps extends Omit<
+    React.HTMLAttributes<HTMLDivElement>,
+    "variant" | "accentColor"
+> {
     variant?: "default" | "bordered" | "elevated" | "accent";
     padding?: "none" | "sm" | "md" | "lg";
     hoverable?: boolean;
