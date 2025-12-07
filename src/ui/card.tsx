@@ -27,7 +27,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
             default: "border border-(--color-border)",
             bordered: "border-2 border-(--color-border)",
             elevated: "shadow-md",
-            accent: "border border-(--color-border) hover:border-(--color-primary) transition-all duration-300 relative overflow-hidden",
+            accent: "border border-(--color-border) hover:border-(--color-primary) active:border-(--color-primary) transition-all duration-300 relative overflow-hidden group",
         };
 
         const paddings = {
@@ -62,7 +62,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
             >
                 {variant === "accent" && (
                     <div
-                        className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-current to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-current to-transparent opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity"
                         style={
                             accentColor
                                 ? { color: accentColor }
