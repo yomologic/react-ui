@@ -62,7 +62,7 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
             blur = false,
             position = "static",
             autoHideOnScroll = false,
-            ...props
+            ...htmlProps
         },
         ref
     ) => {
@@ -441,7 +441,7 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                     borderless && "border-0",
                     className
                 )}
-                {...props}
+                {...htmlProps}
             >
                 <div className={containerStyles}>
                     {/* Logo */}
