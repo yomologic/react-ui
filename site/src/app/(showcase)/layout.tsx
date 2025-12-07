@@ -172,7 +172,12 @@ export default function ShowcaseLayout({
             {/* Header with auto-hide on scroll - desktop only, mobile uses Drawer header */}
             <Header
                 autoHideOnScroll={true}
-                className="hidden lg:block left-0 right-64 z-10 bg-(--color-background) border-b border-(--color-border)"
+                className="hidden lg:block left-0 right-64 z-10 backdrop-blur-md backdrop-saturate-150"
+                style={{
+                    backgroundColor: "var(--color-background)",
+                    opacity: 0.9,
+                    borderBottom: "none",
+                }}
             >
                 <div className="px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                     <Link

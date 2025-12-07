@@ -13,6 +13,9 @@ import Image from "next/image";
 import { useState } from "react";
 
 export default function NavPage() {
+    // Example 0: Modern Hero-Integrated Nav
+    const [modernStyle, setModernStyle] = useState<string>("borderless-blur");
+
     // Example 1: Nav Variants
     const [variant1, setVariant1] = useState<string>("primary");
 
@@ -61,6 +64,147 @@ export default function NavPage() {
                         badges, dividers, and responsive mobile menus.
                     </p>
                 </div>
+
+                {/* Example 0: Modern Hero-Integrated Nav */}
+                <Card variant="bordered">
+                    <h3 className="text-h3 font-semibold theme-text mb-4">
+                        Modern Hero-Integrated Nav 🆕
+                    </h3>
+                    <p className="text-small theme-text-muted mb-4">
+                        Borderless navigation that blends seamlessly into hero
+                        sections. Popular on modern websites like Apple, Stripe,
+                        and Linear.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-6">
+                        {/* Left: Display + Controls */}
+                        <div className="flex-1 min-w-0 space-y-4">
+                            <div className="relative rounded-lg overflow-hidden border theme-border">
+                                {/* Simulated Hero Section */}
+                                <div
+                                    className="relative h-80"
+                                    style={{
+                                        background:
+                                            "linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%)",
+                                    }}
+                                >
+                                    {/* Nav overlays hero */}
+                                    <Nav
+                                        items={navItems}
+                                        logo={logoElement}
+                                        actions={actionElements}
+                                        activeId="home"
+                                        borderless={modernStyle.includes(
+                                            "borderless"
+                                        )}
+                                        transparent={modernStyle.includes(
+                                            "transparent"
+                                        )}
+                                        blur={modernStyle.includes("blur")}
+                                        sticky
+                                    />
+
+                                    {/* Hero Content */}
+                                    <div className="flex items-center justify-center h-full px-6">
+                                        <div className="text-center text-white dark:text-white">
+                                            <h1 className="text-5xl font-bold mb-4 drop-shadow-lg">
+                                                Welcome
+                                            </h1>
+                                            <p className="text-xl opacity-90 drop-shadow-md">
+                                                Notice how the nav blends into
+                                                the hero
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <RadioGroup
+                                label="Modern Style"
+                                name="modernStyle"
+                                value={modernStyle}
+                                onChange={setModernStyle}
+                                orientation="vertical"
+                                options={[
+                                    {
+                                        value: "borderless",
+                                        label: "Borderless (clean edge)",
+                                    },
+                                    {
+                                        value: "borderless-blur",
+                                        label: "Borderless + Blur (glassmorphism)",
+                                    },
+                                    {
+                                        value: "borderless-transparent-blur",
+                                        label: "Borderless + Transparent + Blur (Apple-style)",
+                                    },
+                                    {
+                                        value: "default",
+                                        label: "Default (with border)",
+                                    },
+                                ]}
+                            />
+                        </div>
+
+                        {/* Right: Code */}
+                        <div className="flex-1 min-w-0">
+                            <CodeSnippet
+                                language="tsx"
+                                code={
+                                    modernStyle === "borderless"
+                                        ? `// Clean borderless nav
+<Nav
+  items={navItems}
+  logo={<Logo />}
+  actions={<User />}
+  borderless
+  sticky
+/>
+<Hero />
+
+// Nav blends seamlessly into hero`
+                                        : modernStyle === "borderless-blur"
+                                          ? `// Glassmorphism effect
+<Nav
+  items={navItems}
+  logo={<Logo />}
+  actions={<User />}
+  borderless
+  blur
+  sticky
+/>
+<Hero />
+
+// Backdrop blur creates depth`
+                                          : modernStyle ===
+                                              "borderless-transparent-blur"
+                                            ? `// Apple-style transparent nav
+<Nav
+  items={navItems}
+  logo={<Logo />}
+  actions={<User />}
+  borderless
+  transparent
+  blur
+  sticky
+/>
+<Hero />
+
+// Fully see-through with blur`
+                                            : `// Traditional nav (default)
+<Nav
+  items={navItems}
+  logo={<Logo />}
+  actions={<User />}
+  sticky
+/>
+<Hero />
+
+// Border separates nav from hero`
+                                }
+                            />
+                        </div>
+                    </div>
+                </Card>
 
                 {/* Example 1: Nav Variants */}
                 <Card variant="bordered">
@@ -396,6 +540,50 @@ export default function NavPage() {
                                             <td className="p-3 text-sm theme-text-muted">
                                                 Direction for mobile menu
                                                 (dropdown or drawer)
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                                borderless
+                                            </td>
+                                            <td className="p-3 font-mono text-sm theme-text-muted">
+                                                boolean
+                                            </td>
+                                            <td className="p-3 font-mono text-sm theme-text-muted">
+                                                false
+                                            </td>
+                                            <td className="p-3 text-sm theme-text-muted">
+                                                Remove border for seamless hero
+                                                integration 🆕
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                                transparent
+                                            </td>
+                                            <td className="p-3 font-mono text-sm theme-text-muted">
+                                                boolean
+                                            </td>
+                                            <td className="p-3 font-mono text-sm theme-text-muted">
+                                                false
+                                            </td>
+                                            <td className="p-3 text-sm theme-text-muted">
+                                                Make background transparent 🆕
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                                blur
+                                            </td>
+                                            <td className="p-3 font-mono text-sm theme-text-muted">
+                                                boolean
+                                            </td>
+                                            <td className="p-3 font-mono text-sm theme-text-muted">
+                                                false
+                                            </td>
+                                            <td className="p-3 text-sm theme-text-muted">
+                                                Add backdrop blur effect
+                                                (glassmorphism) 🆕
                                             </td>
                                         </tr>
                                         <tr>

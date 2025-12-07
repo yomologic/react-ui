@@ -30,6 +30,12 @@ export interface NavProps extends React.HTMLAttributes<HTMLElement> {
     sticky?: boolean;
     activeId?: string;
     onItemClick?: (item: NavItem) => void;
+    /** Remove bottom border for seamless hero integration */
+    borderless?: boolean;
+    /** Make background transparent */
+    transparent?: boolean;
+    /** Add backdrop blur effect (glassmorphism) */
+    blur?: boolean;
 }
 
 const Nav = React.forwardRef<HTMLElement, NavProps>(
@@ -47,6 +53,9 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
             sticky = false,
             activeId,
             onItemClick,
+            borderless = false,
+            transparent = false,
+            blur = false,
             ...props
         },
         ref
@@ -110,7 +119,12 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
 
         // Base styles using CSS variables
         const baseStyles = cn(
-            "bg-(--color-background)",
+            // Background
+            !transparent && "bg-(--color-background)",
+            transparent && "bg-transparent",
+            // Blur effect (glassmorphism)
+            blur && "backdrop-blur-md bg-(--color-background)/80",
+            // Sticky positioning
             sticky && "sticky top-0 [z-index:var(--z-index-nav)]"
         );
 
@@ -367,7 +381,10 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                 ref={setRefs}
                 className={cn(
                     baseStyles,
-                    "relative border border-(--color-border)",
+                    "relative",
+                    // Border styles
+                    !borderless && "border border-(--color-border)",
+                    borderless && "border-0",
                     className
                 )}
                 {...props}
