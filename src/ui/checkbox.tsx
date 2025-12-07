@@ -176,7 +176,6 @@ export function Checkbox({
                         checked={checked}
                         onChange={handleChange}
                         disabled={disabled}
-                        suppressHydrationWarning
                         className={cn(
                             "rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 transition-all relative z-10",
                             disabled && "cursor-not-allowed"
@@ -219,7 +218,6 @@ export function Checkbox({
                             disabled && "cursor-not-allowed",
                             !disabled && "cursor-pointer"
                         )}
-                        suppressHydrationWarning
                         style={{
                             fontSize:
                                 size === "xs"

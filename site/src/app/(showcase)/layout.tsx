@@ -30,14 +30,19 @@ const navSections: DrawerNavSection[] = [
         title: "Form Components",
         items: [
             {
-                id: "inputs",
-                label: "Inputs",
-                icon: <Type className="w-5 h-5" />,
-            },
-            {
                 id: "checkbox",
                 label: "Checkboxes",
                 icon: <CheckSquare className="w-5 h-5" />,
+            },
+            {
+                id: "form",
+                label: "Form",
+                icon: <Form className="w-5 h-5" />,
+            },
+            {
+                id: "inputs",
+                label: "Inputs",
+                icon: <Type className="w-5 h-5" />,
             },
             {
                 id: "radio",
@@ -53,11 +58,6 @@ const navSections: DrawerNavSection[] = [
                 id: "switch",
                 label: "Switch",
                 icon: <ToggleLeft className="w-5 h-5" />,
-            },
-            {
-                id: "form",
-                label: "Form",
-                icon: <Form className="w-5 h-5" />,
             },
         ],
     },
@@ -125,6 +125,11 @@ const navSections: DrawerNavSection[] = [
         title: "Layout",
         items: [
             {
+                id: "drawer",
+                label: "Drawer",
+                icon: <PanelLeft className="w-5 h-5" />,
+            },
+            {
                 id: "layout",
                 label: "Layout",
                 icon: <Layout className="w-5 h-5" />,
@@ -133,11 +138,6 @@ const navSections: DrawerNavSection[] = [
                 id: "nav",
                 label: "Navigation",
                 icon: <MenuIcon className="w-5 h-5" />,
-            },
-            {
-                id: "drawer",
-                label: "Drawer",
-                icon: <PanelLeft className="w-5 h-5" />,
             },
         ],
     },
@@ -152,7 +152,7 @@ export default function ShowcaseLayout({
     const router = useRouter();
 
     // Extract the current section from pathname
-    const currentSection = pathname.split("/").pop() || "buttons";
+    const currentSection = pathname.split("/").pop() || "checkbox";
 
     const handleSectionChange = (sectionId: string) => {
         router.push(`/components/${sectionId}`);

@@ -366,28 +366,20 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             <div
                 className={cn("flex flex-col", fullWidth && "w-full")}
                 style={{ marginBottom: "var(--form-control-spacing)" }}
-                suppressHydrationWarning
             >
                 {shouldRenderLabel && (
                     <label
                         htmlFor={inputId}
                         className="block text-small font-semibold text-(--color-muted-foreground) mb-1"
-                        suppressHydrationWarning
                     >
                         {label}
                         {isRequired && <span className="ml-1">*</span>}
                     </label>
                 )}
 
-                <div
-                    className="relative *:data-lastpass-icon-root:hidden"
-                    suppressHydrationWarning
-                >
+                <div className="relative">
                     {leftIcon && (
-                        <div
-                            className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-(--color-placeholder)"
-                            suppressHydrationWarning
-                        >
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-(--color-placeholder)">
                             {leftIcon}
                         </div>
                     )}
@@ -420,7 +412,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                                   ? `${inputId}-helper`
                                   : undefined
                         }
-                        suppressHydrationWarning
                         className={cn(
                             "w-full px-3 py-2 border rounded-md transition-colors",
                             "text-(--color-muted-foreground) placeholder-gray-400",
@@ -437,22 +428,18 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     />
 
                     {rightIcon && (
-                        <div
-                            className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-(--color-placeholder)"
-                            suppressHydrationWarning
-                        >
+                        <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-(--color-placeholder)">
                             {rightIcon}
                         </div>
                     )}
                 </div>
 
-                <div className="h-5 mt-1.5" suppressHydrationWarning>
+                <div className="h-5 mt-1.5">
                     {shouldRenderError && inputError && (
                         <p
                             className="text-small text-error"
                             id={`${inputId}-error`}
                             role="alert"
-                            suppressHydrationWarning
                         >
                             {inputError}
                         </p>
@@ -462,7 +449,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                         <p
                             className="text-small text-(--color-muted-foreground)"
                             id={`${inputId}-helper`}
-                            suppressHydrationWarning
                         >
                             {helperText}
                         </p>

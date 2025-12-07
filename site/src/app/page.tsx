@@ -42,7 +42,7 @@ export default function HomePage() {
                         components with TypeScript and full theme control.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                        <Link href="/components/buttons">
+                        <Link href="/components/checkbox">
                             <Button size="lg" className="group">
                                 Explore Components
                                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -288,7 +288,7 @@ export default function HomePage() {
                         Yomologic UI
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Link href="/components/buttons">
+                        <Link href="/components/checkbox">
                             <Button size="lg">Start Exploring</Button>
                         </Link>
                         <Link
