@@ -21,12 +21,13 @@ import { useState } from "react";
 export default function CardsPage() {
     // Example 1: Variants
     const [variantControl, setVariantControl] = useState<string>("elevated");
+    const [accentColor, setAccentColor] = useState<string>("#19bfb7");
 
     // Example 2: Card with Header and Footer
     const [paddingControl, setPaddingControl] = useState<string>("md");
 
     // Example 3: Card with Media
-    // No state needed
+    const [actionsPosition, setActionsPosition] = useState<string>("left");
 
     // Example 4: Clickable Card
     // No state needed
@@ -53,13 +54,19 @@ export default function CardsPage() {
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1 min-w-0">
                                     <div className="space-y-4">
-                                        <div className="p-6 theme-surface rounded-lg border theme-border">
+                                        <div className="p-6 theme-surface rounded-lg border theme-border group">
                                             <Card
                                                 variant={
                                                     variantControl as
                                                         | "default"
                                                         | "bordered"
                                                         | "elevated"
+                                                        | "accent"
+                                                }
+                                                accentColor={
+                                                    variantControl === "accent"
+                                                        ? accentColor
+                                                        : undefined
                                                 }
                                                 hoverable
                                             >
@@ -99,13 +106,17 @@ export default function CardsPage() {
                                                     value: "elevated",
                                                     label: "Elevated",
                                                 },
+                                                {
+                                                    value: "accent",
+                                                    label: "Accent",
+                                                },
                                             ]}
                                         />
                                     </div>
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <CodeSnippet
-                                        code={`<Card${variantControl !== "default" ? ` variant="${variantControl}"` : ""} hoverable>
+                                        code={`<Card${variantControl !== "default" ? ` variant="${variantControl}"` : ""}${variantControl === "accent" ? ` accentColor="${accentColor}"` : ""} hoverable>
   <CardHeader>
     <CardTitle>Card Title</CardTitle>
     <CardDescription>
@@ -163,7 +174,7 @@ export default function CardsPage() {
                                                     </p>
                                                 </CardContent>
                                                 <CardFooter>
-                                                    <button className="px-4 py-2 bg-[var(--color-primary)] text-white rounded-md text-sm hover:bg-[var(--color-primary-hover)]">
+                                                    <button className="px-4 py-2 bg-(--color-primary) text-white rounded-md text-sm hover:bg-(--color-primary-hover)">
                                                         Action
                                                     </button>
                                                 </CardFooter>
@@ -220,56 +231,92 @@ export default function CardsPage() {
                         <div className="space-y-4">
                             <p className="text-small theme-text-muted">
                                 CardMedia displays images with proper aspect
-                                ratios. CardActions provides action buttons.
+                                ratios. CardActions provides action buttons with
+                                configurable positioning.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-6">
                                 <div className="flex-1 min-w-0">
-                                    <div className="p-6 theme-surface rounded-lg border theme-border">
-                                        <Card
-                                            variant="elevated"
-                                            className="max-w-sm"
-                                        >
-                                            <CardMedia
-                                                component="img"
-                                                image="/yomologic-logo-symbol.svg"
-                                                alt="Yomologic logo"
-                                                aspectRatio="16/9"
-                                                className="theme-bg p-8"
-                                            />
-                                            <CardContent>
-                                                <h3 className="font-semibold theme-text mb-2">
-                                                    Featured Content
-                                                </h3>
-                                                <p className="text-small theme-text-muted">
-                                                    CardMedia displays images
-                                                    with proper aspect ratios.
-                                                </p>
-                                            </CardContent>
-                                            <CardActions>
-                                                <button className="px-3 py-1.5 text-sm text-[var(--color-primary)] hover:bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)] rounded-md">
-                                                    Share
-                                                </button>
-                                                <button className="px-3 py-1.5 text-sm text-[var(--color-primary)] hover:bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)] rounded-md">
-                                                    Learn More
-                                                </button>
-                                            </CardActions>
-                                        </Card>
+                                    <div className="space-y-4">
+                                        <div className="p-6 theme-surface rounded-lg border theme-border">
+                                            <Card
+                                                variant="elevated"
+                                                padding="none"
+                                                className="max-w-sm"
+                                            >
+                                                <div className="theme-bg p-8">
+                                                    <CardMedia
+                                                        component="img"
+                                                        image="/yomologic-logo-symbol.svg"
+                                                        alt="Yomologic logo"
+                                                        aspectRatio="16/9"
+                                                        objectFit="contain"
+                                                    />
+                                                </div>
+                                                <CardContent className="p-4">
+                                                    <h3 className="font-semibold theme-text mb-2">
+                                                        Featured Content
+                                                    </h3>
+                                                    <p className="text-small theme-text-muted">
+                                                        CardMedia displays
+                                                        images with proper
+                                                        aspect ratios.
+                                                    </p>
+                                                </CardContent>
+                                                <CardActions
+                                                    position={
+                                                        actionsPosition as
+                                                            | "left"
+                                                            | "center"
+                                                            | "right"
+                                                    }
+                                                >
+                                                    <button className="px-3 py-1.5 text-sm text-(--color-primary) hover:bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)] rounded-md">
+                                                        Share
+                                                    </button>
+                                                    <button className="px-3 py-1.5 text-sm text-(--color-primary) hover:bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)] rounded-md">
+                                                        Learn More
+                                                    </button>
+                                                </CardActions>
+                                            </Card>
+                                        </div>
+                                        <RadioGroup
+                                            label="Actions Position"
+                                            name="actions-position"
+                                            value={actionsPosition}
+                                            onChange={setActionsPosition}
+                                            orientation="horizontal"
+                                            options={[
+                                                {
+                                                    value: "left",
+                                                    label: "Left",
+                                                },
+                                                {
+                                                    value: "center",
+                                                    label: "Center",
+                                                },
+                                                {
+                                                    value: "right",
+                                                    label: "Right",
+                                                },
+                                            ]}
+                                        />
                                     </div>
                                 </div>
                                 <div className="flex-1 min-w-0">
                                     <CodeSnippet
-                                        code={`<Card variant="elevated">
+                                        code={`<Card variant="elevated" padding="none">
   <CardMedia
-    component="next-image"
-    image="/path/to/image.jpg"
-    alt="Description"
+    component="img"
+    image="/yomologic-logo-symbol.svg"
+    alt="Yomologic logo"
     aspectRatio="16/9"
+    objectFit="contain"
   />
-  <CardContent>
-    <h3>Title</h3>
-    <p>Description...</p>
+  <CardContent className="p-4">
+    <h3>Featured Content</h3>
+    <p>CardMedia displays images...</p>
   </CardContent>
-  <CardActions>
+  <CardActions${actionsPosition !== "left" ? ` position="${actionsPosition}"` : ""}>
     <button>Share</button>
     <button>Learn More</button>
   </CardActions>
@@ -304,7 +351,7 @@ export default function CardsPage() {
                                                 }
                                             >
                                                 <CardHeader>
-                                                    <div className="w-12 h-12 rounded-lg [background-color:var(--card-icon-purple-bg)] [color:var(--card-icon-purple-text)] flex items-center justify-center transition-colors group-hover:[background-color:var(--card-icon-purple-bg-hover)]">
+                                                    <div className="w-12 h-12 rounded-lg bg-(--card-icon-purple-bg) text-(--card-icon-purple-text) flex items-center justify-center transition-colors group-hover:bg-(--card-icon-purple-bg-hover)">
                                                         <Zap className="w-6 h-6" />
                                                     </div>
                                                     <CardTitle>
@@ -384,7 +431,7 @@ export default function CardsPage() {
                             </thead>
                             <tbody className="theme-bg divide-y divide-gray-200">
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-(--color-primary)">
                                         variant
                                     </td>
                                     <td className="px-6 py-4 text-sm theme-text-muted font-mono">
@@ -400,7 +447,7 @@ export default function CardsPage() {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-(--color-primary)">
                                         padding
                                     </td>
                                     <td className="px-6 py-4 text-sm theme-text-muted font-mono">
@@ -415,7 +462,7 @@ export default function CardsPage() {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-(--color-primary)">
                                         hoverable
                                     </td>
                                     <td className="px-6 py-4 text-sm theme-text-muted font-mono">
@@ -429,7 +476,7 @@ export default function CardsPage() {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-(--color-primary)">
                                         children
                                     </td>
                                     <td className="px-6 py-4 text-sm theme-text-muted font-mono">
@@ -443,7 +490,7 @@ export default function CardsPage() {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-(--color-primary)">
                                         className
                                     </td>
                                     <td className="px-6 py-4 text-sm theme-text-muted font-mono">
@@ -483,7 +530,7 @@ export default function CardsPage() {
                                 </thead>
                                 <tbody className="theme-bg divide-y divide-gray-200">
                                     <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-(--color-primary)">
                                             CardHeader
                                         </td>
                                         <td className="px-6 py-4 text-sm theme-text-muted">
@@ -495,7 +542,7 @@ export default function CardsPage() {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-(--color-primary)">
                                             CardTitle
                                         </td>
                                         <td className="px-6 py-4 text-sm theme-text-muted">
@@ -507,7 +554,7 @@ export default function CardsPage() {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-(--color-primary)">
                                             CardDescription
                                         </td>
                                         <td className="px-6 py-4 text-sm theme-text-muted">
@@ -519,7 +566,7 @@ export default function CardsPage() {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-(--color-primary)">
                                             CardContent
                                         </td>
                                         <td className="px-6 py-4 text-sm theme-text-muted">
@@ -530,7 +577,7 @@ export default function CardsPage() {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-(--color-primary)">
                                             CardFooter
                                         </td>
                                         <td className="px-6 py-4 text-sm theme-text-muted">
@@ -542,7 +589,7 @@ export default function CardsPage() {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-(--color-primary)">
                                             CardMedia
                                         </td>
                                         <td className="px-6 py-4 text-sm theme-text-muted">
@@ -554,7 +601,7 @@ export default function CardsPage() {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-(--color-primary)">
                                             CardActions
                                         </td>
                                         <td className="px-6 py-4 text-sm theme-text-muted">
@@ -566,7 +613,7 @@ export default function CardsPage() {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-[var(--color-primary)]">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-(--color-primary)">
                                             CardActionArea
                                         </td>
                                         <td className="px-6 py-4 text-sm theme-text-muted">

@@ -2,9 +2,10 @@ import React from "react";
 import { cn } from "../lib/utils";
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-    variant?: "default" | "bordered" | "elevated";
+    variant?: "default" | "bordered" | "elevated" | "accent";
     padding?: "none" | "sm" | "md" | "lg";
     hoverable?: boolean;
+    accentColor?: string;
 }
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
@@ -14,6 +15,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
             variant = "default",
             padding = "md",
             hoverable = false,
+            accentColor,
             children,
             ...props
         },
@@ -25,6 +27,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
             default: "border border-(--color-border)",
             bordered: "border-2 border-(--color-border)",
             elevated: "shadow-md",
+            accent: "border border-(--color-border) hover:border-(--color-primary) transition-all duration-300 relative overflow-hidden",
         };
 
         const paddings = {
@@ -48,8 +51,25 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
                     hoverStyles,
                     className
                 )}
+                style={
+                    variant === "accent" && accentColor
+                        ? ({
+                              "--card-accent-color": accentColor,
+                          } as React.CSSProperties)
+                        : undefined
+                }
                 {...props}
             >
+                {variant === "accent" && (
+                    <div
+                        className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-current to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                        style={
+                            accentColor
+                                ? { color: accentColor }
+                                : { color: "var(--color-primary)" }
+                        }
+                    />
+                )}
                 {children}
             </div>
         );
@@ -123,6 +143,7 @@ export interface CardMediaProps extends React.HTMLAttributes<HTMLDivElement> {
     component?: "img" | "video" | "div";
     aspectRatio?: "16/9" | "4/3" | "1/1" | "21/9" | string;
     alt?: string;
+    objectFit?: "cover" | "contain" | "fill" | "none" | "scale-down";
 }
 
 const CardMedia = React.forwardRef<HTMLDivElement, CardMediaProps>(
@@ -134,6 +155,7 @@ const CardMedia = React.forwardRef<HTMLDivElement, CardMediaProps>(
             component = "div",
             aspectRatio = "16/9",
             alt = "",
+            objectFit = "cover",
             style,
             ...props
         },
@@ -144,13 +166,24 @@ const CardMedia = React.forwardRef<HTMLDivElement, CardMediaProps>(
             ...style,
         };
 
+        const objectFitClass =
+            objectFit === "cover"
+                ? "object-cover"
+                : objectFit === "contain"
+                  ? "object-contain"
+                  : objectFit === "fill"
+                    ? "object-fill"
+                    : objectFit === "none"
+                      ? "object-none"
+                      : "object-scale-down";
+
         if (component === "img" && image) {
             return (
                 <img
                     ref={ref as React.Ref<HTMLImageElement>}
                     src={image}
                     alt={alt}
-                    className={cn("w-full object-cover", className)}
+                    className={cn("w-full h-full", objectFitClass, className)}
                     style={aspectRatioStyle}
                     {...(props as React.ImgHTMLAttributes<HTMLImageElement>)}
                 />
@@ -162,7 +195,7 @@ const CardMedia = React.forwardRef<HTMLDivElement, CardMediaProps>(
                 <video
                     ref={ref as React.Ref<HTMLVideoElement>}
                     src={video}
-                    className={cn("w-full object-cover", className)}
+                    className={cn("w-full", objectFitClass, className)}
                     style={aspectRatioStyle}
                     {...(props as React.VideoHTMLAttributes<HTMLVideoElement>)}
                 />
@@ -189,20 +222,39 @@ CardMedia.displayName = "CardMedia";
 
 export interface CardActionsProps extends React.HTMLAttributes<HTMLDivElement> {
     disableSpacing?: boolean;
+    position?: "left" | "center" | "right";
 }
 
 const CardActions = React.forwardRef<HTMLDivElement, CardActionsProps>(
-    ({ className, disableSpacing = false, ...props }, ref) => (
-        <div
-            ref={ref}
-            className={cn(
-                "flex items-center",
-                !disableSpacing && "gap-2 p-4",
-                className
-            )}
-            {...props}
-        />
-    )
+    (
+        { className, disableSpacing = false, position = "left", ...props },
+        ref
+    ) => {
+        const justifyContent = {
+            left: "justify-start",
+            center: "justify-center",
+            right: "justify-end",
+        }[position];
+
+        const padding = {
+            left: "pl-4 pr-4 py-4",
+            center: "px-4 py-4",
+            right: "pl-4 pr-4 py-4",
+        }[position];
+
+        return (
+            <div
+                ref={ref}
+                className={cn(
+                    "flex items-center",
+                    justifyContent,
+                    !disableSpacing && `gap-2 ${padding}`,
+                    className
+                )}
+                {...props}
+            />
+        );
+    }
 );
 CardActions.displayName = "CardActions";
 
