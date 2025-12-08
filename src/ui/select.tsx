@@ -98,6 +98,7 @@ export function Select({
     const form = useForm();
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const triggerRef = useRef<HTMLButtonElement>(null);
     const [validationError, _setValidationError] = useState<
         string | undefined
     >();
@@ -201,6 +202,8 @@ export function Select({
             onChange?.(optionValue);
         }
         setIsOpen(false);
+        // Refocus the trigger button to maintain focus
+        setTimeout(() => triggerRef.current?.focus(), 0);
     };
 
     const handleClear = async (e: React.MouseEvent) => {
@@ -343,6 +346,7 @@ export function Select({
             <div ref={dropdownRef} className="relative">
                 {/* Trigger Button */}
                 <button
+                    ref={triggerRef}
                     type="button"
                     onClick={() => !disabled && setIsOpen(!isOpen)}
                     onKeyDown={handleKeyDown}
@@ -353,15 +357,16 @@ export function Select({
             } text-left bg-(--color-background) border rounded-(--dropdown-radius)
             flex items-center justify-between
             transition-all duration-200
+            outline-none
             ${
                 displayError
-                    ? "border-error focus:ring-2 focus:ring-error focus:border-error"
-                    : "border-(--color-border) focus:ring-2 focus:ring-[color-mix(in_srgb,var(--color-primary)_30%,transparent)] focus:border-(--color-primary)"
+                    ? "border-error focus:ring-2 focus:ring-error focus:border-error focus-visible:ring-2 focus-visible:ring-error focus-visible:border-error"
+                    : "border-(--color-border) focus:ring-2 focus:ring-(--color-primary)/30 focus:border-(--color-primary) focus-visible:ring-2 focus-visible:ring-(--color-primary)/30 focus-visible:border-(--color-primary)"
             }
             ${
                 disabled
                     ? "bg-(--color-muted) cursor-not-allowed opacity-60"
-                    : "hover:border-(--color-border)"
+                    : "hover:border-(--color-primary)"
             }
             ${!value ? "text-(--color-placeholder)" : "text-(--color-foreground)"}
           `}
@@ -413,6 +418,8 @@ export function Select({
                                         className={`
                         w-full ${optionSizeStyles[size]} text-left
                         transition-colors duration-150
+                        outline-none
+                        focus-visible:bg-(--color-muted) focus-visible:text-(--color-foreground)
                         ${
                             !value || value === ""
                                 ? "bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)] text-(--color-primary) font-medium"
@@ -440,6 +447,8 @@ export function Select({
                                             className={`
                         w-full ${optionSizeStyles[size]} text-left
                         transition-colors duration-150
+                        outline-none
+                        focus-visible:bg-(--color-muted) focus-visible:text-(--color-foreground)
                         ${
                             option.value === value
                                 ? "bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)] text-(--color-primary) font-medium"

@@ -349,11 +349,11 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
                         className={cn(
                             "w-full px-3 py-2 border rounded-md transition-colors",
                             "text-(--color-muted-foreground) placeholder-gray-400",
-                            "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                            "focus:outline-none",
                             "disabled:bg-(--color-muted) disabled:cursor-not-allowed disabled:text-(--color-muted-foreground)",
                             textareaError
-                                ? "border-error focus:ring-error"
-                                : "border-(--color-border)",
+                                ? "border-error focus:ring-2 focus:ring-error focus:border-error active:border-error"
+                                : "border-(--color-border) focus:ring-2 focus:ring-(--color-primary)/30 focus:border-(--color-primary) active:border-(--color-primary)",
                             resizeClasses[resize],
                             autoResize && "overflow-hidden",
                             !autoResize && "overflow-auto",

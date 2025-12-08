@@ -156,10 +156,11 @@ export function NativeSelect({
                     transition-all duration-200
                     appearance-none
                     cursor-pointer
+                    outline-none
                     ${
                         displayError
-                            ? "border-error focus:ring-2 focus:ring-error focus:border-error"
-                            : "border-(--color-border) focus:ring-2 focus:ring-[color-mix(in_srgb,var(--color-primary)_30%,transparent)] focus:border-(--color-primary)"
+                            ? "border-error focus:border-error active:border-error"
+                            : "border-(--color-border) focus:border-(--color-primary) active:border-(--color-primary)"
                     }
                     ${
                         disabled
