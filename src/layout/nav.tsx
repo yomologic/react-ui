@@ -74,7 +74,7 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
         const mobileMenuRef = useRef<HTMLDivElement>(null);
         const [navElement, setNavElement] = useState<HTMLElement | null>(null);
         const [isNavVisible, setIsNavVisible] = useState(true);
-        const [lastScrollY, setLastScrollY] = useState(0);
+        const lastScrollYRef = useRef(0);
 
         // Auto-hide nav on scroll
         useEffect(() => {
@@ -89,20 +89,23 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                 // Show nav when at top
                 if (currentScrollY < 10) {
                     setIsNavVisible(true);
+                    lastScrollYRef.current = currentScrollY;
+                    return;
                 }
+
                 // Hide on scroll down, show on scroll up
-                else if (currentScrollY > lastScrollY) {
+                if (currentScrollY > lastScrollYRef.current) {
                     setIsNavVisible(false);
-                } else {
+                } else if (currentScrollY < lastScrollYRef.current) {
                     setIsNavVisible(true);
                 }
 
-                setLastScrollY(currentScrollY);
+                lastScrollYRef.current = currentScrollY;
             };
 
             window.addEventListener("scroll", handleScroll, { passive: true });
             return () => window.removeEventListener("scroll", handleScroll);
-        }, [lastScrollY, autoHideOnScroll, position]);
+        }, [autoHideOnScroll, position]);
 
         // Close dropdown when clicking outside
         useEffect(() => {
@@ -435,7 +438,6 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
                 ref={setRefs}
                 className={cn(
                     baseStyles,
-                    "relative",
                     // Border styles
                     !borderless && "border border-(--color-border)",
                     borderless && "border-0",
@@ -452,7 +454,7 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
 
                     {/* Actions (right side) */}
                     {actions && (
-                        <div className="shrink-0 flex items-center gap-2">
+                        <div className="shrink-0 flex items-center gap-2 ml-auto">
                             {actions}
                         </div>
                     )}

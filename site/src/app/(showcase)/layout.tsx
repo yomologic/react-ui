@@ -176,7 +176,7 @@ export default function ShowcaseLayout({
                     items={[]}
                     position="fixed"
                     autoHideOnScroll={true}
-                    className="hidden lg:block"
+                    className="hidden lg:block left-0 lg:right-64 right-0"
                     blur={true}
                     borderless={true}
                     logo={
