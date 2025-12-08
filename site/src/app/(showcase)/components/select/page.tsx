@@ -2,6 +2,7 @@
 
 import {
     Select,
+    NativeSelect,
     Card,
     RadioGroup,
     Checkbox,
@@ -38,7 +39,7 @@ export default function SelectPage() {
     return (
         <SectionLayout>
             {/* ========================================
-                SECTION 1: COMPONENT EXAMPLES
+                SECTION 1: USAGE EXAMPLES
             ======================================== */}
             <section>
                 <h2 className="text-h2 font-semibold theme-text mb-4">
@@ -266,6 +267,66 @@ export default function SelectPage() {
   onChange={setSelected}
 />`
                                         }
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+
+                    {/* Example 4: NativeSelect */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
+                            NativeSelect (Native HTML)
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-small theme-text-muted">
+                                For simple forms, use NativeSelect which wraps
+                                the native HTML select element. Better for
+                                mobile (native OS picker) and accessibility.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1 min-w-0">
+                                    <div className="space-y-4">
+                                        <div className="p-6 theme-surface rounded-lg border theme-border">
+                                            <NativeSelect
+                                                label="Country"
+                                                value={selected3}
+                                                onChange={setSelected3}
+                                                helperText="Select your country"
+                                            >
+                                                <option value="">
+                                                    Select a country
+                                                </option>
+                                                <option value="us">
+                                                    United States
+                                                </option>
+                                                <option value="ca">
+                                                    Canada
+                                                </option>
+                                                <option value="uk">
+                                                    United Kingdom
+                                                </option>
+                                                <option value="au">
+                                                    Australia
+                                                </option>
+                                            </NativeSelect>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <CodeSnippet
+                                        code={`<NativeSelect
+  label="Country"
+  value={country}
+  onChange={setCountry}
+  helperText="Select your country"
+>
+  <option value="">Select a country</option>
+  <option value="us">United States</option>
+  <option value="ca">Canada</option>
+  <option value="uk">United Kingdom</option>
+</NativeSelect>`}
+                                        language="tsx"
                                     />
                                 </div>
                             </div>

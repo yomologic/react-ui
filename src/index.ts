@@ -19,6 +19,8 @@ export { Checkbox, CheckboxGroup } from "./ui/checkbox";
 export { RadioGroup } from "./ui/radio";
 export { Select } from "./ui/select";
 export type { SelectOption, SelectProps } from "./ui/select";
+export { NativeSelect } from "./ui/native-select";
+export type { NativeSelectProps } from "./ui/native-select";
 export { Form, useForm, useFormContext } from "./ui/form";
 export type {
     FormState,

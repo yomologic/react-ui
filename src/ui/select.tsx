@@ -101,6 +101,9 @@ export function Select({
     const [validationError, _setValidationError] = useState<
         string | undefined
     >();
+    const [focusedIndex, setFocusedIndex] = useState<number>(-1);
+    const [searchString, setSearchString] = useState<string>("");
+    const searchTimeoutRef = useRef<NodeJS.Timeout>();
 
     // Determine value and error from Form context or props
     let value: string | number | undefined;
@@ -218,11 +221,95 @@ export function Select({
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (disabled) return;
 
+        // Open/close dropdown
         if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
-            setIsOpen(!isOpen);
+            if (!isOpen) {
+                setIsOpen(true);
+                const currentIndex = options.findIndex(
+                    (opt) => opt.value === value
+                );
+                setFocusedIndex(currentIndex);
+            } else if (focusedIndex >= 0 && focusedIndex < options.length) {
+                handleSelect(options[focusedIndex].value);
+            }
         } else if (e.key === "Escape") {
             setIsOpen(false);
+            setFocusedIndex(-1);
+        }
+        // Arrow navigation
+        else if (e.key === "ArrowDown") {
+            e.preventDefault();
+            if (!isOpen) {
+                // When closed, navigate to next option and change value (like native select)
+                const currentIndex = options.findIndex(
+                    (opt) => opt.value === value
+                );
+                const nextIndex =
+                    currentIndex < options.length - 1
+                        ? currentIndex + 1
+                        : currentIndex;
+                if (nextIndex !== currentIndex && options[nextIndex]) {
+                    handleSelect(options[nextIndex].value);
+                } else if (currentIndex === -1 && options.length > 0) {
+                    // No value selected, select first option
+                    handleSelect(options[0].value);
+                }
+            } else {
+                // When open, just navigate focus
+                setFocusedIndex((prev) =>
+                    prev < options.length - 1 ? prev + 1 : prev
+                );
+            }
+        } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            if (!isOpen) {
+                // When closed, navigate to previous option and change value (like native select)
+                const currentIndex = options.findIndex(
+                    (opt) => opt.value === value
+                );
+                const prevIndex =
+                    currentIndex > 0 ? currentIndex - 1 : currentIndex;
+                if (prevIndex !== currentIndex && options[prevIndex]) {
+                    handleSelect(options[prevIndex].value);
+                }
+            } else {
+                // When open, just navigate focus
+                setFocusedIndex((prev) => (prev > 0 ? prev - 1 : 0));
+            }
+        }
+        // Type-to-search
+        else if (e.key.length === 1 && /[a-z0-9]/i.test(e.key)) {
+            e.preventDefault();
+
+            // Clear previous search timeout
+            if (searchTimeoutRef.current) {
+                clearTimeout(searchTimeoutRef.current);
+            }
+
+            // Append to search string
+            const newSearchString = searchString + e.key.toLowerCase();
+            setSearchString(newSearchString);
+
+            // Find matching option
+            const matchIndex = options.findIndex((opt) =>
+                opt.label.toLowerCase().startsWith(newSearchString)
+            );
+
+            if (matchIndex >= 0) {
+                if (!isOpen) {
+                    // When closed, select the matching option (like native select)
+                    handleSelect(options[matchIndex].value);
+                } else {
+                    // When open, just focus it
+                    setFocusedIndex(matchIndex);
+                }
+            }
+
+            // Clear search string after 1 second
+            searchTimeoutRef.current = setTimeout(() => {
+                setSearchString("");
+            }, 1000);
         }
     };
 
@@ -240,6 +327,16 @@ export function Select({
                     {label}
                     {required && <span className="ml-1">*</span>}
                 </label>
+            )}
+
+            {/* Hidden input for form submission */}
+            {name && (
+                <input
+                    type="hidden"
+                    name={name}
+                    value={value ?? ""}
+                    required={required}
+                />
             )}
 
             {/* Dropdown Container */}
@@ -328,7 +425,7 @@ export function Select({
                                         {placeholder}
                                     </button>
                                 </li>
-                                {options.map((option) => (
+                                {options.map((option, index) => (
                                     <li key={option.value}>
                                         <button
                                             type="button"
@@ -337,13 +434,18 @@ export function Select({
                                                 handleSelect(option.value)
                                             }
                                             disabled={option.disabled}
+                                            onMouseEnter={() =>
+                                                setFocusedIndex(index)
+                                            }
                                             className={`
                         w-full ${optionSizeStyles[size]} text-left
                         transition-colors duration-150
                         ${
                             option.value === value
                                 ? "bg-[color-mix(in_srgb,var(--color-primary)_10%,transparent)] text-(--color-primary) font-medium"
-                                : "text-(--color-foreground) hover:bg-(--color-muted)"
+                                : index === focusedIndex
+                                  ? "bg-(--color-muted) text-(--color-foreground)"
+                                  : "text-(--color-foreground) hover:bg-(--color-muted)"
                         }
                         ${
                             option.disabled
