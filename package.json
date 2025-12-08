@@ -37,7 +37,10 @@
         "format:check": "prettier --check \"**/*.{ts,tsx,json,md}\"",
         "type-check": "tsc --noEmit",
         "prepublishOnly": "yarn build",
-        "prepare": "husky"
+        "prepare": "husky",
+        "release:patch": "npm version patch && git push origin master --tags",
+        "release:minor": "npm version minor && git push origin master --tags",
+        "release:major": "npm version major && git push origin master --tags"
     },
     "lint-staged": {
         "*.{ts,tsx,json,md}": [
