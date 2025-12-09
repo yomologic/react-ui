@@ -69,6 +69,10 @@
   --font-medium: 500;
   --font-semibold: 600;
   --font-bold: 700;
+  
+  /* Font Families - Users can override these */
+  --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --font-family-input: var(--font-family-base);
 
   /* Component: Button */
   --button-padding-xs-x: 0.5rem;
@@ -302,6 +306,38 @@
 
   /* Component: Rating */
   --star-size: 1.5rem;
+}
+
+/* Apply font-family to form inputs */
+input,
+textarea,
+select {
+  font-family: var(--font-family-input);
+}
+
+/* Custom scrollbar for textarea with primary color */
+textarea::-webkit-scrollbar {
+  width: 8px;
+}
+
+textarea::-webkit-scrollbar-track {
+  background: var(--color-surface);
+  border-radius: 4px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 4px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-hover);
+}
+
+/* Firefox scrollbar */
+textarea {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) var(--color-surface);
 }
 
 /* Responsive Typography - Desktop Overrides */
