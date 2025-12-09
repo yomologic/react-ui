@@ -332,6 +332,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
                             (internalRef as any).current = node;
                         }}
                         id={textareaId}
+                        name={name}
                         value={textareaValue}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -348,7 +349,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
                         }
                         className={cn(
                             "w-full px-3 py-2 border rounded-md transition-colors",
-                            "text-(--color-muted-foreground) placeholder-gray-400",
+                            "text-(--color-foreground) placeholder-gray-400",
                             "focus:outline-none",
                             "disabled:bg-(--color-muted) disabled:cursor-not-allowed disabled:text-(--color-muted-foreground)",
                             textareaError
