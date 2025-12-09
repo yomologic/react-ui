@@ -91,3 +91,27 @@ export type { ThemeId } from "./themes";
 
 // Utility functions
 export { cn } from "./lib/utils";
+
+// Validation constants and utilities
+export {
+    EMAIL_REGEX,
+    URL_REGEX,
+    PHONE_REGEX,
+    DATE_REGEX,
+    isValidEmail,
+    isValidDate,
+    isValidUrl,
+    isValidPhone,
+} from "./constants/validation";
+
+// Formatting utilities
+export {
+    formatPhoneUS,
+    formatPhoneIntl,
+    formatCreditCard,
+    formatDate,
+    formatDateTime,
+    getRawValue,
+    applyFormat,
+} from "./lib/formatting";
+export type { FormatType } from "./lib/formatting";

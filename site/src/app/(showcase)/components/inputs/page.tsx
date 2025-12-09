@@ -374,7 +374,144 @@ export default function InputsPage() {
             <Divider className="my-12" />
 
             {/* ========================================
-                SECTION 2: VALIDATION EXAMPLES
+                SECTION 2: INPUT FORMATTING
+            ======================================== */}
+            <section>
+                <h2 className="text-h2 font-semibold theme-text mb-4">
+                    Input Formatting
+                </h2>
+                <div className="space-y-6">
+                    {/* Example 1: Phone Formatting */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
+                            Phone Number Formatting
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-small theme-text-muted">
+                                Automatically format phone numbers as users
+                                type. The input stores raw digits while
+                                displaying formatted text.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border space-y-4">
+                                        <Input
+                                            type="tel"
+                                            format="phone"
+                                            label="US Phone Number"
+                                            placeholder="(123) 456-7890"
+                                            helperText="Formats as (123) 456-7890"
+                                        />
+                                        <Input
+                                            type="tel"
+                                            format="phone-intl"
+                                            label="International Phone"
+                                            placeholder="+1 (123) 456-7890"
+                                            helperText="Formats as +1 (123) 456-7890"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex-1">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<Input
+  type="tel"
+  format="phone"
+  label="US Phone Number"
+  placeholder="(123) 456-7890"
+  helperText="Formats as (123) 456-7890"
+/>
+
+<Input
+  type="tel"
+  format="phone-intl"
+  label="International Phone"
+  placeholder="+1 (123) 456-7890"
+  helperText="Formats as +1 (123) 456-7890"
+/>`}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+
+                    {/* Example 2: Credit Card Formatting */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
+                            Credit Card Formatting
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-small theme-text-muted">
+                                Format credit card numbers with spaces every 4
+                                digits.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border">
+                                        <Input
+                                            format="credit-card"
+                                            label="Card Number"
+                                            placeholder="1234 5678 9012 3456"
+                                            helperText="16-digit card number"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex-1">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<Input
+  format="credit-card"
+  label="Card Number"
+  placeholder="1234 5678 9012 3456"
+  helperText="16-digit card number"
+/>`}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+
+                    {/* Example 3: Date Formatting */}
+                    <Card variant="bordered" padding="lg">
+                        <h3 className="text-h3 font-semibold theme-text mb-3">
+                            Date Formatting
+                        </h3>
+                        <div className="space-y-4">
+                            <p className="text-small theme-text-muted">
+                                Format dates as MM/DD/YYYY while typing.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-6">
+                                <div className="flex-1">
+                                    <div className="p-6 theme-surface rounded-lg border theme-border">
+                                        <Input
+                                            format="date"
+                                            label="Birth Date"
+                                            placeholder="MM/DD/YYYY"
+                                            helperText="Enter as MM/DD/YYYY"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="flex-1">
+                                    <CodeSnippet
+                                        language="tsx"
+                                        code={`<Input
+  format="date"
+  label="Birth Date"
+  placeholder="MM/DD/YYYY"
+  helperText="Enter as MM/DD/YYYY"
+/>`}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+                </div>
+            </section>
+
+            <Divider className="my-12" />
+
+            {/* ========================================
+                SECTION 3: VALIDATION EXAMPLES
             ======================================== */}
             <section>
                 <h2 className="text-h2 font-semibold theme-text mb-4">
@@ -674,6 +811,29 @@ export default function InputsPage() {
                                     <td className="px-6 py-4 text-sm theme-text-muted">
                                         Icon or element displayed on the right
                                         side
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        className="px-6 py-4 whitespace-nowrap text-sm font-mono"
+                                        style={{
+                                            color: "var(--color-primary)",
+                                        }}
+                                    >
+                                        format
+                                    </td>
+                                    <td className="px-6 py-4 text-sm theme-text-muted font-mono">
+                                        &quot;phone&quot; |
+                                        &quot;phone-intl&quot; |
+                                        &quot;credit-card&quot; |
+                                        &quot;date&quot; | function
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm theme-text-muted font-mono">
+                                        undefined
+                                    </td>
+                                    <td className="px-6 py-4 text-sm theme-text-muted">
+                                        Auto-format input value (e.g., phone
+                                        numbers, credit cards)
                                     </td>
                                 </tr>
                                 <tr>

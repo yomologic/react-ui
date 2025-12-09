@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState } from "react";
+import { EMAIL_REGEX } from "../../constants/validation";
 import { useForm, ValidationFunction } from "../form";
 import { useFormControl } from "../form-control";
 
@@ -165,7 +166,7 @@ export function useFormField(options: UseFormFieldOptions): UseFormFieldResult {
 
         if (value) {
             // Email validation (for type="email")
-            if (type === "email" && !value.includes("@")) {
+            if (type === "email" && !EMAIL_REGEX.test(value)) {
                 return (
                     errorMessages?.email || "Please enter a valid email address"
                 );
@@ -258,7 +259,7 @@ export function useFormField(options: UseFormFieldOptions): UseFormFieldResult {
 
                 if (value) {
                     // Type-specific validation
-                    if (type === "email" && !value.includes("@")) {
+                    if (type === "email" && !EMAIL_REGEX.test(value)) {
                         return (
                             errorMessages?.email ||
                             "Please enter a valid email address"

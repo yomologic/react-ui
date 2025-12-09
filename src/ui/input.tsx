@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { applyFormat, FormatType } from "../lib/formatting";
 import { cn } from "../lib/utils";
 import { ValidationFunction } from "./form";
 import { useFormField } from "./hooks/useFormField";
@@ -23,6 +24,8 @@ export interface InputProps extends Omit<
     onValidationError?: (error: string | undefined) => void;
     /** Regex pattern for validation (string or RegExp) */
     pattern?: RegExp | string;
+    /** Format type for auto-formatting input value (phone, credit-card, date, etc.) */
+    format?: FormatType | ((value: string) => string);
     /** Custom error messages for built-in validations */
     errorMessages?: {
         required?: string;
@@ -33,6 +36,7 @@ export interface InputProps extends Omit<
         pattern?: string;
         email?: string;
         url?: string;
+        date?: string;
     };
 }
 
@@ -55,15 +59,46 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             validate,
             onValidationError,
             pattern,
+            format,
             errorMessages,
             ...props
         },
         ref
     ) => {
+        // Internal state for standalone usage
+        const [internalValue, setInternalValue] = React.useState<string>("");
+
+        // Create date validation wrapper if format is 'date'
+        const dateValidate = React.useCallback(
+            async (value: string): Promise<string | undefined> => {
+                // Run custom validation first if provided
+                if (validate) {
+                    const customError = await validate(value);
+                    if (customError) return customError;
+                }
+
+                // If format is date and value is complete, validate it
+                if (format === "date" && value && value.length === 8) {
+                    const { isValidDate } =
+                        await import("../constants/validation");
+                    // Format the raw digits to MM/DD/YYYY for validation
+                    const formatted = `${value.slice(0, 2)}/${value.slice(2, 4)}/${value.slice(4, 8)}`;
+                    if (!isValidDate(formatted)) {
+                        return (
+                            errorMessages?.date || "Please enter a valid date"
+                        );
+                    }
+                }
+
+                return undefined;
+            },
+            [validate, format, errorMessages]
+        );
+
         // Use the custom hook to handle all form field logic
         const {
             fieldId,
-            value: inputValue,
+            value: hookValue,
             error: inputError,
             isDisabled,
             isRequired,
@@ -85,22 +120,105 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             min: props.min,
             max: props.max,
             pattern,
-            validate,
+            validate: format === "date" ? dateValidate : validate,
             onValidationError,
             errorMessages,
             idPrefix: "input",
         });
 
+        // Use hookValue if available (Form context), otherwise use internal state
+        const inputValue = hookValue !== undefined ? hookValue : internalValue;
+
+        // Track cursor position for formatting
+        const [cursorPosition, setCursorPosition] = React.useState<
+            number | null
+        >(null);
+
         // Wrap hook handlers to call external handlers
         const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-            hookHandleChange(e.target.value);
+            const input = e.target;
+            const newValue = input.value;
+            const cursorPos = input.selectionStart || 0;
+
+            if (format && typeof format === "string") {
+                // Get only digits/valid characters from the new value
+                const cleaned = newValue.replace(/\D/g, "");
+
+                // Format the cleaned value
+                const formatted = applyFormat(cleaned, format);
+
+                // Store cleaned value (in Form if available, otherwise internal state)
+                if (hookValue !== undefined) {
+                    hookHandleChange(cleaned);
+                } else {
+                    setInternalValue(cleaned);
+                }
+
+                // Calculate new cursor position
+                // Count how many formatting chars are before cursor in formatted string
+                let formattedPos = 0;
+                let digitCount = 0;
+                const targetDigits = cleaned.slice(
+                    0,
+                    Math.min(cleaned.length, cursorPos)
+                );
+
+                for (
+                    let i = 0;
+                    i < formatted.length && digitCount < targetDigits.length;
+                    i++
+                ) {
+                    if (/\d/.test(formatted[i])) {
+                        digitCount++;
+                    }
+                    formattedPos = i + 1;
+                }
+
+                setCursorPosition(formattedPos);
+            } else {
+                if (hookValue !== undefined) {
+                    hookHandleChange(newValue);
+                } else {
+                    setInternalValue(newValue);
+                }
+            }
+
             onChange?.(e);
         };
 
         const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-            hookHandleBlur(e.target.value);
+            const value = e.target.value;
+            // If formatting is enabled, blur should get the cleaned value
+            const blurValue =
+                format && typeof format === "string"
+                    ? value.replace(/\D/g, "")
+                    : value;
+            hookHandleBlur(blurValue);
             onBlur?.(e);
         };
+
+        // Format the display value if format prop is provided
+        const displayValue = React.useMemo(() => {
+            if (format && inputValue) {
+                if (typeof format === "function") {
+                    return format(inputValue);
+                }
+                // Input value should already be cleaned digits if format is set
+                return applyFormat(inputValue, format);
+            }
+            return inputValue;
+        }, [format, inputValue]);
+
+        // Restore cursor position after formatting
+        React.useEffect(() => {
+            if (cursorPosition !== null && internalRef.current) {
+                internalRef.current.setSelectionRange(
+                    cursorPosition,
+                    cursorPosition
+                );
+                setCursorPosition(null);
+            }
+        }, [cursorPosition, displayValue]);
 
         return (
             <div
@@ -136,7 +254,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                         }}
                         type={type}
                         id={fieldId}
-                        value={inputValue}
+                        value={displayValue}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         disabled={isDisabled}
