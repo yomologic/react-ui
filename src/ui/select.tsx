@@ -360,7 +360,7 @@ export function Select({
             outline-none
             ${
                 displayError
-                    ? "border-error focus:ring-2 focus:ring-error focus:border-error focus-visible:ring-2 focus-visible:ring-error focus-visible:border-error"
+                    ? "border-(--color-error) focus:ring-2 focus:ring-(--color-error) focus:border-(--color-error) focus-visible:ring-2 focus-visible:ring-(--color-error) focus-visible:border-(--color-error)"
                     : "border-(--color-border) focus:ring-2 focus:ring-(--color-primary)/30 focus:border-(--color-primary) focus-visible:ring-2 focus-visible:ring-(--color-primary)/30 focus-visible:border-(--color-primary)"
             }
             ${
@@ -481,7 +481,7 @@ export function Select({
             <div className="h-5 mt-1.5">
                 {(helperText || displayError) && (
                     <p
-                        className={`text-small ${displayError ? "text-error" : "text-(--color-muted-foreground)"}`}
+                        className={`text-small ${displayError ? "text-(--color-error)" : "text-(--color-muted-foreground)"}`}
                     >
                         {displayError || helperText}
                     </p>

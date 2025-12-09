@@ -158,7 +158,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                             "focus:outline-none",
                             "disabled:bg-(--color-muted) disabled:cursor-not-allowed disabled:text-(--color-muted-foreground)",
                             inputError
-                                ? "border-error focus:ring-2 focus:ring-error focus:border-error active:border-error"
+                                ? "border-(--color-error) focus:ring-2 focus:ring-(--color-error) focus:border-(--color-error) active:border-(--color-error)"
                                 : "border-(--color-border) focus:ring-2 focus:ring-(--color-primary)/30 focus:border-(--color-primary) active:border-(--color-primary)",
                             leftIcon && "pl-10",
                             rightIcon && "pr-10",
@@ -177,7 +177,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 <div className="h-5 mt-1.5">
                     {shouldRenderError && inputError && (
                         <p
-                            className="text-small text-error"
+                            className="text-small text-(--color-error)"
                             id={`${fieldId}-error`}
                             role="alert"
                         >

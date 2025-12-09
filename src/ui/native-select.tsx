@@ -138,7 +138,9 @@ export function NativeSelect({
                     style={{ color: "var(--color-muted-foreground)" }}
                 >
                     {label}
-                    {required && <span className="ml-1 text-error">*</span>}
+                    {required && (
+                        <span className="ml-1 text-(--color-error)">*</span>
+                    )}
                 </label>
             )}
 
@@ -159,7 +161,7 @@ export function NativeSelect({
                     outline-none
                     ${
                         displayError
-                            ? "border-error focus:border-error active:border-error"
+                            ? "border-(--color-error) focus:border-(--color-error) active:border-(--color-error)"
                             : "border-(--color-border) focus:border-(--color-primary) active:border-(--color-primary)"
                     }
                     ${
@@ -183,7 +185,7 @@ export function NativeSelect({
             <div className="h-5 mt-1.5">
                 {(helperText || displayError) && (
                     <p
-                        className={`text-small ${displayError ? "text-error" : "text-(--color-muted-foreground)"}`}
+                        className={`text-small ${displayError ? "text-(--color-error)" : "text-(--color-muted-foreground)"}`}
                     >
                         {displayError || helperText}
                     </p>

@@ -506,7 +506,7 @@ export function FormControl({
                             className={cn(
                                 "text-small",
                                 currentError
-                                    ? "text-error"
+                                    ? "text-(--color-error)"
                                     : "text-(--color-muted-foreground)"
                             )}
                             id={`${fieldId}-message`}
@@ -614,7 +614,9 @@ export function FormHelperText({
             <p
                 className={cn(
                     "text-small",
-                    isError ? "text-error" : "text-(--color-muted-foreground)",
+                    isError
+                        ? "text-(--color-error)"
+                        : "text-(--color-muted-foreground)",
                     className
                 )}
                 role={isError ? "alert" : undefined}
