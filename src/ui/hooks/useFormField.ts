@@ -174,6 +174,11 @@ export function useFormField(options: UseFormFieldOptions): UseFormFieldResult {
 
             // URL validation (for type="url")
             if (type === "url") {
+                // Block dangerous protocols (javascript:, data:, etc.)
+                if (/^(javascript|data|vbscript|file|about):/i.test(value)) {
+                    return errorMessages?.url || "Invalid URL protocol";
+                }
+
                 try {
                     new URL(value);
                 } catch {
@@ -267,6 +272,15 @@ export function useFormField(options: UseFormFieldOptions): UseFormFieldResult {
                     }
 
                     if (type === "url") {
+                        // Block dangerous protocols
+                        if (
+                            /^(javascript|data|vbscript|file|about):/i.test(
+                                value
+                            )
+                        ) {
+                            return errorMessages?.url || "Invalid URL protocol";
+                        }
+
                         try {
                             new URL(value);
                         } catch {

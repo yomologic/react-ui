@@ -32,9 +32,16 @@ export const isValidEmail = (email: string): boolean => {
 };
 
 /**
- * Validate URL format
+ * Validate URL format and security
+ * Checks for valid http/https protocol and blocks dangerous protocols
  */
 export const isValidUrl = (url: string): boolean => {
+    // Block dangerous protocols
+    if (/^(javascript|data|vbscript|file|about):/i.test(url)) {
+        return false;
+    }
+
+    // Validate http/https URLs
     return URL_REGEX.test(url);
 };
 
