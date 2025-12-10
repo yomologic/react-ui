@@ -3,11 +3,12 @@
  */
 
 /**
- * RFC 5322 compliant email validation regex (simplified)
+ * Email validation regex
  * Matches standard email formats like: user@example.com
+ * Requires @ symbol, domain name, and TLD (like .com, .org, etc.)
  */
 export const EMAIL_REGEX =
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,}$/;
 
 /**
  * URL validation regex
