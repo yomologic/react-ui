@@ -1,6 +1,6 @@
 {
     "name": "@yomologic/react-ui",
-    "version": "0.6.4",
+    "version": "0.6.5",
     "private": true,
     "workspaces": [
         "site"
@@ -68,7 +68,6 @@
         "@types/react": "^18.3.12",
         "@types/react-dom": "^18.3.1",
         "esbuild-plugin-postcss2": "^0.1.2",
-        "prism-react-renderer": "^2.0.0",
         "eslint": "^9.15.0",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-import": "^2.32.0",
@@ -77,6 +76,7 @@
         "lint-staged": "^16.2.7",
         "postcss": "^8.5.6",
         "prettier": "^3.6.2",
+        "prism-react-renderer": "^2.0.0",
         "tailwindcss": "^4",
         "tsup": "^8.3.5",
         "tsx": "^4.20.6",
