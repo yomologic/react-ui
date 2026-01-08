@@ -223,6 +223,7 @@ export default function NavPage() {
                                                 | "primary"
                                                 | "secondary"
                                                 | "ghost"
+                                                | "underline"
                                         }
                                         activeId="home"
                                     />
@@ -239,6 +240,7 @@ export default function NavPage() {
                                     { value: "primary", label: "Primary" },
                                     { value: "secondary", label: "Secondary" },
                                     { value: "ghost", label: "Ghost" },
+                                    { value: "underline", label: "Underline" },
                                 ]}
                             />
                         </div>

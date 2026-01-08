@@ -20,7 +20,7 @@ export interface NavItem {
 
 export interface NavProps extends React.HTMLAttributes<HTMLElement> {
     items: NavItem[];
-    variant?: "primary" | "secondary" | "ghost";
+    variant?: "primary" | "secondary" | "ghost" | "underline";
     orientation?: "horizontal" | "vertical";
     size?: "xs" | "sm" | "md" | "lg" | "xl";
     mobileBreakpoint?: "sm" | "md" | "lg";
@@ -216,6 +216,8 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
             secondary:
                 "rounded-md hover:bg-(--color-muted) transition-colors duration-150",
             ghost: "rounded-md hover:bg-(--color-primary)/5 transition-colors duration-150",
+            underline:
+                "relative hover:text-(--color-primary) transition-colors duration-150 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-(--color-primary) after:w-0 hover:after:w-full after:transition-all after:duration-300",
         };
 
         const activeItemStyles = {
@@ -224,6 +226,8 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
             secondary:
                 "bg-(--color-muted) text-(--color-foreground) font-semibold",
             ghost: "text-(--color-primary) font-medium",
+            underline:
+                "text-(--color-primary) after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-(--color-primary)",
         };
 
         // Breakpoint classes
