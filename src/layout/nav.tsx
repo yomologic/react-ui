@@ -201,6 +201,15 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
             xl: "px-5 py-3",
         };
 
+        // Mobile touch-friendly padding
+        const mobilePaddingStyles = {
+            xs: "px-3 py-2.5",
+            sm: "px-3 py-3",
+            md: "px-4 py-3",
+            lg: "px-4 py-3.5",
+            xl: "px-5 py-4",
+        };
+
         const fontSizeStyles = {
             xs: "[font-size:var(--nav-font-size-xs)]",
             sm: "[font-size:var(--nav-font-size-sm)]",
@@ -212,22 +221,22 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
         // Variant styles for items
         const variantItemStyles = {
             primary:
-                "rounded-md hover:bg-(--color-primary)/10 hover:text-(--color-primary) transition-colors duration-150",
+                "rounded-md hover:bg-(--color-primary)/10 hover:text-(--color-primary) active:bg-(--color-primary)/20 transition-colors duration-150",
             secondary:
-                "rounded-md hover:bg-(--color-muted) transition-colors duration-150",
-            ghost: "rounded-md hover:bg-(--color-primary)/5 transition-colors duration-150",
+                "rounded-md hover:bg-(--color-muted) active:bg-(--color-muted)/80 transition-colors duration-150",
+            ghost: "rounded-md hover:text-(--color-primary) active:text-(--color-primary) transition-colors duration-150",
             underline:
-                "relative hover:text-(--color-primary) transition-colors duration-150 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-(--color-primary) after:w-0 hover:after:w-full after:transition-all after:duration-300",
+                "relative hover:text-(--color-primary) active:text-(--color-primary) transition-colors duration-150 after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-(--color-primary) after:scale-x-0 hover:after:scale-x-100 active:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center",
         };
 
         const activeItemStyles = {
             primary:
-                "bg-(--color-primary) text-white hover:bg-(--color-primary) hover:text-white",
+                "bg-(--color-primary) text-white hover:bg-(--color-primary) hover:text-white active:bg-(--color-primary)/90",
             secondary:
-                "bg-(--color-muted) text-(--color-foreground) font-semibold",
+                "bg-(--color-muted) text-(--color-foreground) font-semibold active:bg-(--color-muted)/80",
             ghost: "text-(--color-primary) font-medium",
             underline:
-                "text-(--color-primary) after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:bg-(--color-primary)",
+                "text-(--color-primary) after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:scale-x-100 after:bg-(--color-primary)",
         };
 
         // Breakpoint classes
@@ -292,11 +301,12 @@ const Nav = React.forwardRef<HTMLElement, NavProps>(
 
             const itemBaseStyles = cn(
                 "flex items-center [gap:var(--nav-gap)] font-medium text-(--color-foreground) cursor-pointer select-none",
-                itemPaddingStyles[size],
+                isMobile ? mobilePaddingStyles[size] : itemPaddingStyles[size],
                 fontSizeStyles[size],
                 variantItemStyles[variant],
                 isActive && activeItemStyles[variant],
                 orientation === "vertical" && "w-full",
+                isMobile && "w-full",
                 item.disabled && "opacity-50 cursor-not-allowed"
             );
 
