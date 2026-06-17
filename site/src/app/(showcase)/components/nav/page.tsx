@@ -12,9 +12,16 @@ import { BookOpen, Home, Users, User } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
+type ModernStyle =
+    | "borderless"
+    | "borderless-blur"
+    | "borderless-transparent-blur"
+    | "default";
+
 export default function NavPage() {
     // Example 0: Modern Hero-Integrated Nav
-    const [modernStyle, setModernStyle] = useState<string>("borderless-blur");
+    const [modernStyle, setModernStyle] =
+        useState<ModernStyle>("borderless-blur");
 
     // Example 1: Nav Variants
     const [variant1, setVariant1] = useState<string>("primary");
@@ -52,6 +59,40 @@ export default function NavPage() {
     const actionElements = (
         <User className="w-5 h-5 theme-text-muted cursor-pointer hover:theme-text" />
     );
+
+    const modernStyleConfig: Record<
+        ModernStyle,
+        { borderless: boolean; transparent: boolean; blur: boolean }
+    > = {
+        borderless: { borderless: true, transparent: false, blur: false },
+        "borderless-blur": {
+            borderless: true,
+            transparent: false,
+            blur: true,
+        },
+        "borderless-transparent-blur": {
+            borderless: true,
+            transparent: true,
+            blur: true,
+        },
+        default: { borderless: false, transparent: false, blur: false },
+    };
+
+    const modernNavCode = (() => {
+        const config = modernStyleConfig[modernStyle];
+        const props = [
+            "items={navItems}",
+            "logo={<Logo />}",
+            "actions={<User />}",
+        ];
+
+        if (config.borderless) props.push("borderless");
+        if (config.transparent) props.push("transparent");
+        if (config.blur) props.push("blur");
+        props.push("sticky");
+
+        return `<Nav\n  ${props.join("\n  ")}\n/>`;
+    })();
 
     return (
         <SectionLayout>
@@ -93,13 +134,17 @@ export default function NavPage() {
                                         logo={logoElement}
                                         actions={actionElements}
                                         activeId="home"
-                                        borderless={modernStyle.includes(
-                                            "borderless"
-                                        )}
-                                        transparent={modernStyle.includes(
-                                            "transparent"
-                                        )}
-                                        blur={modernStyle.includes("blur")}
+                                        borderless={
+                                            modernStyleConfig[modernStyle]
+                                                .borderless
+                                        }
+                                        transparent={
+                                            modernStyleConfig[modernStyle]
+                                                .transparent
+                                        }
+                                        blur={
+                                            modernStyleConfig[modernStyle].blur
+                                        }
                                         sticky
                                     />
 
@@ -147,61 +192,7 @@ export default function NavPage() {
 
                         {/* Right: Code */}
                         <div className="flex-1 min-w-0">
-                            <CodeSnippet
-                                language="tsx"
-                                code={
-                                    modernStyle === "borderless"
-                                        ? `// Clean borderless nav
-<Nav
-  items={navItems}
-  logo={<Logo />}
-  actions={<User />}
-  borderless
-  sticky
-/>
-<Hero />
-
-// Nav blends seamlessly into hero`
-                                        : modernStyle === "borderless-blur"
-                                          ? `// Glassmorphism effect
-<Nav
-  items={navItems}
-  logo={<Logo />}
-  actions={<User />}
-  borderless
-  blur
-  sticky
-/>
-<Hero />
-
-// Backdrop blur creates depth`
-                                          : modernStyle ===
-                                              "borderless-transparent-blur"
-                                            ? `// Apple-style transparent nav
-<Nav
-  items={navItems}
-  logo={<Logo />}
-  actions={<User />}
-  borderless
-  transparent
-  blur
-  sticky
-/>
-<Hero />
-
-// Fully see-through with blur`
-                                            : `// Traditional nav (default)
-<Nav
-  items={navItems}
-  logo={<Logo />}
-  actions={<User />}
-  sticky
-/>
-<Hero />
-
-// Border separates nav from hero`
-                                }
-                            />
+                            <CodeSnippet language="tsx" code={modernNavCode} />
                         </div>
                     </div>
                 </Card>
@@ -405,7 +396,7 @@ export default function NavPage() {
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 items
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -420,7 +411,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 variant
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -437,7 +428,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 orientation
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -453,7 +444,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 size
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -469,7 +460,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 activeId
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -483,7 +474,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 logo
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -498,7 +489,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 actions
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -513,7 +504,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 sticky
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -528,7 +519,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 mobileMenuDirection
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -545,7 +536,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 borderless
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -560,7 +551,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 transparent
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -574,7 +565,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 blur
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -589,7 +580,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 className
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -632,7 +623,7 @@ export default function NavPage() {
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 id
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -646,7 +637,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 label
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -660,7 +651,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 type
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -676,7 +667,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 href
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -690,7 +681,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 onClick
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -704,7 +695,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 icon
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -718,7 +709,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 badge
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -732,7 +723,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 disabled
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -746,7 +737,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 target
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -761,7 +752,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 children
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
@@ -776,7 +767,7 @@ export default function NavPage() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="p-3 font-mono text-sm text-[var(--color-primary)]">
+                                            <td className="p-3 font-mono text-sm text-(--color-primary)">
                                                 render
                                             </td>
                                             <td className="p-3 font-mono text-sm theme-text-muted">
