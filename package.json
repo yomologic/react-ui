@@ -32,6 +32,8 @@
     "scripts": {
         "build": "tsup",
         "dev": "tsup --watch",
+        "dev:site": "yarn workspace @yomologic/react-ui-site dev",
+        "dev:all": "concurrently \"yarn dev\" \"yarn dev:site\"",
         "lint": "eslint .",
         "format": "prettier --write \"**/*.{ts,tsx,json,md}\"",
         "format:check": "prettier --check \"**/*.{ts,tsx,json,md}\"",
@@ -67,6 +69,7 @@
         "@types/node": "^22.19.1",
         "@types/react": "^18.3.12",
         "@types/react-dom": "^18.3.1",
+        "concurrently": "^10.0.3",
         "esbuild-plugin-postcss2": "^0.1.2",
         "eslint": "^9.15.0",
         "eslint-config-prettier": "^10.1.8",

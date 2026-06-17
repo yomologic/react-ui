@@ -105,6 +105,9 @@ yarn build
 # Watch mode for development
 yarn dev
 
+# Run library watcher + showcase site together
+yarn dev:all
+
 # Type check
 yarn type-check
 ```
