@@ -70,6 +70,17 @@ import "./custom-theme.css"; // Your overrides
 
 Browse all components, see code examples, and experiment with variants in our interactive showcase.
 
+## AI Docs
+
+Use these files as the canonical AI reference set for this repository:
+
+- [AI Context](./AI_CONTEXT.md) - Project orientation, source-of-truth order, and task routing
+- [AI Conventions](./docs/ai/CONVENTIONS.md) - Coding and documentation standards for AI-assisted changes
+- [AI Playbooks](./docs/ai/PLAYBOOKS.md) - Repeatable workflows for common implementation tasks
+- [AI Prompt Templates](./docs/ai/PROMPTS.md) - Reusable prompt formats with acceptance criteria
+
+When guidance conflicts, follow the precedence defined in [AI_CONTEXT.md](./AI_CONTEXT.md).
+
 ## Development
 
 ```bash

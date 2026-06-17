@@ -531,7 +531,6 @@ const [iconPosition, setIconPosition] = useState<"left" | "right" | "both" | "no
 ## Related Documentation
 
 - [Component Development Guide](./COMPONENT-DEVELOPMENT-GUIDE.md)
-- [Component Library](./COMPONENT-LIBRARY.md)
 - [Theme System](./THEME_SYSTEM.md)
 
 ## Reference Implementation
