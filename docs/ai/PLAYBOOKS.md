@@ -13,10 +13,10 @@ Excludes one-off project management tasks.
 
 Implementation behavior is defined by:
 
-1. COMPONENT-DEVELOPMENT-GUIDE.md
-2. SHOWCASE-GUIDE.md
-3. THEME_SYSTEM.md
-4. THEME_QUICK_REFERENCE.md
+1. ../guides/COMPONENT-DEVELOPMENT-GUIDE.md
+2. ../guides/SHOWCASE-GUIDE.md
+3. ../guides/THEME_SYSTEM.md
+4. ../guides/THEME_QUICK_REFERENCE.md
 
 ## Rules
 
@@ -33,7 +33,7 @@ Implementation behavior is defined by:
 5. Add showcase page at site/src/app/(showcase)/components/<component-name>/page.tsx.
 6. Add navigation entry in site/src/app/(showcase)/layout.tsx if applicable.
 7. Run yarn type-check and yarn lint.
-8. Update docs where API or usage changed.
+8. Update docs in docs/guides/ where API or usage changed.
 
 Done criteria:
 
@@ -45,7 +45,7 @@ Done criteria:
 
 1. Create/edit page under site/src/app/(showcase)/components/<component-name>/page.tsx.
 2. Use SectionLayout wrapper.
-3. Follow section pattern from SHOWCASE-GUIDE.md.
+3. Follow section pattern from ../guides/SHOWCASE-GUIDE.md.
 4. Ensure examples show one component instance with interactive controls.
 5. Add API reference section and usage examples.
 6. Validate with site lint.
@@ -59,7 +59,7 @@ Done criteria:
 ## Playbook 3: Update Theme Tokens
 
 1. Identify whether change belongs to library theme variables or showcase-only settings.
-2. Apply naming standards from THEME_QUICK_REFERENCE.md.
+2. Apply naming standards from ../guides/THEME_QUICK_REFERENCE.md.
 3. Keep semantic variables over component-specific naming when possible.
 4. Update all impacted theme definitions and usages.
 5. Validate typography/color utilities still map correctly.

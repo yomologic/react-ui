@@ -10,7 +10,7 @@ Task prompt templates for coding, docs, and review workflows in this repository.
 
 ## Source Of Truth
 
-Behavior and structure constraints come from AI_CONTEXT.md and docs/ai/CONVENTIONS.md.
+Behavior and structure constraints come from ./AI_CONTEXT.md and ./CONVENTIONS.md.
 
 ## Rules
 
@@ -38,7 +38,7 @@ Add a new <component-name> component to the library and showcase.
 
 Constraints:
 
-- Follow COMPONENT-DEVELOPMENT-GUIDE.md and SHOWCASE-GUIDE.md.
+- Follow ../guides/COMPONENT-DEVELOPMENT-GUIDE.md and ../guides/SHOWCASE-GUIDE.md.
 - Preserve backward compatibility.
 - Do not refactor unrelated files.
 
@@ -74,7 +74,7 @@ Update theme tokens for <feature>.
 
 Constraints:
 
-- Follow THEME_QUICK_REFERENCE.md naming rules.
+- Follow ../guides/THEME_QUICK_REFERENCE.md naming rules.
 - Reuse semantic tokens before adding component-specific tokens.
 
 Files In Scope:

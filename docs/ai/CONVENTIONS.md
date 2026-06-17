@@ -13,11 +13,11 @@ Excludes feature-specific implementation details.
 
 Primary references:
 
-1. ARCHITECTURE.md
-2. COMPONENT-DEVELOPMENT-GUIDE.md
-3. SHOWCASE-GUIDE.md
-4. THEME_SYSTEM.md
-5. THEME_QUICK_REFERENCE.md
+1. ../guides/ARCHITECTURE.md
+2. ../guides/COMPONENT-DEVELOPMENT-GUIDE.md
+3. ../guides/SHOWCASE-GUIDE.md
+4. ../guides/THEME_SYSTEM.md
+5. ../guides/THEME_QUICK_REFERENCE.md
 
 ## Rules
 
@@ -58,7 +58,7 @@ For showcase app changes, also run:
 
 ## Conflict Resolution
 
-When two docs disagree, follow precedence in AI_CONTEXT.md.
+When two docs disagree, follow precedence in ./AI_CONTEXT.md.
 If conflict is unresolved, raise a short note in PR and propose the source-of-truth update.
 
 ## Update Policy

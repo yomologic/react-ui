@@ -13,21 +13,21 @@ Excludes deep implementation details that belong in feature docs.
 
 If documents conflict, use this precedence:
 
-1. ARCHITECTURE.md
+1. ../guides/ARCHITECTURE.md
 2. src/index.ts
-3. COMPONENT-DEVELOPMENT-GUIDE.md
-4. SHOWCASE-GUIDE.md
-5. THEME_SYSTEM.md and THEME_QUICK_REFERENCE.md
-6. README.md
+3. ../guides/COMPONENT-DEVELOPMENT-GUIDE.md
+4. ../guides/SHOWCASE-GUIDE.md
+5. ../guides/THEME_SYSTEM.md and ../guides/THEME_QUICK_REFERENCE.md
+6. ../../README.md
 
 ## Rules
 
 - MUST treat the root package as the publishable library: @yomologic/react-ui.
 - MUST treat site/ as the docs and showcase app.
 - MUST export all public components from src/index.ts.
-- MUST follow naming and file placement from COMPONENT-DEVELOPMENT-GUIDE.md.
-- MUST follow showcase page structure from SHOWCASE-GUIDE.md.
-- MUST follow theme variable naming from THEME_SYSTEM.md.
+- MUST follow naming and file placement from ../guides/COMPONENT-DEVELOPMENT-GUIDE.md.
+- MUST follow showcase page structure from ../guides/SHOWCASE-GUIDE.md.
+- MUST follow theme variable naming from ../guides/THEME_SYSTEM.md.
 - MUST NOT invent legacy paths like src/components/ui if the current source uses src/ui.
 - SHOULD run type-check and lint before finalizing changes.
 - SHOULD keep docs concise and machine-scannable.
@@ -55,9 +55,9 @@ If documents conflict, use this precedence:
     - Add/adjust styles in src/styles.css or src/base.css as needed
 - Add or modify a showcase page:
     - Edit site/src/app/(showcase)/components/<name>/page.tsx
-    - Keep four-section pattern from SHOWCASE-GUIDE.md
+    - Keep four-section pattern from ../guides/SHOWCASE-GUIDE.md
 - Update theme system:
-    - Follow variable conventions in THEME_QUICK_REFERENCE.md
+    - Follow variable conventions in ../guides/THEME_QUICK_REFERENCE.md
     - Keep compatibility with existing theme JSON/CSS flow
 
 ## Done Criteria

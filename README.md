@@ -70,16 +70,27 @@ import "./custom-theme.css"; // Your overrides
 
 Browse all components, see code examples, and experiment with variants in our interactive showcase.
 
-## AI Docs
+## Documentation Structure
 
-Use these files as the canonical AI reference set for this repository:
+### Development Guides
 
-- [AI Context](./AI_CONTEXT.md) - Project orientation, source-of-truth order, and task routing
+- [Architecture](./docs/guides/ARCHITECTURE.md) - System design and package layout
+- [Component Development](./docs/guides/COMPONENT-DEVELOPMENT-GUIDE.md) - How to build new components
+- [Showcase Pages](./docs/guides/SHOWCASE-GUIDE.md) - How to create component showcase pages
+- [Theme System](./docs/guides/THEME_SYSTEM.md) - Theme architecture and conventions
+- [Theme Quick Reference](./docs/guides/THEME_QUICK_REFERENCE.md) - Quick lookup for theme tokens
+- [Validation](./docs/guides/VALIDATION.md) - Form validation patterns
+
+### AI Reference
+
+For AI-assisted contributions, use these canonical references:
+
+- [AI Context](./docs/ai/AI_CONTEXT.md) - Project orientation, source-of-truth order, and task routing
 - [AI Conventions](./docs/ai/CONVENTIONS.md) - Coding and documentation standards for AI-assisted changes
 - [AI Playbooks](./docs/ai/PLAYBOOKS.md) - Repeatable workflows for common implementation tasks
 - [AI Prompt Templates](./docs/ai/PROMPTS.md) - Reusable prompt formats with acceptance criteria
 
-When guidance conflicts, follow the precedence defined in [AI_CONTEXT.md](./AI_CONTEXT.md).
+When guidance conflicts, follow the precedence defined in [AI Context](./docs/ai/AI_CONTEXT.md).
 
 ## Development
 
