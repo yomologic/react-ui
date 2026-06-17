@@ -41,8 +41,7 @@ Our component library follows a consistent pattern:
 ### Step 2: Define Component Interface
 
 ```tsx
-export interface ComponentNameProps
-    extends React.HTMLAttributes<HTMLDivElement> {
+export interface ComponentNameProps extends React.HTMLAttributes<HTMLDivElement> {
     variant?: "default" | "primary" | "success" | "warning" | "danger";
     size?: "sm" | "md" | "lg";
     // ... other props

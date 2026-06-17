@@ -530,9 +530,8 @@ const [iconPosition, setIconPosition] = useState<"left" | "right" | "both" | "no
 
 ## Related Documentation
 
-- [Component Development Guide](./COMPONENT-DEVELOPMENT-GUIDE.md)
-- [Component Library](./COMPONENT-LIBRARY.md)
-- [Theme System](./THEME_SYSTEM.md)
+- [Component Development Guide](./COMPONENT-DEVELOPMENT-GUIDE.md) - How to build components
+- [Theme System](./THEME_SYSTEM.md) - Theme architecture and conventions
 
 ## Reference Implementation
 
