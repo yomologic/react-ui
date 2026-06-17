@@ -80,6 +80,7 @@ Browse all components, see code examples, and experiment with variants in our in
 - [Theme System](./docs/guides/THEME_SYSTEM.md) - Theme architecture and conventions
 - [Theme Quick Reference](./docs/guides/THEME_QUICK_REFERENCE.md) - Quick lookup for theme tokens
 - [Validation](./docs/guides/VALIDATION.md) - Form validation patterns
+- [Publishing & Release](./docs/guides/PUBLISHING.md) - Release process, GitHub Actions, and deployment
 
 ### AI Reference
 

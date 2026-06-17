@@ -18,7 +18,8 @@ If documents conflict, use this precedence:
 3. ../guides/COMPONENT-DEVELOPMENT-GUIDE.md
 4. ../guides/SHOWCASE-GUIDE.md
 5. ../guides/THEME_SYSTEM.md and ../guides/THEME_QUICK_REFERENCE.md
-6. ../../README.md
+6. ../guides/PUBLISHING.md (for release and CI workflows)
+7. ../../README.md
 
 ## Rules
 
